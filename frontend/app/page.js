@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import { Lock } from 'lucide-react';
-import { Landing, BaseStation } from '../components/Views';
-import { GalaxySelection, PlanetSelection } from '../components/Views3';
+import { BaseStation, Landing } from '../components/Views';
+import { GalaxySelection } from '../components/Views2';
+import { PlanetSelection } from '../components/Views3';
 import { RutaLiderView, LaboratorioView, IngenieriaView, SuministrosView, OperacionesView } from '../components/Views5';
 import { PlanetContentView } from '../components/Views6';
 import { AdminCenter } from '../components/AdminViews';
@@ -111,7 +112,27 @@ export default function Page() {
       );
     }
     case 'admin-ruta-lider':
-      return <AdminRutaLider rutaData={appConfig[adminStation.toLowerCase()].rutaLider} setRutaData={(val)=>{const next={...appConfig};next[adminStation.toLowerCase()].rutaLider=val;setAppConfig(next);}} title="EDITOR: RUTA DEL LÍDER GUARDIÁN" onBack={()=>go('admin')}/>;
+      return (
+        <AdminRutaLider 
+          rutaData={appConfig[adminStation.toLowerCase()].rutaLider} 
+          setRutaData={(val) => {
+            const sk = adminStation.toLowerCase();
+            const currentRuta = appConfig[sk].rutaLider;
+            const newVal = typeof val === 'function' ? val(currentRuta) : val;
+            
+            // Deep update to ensure reactivity
+            setAppConfig(prev => ({
+              ...prev,
+              [sk]: {
+                ...prev[sk],
+                rutaLider: newVal
+              }
+            }));
+          }} 
+          title="EDITOR: RUTA DEL LÍDER GUARDIÁN" 
+          onBack={() => go('admin')}
+        />
+      );
     case 'admin-satelites':
       return <AdminSatelites satelitesData={appConfig[adminStation.toLowerCase()].satelites||{conhecendo:[],imersao:[]}} setSatelitesData={(val)=>{const next={...appConfig};next[adminStation.toLowerCase()].satelites=val;setAppConfig(next);}} initialPortal={adminPortal} onBack={()=>go('admin-exploracion')}/>;
     case 'ruta-lider':
