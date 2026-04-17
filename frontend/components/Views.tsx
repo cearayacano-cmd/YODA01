@@ -38,6 +38,94 @@ export const Landing = ({ onNavigate, onAdmin }: any) => (
   </div>
 );
 
+const RotatingEarth = () => {
+  return (
+    <div style={{
+      position: 'absolute',
+      top: '55%', 
+      left: '72%', 
+      transform: 'translate(-50%, -50%)', 
+      width: '450px',
+      height: '450px',
+      borderRadius: '50%',
+      zIndex: 1,
+      pointerEvents: 'none',
+      boxShadow: `
+        0 0 60px rgba(0, 150, 255, 0.6),               /* Intense Atmospheric Rim */
+        0 0 120px rgba(0, 100, 255, 0.25)             /* Diffuse Bloom */
+      `,
+      overflow: 'hidden'
+    }}>
+      {/* LAYER 1: BASE SURFACE (DAY) */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        borderRadius: '50%',
+        background: 'url("/earth-texture.png")',
+        backgroundSize: '900px 450px',
+        backgroundRepeat: 'repeat-x',
+        animation: 'earthSeamlessRotate 120s linear infinite',
+      }} />
+
+      {/* LAYER 2: NIGHT LIGHTS (Visible only in shadow) */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        borderRadius: '50%',
+        background: 'url("/earth_night_lights_v5_1776432149193.png")',
+        backgroundSize: '900px 450px',
+        backgroundRepeat: 'repeat-x',
+        animation: 'earthSeamlessRotate 120s linear infinite',
+        mixBlendMode: 'screen',
+        opacity: 0.8,
+        maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 40%, rgba(0,0,0,1) 60%)',
+        WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,0) 40%, rgba(0,0,0,1) 60%)'
+      }} />
+
+      {/* LAYER 3: MOVING CLOUDS (Parallax effect) */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        borderRadius: '50%',
+        background: 'url("/earth_clouds_mask_1776432085038.png")',
+        backgroundSize: '900px 450px',
+        backgroundRepeat: 'repeat-x',
+        animation: 'earthSeamlessRotate 180s linear infinite', /* Slightly slower than surface */
+        opacity: 0.45,
+        mixBlendMode: 'screen'
+      }} />
+
+      {/* LIGHTING & SHADOWS (Terminator Line) */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        borderRadius: '50%',
+        background: 'linear-gradient(90deg, transparent 30%, rgba(0,0,0,0.85) 75%)',
+        boxShadow: 'inset -30px 0 50px rgba(0,0,0,0.9), inset 30px 0 40px rgba(0,180,255,0.2)',
+        pointerEvents: 'none'
+      }} />
+
+      {/* SPECULAR REFLECTION (Sun Glint) */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        borderRadius: '50%',
+        background: 'radial-gradient(circle at 35% 35%, rgba(255,255,255,0.2) 0%, transparent 50%)',
+        pointerEvents: 'none'
+      }} />
+
+      {/* ATMOSPHERIC RIM GLOW (Inner) */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        borderRadius: '50%',
+        boxShadow: 'inset 0 0 30px rgba(0, 150, 255, 0.4)',
+        pointerEvents: 'none'
+      }} />
+    </div>
+  );
+};
+
 const SpaceBackground = () => {
   const [isMounted, setIsMounted] = React.useState(false);
   React.useEffect(() => setIsMounted(true), []);
@@ -45,10 +133,9 @@ const SpaceBackground = () => {
 
   return (
     <div style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden', background: '#0B0033' }}>
-      {/* Deep space base */}
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 30%, #1B0088 0%, #0B0033 80%)' }} />
-
-      {/* Bright Pulsing Stars */}
+      <RotatingEarth />
+      {/* ... stars ... */}
       {[...Array(20)].map((_, i) => (
         <div key={i} style={{
           position: 'absolute',
@@ -63,35 +150,16 @@ const SpaceBackground = () => {
           animationDelay: `${Math.random() * 5}s`
         }} />
       ))}
-
-
-      {/* Static Stars Field */}
-      <div style={{ 
-        position: 'absolute', inset: 0, opacity: 0.4,
-        backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 50px 160px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 130px 80px, #ffffff, rgba(0,0,0,0))',
-        backgroundSize: '200px 200px'
-      }} />
-
-      {/* Animated Nebula/Cosmic Dust */}
-      <div style={{ 
-        position: 'absolute', top: '10%', left: '20%', width: '60%', height: '40%', 
-        background: 'radial-gradient(ellipse, rgba(178,15,59,0.1) 0%, rgba(27,0,136,0) 70%)', 
-        filter: 'blur(60px)', transform: 'rotate(-15deg)',
-        animation: 'pulse 10s infinite alternate ease-in-out'
-      }} />
-      <div style={{ 
-        position: 'absolute', top: '30%', right: '10%', width: '50%', height: '50%', 
-        background: 'radial-gradient(ellipse, rgba(0,214,204,0.1) 0%, rgba(27,0,136,0) 70%)', 
-        filter: 'blur(80px)', transform: 'rotate(20deg)',
-        animation: 'pulse 12s infinite alternate-reverse ease-in-out'
-      }} />
-
-
-      <style>{`
+      <div style={{ position: 'absolute', inset: 0, opacity: 0.4, backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 50px 160px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 130px 80px, #ffffff, rgba(0,0,0,0))', backgroundSize: '200px 200px' }} />
+      <div style={{ position: 'absolute', top: '10%', left: '20%', width: '60%', height: '40%', background: 'radial-gradient(ellipse, rgba(178,15,59,0.1) 0%, rgba(27,0,136,0) 70%)', filter: 'blur(60px)', transform: 'rotate(-15deg)', animation: 'pulse 10s infinite alternate ease-in-out' }} />
+      <div style={{ position: 'absolute', top: '30%', right: '10%', width: '50%', height: '50%', background: 'radial-gradient(ellipse, rgba(0,214,204,0.1) 0%, rgba(27,0,136,0) 70%)', filter: 'blur(80px)', transform: 'rotate(20deg)', animation: 'pulse 12s infinite alternate-reverse ease-in-out' }} />
+      <style dangerouslySetInnerHTML={{ __html: `
         @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
-        @keyframes earthSeamlessRotate { from { background-position: 0px 0px; } to { background-position: -320px 0px; } }
-      `}</style>
+        @keyframes earthSeamlessRotate { from { background-position: 0 0; } to { background-position: -900px 0; } }
+      `}} />
     </div>
+
+
   );
 };
 
@@ -589,7 +657,7 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
           />
         </ConsoleSideFrame>
         
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', transform: 'translateY(60px)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', transform: 'translateY(88px)' }}>
           <CentralMonitorCard onNavigate={onNavigate} />
         </div>
 
