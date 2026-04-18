@@ -22,17 +22,17 @@ import {
   IMERSAO_DATA 
 } from './lib/data';
 
-import { AdminCenter } from '../frontend/components/AdminViews';
-import { AdminExploracion } from '../frontend/components/AdminViews2';
-import { AdminRutaLider } from '../frontend/components/AdminViews3';
-import { AdminSatelites } from '../frontend/components/AdminViews4';
-import { AdminPlanetEditor } from '../frontend/components/AdminPlanetEditor';
-import { Landing, BaseStation } from '../frontend/components/Views';
-import { GalaxySelection } from '../frontend/components/Views2';
-import { PlanetSelection } from '../frontend/components/Views3';
-import { LinksView, RutaLiderView } from '../frontend/components/Views4';
-import { LaboratorioView, IngenieriaView, SuministrosView, OperacionesView } from '../frontend/components/Views5';
-import { PlanetContentView } from '../frontend/components/Views6';
+import { AdminCenter } from './components/AdminViews';
+import { AdminExploracion } from './components/AdminViews2';
+import { AdminRutaLider } from './components/AdminViews3';
+import { AdminSatelites } from './components/AdminViews4';
+import { AdminPlanetEditor } from './components/AdminPlanetEditor';
+import { Landing, BaseStation } from './components/Views';
+import { GalaxySelection } from './components/Views2';
+import { PlanetSelection } from './components/Views3';
+import { LinksView } from './components/Views4';
+import { LaboratorioView, IngenieriaView, SuministrosView, OperacionesView, RutaLiderView } from './components/Views5';
+import { PlanetContentView } from './components/Views6';
 
 /* ── SIMPLE BUTTONS ─────────────────────────────────────────────────── */
 const Btn = ({ onClick, children, style={} }: any) => (
@@ -123,7 +123,13 @@ export default function App() {
   const [adminCourseIdx, setAdminCourseIdx] = useState(0);
   const [adminSatellitePk, setAdminSatellitePk] = useState('conhecendo');
   
-  const initGalaxy = (labels: string[]) => labels.map(l => ({ label:l }));
+  const initGalaxy = (labels: string[]) => {
+    const COLORS = [
+      '#ED1650', '#00D6CC', '#D400FF', '#FFE017', '#99CC33', 
+      '#00A9E0', '#FF8C00', '#FF00FF', '#00FF00', '#FFFFFF'
+    ];
+    return labels.map((l, i) => ({ label: l, color: COLORS[i % COLORS.length] }));
+  };
 
   const [appConfig, setAppConfig] = useState({
     br: {

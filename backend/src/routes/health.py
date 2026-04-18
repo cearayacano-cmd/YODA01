@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from ..controllers import health_controller
+from src.controllers import health_controller
 
 router = APIRouter()
 

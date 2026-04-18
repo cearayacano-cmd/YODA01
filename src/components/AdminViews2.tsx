@@ -9,15 +9,15 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
   const satelites = currentStationConfig.satelites || { conhecendo:[], imersao:[] };
   const galaxyConfig = exploracion[activeSector] || [];
   
-  const updateCourseLabel = (idx: any, val: any) => {
+  const updateCourseField = (idx: any, field: string, val: any) => {
     const next = {...exploracion};
-    next[activeSector] = (Array.isArray(next[activeSector]) ? next[activeSector] : []).map((c: any,i: any)=>i===idx?{...c,label:val}:c);
+    next[activeSector] = (Array.isArray(next[activeSector]) ? next[activeSector] : []).map((c: any,i: any)=>i===idx?{...c,[field]:val}:c);
     updateStationConfig('exploracion', next);
   };
   
   const addCourse = () => {
     const next = {...exploracion};
-    next[activeSector] = [...(next[activeSector]||[]), {label:'NUEVO PLANETA'}];
+    next[activeSector] = [...(next[activeSector]||[]), {label:'NUEVO PLANETA', color: '#ED1650'}];
     updateStationConfig('exploracion', next);
     const advDataKey = activeSector === 'soporte' ? 'soporteContent' : activeSector === 'frontLine' ? 'frontLineContent' : 'fsc';
     const advData = Array.isArray(currentStationConfig[advDataKey]) ? [...currentStationConfig[advDataKey]] : [];
@@ -225,11 +225,36 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
                     <div style={{fontSize:10, color:'#64748b', textTransform:'uppercase', marginBottom:10, fontWeight: 800, letterSpacing: '0.1em'}}>NOMBRE DEL PLANETA</div>
                     <input 
                       value={course.label} 
-                      onChange={e=>updateCourseLabel(i,e.target.value)} 
+                      onChange={e=>updateCourseField(i,'label',e.target.value)} 
                       style={{...inp({ background: '#F8FAFC', padding: '12px 16px', fontSize: 16, fontWeight: 900, color: '#1B0088' }), width:'100%'}}
                       onFocus={(e) => { e.target.style.borderColor = '#1B0088'; e.target.style.background = '#ffffff'; }}
                       onBlur={(e) => { e.target.style.borderColor = '#E2E8F0'; e.target.style.background = '#F8FAFC'; }}
                     />
+                  </div>
+                  <div>
+                    <div style={{fontSize:10, color:'#64748b', textTransform:'uppercase', marginBottom:12, fontWeight: 800, letterSpacing: '0.1em'}}>COLOR DEL PLANETA</div>
+                    <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                      {[
+                        '#ED1650', '#00D6CC', '#D400FF', '#FFE017', '#99CC33', 
+                        '#00A9E0', '#FF8C00', '#FF00FF', '#00FF00', '#FFFFFF'
+                      ].map(c => (
+                        <motion.div
+                          key={c}
+                          whileHover={{ scale: 1.2 }}
+                          onClick={() => updateCourseField(i, 'color', c)}
+                          style={{
+                            width: 28, height: 28, borderRadius: '50%', background: c, border: `2px solid ${course.color === c ? '#1B0088' : 'rgba(0,0,0,0.1)'}`,
+                            cursor: 'pointer', boxShadow: course.color === c ? `0 0 10px ${c}` : 'none'
+                          }}
+                        />
+                      ))}
+                      <input 
+                        type="color" 
+                        value={course.color || '#ED1650'} 
+                        onChange={e => updateCourseField(i, 'color', e.target.value)}
+                        style={{ width: 28, height: 28, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
+                      />
+                    </div>
                   </div>
                   <div style={{display:'flex', gap:14}}>
                     <button 

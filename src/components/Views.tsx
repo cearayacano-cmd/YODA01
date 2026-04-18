@@ -445,20 +445,6 @@ const CentralMonitorCard = ({ onNavigate }: any) => {
       {/* Glass Panel Bezel */}
       <div style={{ position: 'absolute', inset: 0, border: '2px solid rgba(255,255,255,0.1)', pointerEvents: 'none', zIndex: 10 }} />
       
-      {/* Realistic Glass Reflection */}
-      <div style={{
-        position: 'absolute',
-        top: '-50%',
-        left: '-50%',
-        width: '200%',
-        height: '200%',
-        background: 'linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.1) 48%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 52%, transparent 55%)',
-        zIndex: 11,
-        pointerEvents: 'none',
-        transform: 'rotate(-25deg)',
-        opacity: 0.7
-      }} />
-
       {/* Tactical Corners */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: 24, height: 24, borderTop: `6px solid ${color}`, borderLeft: `6px solid ${color}`, zIndex: 3 }} />
       <div style={{ position: 'absolute', top: 0, right: 0, width: 24, height: 24, borderTop: `6px solid ${color}`, borderRight: `6px solid ${color}`, zIndex: 3 }} />
@@ -532,7 +518,7 @@ const CentralMonitorCard = ({ onNavigate }: any) => {
   );
 };
 
-const SpaceKeyboard = ({ onAlert, onHud, onDim, states }: any) => {
+const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, states }: any) => {
   const { alertMode, hudHidden, dimLights } = states;
   
   const Key = ({ label, color, active, onClick, large }: any) => (
@@ -552,10 +538,11 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, states }: any) => {
         cursor: 'pointer',
         boxShadow: active ? `0 0 20px ${color}` : 'none',
         position: 'relative',
-        transition: 'all 0.3s ease'
+        transition: 'all 0.3s ease',
+        textAlign: 'center'
       }}
     >
-      <span style={{ fontSize: 7, fontWeight: 900, color: active ? '#fff' : 'rgba(255,255,255,0.6)', letterSpacing: '0.1em' }}>{label}</span>
+      <span style={{ fontSize: label.length > 10 ? 6 : 7, fontWeight: 900, color: active ? '#fff' : 'rgba(255,255,255,0.6)', letterSpacing: '0.1em', padding: '0 4px' }}>{label}</span>
       {active && <div style={{ position: 'absolute', top: 2, right: 2, width: 4, height: 4, borderRadius: '50%', background: '#fff' }} />}
     </motion.div>
   );
@@ -601,6 +588,7 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, states }: any) => {
         {/* CENTER ACTION CLUSTER */}
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
           <Key label="!! ALERT !!" color="#B20F3B" active={alertMode} onClick={onAlert} large />
+          <Key label="PAINÉIS & RELATÓRIOS" color="#00D6CC" onClick={onMonitoring} large />
           <Key label="HUD" color="#00FFF2" active={!hudHidden} onClick={onHud} />
         </div>
 
@@ -629,6 +617,7 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
         onAlert={() => setAlertMode(!alertMode)}
         onHud={() => setHudHidden(!hudHidden)}
         onDim={() => setDimLights(!dimLights)}
+        onMonitoring={() => config.monitoringUrl && window.open(config.monitoringUrl, '_blank')}
         states={{ alertMode, hudHidden, dimLights }}
       />
 
@@ -673,10 +662,7 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
         </ConsoleSideFrame>
       </div>
 
-      <div style={{ height: '64px', background: alertMode ? '#4A0618' : '#E8E7F2', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 32px', borderTop: alertMode ? '1px solid #ff0000' : 'none', transition: 'all 0.5s ease' }}>
-        <button onClick={()=>config.monitoringUrl && window.open(config.monitoringUrl,'_blank')} style={{ background: '#00D6CC', color: '#0B0033', padding: '10px 24px', borderRadius: '8px', fontSize: 11, fontWeight: 800, cursor: 'pointer', border:'none' }}>
-          CENTRO DE MONITOREO
-        </button>
+      <div style={{ height: '64px', background: alertMode ? '#4A0618' : '#E8E7F2', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0 32px', borderTop: alertMode ? '1px solid #ff0000' : 'none', transition: 'all 0.5s ease' }}>
         <div style={{ fontSize: 10, fontWeight: 800, color: alertMode ? '#ffaaaa' : '#64748b' }}>Universo Training | Customer Care & Sales</div>
       </div>
     </div>

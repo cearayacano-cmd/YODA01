@@ -556,6 +556,7 @@ export const TechBaseView = ({
   topDecalRight = "Customer Care & Sales",
   sideDecalLeft = "Guardianes",
   sideDecalRight = "Capacitación",
+  footerLogo = null,
   description = "Accedé a manuales técnicos, guías de procedimientos y recursos de soporte para operaciones."
 }: any) => {
   return (
@@ -581,22 +582,31 @@ export const TechBaseView = ({
       }} />
 
       {/* Background Decals */}
-      <div style={{ position: 'absolute', top: 100, left: 40, fontSize: 10, color: '#888', fontWeight: 700, letterSpacing: '0.1em', lineHeight: 1.8, zIndex: 1, textTransform: 'uppercase' }}>
-        <div>UNIVERSO TRAINING</div>
-        <div>CUSTOMER CARE & SALES</div>
+      <div style={{ position: 'absolute', top: 100, left: 40, display: 'flex', alignItems: 'center', gap: 15, zIndex: 1 }}>
+        <img src="/logo_pt.png" alt="Logo PT" style={{ height: 45 }} />
+        <div style={{ fontSize: 10, color: '#888', fontWeight: 700, letterSpacing: '0.1em', lineHeight: 1.8, textTransform: 'uppercase' }}>
+          <div>UNIVERSO TRAINING</div>
+          <div>CUSTOMER CARE & SALES</div>
+        </div>
       </div>
 
       {/* Left Vertical Decal */}
-      <div style={{ position: 'absolute', top: '40%', left: -30, display: 'flex', alignItems: 'center', gap: 10, transform: 'rotate(-90deg)', transformOrigin: 'center', zIndex: 1 }}>
+      <div style={{ position: 'absolute', top: '40%', left: -80, display: 'flex', alignItems: 'center', gap: 15, transform: 'rotate(-90deg)', transformOrigin: 'center', zIndex: 1 }}>
         <div style={{ width: 40, height: 2, background: themeColor, boxShadow: `0 0 10px ${themeColor}` }} />
-        <div style={{ fontSize: 12, fontWeight: 900, color: '#b0b0c0', letterSpacing: '0.2em', textTransform: 'uppercase' }}>GUARDIANES</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ fontSize: 12, fontWeight: 900, color: '#b0b0c0', letterSpacing: '0.2em', textTransform: 'uppercase' }}>GUARDIANES</div>
+          <img src="/logo_guardianes.png" alt="Logo Guardianes" style={{ height: 32 }} />
+        </div>
         <div style={{ width: 40, height: 2, background: themeColor, boxShadow: `0 0 10px ${themeColor}` }} />
       </div>
 
       {/* Right Vertical Decal */}
-      <div style={{ position: 'absolute', top: '40%', right: -40, display: 'flex', alignItems: 'center', gap: 10, transform: 'rotate(90deg)', transformOrigin: 'center', zIndex: 1 }}>
+      <div style={{ position: 'absolute', top: '40%', right: -80, display: 'flex', alignItems: 'center', gap: 15, transform: 'rotate(90deg)', transformOrigin: 'center', zIndex: 1 }}>
         <div style={{ width: 40, height: 2, background: themeColor, boxShadow: `0 0 10px ${themeColor}` }} />
-        <div style={{ fontSize: 12, fontWeight: 900, color: '#b0b0c0', letterSpacing: '0.2em', textTransform: 'uppercase' }}>CAPACITACIÓN</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ fontSize: 12, fontWeight: 900, color: '#b0b0c0', letterSpacing: '0.2em', textTransform: 'uppercase' }}>GUARDIANES</div>
+          <img src="/logo_guardianes.png" alt="Logo Guardianes" style={{ height: 32 }} />
+        </div>
         <div style={{ width: 40, height: 2, background: themeColor, boxShadow: `0 0 10px ${themeColor}` }} />
       </div>
 
@@ -609,8 +619,8 @@ export const TechBaseView = ({
         justifyContent: 'space-between', 
         position: 'relative', 
         zIndex: 10,
-        borderBottom: '4px solid #FF007F',
-        boxShadow: '0 4px 20px rgba(255,0,127,0.3)'
+        borderBottom: '4px solid #ED1650',
+        boxShadow: '0 4px 20px rgba(237, 22, 80, 0.3)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 30 }}>
           <button onClick={onBack} style={{ 
@@ -628,14 +638,14 @@ export const TechBaseView = ({
             ← VOLVER
           </button>
           <div style={{ textAlign: 'left' }}>
-            <div style={{ fontSize: 10, color: '#FF007F', letterSpacing: '0.3em', fontWeight: 900 }}>{headerTitle}</div>
+            <div style={{ fontSize: 10, color: '#ED1650', letterSpacing: '0.3em', fontWeight: 900 }}>{headerTitle}</div>
             <div style={{ fontSize: 24, fontWeight: 900, letterSpacing: '0.1em', color: '#ffffff', textShadow: '0 0 10px rgba(255,255,255,0.5)' }}>
               {title}
             </div>
           </div>
         </div>
         <div style={{ display: 'flex', gap: 16 }}>
-          <div style={{ border: `1px solid #FF007F`, background: 'rgba(11,0,51,0.8)', color: '#FF007F', padding: '6px 16px', borderRadius: 4, fontSize: 11, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, boxShadow: `inset 0 0 10px rgba(255,0,127,0.4)` }}>
+          <div style={{ border: `1px solid #ED1650`, background: 'rgba(11,0,51,0.8)', color: '#ED1650', padding: '6px 16px', borderRadius: 4, fontSize: 11, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, boxShadow: `inset 0 0 10px rgba(237, 22, 80, 0.4)` }}>
             CORE_STATUS: <span style={{ color: '#ffffff' }}>NUEVOS INGRESOS</span>
             <motion.div 
               animate={{ opacity: [0.4, 1, 0.4] }}
@@ -643,7 +653,7 @@ export const TechBaseView = ({
               style={{ width: 6, height: 6, borderRadius: '50%', background: '#00F3FF', boxShadow: '0 0 8px #00F3FF' }} 
             />
           </div>
-          <div style={{ border: `1px solid #FF007F`, background: 'rgba(11,0,51,0.8)', color: '#FF007F', padding: '6px 16px', borderRadius: 4, fontSize: 11, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, boxShadow: `inset 0 0 10px rgba(255,0,127,0.4)` }}>
+          <div style={{ border: `1px solid #ED1650`, background: 'rgba(11,0,51,0.8)', color: '#ED1650', padding: '6px 16px', borderRadius: 4, fontSize: 11, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, boxShadow: `inset 0 0 10px rgba(237, 22, 80, 0.4)` }}>
             PÁGINAS PUBLICADAS: <span style={{ color: '#ffffff' }}>{links ? links.length : 0}</span>
           </div>
         </div>
@@ -728,7 +738,7 @@ export const TechBaseView = ({
 
             {/* Text Content */}
             <div style={{ flex: 1, position: 'relative', zIndex: 5 }}>
-              <div style={{ fontSize: 11, color: '#FF007F', letterSpacing: '0.3em', marginBottom: 10, fontWeight: 900, textTransform: 'uppercase' }}>
+              <div style={{ fontSize: 11, color: '#ED1650', letterSpacing: '0.3em', marginBottom: 10, fontWeight: 900, textTransform: 'uppercase' }}>
                 MANTENIMIENTO · PROTOCOLOS · SOPORTE
               </div>
               <div style={{ fontSize: 42, fontWeight: 900, marginBottom: 12, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
@@ -755,7 +765,7 @@ export const TechBaseView = ({
         {/* List Section Header */}
         <div style={{ marginBottom: 24, display: 'flex', alignItems: 'center', gap: 20 }}>
           <div>
-            <div style={{ fontSize: 11, color: '#FF007F', letterSpacing: '0.2em', marginBottom: 4, fontWeight: 900, textTransform: 'uppercase' }}>REGISTROS TÉCNICOS</div>
+            <div style={{ fontSize: 11, color: '#ED1650', letterSpacing: '0.2em', marginBottom: 4, fontWeight: 900, textTransform: 'uppercase' }}>REGISTROS TÉCNICOS</div>
             <div style={{ fontSize: 22, fontWeight: 900, letterSpacing: '0.05em', color: '#0B0033', textTransform: 'uppercase' }}>RECURSOS DISPONIBLES</div>
           </div>
           <div style={{ flex: 1, height: 1, background: 'rgba(11,0,51,0.2)', position: 'relative' }}>
@@ -843,7 +853,7 @@ export const TechBaseView = ({
 
               <div style={{ flex: 1, zIndex: 2 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-                  <div style={{ fontSize: 20, fontWeight: 900, color: '#FF007F', opacity: 0.8 }}>{String(i + 1).padStart(2, '0')}</div>
+                  <div style={{ fontSize: 20, fontWeight: 900, color: '#ED1650', opacity: 0.8 }}>{String(i + 1).padStart(2, '0')}</div>
                   <div style={{ fontSize: 18, fontWeight: 900, letterSpacing: '0.02em', color: '#ffffff', textTransform: 'uppercase' }}>{link.label}</div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16, fontSize: 10, fontWeight: 800, color: 'rgba(255,255,255,0.4)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
@@ -885,12 +895,16 @@ export const TechBaseView = ({
         fontWeight: 800, 
         zIndex: 100,
         color: '#ffffff',
-        borderTop: '2px solid #FF007F',
-        boxShadow: '0 -4px 20px rgba(255,0,127,0.2)'
+        borderTop: '2px solid #ED1650',
+        boxShadow: '0 -4px 20px rgba(237, 22, 80, 0.2)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#FF007F', boxShadow: '0 0 10px #FF007F' }} />
-          {footerTitle} <span style={{ color: '#666' }}>· LATAM STARSHIP</span>
+          {footerLogo ? (
+            <img src={footerLogo} alt="Footer Logo" style={{ height: 18, filter: 'brightness(0) invert(1)' }} />
+          ) : (
+            <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#ED1650', boxShadow: '0 0 10px #ED1650' }} />
+          )}
+          <span style={{ fontWeight: 900 }}>{footerTitle}</span>
         </div>
         <div style={{ display: 'flex', gap: 24 }}>
           <div>POWER: <span style={{ color: '#00C853' }}>STABLE</span></div>
@@ -945,15 +959,16 @@ export const LaboratorioView = ({ links, rutaData, onBack, onNavigateRuta, title
 
   return (
     <TechBaseView
-      title={title || 'LAB. DE ESTRATEGIA'}
-      subtitle={subtitle || 'Portal de líderes, expediciones de formación y análisis de datos en tiempo real.'}
+      title={title || 'PORTAL DE LÍDERES'}
+      subtitle={subtitle || 'Lab. de Estrategia: expediciones de formación y análisis de datos en tiempo real.'}
       links={links}
       onBack={onBack}
       themeColor={themeColor}
       heroIcon={heroIcon}
       listIcon={<Microscope size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
       headerTitle="MANTENIMIENTO · PROTOCOLOS · SOPORTE"
-      footerTitle="LABORATORIO DE ESTRATEGIA"
+      footerTitle="PORTAL DE LÍDERES"
+      footerLogo="/logo_blanco_1.png"
       topDecalLeft="ESTRATEGIA"
       topDecalRight="LIDERAZGO"
       sideDecalLeft="ANÁLISIS"

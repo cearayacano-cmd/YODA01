@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routes import health
+from src.routes import health
 
 app = FastAPI(title="Universo Customer Care API")
 
