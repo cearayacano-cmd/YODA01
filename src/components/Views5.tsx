@@ -5,20 +5,19 @@ import { Wrench, BookOpen, Settings, Hexagon, Network, Microscope, Package, Box,
 const Stars = () => (
   <div className="stars-container" style={{ position: 'fixed', inset: 0, pointerEvents: 'none' }}>
     {[...Array(80)].map((_, i) => (
-      <div
+      <motion.div
         key={i}
-        className="star"
+        animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.2, 1] }}
+        transition={{ duration: Math.random() * 5 + 3, repeat: Infinity, ease: 'easeInOut', delay: -Math.random() * 5 }}
         style={{
           position: 'absolute',
-          width: (Math.random() * 2 + 0.5) + 'px',
-          height: (Math.random() * 2 + 0.5) + 'px',
+          width: (Math.random() * 2 + 1) + 'px',
+          height: (Math.random() * 2 + 1) + 'px',
           left: Math.random() * 100 + '%',
           top: Math.random() * 100 + '%',
           background: '#ffffff',
           borderRadius: '50%',
-          opacity: Math.random(),
-          animation: `twinkle ${Math.random() * 5 + 3}s ease-in-out infinite`,
-          animationDelay: `-${Math.random() * 5}s`
+          boxShadow: '0 0 5px #fff'
         }}
       />
     ))}
@@ -28,8 +27,16 @@ const Stars = () => (
 const MapBackground = () => (
   <div style={{ position: 'fixed', inset: 0, backgroundColor: '#0F004F', zIndex: 0, overflow: 'hidden' }}>
     {/* Dynamic Tactical Glows */}
-    <div style={{ position: 'absolute', top: '5%', left: '15%', width: '700px', height: '700px', background: 'radial-gradient(circle, rgba(27,0,136,0.3) 0%, transparent 70%)', filter: 'blur(100px)', animation: 'dataPulse 12s ease-in-out infinite' }} />
-    <div style={{ position: 'absolute', bottom: '10%', right: '5%', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(0,214,204,0.15) 0%, transparent 70%)', filter: 'blur(80px)', animation: 'dataPulse 15s ease-in-out infinite alternate' }} />
+    <motion.div 
+        animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.1, 1] }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ position: 'absolute', top: '5%', left: '15%', width: '700px', height: '700px', background: 'radial-gradient(circle, rgba(27,0,136,0.5) 0%, transparent 70%)', filter: 'blur(100px)' }} 
+    />
+    <motion.div 
+        animate={{ opacity: [0.1, 0.3, 0.1], scale: [1.1, 1, 1.1] }}
+        transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ position: 'absolute', bottom: '10%', right: '5%', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(0,214,204,0.3) 0%, transparent 70%)', filter: 'blur(80px)' }} 
+    />
     
     {/* Vector Tactical Grid */}
     <div style={{ 
@@ -44,48 +51,6 @@ const MapBackground = () => (
 
     {/* Twinkly Stars Background */}
     <Stars />
-
-    {/* Moon Surface (Lunar Base) */}
-    <div style={{
-      position: 'absolute',
-      bottom: '-600px',
-      left: '-10%',
-      width: '120%',
-      height: '700px',
-      background: 'radial-gradient(circle at 50% 0%, #E2E8F0 0%, #94A3B8 20%, #475569 50%, #0F172A 100%)',
-      borderRadius: '50%',
-      boxShadow: '0 -20px 100px rgba(226,232,240,0.2), inset 0 20px 50px rgba(255,255,255,0.1)',
-      zIndex: 1,
-      opacity: 0.8,
-      display: 'flex',
-      justifyContent: 'center'
-    }}>
-      {/* Craters with more depth */}
-      {[...Array(15)].map((_, i) => (
-        <div key={i} style={{
-          position: 'absolute',
-          top: `${Math.random() * 180}px`,
-          left: `${5 + Math.random() * 90}%`,
-          width: `${30 + Math.random() * 100}px`,
-          height: `${15 + Math.random() * 50}px`,
-          background: 'rgba(0,0,0,0.2)',
-          borderRadius: '50%',
-          boxShadow: 'inset 4px 4px 12px rgba(0,0,0,0.4), 1px 1px 2px rgba(255,255,255,0.05)',
-          transform: `rotate(${Math.random() * 360}deg)`,
-          opacity: 0.6
-        }} />
-      ))}
-    </div>
-
-    <style>{`
-      @keyframes twinkle {
-        0%, 100% { opacity: 0.3; transform: scale(1); }
-        50% { opacity: 1; transform: scale(1.2); }
-      }
-      @keyframes dataPulse { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.1); } }
-      @keyframes pathFlow { from { stroke-dashoffset: 100; stroke-opacity: 0.4; } to { stroke-dashoffset: 0; stroke-opacity: 0.8; } }
-      @keyframes hologramRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    `}</style>
   </div>
 );
 
@@ -514,8 +479,12 @@ export const RutaLiderView = ({ links, rutaData, onBack }: any) => {
               const d = `M ${startX} ${y1} C ${cpX1} ${y1}, ${cpX2} ${y2}, ${endX} ${y2}`;
               
               return (
-                <path key={`path-${i}`} d={d} stroke={`url(#grad-${i})`} strokeWidth="8" fill="none" 
-                      strokeDasharray="20 20" filter="url(#pathGlow)" style={{ animation: 'pathFlow 4s linear infinite' }} />
+                <motion.path 
+                    key={`path-${i}`} d={d} stroke={`url(#grad-${i})`} strokeWidth="8" fill="none" 
+                    strokeDasharray="20 20" filter="url(#pathGlow)" 
+                    animate={{ strokeDashoffset: [100, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                />
               );
             })}
           </svg>
