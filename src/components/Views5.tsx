@@ -531,8 +531,8 @@ export const TechBaseView = ({
   return (
     <div style={{ 
       minHeight: '100vh', 
-      backgroundColor: '#F8F7FF', 
-      color: '#0B0033', 
+      background: '#F8FAFC', 
+      color: '#1B0088', 
       fontFamily: '"Orbitron", sans-serif', 
       position: 'relative', 
       overflow: 'hidden',
@@ -542,18 +542,28 @@ export const TechBaseView = ({
       {/* Base Grid */}
       <div style={{ 
         position: 'absolute', inset: 0, 
+        backgroundColor: '#F8FAFC',
         backgroundImage: `
-          linear-gradient(90deg, rgba(11,0,51,0.05) 1px, transparent 1px),
-          linear-gradient(0deg, rgba(11,0,51,0.05) 1px, transparent 1px)
+          linear-gradient(rgba(27,0,136,0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(27,0,136,0.05) 1px, transparent 1px)
         `,
         backgroundSize: '40px 40px',
+        zIndex: 0
+      }} />
+      <div style={{
+        position: 'absolute', inset: 0,
+        backgroundImage: `
+          linear-gradient(rgba(27,0,136,0.02) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(27,0,136,0.02) 1px, transparent 1px)
+        `,
+        backgroundSize: '10px 10px',
         zIndex: 0
       }} />
 
       {/* Background Decals */}
       <div style={{ position: 'absolute', top: 100, left: 40, display: 'flex', alignItems: 'center', gap: 15, zIndex: 1 }}>
-        <img src="/logo_pt.png" alt="Logo PT" style={{ height: 45 }} />
-        <div style={{ fontSize: 10, color: '#888', fontWeight: 700, letterSpacing: '0.1em', lineHeight: 1.8, textTransform: 'uppercase' }}>
+        <img src="/por_logo.png" alt="Logo Capacitación" style={{ height: 45, filter: 'brightness(1.1) drop-shadow(0 0 10px rgba(153,204,51,0.3))' }} />
+        <div style={{ fontSize: 10, color: '#64748B', fontWeight: 700, letterSpacing: '0.1em', lineHeight: 1.8, textTransform: 'uppercase' }}>
           <div>UNIVERSO TRAINING</div>
           <div>CUSTOMER CARE & SALES</div>
         </div>
@@ -563,67 +573,68 @@ export const TechBaseView = ({
       <div style={{ position: 'absolute', top: '40%', left: -80, display: 'flex', alignItems: 'center', gap: 15, transform: 'rotate(-90deg)', transformOrigin: 'center', zIndex: 1 }}>
         <div style={{ width: 40, height: 2, background: themeColor, boxShadow: `0 0 10px ${themeColor}` }} />
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ fontSize: 12, fontWeight: 900, color: '#b0b0c0', letterSpacing: '0.2em', textTransform: 'uppercase' }}>GUARDIANES</div>
-          <img src="/logo_guardianes.png" alt="Logo Guardianes" style={{ height: 32 }} />
+          <div style={{ fontSize: 12, fontWeight: 900, color: '#64748B', letterSpacing: '0.2em' }}>Guardianes</div>
+          <img src="/guardianes_logo.png" alt="Logo Guardianes" style={{ height: 32, filter: 'brightness(1.1) drop-shadow(0 0 8px rgba(153,204,51,0.2))' }} />
         </div>
-        <div style={{ width: 40, height: 2, background: themeColor, boxShadow: `0 0 10px ${themeColor}` }} />
+        <div style={{ width: 40, height: 2, background: themeColor, boxShadow: `0 0 10px ${themeColor}40` }} />
       </div>
 
       {/* Right Vertical Decal */}
       <div style={{ position: 'absolute', top: '40%', right: -80, display: 'flex', alignItems: 'center', gap: 15, transform: 'rotate(90deg)', transformOrigin: 'center', zIndex: 1 }}>
-        <div style={{ width: 40, height: 2, background: themeColor, boxShadow: `0 0 10px ${themeColor}` }} />
+        <div style={{ width: 40, height: 2, background: themeColor, boxShadow: `0 0 10px ${themeColor}40` }} />
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ fontSize: 12, fontWeight: 900, color: '#b0b0c0', letterSpacing: '0.2em', textTransform: 'uppercase' }}>GUARDIANES</div>
-          <img src="/logo_guardianes.png" alt="Logo Guardianes" style={{ height: 32 }} />
+          <div style={{ fontSize: 12, fontWeight: 900, color: '#64748B', letterSpacing: '0.2em' }}>Guardianes</div>
+          <img src="/guardianes_logo.png" alt="Logo Guardianes" style={{ height: 32, filter: 'brightness(1.1) drop-shadow(0 0 8px rgba(153,204,51,0.2))' }} />
         </div>
-        <div style={{ width: 40, height: 2, background: themeColor, boxShadow: `0 0 10px ${themeColor}` }} />
+        <div style={{ width: 40, height: 2, background: themeColor, boxShadow: `0 0 10px ${themeColor}40` }} />
       </div>
 
       {/* Header */}
       <div style={{ 
-        background: '#0B0033', 
+        background: '#ffffff', 
         padding: '16px 32px', 
         display: 'flex', 
         alignItems: 'center', 
         justifyContent: 'space-between', 
         position: 'relative', 
         zIndex: 10,
-        borderBottom: '4px solid #ED1650',
-        boxShadow: '0 4px 20px rgba(237, 22, 80, 0.3)'
+        borderBottom: `4px solid ${themeColor}`,
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 30 }}>
           <button onClick={onBack} style={{ 
-            background: '#ffffff', 
+            background: '#1B0088', 
             border: 'none', 
-            color: '#0B0033', 
+            color: '#fff', 
             padding: '8px 20px', 
             borderRadius: 4, 
             cursor: 'pointer', 
             fontSize: 14, 
             fontWeight: 900, 
             textTransform: 'uppercase',
-            display: 'flex', alignItems: 'center', gap: 8
+            display: 'flex', alignItems: 'center', gap: 8,
+            boxShadow: '0 4px 10px rgba(27,0,136,0.2)'
           }}>
             ← VOLVER
           </button>
           <div style={{ textAlign: 'left' }}>
-            <div style={{ fontSize: 10, color: '#ED1650', letterSpacing: '0.3em', fontWeight: 900 }}>{headerTitle}</div>
-            <div style={{ fontSize: 24, fontWeight: 900, letterSpacing: '0.1em', color: '#ffffff', textShadow: '0 0 10px rgba(255,255,255,0.5)' }}>
+            <div style={{ fontSize: 10, color: themeColor, letterSpacing: '0.3em', fontWeight: 900 }}>{headerTitle}</div>
+            <div style={{ fontSize: 24, fontWeight: 900, letterSpacing: '0.1em', color: '#1B0088' }}>
               {title}
             </div>
           </div>
         </div>
         <div style={{ display: 'flex', gap: 16 }}>
-          <div style={{ border: `1px solid #ED1650`, background: 'rgba(11,0,51,0.8)', color: '#ED1650', padding: '6px 16px', borderRadius: 4, fontSize: 11, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, boxShadow: `inset 0 0 10px rgba(237, 22, 80, 0.4)` }}>
-            CORE_STATUS: <span style={{ color: '#ffffff' }}>NUEVOS INGRESOS</span>
+          <div style={{ border: `1px solid ${themeColor}40`, background: '#F1F5F9', color: '#1B0088', padding: '6px 16px', borderRadius: 4, fontSize: 11, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, boxShadow: `inset 0 0 10px rgba(0,0,0,0.02)` }}>
+            CORE_STATUS: <span style={{ color: '#1B0088' }}>NUEVOS INGRESOS</span>
             <motion.div 
               animate={{ opacity: [0.4, 1, 0.4] }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              style={{ width: 6, height: 6, borderRadius: '50%', background: '#00F3FF', boxShadow: '0 0 8px #00F3FF' }} 
+              style={{ width: 6, height: 6, borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 8px #22c55e' }} 
             />
           </div>
-          <div style={{ border: `1px solid #ED1650`, background: 'rgba(11,0,51,0.8)', color: '#ED1650', padding: '6px 16px', borderRadius: 4, fontSize: 11, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, boxShadow: `inset 0 0 10px rgba(237, 22, 80, 0.4)` }}>
-            PÁGINAS PUBLICADAS: <span style={{ color: '#ffffff' }}>{links ? links.length : 0}</span>
+          <div style={{ border: `1px solid ${themeColor}40`, background: '#F1F5F9', color: '#1B0088', padding: '6px 16px', borderRadius: 4, fontSize: 11, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, boxShadow: `inset 0 0 10px rgba(0,0,0,0.02)` }}>
+            PÁGINAS PUBLICADAS: <span style={{ color: '#1B0088' }}>{links ? links.length : 0}</span>
           </div>
         </div>
       </div>
@@ -855,7 +866,7 @@ export const TechBaseView = ({
 
       {/* Footer */}
       <div style={{ 
-        background: '#0B0033', 
+        background: '#ffffff', 
         padding: '12px 32px', 
         display: 'flex', 
         justifyContent: 'space-between', 
@@ -863,24 +874,24 @@ export const TechBaseView = ({
         fontSize: 11, 
         fontWeight: 800, 
         zIndex: 100,
-        color: '#ffffff',
-        borderTop: '2px solid #ED1650',
-        boxShadow: '0 -4px 20px rgba(237, 22, 80, 0.2)'
+        color: '#1B0088',
+        borderTop: `2px solid ${themeColor}`,
+        boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.05)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           {footerLogo ? (
-            <img src={footerLogo} alt="Footer Logo" style={{ height: 18, filter: 'brightness(0) invert(1)' }} />
+            <img src={footerLogo} alt="Footer Logo" style={{ height: 18, filter: 'brightness(0) sepia(1) hue-rotate(240deg) saturate(3) opacity(0.8)' }} />
           ) : (
-            <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#ED1650', boxShadow: '0 0 10px #ED1650' }} />
+            <div style={{ width: 8, height: 8, borderRadius: '50%', background: themeColor, boxShadow: `0 0 10px ${themeColor}` }} />
           )}
           <span style={{ fontWeight: 900 }}>{footerTitle}</span>
         </div>
-        <div style={{ display: 'flex', gap: 24 }}>
-          <div>POWER: <span style={{ color: '#00C853' }}>STABLE</span></div>
-          <div style={{ color: '#444' }}>|</div>
-          <div>TEMP: <span style={{ color: '#00C853' }}>22°C</span></div>
-          <div style={{ color: '#444' }}>|</div>
-          <div>AUTH: <span style={{ color: '#00C853' }}>GRANTED</span></div>
+        <div style={{ display: 'flex', gap: 24, fontSize: 10 }}>
+          <div style={{ color: '#64748B' }}>POWER: <span style={{ color: '#00C853' }}>STABLE</span></div>
+          <div style={{ color: '#CBD5E1' }}>|</div>
+          <div style={{ color: '#64748B' }}>TEMP: <span style={{ color: '#00C853' }}>22°C</span></div>
+          <div style={{ color: '#CBD5E1' }}>|</div>
+          <div style={{ color: '#64748B' }}>AUTH: <span style={{ color: '#00C853' }}>GRANTED</span></div>
         </div>
       </div>
     </div>

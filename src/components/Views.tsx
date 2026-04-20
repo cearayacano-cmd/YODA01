@@ -1,39 +1,131 @@
 import React, { useState } from 'react';
-import { Lock, ChevronLeft, Beaker, Settings, Package, Webcam, Rocket, Radar, Microscope, Cpu, Box, Activity } from 'lucide-react';
+import { Lock, ChevronLeft, Beaker, Settings, Package, Webcam, Rocket, Radar, Microscope, Cpu, Box, Activity, Monitor, Eye } from 'lucide-react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { Btn, BackBtn } from './Shared';
 
-export const Landing = ({ onNavigate, onAdmin }: any) => (
-  <div style={{minHeight:'100vh', background:'#ffffff', display:'flex', flexDirection:'column'}}>
-    <div style={{background:'#111111', padding:'10px 24px', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-      <span style={{color:'#ffffff', fontSize:13, fontWeight:700, letterSpacing:'0.1em'}}>MISSION CONTROL • LATAM CARRIER</span>
-      <button onClick={onAdmin} style={{background:'#ffffff', border:'2px solid #ffffff', padding:'5px 14px', cursor:'pointer', fontSize:11, fontWeight:700, color:'#111111', borderRadius:3}}>SYS.ADMIN</button>
+const MissionIcon = ({ color, alertMode }: any) => (
+  <motion.div
+    animate={{ 
+      y: [0, -3, 0],
+      rotate: [0, 2, 0]
+    }}
+    transition={{ 
+      duration: 4, 
+      repeat: Infinity, 
+      ease: 'easeInOut' 
+    }}
+    style={{ position: 'relative', width: 60, height: 60, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 15 }}
+  >
+    <svg width="50" height="50" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g opacity="0.9">
+        <rect x="8" y="18" width="24" height="4" rx="1" transform="rotate(45 20 20)" fill="#0F004F" />
+        <rect x="8" y="18" width="24" height="4" rx="1" transform="rotate(-45 20 20)" fill="#0F004F" />
+        <rect x="12" y="19.5" width="6" height="1" rx="0.5" transform="rotate(45 20 20)" fill={color} opacity="0.6" />
+        <rect x="22" y="19.5" width="6" height="1" rx="0.5" transform="rotate(45 20 20)" fill={color} opacity="0.6" />
+        <rect x="12" y="19.5" width="6" height="1" rx="0.5" transform="rotate(-45 20 20)" fill={color} opacity="0.6" />
+        <rect x="22" y="19.5" width="6" height="1" rx="0.5" transform="rotate(-45 20 20)" fill={color} opacity="0.6" />
+      </g>
+      <path d="M18 10C18 8.89543 18.8954 8 20 8C21.1046 8 22 8.89543 22 10V26H18V10Z" fill="#0F004F" />
+      <rect x="18.5" y="12" width="3" height="1" fill={color} opacity="0.8" />
+      <path d="M14 30C14 28 16 26 20 26C24 26 26 28 26 30L20 34L14 30Z" fill="#0F004F" />
+      <circle cx="20" cy="34" r="2" fill={color}>
+        <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite" />
+      </circle>
+    </svg>
+  </motion.div>
+);
+
+const LandingMissionCard = ({ title, subtitle, id, color, onClick }: any) => (
+  <motion.div 
+    onClick={onClick}
+    whileHover={{ scale: 1.05, translateY: -10 }}
+    style={{
+      background: 'rgba(15, 0, 79, 0.4)',
+      backdropFilter: 'blur(12px)',
+      border: `1px solid ${color}40`,
+      padding: '40px 32px',
+      cursor: 'pointer',
+      textAlign: 'center',
+      borderRadius: 12,
+      minWidth: 240,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      position: 'relative',
+      overflow: 'hidden',
+      boxShadow: `0 20px 40px rgba(0,0,0,0.4), inset 0 0 20px ${color}10`
+    }}
+  >
+    {/* Decorative corner light */}
+    <div style={{ position: 'absolute', top: 0, right: 0, width: 40, height: 40, background: `radial-gradient(circle at top right, ${color}30, transparent)`, borderRadius: '0 12px 0 0' }} />
+    
+    <div style={{ fontSize: 10, color: '#999', letterSpacing: '0.4em', marginBottom: 12, fontWeight: 700 }}>MISIÓN • {id.toUpperCase()}</div>
+    <MissionIcon color={color} />
+    <div style={{ fontSize: 44, fontWeight: 900, color: '#fff', marginBottom: 6, letterSpacing: '0.05em' }}>{id.toUpperCase()}</div>
+    <div style={{ fontSize: 12, color: '#bbb', marginBottom: 25, fontWeight: 500 }}>{subtitle}</div>
+    
+    <div style={{ 
+      padding: '10px 24px', 
+      background: color, 
+      color: '#fff', 
+      fontSize: 10, 
+      fontWeight: 900, 
+      borderRadius: 4, 
+      letterSpacing: '0.2em' 
+    }}>
+      INICIAR SECUENCIA
     </div>
-    <div style={{flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:40}}>
-      <div style={{fontSize:14, color:'#555555', letterSpacing:'0.5em', textTransform:'uppercase', marginBottom:8}}>PREPARE FOR LAUNCH</div>
-      <div style={{fontSize:64, fontWeight:900, letterSpacing:'0.08em', color:'#111111', marginBottom:4}}>UNIVERSO</div>
-      <div style={{fontSize:16, fontWeight:700, letterSpacing:'0.5em', color:'#333333', marginBottom:40}}>CUSTOMER CARE</div>
-      <div style={{display:'flex', gap:20, marginBottom:16}}>
-        <div onClick={()=>onNavigate('ssc')} style={{border:'2px solid #111111', padding:'28px 40px', cursor:'pointer', textAlign:'center', borderRadius:6, minWidth:180}}
-          onMouseEnter={e=>e.currentTarget.style.background='#f0f0f0'}
-          onMouseLeave={e=>e.currentTarget.style.background='#ffffff'}>
-          <div style={{fontSize:11, color:'#555555', letterSpacing:'0.3em', marginBottom:8}}>MISIÓN • SSC</div>
-          <div style={{fontSize:42, fontWeight:900, color:'#111111', marginBottom:4}}>SSC</div>
-          <div style={{fontSize:11, color:'#777777'}}>Satellite Alpha • Orbit 1</div>
-          <div style={{marginTop:14, fontSize:11, fontWeight:700, letterSpacing:'0.18em'}}>INICIAR SECUENCIA →</div>
+  </motion.div>
+);
+
+export const Landing = ({ onNavigate, onAdmin }: any) => (
+  <div style={{minHeight:'100vh', background:'#0F004F', display:'flex', flexDirection:'column', position: 'relative', overflow: 'hidden'}}>
+    <SpaceBackground />
+    {/* Header */}
+    <div style={{background:'rgba(15, 0, 79, 0.8)', backdropFilter: 'blur(10px)', padding:'15px 32px', display:'flex', justifyContent:'space-between', alignItems:'center', borderBottom: '1px solid rgba(255,255,255,0.1)', zIndex: 10}}>
+      <div style={{display: 'flex', alignItems: 'center', gap: 12}}>
+        <div style={{width: 32, height: 32, borderRadius: '50%', border: '1px solid #99CC33', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <Rocket size={16} color="#99CC33" />
         </div>
-        <div onClick={()=>onNavigate('br')} style={{border:'2px solid #111111', padding:'28px 40px', cursor:'pointer', textAlign:'center', borderRadius:6, minWidth:180}}
-          onMouseEnter={e=>e.currentTarget.style.background='#f0f0f0'}
-          onMouseLeave={e=>e.currentTarget.style.background='#ffffff'}>
-          <div style={{fontSize:11, color:'#555555', letterSpacing:'0.3em', marginBottom:8}}>MISIÓN • BR</div>
-          <div style={{fontSize:42, fontWeight:900, color:'#111111', marginBottom:4}}>BR</div>
-          <div style={{fontSize:11, color:'#777777'}}>Satellite Beta • Orbit 2</div>
-          <div style={{marginTop:14, fontSize:11, fontWeight:700, letterSpacing:'0.18em'}}>INICIAR SECUENCIA →</div>
-        </div>
+        <span style={{color:'#ffffff', fontSize:13, fontWeight:900, letterSpacing:'0.2em'}}>MISSION CONTROL • LATAM CARRIER</span>
+      </div>
+      <button onClick={onAdmin} style={{background:'transparent', border:'1px solid #99CC33', padding:'7px 18px', cursor:'pointer', fontSize:11, fontWeight:900, color:'#99CC33', borderRadius:30, letterSpacing: '0.1em'}}>
+        SYS.ADMIN
+      </button>
+    </div>
+
+    {/* Content */}
+    <div style={{flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:40, zIndex: 10}}>
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        style={{textAlign: 'center', marginBottom: 60}}
+      >
+        <div style={{fontSize:14, color:'#99CC33', letterSpacing:'0.6em', textTransform:'uppercase', marginBottom:12, fontWeight: 900}}>PREPARE FOR LAUNCH</div>
+        <div style={{fontSize:82, fontWeight:900, letterSpacing:'0.1em', color:'#fff', marginBottom:4, textShadow: '0 0 40px rgba(153,204,51,0.3)'}}>UNIVERSO</div>
+        <div style={{fontSize:18, fontWeight:700, letterSpacing:'0.6em', color:'rgba(255,255,255,0.6)', textTransform: 'uppercase'}}>Customer Care & Sales</div>
+      </motion.div>
+
+      <div style={{display:'flex', gap:32, marginBottom:16}}>
+        <LandingMissionCard 
+          id="ssc" 
+          subtitle="Satellite Alpha • Orbit 1" 
+          color="#00FFF2" /* SSC uses Cyan/Blue */
+          onClick={() => onNavigate('ssc')} 
+        />
+        <LandingMissionCard 
+          id="br" 
+          subtitle="Satellite Beta • Orbit 2" 
+          color="#99CC33" /* BR uses Green */
+          onClick={() => onNavigate('br')} 
+        />
       </div>
     </div>
-    <div style={{background:'#111111', padding:'8px 24px', display:'flex', justifyContent:'center'}}>
-      <span style={{color:'#ffffff', fontSize:11, letterSpacing:'0.3em'}}>Selecciona tu destino • CHOOSE YOUR STATION</span>
+
+    {/* Footer */}
+    <div style={{background:'rgba(15, 0, 79, 0.8)', padding:'12px 24px', display:'flex', justifyContent:'center', borderTop: '1px solid rgba(255,255,255,0.1)', zIndex: 10}}>
+      <span style={{color:'rgba(255,255,255,0.5)', fontSize:11, letterSpacing:'0.4em', fontWeight: 700}}>SELECCIONA TU DESTINO • CHOOSE YOUR STATION</span>
     </div>
   </div>
 );
@@ -126,40 +218,120 @@ const RotatingEarth = () => {
   );
 };
 
+const Thruster = ({ top, right, scale = 1, delay = 0 }: any) => (
+  <div style={{
+    position: 'absolute',
+    top,
+    right,
+    transform: 'translateY(-50%)',
+    zIndex: 5,
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row-reverse',
+    pointerEvents: 'none'
+  }}>
+    <motion.div
+      animate={{ 
+        scale: [1, 1.6, 1], 
+        opacity: [0.8, 1, 0.8],
+      }}
+      transition={{ duration: 0.07, repeat: Infinity, delay }}
+      style={{
+        width: 22 * scale, height: 22 * scale, borderRadius: '50%',
+        background: '#fff', 
+        boxShadow: '0 0 30px #99CC33, 0 0 60px #99CC33, 0 0 100px rgba(153, 204, 51, 0.6)',
+        filter: 'blur(1px)'
+      }}
+    />
+    <motion.div
+      animate={{ 
+        width: [100 * scale, 300 * scale, 120 * scale], 
+        opacity: [0.5, 1, 0.6],
+        x: [0, -10, 0]
+      }}
+      transition={{ duration: 0.1, repeat: Infinity, delay }}
+      style={{
+        height: 28 * scale,
+        background: 'linear-gradient(to right, transparent, rgba(0, 255, 242, 1) 60%, rgba(0, 150, 255, 0.8))',
+        borderRadius: '50% 0 0 50%', filter: 'blur(16px)', marginRight: -10
+      }}
+    />
+  </div>
+);
+
+const FloatingSpaceship = () => {
+  return (
+    <motion.div
+      style={{
+        position: 'absolute',
+        top: '18%',
+        left: '28%',
+        width: '260px',
+        zIndex: 2,
+        pointerEvents: 'none',
+        mixBlendMode: 'screen', // Re-enabled for optimal transparency with the new image
+      }}
+      initial={{ x: -150, opacity: 0, rotate: -5 }}
+      animate={{ 
+        x: 0, 
+        opacity: 1,
+        y: [0, -30, 0],
+        rotate: [-1.5, 1.5, -1.5]
+      }}
+      transition={{
+        x: { duration: 4, ease: "easeOut" },
+        opacity: { duration: 3 },
+        y: { duration: 12, repeat: Infinity, ease: "easeInOut" },
+        rotate: { duration: 15, repeat: Infinity, ease: "easeInOut" }
+      }}
+    >
+      <img 
+        src="/nava_exploracion.png" 
+        alt="Nava exploracion" 
+        style={{ 
+          width: '100%', 
+          height: 'auto',
+          display: 'block',
+        }} 
+      />
+      
+      {/* Dynamic Cinematic Thrusters - Repositioned using RIGHT anchor for better precision */}
+      <Thruster top="36%" right="95%" scale={0.8} delay={0} />
+      <Thruster top="52%" right="90%" scale={1.3} delay={0.05} />
+      <Thruster top="68%" right="95%" scale={0.8} delay={0.1} />
+    </motion.div>
+  );
+};
+
 const SpaceBackground = () => {
   const [isMounted, setIsMounted] = React.useState(false);
   React.useEffect(() => setIsMounted(true), []);
-  if (!isMounted) return <div style={{ position: 'absolute', inset: 0, background: '#0B0033' }} />;
+  if (!isMounted) return <div style={{ position: 'absolute', inset: 0, background: '#0F004F' }} />;
 
   return (
-    <div style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden', background: '#0B0033' }}>
-      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 30%, #1B0088 0%, #0B0033 80%)' }} />
+    <div style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden', background: '#0F004F' }}>
+      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 30%, #1B0088 0%, #0F004F 80%)' }} />
       <RotatingEarth />
-      {/* ... stars ... */}
-      {[...Array(20)].map((_, i) => (
-        <div key={i} style={{
-          position: 'absolute',
-          top: `${Math.random() * 100}%`,
-          left: `${Math.random() * 100}%`,
-          width: `${Math.random() * 3}px`,
-          height: `${Math.random() * 3}px`,
-          background: '#ffffff',
-          borderRadius: '50%',
-          boxShadow: '0 0 10px #ffffff',
-          animation: `pulse ${2 + Math.random() * 4}s infinite ease-in-out`,
-          animationDelay: `${Math.random() * 5}s`
-        }} />
-      ))}
-      <div style={{ position: 'absolute', inset: 0, opacity: 0.4, backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 50px 160px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 130px 80px, #ffffff, rgba(0,0,0,0))', backgroundSize: '200px 200px' }} />
-      <div style={{ position: 'absolute', top: '10%', left: '20%', width: '60%', height: '40%', background: 'radial-gradient(ellipse, rgba(178,15,59,0.1) 0%, rgba(27,0,136,0) 70%)', filter: 'blur(60px)', transform: 'rotate(-15deg)', animation: 'pulse 10s infinite alternate ease-in-out' }} />
-      <div style={{ position: 'absolute', top: '30%', right: '10%', width: '50%', height: '50%', background: 'radial-gradient(ellipse, rgba(0,214,204,0.1) 0%, rgba(27,0,136,0) 70%)', filter: 'blur(80px)', transform: 'rotate(20deg)', animation: 'pulse 12s infinite alternate-reverse ease-in-out' }} />
+      <FloatingSpaceship />
+
+      {/* High Performance CSS Starfield */}
+      <style>{`
+        @keyframes subtleTwinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+      `}</style>
+      <div style={{ 
+        position: 'absolute', inset: 0, opacity: 0.6,
+        backgroundImage: 'radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 50px 160px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 130px 80px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 300px 480px, #ffffff, rgba(0,0,0,0))', 
+        backgroundSize: '400px 400px',
+        animation: 'subtleTwinkle 5s infinite ease-in-out'
+      }} />
+
+      <div style={{ position: 'absolute', top: '10%', left: '20%', width: '60%', height: '40%', background: 'radial-gradient(ellipse, rgba(178,15,59,0.05) 0%, rgba(27,0,136,0) 70%)', filter: 'blur(60px)', transform: 'rotate(-15deg)' }} />
+      <div style={{ position: 'absolute', top: '30%', right: '10%', width: '50%', height: '50%', background: 'radial-gradient(ellipse, rgba(0,214,204,0.05) 0%, rgba(27,0,136,0) 70%)', filter: 'blur(80px)', transform: 'rotate(20deg)' }} />
+      
       <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
         @keyframes earthSeamlessRotate { from { background-position: 0 0; } to { background-position: -900px 0; } }
       `}} />
     </div>
-
-
   );
 };
 
@@ -186,6 +358,10 @@ const CommandCenterInterior = ({ isAlert, isDim, isHudHidden }: any) => {
             <feGaussianBlur stdDeviation="2" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
+          <filter id="whiteNeon">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
         </defs>
 
         {/* FULL-SCREEN INTERIOR WALL WITH CUTOUT */}
@@ -201,17 +377,26 @@ const CommandCenterInterior = ({ isAlert, isDim, isHudHidden }: any) => {
           />
         )}
 
-        {/* WINDOW FRAME */}
+        {/* ADDITIONAL WHITE NEON BORDER (Glow layer) */}
         <path 
           d="M 300,80 L 700,80 L 750,130 L 750,390 L 700,440 L 300,440 L 250,390 L 250,130 Z" 
           fill="none" 
-          stroke={isAlert ? "#B20F3B" : "#A0A0B0"} 
-          strokeWidth="3" 
+          stroke="rgba(255,255,255,0.4)" 
+          strokeWidth="6" 
+          filter="url(#whiteNeon)"
+        />
+
+        {/* WINDOW FRAME (Main silver/white line) */}
+        <path 
+          d="M 300,80 L 700,80 L 750,130 L 750,390 L 700,440 L 300,440 L 250,390 L 250,130 Z" 
+          fill="none" 
+          stroke={isAlert ? "#B20F3B" : "#ffffff"} 
+          strokeWidth="2" 
         />
         
         {/* Edge LED Elements */}
-        <path d="M 320,85 L 450,85" stroke="#00FFF2" strokeWidth="3" filter="url(#neonGlow)" />
-        <path d="M 550,85 L 680,85" stroke="#00FFF2" strokeWidth="3" filter="url(#neonGlow)" />
+        <path d="M 320,85 L 450,85" stroke="#99CC33" strokeWidth="3" filter="url(#neonGlow)" />
+        <path d="M 550,85 L 680,85" stroke="#99CC33" strokeWidth="3" filter="url(#neonGlow)" />
       </svg>
     </div>
   );
@@ -240,8 +425,8 @@ const ConsoleSideFrame = ({ children, side }: any) => {
       transformStyle: 'preserve-3d',
     }}>
       {/* LED EDGE PIPES */}
-      <div style={{ position: 'absolute', top: '10%', [side === 'left' ? 'left' : 'right']: -3, height: '80%', width: 2, background: '#00FFF2', boxShadow: '0 0 15px #00FFF2', borderRadius: 2, opacity: 0.8 }} />
-      <div style={{ position: 'absolute', top: -1, [side === 'left' ? 'left' : 'right']: '10%', width: '40%', height: 2, background: '#00FFF2', boxShadow: '0 0 15px #00FFF2', borderRadius: 2, opacity: 0.6 }} />
+      <div style={{ position: 'absolute', top: '10%', [side === 'left' ? 'left' : 'right']: -3, height: '80%', width: 2, background: '#99CC33', boxShadow: '0 0 15px #99CC33', borderRadius: 2, opacity: 0.8 }} />
+      <div style={{ position: 'absolute', top: -1, [side === 'left' ? 'left' : 'right']: '10%', width: '40%', height: 2, background: '#99CC33', boxShadow: '0 0 15px #99CC33', borderRadius: 2, opacity: 0.6 }} />
 
       {/* TECHNICAL DECALS */}
       <div style={{ position: 'absolute', top: 6, [side === 'left' ? 'left' : 'right']: 10, fontSize: 8, fontFamily: 'monospace', fontWeight: 900, color: 'rgba(0,0,0,0.5)', letterSpacing: '0.1em' }}>
@@ -267,6 +452,14 @@ const ModuleCard = ({ sec, title, subtitle, color, icon, stats, onClick }: any) 
   return (
     <motion.div
       onClick={onClick}
+      animate={{
+        boxShadow: [
+          '0 0 8px rgba(255,255,255,0.15), 0 0 20px rgba(255,255,255,0.06), inset 0 0 15px rgba(255,255,255,0.02)',
+          '0 0 18px rgba(255,255,255,0.35), 0 0 40px rgba(255,255,255,0.12), inset 0 0 25px rgba(255,255,255,0.05)',
+          '0 0 8px rgba(255,255,255,0.15), 0 0 20px rgba(255,255,255,0.06), inset 0 0 15px rgba(255,255,255,0.02)',
+        ]
+      }}
+      transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
       style={{
         width: '100%',
         height: '280px',
@@ -278,58 +471,32 @@ const ModuleCard = ({ sec, title, subtitle, color, icon, stats, onClick }: any) 
         cursor: 'pointer',
         overflow: 'hidden',
         transition: 'all 0.4s ease',
-        background: '#1B0088',
-        border: '1px solid rgba(255,255,255,0.15)',
+        background: 'linear-gradient(180deg, #1E0A6E 0%, #160850 100%)',
+        border: '1.5px solid rgba(220,235,255,0.65)',
         transformStyle: 'preserve-3d',
       }}
       whileHover={{ 
         filter: 'brightness(1.2)',
-        backgroundColor: '#2300AA'
+        boxShadow: `0 0 25px rgba(255,255,255,0.5), 0 0 60px rgba(255,255,255,0.18), 0 0 80px ${color}30, inset 0 0 20px rgba(255,255,255,0.06)`,
       }}
     >
-      {/* Glass Panel Bezel */}
-      <div style={{ position: 'absolute', inset: 0, border: '2px solid rgba(255,255,255,0.1)', pointerEvents: 'none', zIndex: 10 }} />
-      <div style={{ position: 'absolute', inset: 1, border: '1px solid rgba(0,0,0,0.3)', pointerEvents: 'none', zIndex: 10 }} />
+      {/* Pearl outer bezel */}
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(220,235,255,0.12) 0%, rgba(140,180,220,0.04) 40%, transparent 100%)', pointerEvents: 'none', zIndex: 10 }} />
+      {/* Top edge highlight — like keyboard teal strip */}
+      <div style={{ position: 'absolute', top: 0, left: '10%', right: '10%', height: '1.5px', background: `linear-gradient(90deg, transparent, ${color}90, rgba(200,230,255,0.7), ${color}90, transparent)`, pointerEvents: 'none', zIndex: 12 }} />
+      {/* Pearl bevel inner */}
+      <div style={{ position: 'absolute', top: 1, left: 1, right: 1, height: '6px', background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)', pointerEvents: 'none', zIndex: 10, borderRadius: '1px 1px 0 0' }} />
 
-      {/* Realistic Glass Reflection */}
-      <div style={{
-        position: 'absolute',
-        top: '-50%',
-        left: '-50%',
-        width: '200%',
-        height: '200%',
-        background: 'linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.08) 48%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.08) 52%, transparent 55%)',
-        zIndex: 11,
-        pointerEvents: 'none',
-        transform: 'rotate(-20deg)',
-        opacity: 0.6
-      }} />
-
-      {/* Internal Glow */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: `radial-gradient(circle at 50% 0%, ${color}15 0%, transparent 70%)`,
-          zIndex: 1,
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* Glossy Overlay */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        background: 'linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 50%, rgba(255,255,255,0.02) 100%)',
-        zIndex: 1,
-        pointerEvents: 'none'
-      }} />
-
-      {/* Tactical Corners */}
-      <div style={{ position: 'absolute', top: 0, left: 0, width: 16, height: 16, borderTop: `4px solid ${color}`, borderLeft: `4px solid ${color}`, zIndex: 3 }} />
-      <div style={{ position: 'absolute', top: 0, right: 0, width: 16, height: 16, borderTop: `4px solid ${color}`, borderRight: `4px solid ${color}`, zIndex: 3 }} />
-      <div style={{ position: 'absolute', bottom: 0, left: 0, width: 16, height: 16, borderBottom: `4px solid ${color}`, borderLeft: `4px solid ${color}`, zIndex: 3 }} />
-      <div style={{ position: 'absolute', bottom: 0, right: 0, width: 16, height: 16, borderBottom: `4px solid ${color}`, borderRight: `4px solid ${color}`, zIndex: 3 }} />
+      {/* Tactical Corners — pearl style */}
+      <div style={{ position: 'absolute', top: 0, left: 0, width: 18, height: 18, borderTop: `3px solid rgba(210,230,255,0.8)`, borderLeft: `3px solid rgba(210,230,255,0.8)`, zIndex: 13 }} />
+      <div style={{ position: 'absolute', top: 0, right: 0, width: 18, height: 18, borderTop: `3px solid rgba(210,230,255,0.8)`, borderRight: `3px solid rgba(210,230,255,0.8)`, zIndex: 13 }} />
+      <div style={{ position: 'absolute', bottom: 0, left: 0, width: 18, height: 18, borderBottom: `3px solid rgba(210,230,255,0.8)`, borderLeft: `3px solid rgba(210,230,255,0.8)`, zIndex: 13 }} />
+      <div style={{ position: 'absolute', bottom: 0, right: 0, width: 18, height: 18, borderBottom: `3px solid rgba(210,230,255,0.8)`, borderRight: `3px solid rgba(210,230,255,0.8)`, zIndex: 13 }} />
+      {/* Accent corner dots */}
+      <div style={{ position: 'absolute', top: 3, left: 3, width: 4, height: 4, background: color, borderRadius: '50%', boxShadow: `0 0 6px ${color}`, zIndex: 14 }} />
+      <div style={{ position: 'absolute', top: 3, right: 3, width: 4, height: 4, background: color, borderRadius: '50%', boxShadow: `0 0 6px ${color}`, zIndex: 14 }} />
+      <div style={{ position: 'absolute', bottom: 3, left: 3, width: 4, height: 4, background: color, borderRadius: '50%', boxShadow: `0 0 6px ${color}`, zIndex: 14 }} />
+      <div style={{ position: 'absolute', bottom: 3, right: 3, width: 4, height: 4, background: color, borderRadius: '50%', boxShadow: `0 0 6px ${color}`, zIndex: 14 }} />
 
       <div style={{ zIndex: 2, position: 'relative' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
@@ -423,73 +590,147 @@ const ModuleCard = ({ sec, title, subtitle, color, icon, stats, onClick }: any) 
   );
 };
 
+const SectorScanDisplay = ({ color }: any) => {
+  return (
+    <div style={{ position: 'relative', width: '100%', height: '60px', overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
+      {/* BACKGROUND GRID */}
+      <div style={{ 
+        position: 'absolute', inset: 0, 
+        backgroundImage: `linear-gradient(${color}15 1px, transparent 1px), linear-gradient(90deg, ${color}15 1px, transparent 1px)`,
+        backgroundSize: '20px 20px',
+        opacity: 0.5
+      }} />
+
+      {/* SCANNING LASER LINE */}
+      <motion.div
+        animate={{ left: ['-5%', '105%'] }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+        style={{
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          width: '2px',
+          background: `linear-gradient(180deg, transparent, ${color}, #fff, ${color}, transparent)`,
+          boxShadow: `0 0 15px ${color}`,
+          zIndex: 5
+        }}
+      />
+
+      {/* TACTICAL DATA OVERLAYS */}
+      <div style={{ position: 'absolute', top: 4, left: 8, fontSize: 6, fontFamily: 'monospace', color: color, opacity: 0.6, letterSpacing: '1px' }}>
+        SEC_SCAN_INIT // RANGE: 400ly
+      </div>
+      <div style={{ position: 'absolute', bottom: 4, right: 8, fontSize: 6, fontFamily: 'monospace', color: color, opacity: 0.6 }}>
+        AUTO_LOCK: ACTIVE
+      </div>
+
+      {/* STAR PINGS (Reactive to scan) */}
+      {[0.1, 0.3, 0.5, 0.7, 0.9].map((pos, i) => (
+        <React.Fragment key={i}>
+          <div style={{
+            position: 'absolute',
+            left: `${pos * 100}%`,
+            top: `${20 + (i * 15) % 60}%`,
+            width: '3px',
+            height: '3px',
+            background: color,
+            borderRadius: '50%',
+            opacity: 0.3
+          }} />
+          <motion.div
+            animate={{ 
+              opacity: [0, 1, 0],
+              scale: [1, 1.5, 1]
+            }}
+            transition={{ 
+              duration: 1, 
+              repeat: Infinity, 
+              repeatDelay: 3, 
+              delay: pos * 4 // Sync with scan line (4s duration)
+            }}
+            style={{
+              position: 'absolute',
+              left: `${pos * 100}%`,
+              top: `${20 + (i * 15) % 60}%`,
+              width: '6px',
+              height: '6px',
+              background: '#fff',
+              borderRadius: '50%',
+              boxShadow: `0 0 10px ${color}, 0 0 20px ${color}`,
+              zIndex: 4
+            }}
+          />
+        </React.Fragment>
+      ))}
+    </div>
+  );
+};
+
 const CentralMonitorCard = ({ onNavigate }: any) => {
-  const color = "#B20F3B"; // Use red theme for the central mission module
+  const color = "#B20F3B"; 
   return (
     <motion.div
+      animate={{
+        boxShadow: [
+          '0 0 8px rgba(255,255,255,0.15), 0 0 20px rgba(255,255,255,0.06), inset 0 0 15px rgba(255,255,255,0.02)',
+          '0 0 18px rgba(255,255,255,0.35), 0 0 40px rgba(255,255,255,0.12), inset 0 0 25px rgba(255,255,255,0.05)',
+          '0 0 8px rgba(255,255,255,0.15), 0 0 20px rgba(255,255,255,0.06), inset 0 0 15px rgba(255,255,255,0.02)',
+        ]
+      }}
+      transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
       style={{
         width: '440px',
-        padding: '24px',
+        padding: '16px 20px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         position: 'relative',
-        background: '#1B0088',
-        border: '1px solid rgba(255,255,255,0.15)',
+        background: 'linear-gradient(180deg, #1E0A6E 0%, #160850 100%)',
+        border: '1.5px solid rgba(220,235,255,0.65)',
         boxShadow: '0 40px 80px rgba(0,0,0,0.4)',
-        transform: 'perspective(1500px) rotateX(10deg)',
+        transform: 'translateZ(20px)',
         transformStyle: 'preserve-3d',
-        zIndex: 20
+        zIndex: 20,
+        overflow: 'hidden'
       }}
     >
-      {/* Glass Panel Bezel */}
-      <div style={{ position: 'absolute', inset: 0, border: '2px solid rgba(255,255,255,0.1)', pointerEvents: 'none', zIndex: 10 }} />
-      
-      {/* Tactical Corners */}
-      <div style={{ position: 'absolute', top: 0, left: 0, width: 24, height: 24, borderTop: `6px solid ${color}`, borderLeft: `6px solid ${color}`, zIndex: 3 }} />
-      <div style={{ position: 'absolute', top: 0, right: 0, width: 24, height: 24, borderTop: `6px solid ${color}`, borderRight: `6px solid ${color}`, zIndex: 3 }} />
-      <div style={{ position: 'absolute', bottom: 0, left: 0, width: 24, height: 24, borderBottom: `6px solid ${color}`, borderLeft: `6px solid ${color}`, zIndex: 3 }} />
-      <div style={{ position: 'absolute', bottom: 0, right: 0, width: 24, height: 24, borderBottom: `6px solid ${color}`, borderRight: `6px solid ${color}`, zIndex: 3 }} />
+      {/* Pearl outer bezel */}
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(220,235,255,0.12) 0%, rgba(140,180,220,0.04) 40%, transparent 100%)', pointerEvents: 'none', zIndex: 10 }} />
+      {/* Top edge highlight */}
+      <div style={{ position: 'absolute', top: 0, left: '10%', right: '10%', height: '1.5px', background: `linear-gradient(90deg, transparent, ${color}90, rgba(200,230,255,0.7), ${color}90, transparent)`, pointerEvents: 'none', zIndex: 12 }} />
+      {/* Pearl bevel inner */}
+      <div style={{ position: 'absolute', top: 1, left: 1, right: 1, height: '6px', background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)', pointerEvents: 'none', zIndex: 10, borderRadius: '1px 1px 0 0' }} />
+
+      {/* Tactical Corners — pearl style */}
+      <div style={{ position: 'absolute', top: 0, left: 0, width: 22, height: 22, borderTop: `4px solid rgba(210,230,255,0.8)`, borderLeft: `4px solid rgba(210,230,255,0.8)`, zIndex: 13 }} />
+      <div style={{ position: 'absolute', top: 0, right: 0, width: 22, height: 22, borderTop: `4px solid rgba(210,230,255,0.8)`, borderRight: `4px solid rgba(210,230,255,0.8)`, zIndex: 13 }} />
+      <div style={{ position: 'absolute', bottom: 0, left: 0, width: 22, height: 22, borderBottom: `4px solid rgba(210,230,255,0.8)`, borderLeft: `4px solid rgba(210,230,255,0.8)`, zIndex: 13 }} />
+      <div style={{ position: 'absolute', bottom: 0, right: 0, width: 22, height: 22, borderBottom: `4px solid rgba(210,230,255,0.8)`, borderRight: `4px solid rgba(210,230,255,0.8)`, zIndex: 13 }} />
+      {/* Accent corner dots */}
+      <div style={{ position: 'absolute', top: 4, left: 4, width: 5, height: 5, background: color, borderRadius: '50%', boxShadow: `0 0 8px ${color}`, zIndex: 14 }} />
+      <div style={{ position: 'absolute', top: 4, right: 4, width: 5, height: 5, background: color, borderRadius: '50%', boxShadow: `0 0 8px ${color}`, zIndex: 14 }} />
+      <div style={{ position: 'absolute', bottom: 4, left: 4, width: 5, height: 5, background: color, borderRadius: '50%', boxShadow: `0 0 8px ${color}`, zIndex: 14 }} />
+      <div style={{ position: 'absolute', bottom: 4, right: 4, width: 5, height: 5, background: color, borderRadius: '50%', boxShadow: `0 0 8px ${color}`, zIndex: 14 }} />
 
       <div style={{ zIndex: 2, position: 'relative', width: '100%', textAlign: 'center' }}>
-        <div style={{ fontSize: 9, color: color, letterSpacing: '0.3em', fontWeight: 900, marginBottom: 4, textTransform: 'uppercase' }}>HANGAR BAY - DOCK-01</div>
-        <div style={{ fontSize: 24, fontWeight: 900, color: '#ffffff', marginBottom: 20, letterSpacing: '0.05em' }}>NAVE DE EXPLORACIÓN</div>
+        <div style={{ fontSize: 9, color: color, letterSpacing: '0.3em', fontWeight: 900, marginBottom: 4, textTransform: 'uppercase' }}>ESTADO_ESTACIÓN: ÓPTIMO</div>
+        <div style={{ fontSize: 24, fontWeight: 900, color: '#ffffff', marginBottom: 12, letterSpacing: '0.05em' }}>NAVE DE EXPLORACIÓN</div>
 
-        {/* SCANNER AREA */}
+        {/* SECTOR SCAN AREA (Widescreen tactical display) */}
         <div style={{ 
-          height: '60px', 
+          height: '55px', 
           width: '100%',
           display: 'flex', 
           justifyContent: 'center', 
           alignItems: 'center', 
-          background: 'rgba(0,0,0,0.5)',
+          background: 'rgba(0,0,0,0.6)',
           borderRadius: '4px',
           position: 'relative',
-          border: `1px solid ${color}40`,
+          border: `1px solid ${color}30`,
           overflow: 'hidden',
-          marginBottom: 24,
-          backgroundImage: `linear-gradient(${color}10 1px, transparent 1px), linear-gradient(90deg, ${color}10 1px, transparent 1px)`,
-          backgroundSize: '16px 16px'
+          marginBottom: 16,
         }}>
-          <motion.div 
-            animate={{ left: ['0%', '100%'] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-            style={{
-              position: 'absolute',
-              top: 0,
-              bottom: 0,
-              width: '4px',
-              background: `linear-gradient(180deg, transparent, ${color}, transparent)`,
-              boxShadow: `0 0 20px ${color}`,
-              zIndex: 10,
-              pointerEvents: 'none',
-              opacity: 0.8
-            }}
-          />
-          <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
-            <Activity color={color} size={20} />
-            <div style={{ fontSize: 10, color: '#ffffff', fontFamily: 'monospace', letterSpacing: '0.2em' }}>SYS_READY // PROPULSION: 100%</div>
-          </div>
+          <SectorScanDisplay color={color} />
         </div>
 
         <motion.button 
@@ -499,7 +740,7 @@ const CentralMonitorCard = ({ onNavigate }: any) => {
           style={{ 
             background: color, 
             color: '#fff', 
-            padding: '16px 32px', 
+            padding: '12px 32px', 
             borderRadius: '4px', 
             width: '100%', 
             fontSize: 12, 
@@ -511,96 +752,461 @@ const CentralMonitorCard = ({ onNavigate }: any) => {
             textTransform: 'uppercase'
           }}
         >
-          + LAUNCH SEQUENCE
+          READY
         </motion.button>
       </div>
     </motion.div>
   );
 };
 
-const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, states }: any) => {
-  const { alertMode, hudHidden, dimLights } = states;
-  
-  const Key = ({ label, color, active, onClick, large }: any) => (
-    <motion.div
-      whileHover={{ scale: 1.05, filter: 'brightness(1.5)' }}
-      whileTap={{ scale: 0.95 }}
-      onClick={onClick}
-      style={{
-        width: large ? '120px' : '48px',
-        height: '32px',
-        background: active ? color : 'rgba(255,255,255,0.1)',
-        border: `1px solid ${active ? color : 'rgba(255,255,255,0.3)'}`,
-        borderRadius: '3px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'pointer',
-        boxShadow: active ? `0 0 20px ${color}` : 'none',
-        position: 'relative',
-        transition: 'all 0.3s ease',
-        textAlign: 'center'
-      }}
-    >
-      <span style={{ fontSize: label.length > 10 ? 6 : 7, fontWeight: 900, color: active ? '#fff' : 'rgba(255,255,255,0.6)', letterSpacing: '0.1em', padding: '0 4px' }}>{label}</span>
-      {active && <div style={{ position: 'absolute', top: 2, right: 2, width: 4, height: 4, borderRadius: '50%', background: '#fff' }} />}
-    </motion.div>
+const SubMonitor = ({ label, color, active = false }: any) => (
+  <div style={{
+    width: '90px',
+    height: '55px',
+    background: 'rgba(0,0,0,0.8)',
+    border: `1px solid ${active ? color : 'rgba(255,255,255,0.2)'}`,
+    borderRadius: '3px',
+    padding: '6px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    position: 'relative',
+    boxShadow: active ? `inset 0 0 15px ${color}50, 0 0 20px ${color}30` : 'none',
+    overflow: 'hidden'
+  }}>
+    <div style={{ fontSize: 5, color, opacity: 0.8, fontFamily: 'monospace', letterSpacing: '1px' }}>SYS_{label}_ACTIVE</div>
+    <div style={{ fontSize: 9, fontWeight: 900, color: '#fff' }}>{label}</div>
+    <div style={{ height: '3px', width: '100%', background: 'rgba(255,255,255,0.1)', borderRadius: 1 }}>
+      <motion.div 
+        animate={{ width: ['20%', '80%', '20%'] }}
+        transition={{ duration: 1.5 + Math.random(), repeat: Infinity }}
+        style={{ height: '100%', background: color, borderRadius: 1 }}
+      />
+    </div>
+  </div>
+);
+
+const ConsoleCentralFrame = ({ children }: any) => {
+  return (
+    <div style={{
+      position: 'relative',
+      padding: '10px 10px 6px 10px',
+      background: 'linear-gradient(180deg, #A0A0B0 0%, #D1D1D1 25%, #9A9AA5 50%, #6A6A7A 100%)',
+      borderRadius: '10px 10px 4px 4px',
+      border: '1px solid rgba(255,255,255,0.7)',
+      boxShadow: '0 30px 60px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.8)',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: '465px',
+      zIndex: 25,
+      transform: 'perspective(1500px) rotateX(4deg)',
+      transformStyle: 'preserve-3d',
+    }}>
+      {/* Structural trapezoid base at bottom */}
+      <div style={{
+        position: 'absolute',
+        bottom: '-15px',
+        left: '-5%',
+        width: '110%',
+        height: '25px',
+        background: 'linear-gradient(180deg, #7A7A8A 0%, #303040 100%)',
+        clipPath: 'polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%)',
+        border: '1px solid rgba(255,255,255,0.2)',
+        zIndex: -1
+      }} />
+
+      {/* LED EDGE PIPES */}
+      <div style={{ position: 'absolute', bottom: '20px', left: -4, height: '40%', width: 3, background: '#B20F3B', boxShadow: '0 0 12px #B20F3B', borderRadius: 2, opacity: 0.8 }} />
+      <div style={{ position: 'absolute', bottom: '20px', right: -4, height: '40%', width: 3, background: '#B20F3B', boxShadow: '0 0 12px #B20F3B', borderRadius: 2, opacity: 0.8 }} />
+      <div style={{ position: 'absolute', top: 8, left: '15%', width: '70%', height: 1.5, background: 'rgba(255,255,255,0.4)', borderRadius: 1 }} />
+
+      {/* TECHNICAL DECALS */}
+      <div style={{ position: 'absolute', top: 5, left: '50%', transform: 'translateX(-50%)', fontSize: 7, fontFamily: 'monospace', fontWeight: 900, color: 'rgba(0,0,0,0.4)', letterSpacing: '0.2em' }}>
+        CENTRAL_HUB_UNIT_A0
+      </div>
+
+      <div style={{ transform: 'translateZ(10px)', transformStyle: 'preserve-3d', width: '100%', display: 'flex', justifyContent: 'center' }}>
+        {children}
+      </div>
+    </div>
   );
+};
+const TacticalKey = ({ label, color, active = false, onClick, large = false }: any) => (
+  <motion.div
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    onClick={onClick}
+    style={{
+      width: large ? '140px' : '75px',
+      height: '34px',
+      background: active ? color : 'rgba(15, 23, 42, 0.9)',
+      border: `1px solid ${active ? '#fff' : 'rgba(255,255,255,0.2)'}`,
+      borderRadius: '2px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      cursor: 'pointer',
+      boxShadow: active ? `0 0 20px ${color}` : 'none',
+      position: 'relative',
+      overflow: 'hidden'
+    }}
+  >
+    <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '2px', background: 'rgba(255,255,255,0.1)' }} />
+    <span style={{ fontSize: 8, fontWeight: 900, color: active ? '#fff' : 'rgba(255,255,255,0.7)', letterSpacing: '0.15em' }}>{label}</span>
+  </motion.div>
+);
+
+const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive, states }: any) => {
+  const { alertMode, hudHidden, dimLights } = states;
+  const color = alertMode ? "#B20F3B" : "#99CC33";
 
   return (
     <div style={{ 
       position: 'absolute', 
-      bottom: '45px', 
+      bottom: '85px', 
       left: '50%', 
-      transform: 'translateX(-50%) perspective(1500px) rotateX(45deg)',
-      width: '800px',
-      height: '160px',
+      transform: 'translateX(-50%) perspective(1500px) rotateX(8deg)',
+      width: '620px',
+      height: '100px',
       zIndex: 100,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       pointerEvents: 'auto'
     }}>
-      <svg width="800" height="160" viewBox="0 0 800 160" style={{ position: 'absolute', top: 0, left: 0 }}>
+      {/* HOLODECK TERMINAL FRAME — smaller, more upright */}
+      <svg width="620" height="100" viewBox="0 0 620 100" style={{ position: 'absolute', top: 0, left: 0 }}>
         <defs>
-          <linearGradient id="consoleGradColorful" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor={alertMode ? "#4A0618" : "#1E293B"} />
-            <stop offset="100%" stopColor={alertMode ? "#1A0308" : "#020617"} />
+          <linearGradient id="hullGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#c8d8e8" />
+            <stop offset="8%" stopColor="#e8f0f8" />
+            <stop offset="25%" stopColor="#a0b4c8" />
+            <stop offset="75%" stopColor="#6080a0" />
+            <stop offset="100%" stopColor="#304060" />
           </linearGradient>
+          <linearGradient id="innerSurf" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#130060" />
+            <stop offset="100%" stopColor="#0a003a" />
+          </linearGradient>
+          <linearGradient id="edgeGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="rgba(0,200,220,0)" />
+            <stop offset="30%" stopColor="rgba(0,200,220,0.8)" />
+            <stop offset="70%" stopColor="rgba(0,200,220,0.8)" />
+            <stop offset="100%" stopColor="rgba(0,200,220,0)" />
+          </linearGradient>
+          <filter id="edgeBlur"><feGaussianBlur stdDeviation="2" /></filter>
         </defs>
-        <path d="M 120,0 L 680,0 L 800,160 L 0,160 Z" fill="url(#consoleGradColorful)" stroke="#00FFF2" strokeWidth="2" strokeOpacity="0.5" />
+        {/* Hull trapezoid — narrower sides */}
+        <path d="M 60,0 L 560,0 L 620,100 L 0,100 Z" fill="url(#hullGrad)" />
+        <path d="M 62,2 L 558,2 L 560,8 L 60,8 Z" fill="rgba(255,255,255,0.35)" />
+        <path d="M 68,9 L 552,9 L 610,93 L 10,93 Z" fill="url(#innerSurf)" />
+        <path d="M 68,9 L 552,9 L 610,93 L 10,93 Z" fill="none" stroke="rgba(0,200,220,0.2)" strokeWidth="1" />
+        {/* Top glow edge */}
+        <path d="M 66,8 L 554,8" stroke="url(#edgeGlow)" strokeWidth="2.5" filter="url(#edgeBlur)" />
+        <path d="M 66,8 L 554,8" stroke="rgba(0,220,240,0.6)" strokeWidth="1" />
+        {/* Bottom glow */}
+        <path d="M 12,92 L 608,92" stroke="rgba(0,160,200,0.35)" strokeWidth="1.5" filter="url(#edgeBlur)" />
+        {/* Corner screws */}
+        <circle cx="78" cy="16" r="2.5" fill="#304060" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
+        <circle cx="542" cy="16" r="2.5" fill="#304060" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
+        <circle cx="22" cy="84" r="2.5" fill="#304060" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
+        <circle cx="598" cy="84" r="2.5" fill="#304060" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
+        {/* Outer stroke */}
+        <path d="M 60,0 L 560,0 L 620,100 L 0,100 Z" fill="none" stroke="rgba(180,210,230,0.6)" strokeWidth="1.5" />
       </svg>
-      
-      <div style={{ marginTop: '15px', width: '440px', height: '28px', background: 'rgba(0,0,0,0.8)', border: '1px solid rgba(0,214,204,0.3)', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 15px', color: alertMode ? '#ff0000' : '#00D6CC', fontFamily: 'monospace', fontSize: '9px', letterSpacing: '2px', position: 'relative', zIndex: 2 }}>
-        <span>SYS: {alertMode ? 'ALERT_MODE' : 'NOMINAL'}</span>
-        <span style={{ fontWeight: 900 }}>COMMAND_INTERFACE_V_5.0</span>
+
+      {/* STATUS BAR */}
+      <div style={{ 
+        marginTop: '12px', 
+        width: '420px', 
+        height: '18px', 
+        background: '#0F004F',
+        border: '1px solid rgba(255,255,255,0.2)',
+        borderRadius: '2px', 
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        color: '#ffffff', fontFamily: 'monospace', fontSize: '8px', fontWeight: 900,
+        letterSpacing: '1.5px', position: 'relative', zIndex: 2, gap: 6
+      }}>
+        <motion.div animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
+          style={{ width: 4, height: 4, borderRadius: '50%', background: '#fff', boxShadow: '0 0 5px #fff', flexShrink: 0 }} />
+        <span>Treinamento Customer Care &amp; Sales</span>
       </div>
 
-      <div style={{ marginTop: '20px', display: 'flex', gap: '30px', position: 'relative', zIndex: 2 }}>
-        {/* LEFT CLUSTER */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
-          <Key label="NAV" color="#00D6CC" />
-          <Key label="ENG" color="#D400FF" />
-          <Key label="COM" color="#FFE017" />
-          <Key label="LT" color="#00D6CC" active={!dimLights} onClick={onDim} />
+      {/* DISTRIBUTED ROW — Corners + Middle */}
+      <div style={{ 
+        marginTop: '7px', width: '480px', display: 'flex', justifyContent: 'space-between', 
+        alignItems: 'center', position: 'relative', zIndex: 2 
+      }}>
+        {/* LEFT CORNER: LT */}
+        <motion.div
+          whileHover={{ backgroundColor: 'rgba(0,184,204,0.3)', boxShadow: '0 0 16px rgba(0,200,220,0.8)' }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onDim}
+          style={{
+            height: '34px', width: '50px',
+            background: !dimLights ? 'rgba(0,184,204,0.35)' : 'transparent',
+            border: `1.5px solid ${!dimLights ? '#00DDEE' : 'rgba(0,200,220,0.38)'}`,
+            boxShadow: !dimLights ? '0 0 12px rgba(0,200,220,0.55)' : 'none',
+            borderRadius: '3px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer', transition: 'background 0.3s, box-shadow 0.3s',
+          }}
+          title="Alternar Iluminación"
+        >
+          <Monitor size={18} color="#fff" style={{ filter: !dimLights ? 'drop-shadow(0 0 5px #00FFFF)' : 'none' }} />
+        </motion.div>
+
+        {/* CENTER GROUP: PAINÉIS + IARA */}
+        <div style={{ display: 'flex', gap: '8px' }}>
+          {/* PAINÉIS & RELATÓRIOS */}
+          <motion.div
+            animate={{ boxShadow: ['0 0 6px rgba(153,204,51,0.25)', '0 0 16px rgba(153,204,51,0.6)', '0 0 6px rgba(153,204,51,0.25)'] }}
+            transition={{ duration: 2.5, repeat: Infinity }}
+            whileHover={{ backgroundColor: 'rgba(153,204,51,0.22)', boxShadow: '0 0 18px rgba(153,204,51,0.8), 0 0 36px rgba(153,204,51,0.35)' }}
+            whileTap={{ scale: 0.97, backgroundColor: 'rgba(153,204,51,0.4)' }}
+            onClick={onMonitoring}
+            style={{
+              height: '34px', padding: '0 12px',
+              background: 'transparent', border: '1.5px solid rgba(153,204,51,0.55)',
+              borderRadius: '3px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', position: 'relative', overflow: 'hidden', gap: 6,
+              transition: 'background 0.3s, box-shadow 0.3s',
+            }}
+          >
+            <motion.div animate={{ x: ['-100%', '200%'] }} transition={{ duration: 2.5, repeat: Infinity, ease: 'linear', repeatDelay: 2 }}
+              style={{ position: 'absolute', top: 0, left: 0, width: '35%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(153,204,51,0.12), transparent)', pointerEvents: 'none' }} />
+            <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '0.1em', textShadow: '0 0 8px rgba(153,204,51,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>📊 PAINÉIS</span>
+          </motion.div>
+
+          {/* IARA */}
+          <motion.div
+            animate={{ boxShadow: iaraActive
+              ? ['0 0 14px rgba(123,64,255,0.6)', '0 0 26px rgba(123,64,255,1)', '0 0 14px rgba(123,64,255,0.6)']
+              : ['0 0 5px rgba(123,64,255,0.2)', '0 0 10px rgba(123,64,255,0.4)', '0 0 5px rgba(123,64,255,0.2)'] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            whileHover={{ backgroundColor: iaraActive ? 'rgba(160,80,255,0.45)' : 'rgba(100,20,220,0.3)', boxShadow: '0 0 18px rgba(130,60,255,0.8)' }}
+            whileTap={{ scale: 0.97 }}
+            onClick={onIara}
+            style={{
+              height: '34px', padding: '0 14px',
+              background: iaraActive ? 'rgba(100,32,200,0.45)' : 'transparent',
+              border: `1.5px solid ${iaraActive ? '#A060FF' : 'rgba(123,64,255,0.45)'}`,
+              borderRadius: '3px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', position: 'relative', overflow: 'hidden',
+              transition: 'background 0.3s, box-shadow 0.3s',
+            }}
+          >
+            <span style={{ fontSize: 10, fontWeight: 900, color: '#fff', letterSpacing: '0.2em', fontFamily: 'monospace', textShadow: iaraActive ? '0 0 10px #C090FF, 0 0 3px #fff' : 'none', whiteSpace: 'nowrap' }}>IARA</span>
+          </motion.div>
         </div>
 
-        {/* CENTER ACTION CLUSTER */}
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <Key label="!! ALERT !!" color="#B20F3B" active={alertMode} onClick={onAlert} large />
-          <Key label="PAINÉIS & RELATÓRIOS" color="#00D6CC" onClick={onMonitoring} large />
-          <Key label="HUD" color="#00FFF2" active={!hudHidden} onClick={onHud} />
-        </div>
-
-        {/* RIGHT CLUSTER */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
-          <Key label="SCAN" color="#A4FF00" />
-          <Key label="GEN" color="#00D6CC" />
-          <Key label="RST" color="#B20F3B" />
-          <Key label="AUTO" color="#00FFF2" />
-        </div>
+        {/* RIGHT CORNER: TOGGLE HUD VIEW */}
+        <motion.div
+          whileHover={{ backgroundColor: 'rgba(0,184,204,0.3)', boxShadow: '0 0 16px rgba(0,200,220,0.8)' }}
+          whileTap={{ scale: 0.97 }}
+          onClick={onHud}
+          style={{
+            height: '34px', width: '50px',
+            background: !hudHidden ? 'rgba(0,184,204,0.35)' : 'transparent',
+            border: `1.5px solid ${!hudHidden ? '#00DDEE' : 'rgba(0,200,220,0.38)'}`,
+            boxShadow: !hudHidden ? '0 0 12px rgba(0,200,220,0.55)' : 'none',
+            borderRadius: '3px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer', transition: 'background 0.3s, box-shadow 0.3s',
+          }}
+          title="Alternar HUD"
+        >
+          <Eye size={18} color="#fff" style={{ filter: !hudHidden ? 'drop-shadow(0 0 5px #00FFFF)' : 'none' }} />
+        </motion.div>
       </div>
     </div>
+  );
+};
+
+const IaraHologram = ({ isVisible, onClose, iaraLink }: any) => {
+  if (!isVisible) return null;
+
+  const scanlineStyle: React.CSSProperties = {
+    position: 'absolute',
+    inset: 0,
+    background: 'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,243,255,0.05) 3px, rgba(0,243,255,0.05) 4px)',
+    pointerEvents: 'none',
+    zIndex: 3,
+    borderRadius: 'inherit'
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40, scale: 0.9 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 40 }}
+      style={{
+        position: 'fixed',
+        bottom: '140px',
+        left: 'calc(50% + 220px)',
+        zIndex: 9999,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        pointerEvents: 'auto',
+        transform: 'translateX(-50%)',
+      }}
+    >
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        style={{
+          position: 'absolute', top: 0, right: -10,
+          background: 'rgba(0,20,60,0.8)', border: '1px solid rgba(0,243,255,0.4)',
+          color: '#00F3FF', width: 24, height: 24, borderRadius: '50%',
+          fontSize: 10, cursor: 'pointer', fontWeight: 900, zIndex: 10,
+          display: 'flex', alignItems: 'center', justifyContent: 'center'
+        }}
+      >✕</button>
+
+      {/* TRANSMISSION LABEL */}
+      <motion.div
+        animate={{ opacity: [0.6, 1, 0.6] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        style={{ fontSize: 7, color: '#00F3FF', letterSpacing: '0.4em', fontFamily: 'monospace', marginBottom: 6, textTransform: 'uppercase' }}
+      >
+        ◉ TRANSMISIÓN ACTIVA
+      </motion.div>
+
+      {/* IARA FIGURE — transparent background, floating */}
+      <div style={{ position: 'relative', width: 180, height: 260 }}>
+
+        {/* Ground glow disc */}
+        <motion.div
+          animate={{ scaleX: [1, 1.1, 1], opacity: [0.5, 0.9, 0.5] }}
+          transition={{ duration: 3, repeat: Infinity }}
+          style={{
+            position: 'absolute', bottom: -6, left: '50%',
+            transform: 'translateX(-50%)',
+            width: 120, height: 16,
+            background: 'radial-gradient(ellipse, rgba(0,243,255,0.7) 0%, transparent 70%)',
+            zIndex: 1, filter: 'blur(3px)'
+          }}
+        />
+
+        {/* Ambient glow pulse behind IARA */}
+        <motion.div
+          animate={{ opacity: [0.2, 0.5, 0.2] }}
+          transition={{ duration: 2.5, repeat: Infinity }}
+          style={{
+            position: 'absolute', inset: 10, borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(0,243,255,0.4) 0%, transparent 65%)',
+            zIndex: 2, filter: 'blur(12px)'
+          }}
+        />
+
+        {/* IARA floating + swaying */}
+        <motion.div
+          animate={{
+            y: [0, -14, 0, -8, 0],
+            rotate: [-1.5, 1.5, -0.5, 1, -1.5],
+          }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+          style={{ position: 'relative', zIndex: 5, width: '100%', height: '100%', background: 'transparent' }}
+        >
+          {/* Glitch flicker */}
+          <motion.div
+            animate={{ opacity: [0, 0, 0, 0.5, 0, 0, 0, 0.3, 0, 0] }}
+            transition={{ duration: 5, repeat: Infinity }}
+            style={{ position: 'absolute', inset: 0, zIndex: 8, background: 'rgba(0,243,255,0.08)', pointerEvents: 'none', mixBlendMode: 'screen' }}
+          />
+
+          <img
+            src="/iara.png"
+            alt="IARA"
+            style={{
+              width: '100%', height: '100%', objectFit: 'contain',
+              position: 'relative', zIndex: 5,
+              mixBlendMode: 'screen',
+              filter: 'drop-shadow(0 0 25px rgba(0,243,255,1)) drop-shadow(0 0 8px #00F3FF) brightness(1.2) contrast(1.1)',
+            }}
+          />
+        </motion.div>
+      </div>
+
+      {/* NAME + CTA */}
+      <motion.div
+        animate={{ opacity: [0.8, 1, 0.8] }}
+        transition={{ duration: 3, repeat: Infinity }}
+        style={{ fontSize: 9, color: '#00F3FF', letterSpacing: '0.5em', fontFamily: 'monospace', fontWeight: 900, marginBottom: 10 }}
+      >
+        I · A · R · A
+      </motion.div>
+
+      <motion.button
+        animate={{ boxShadow: ['0 0 12px rgba(0,243,255,0.4)', '0 0 28px rgba(0,243,255,0.9)', '0 0 12px rgba(0,243,255,0.4)'] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={() => { if (iaraLink) window.open(iaraLink, '_blank'); }}
+        style={{
+          background: 'rgba(0,15,50,0.75)',
+          color: '#00F3FF',
+          border: '1px solid #00F3FF',
+          padding: '7px 18px',
+          borderRadius: 20,
+          fontSize: 9,
+          fontFamily: 'monospace',
+          fontWeight: 900,
+          cursor: 'pointer',
+          letterSpacing: '0.2em',
+        }}
+      >
+        ▶ CONECTAR
+      </motion.button>
+    </motion.div>
+  );
+};
+
+const StationIcon = ({ alertMode }: any) => {
+  const mainColor = alertMode ? "#ff0000" : "#99CC33";
+  const brandColor = "#0F004F";
+  
+  return (
+    <motion.div
+      animate={{ 
+        y: [0, -5, 0],
+        rotate: [0, 3, 0]
+      }}
+      transition={{ 
+        duration: 5, 
+        repeat: Infinity, 
+        ease: 'easeInOut' 
+      }}
+      style={{ position: 'relative', width: 70, height: 70, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+    >
+      <svg width="64" height="64" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Crossed Solar Panels (X-Formation) */}
+        <g opacity="0.9">
+          <rect x="8" y="18" width="24" height="4" rx="1" transform="rotate(45 20 20)" fill={brandColor} />
+          <rect x="8" y="18" width="24" height="4" rx="1" transform="rotate(-45 20 20)" fill={brandColor} />
+          {/* Panel Highlights */}
+          <rect x="12" y="19.5" width="6" height="1" rx="0.5" transform="rotate(45 20 20)" fill={mainColor} opacity="0.6" />
+          <rect x="22" y="19.5" width="6" height="1" rx="0.5" transform="rotate(45 20 20)" fill={mainColor} opacity="0.6" />
+          <rect x="12" y="19.5" width="6" height="1" rx="0.5" transform="rotate(-45 20 20)" fill={mainColor} opacity="0.6" />
+          <rect x="22" y="19.5" width="6" height="1" rx="0.5" transform="rotate(-45 20 20)" fill={mainColor} opacity="0.6" />
+        </g>
+        
+        {/* Main Body (Cylinder) */}
+        <path d="M18 10C18 8.89543 18.8954 8 20 8C21.1046 8 22 8.89543 22 10V26H18V10Z" fill={brandColor} />
+        <rect x="18.5" y="12" width="3" height="1" fill={mainColor} opacity="0.8" />
+        <rect x="18.5" y="15" width="3" height="4" fill={mainColor} opacity="0.4" />
+        
+        {/* Communication Dish */}
+        <path d="M14 30C14 28 16 26 20 26C24 26 26 28 26 30L20 34L14 30Z" fill={brandColor} />
+        <circle cx="20" cy="34" r="2.5" fill={mainColor}>
+          <animate attributeName="r" values="2;3;2" dur="2s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite" />
+        </circle>
+        
+        {/* Antenna Tip */}
+        <rect x="19.5" y="5" width="1" height="4" fill={mainColor} />
+      </svg>
+    </motion.div>
   );
 };
 
@@ -608,26 +1214,33 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
   const [alertMode, setAlertMode] = useState(false);
   const [hudHidden, setHudHidden] = useState(false);
   const [dimLights, setDimLights] = useState(false);
+  const [showIara, setShowIara] = useState(false);
 
   return (
-    <div style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden', backgroundColor: '#0B0033', fontFamily: '"Inter", sans-serif', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden', backgroundColor: '#0F004F', fontFamily: '"Inter", sans-serif', display: 'flex', flexDirection: 'column' }}>
       <SpaceBackground />
+      <IaraHologram isVisible={showIara} onClose={() => setShowIara(false)} iaraLink={config.iaraLink} />
       {!hudHidden && <CommandCenterInterior isAlert={alertMode} isDim={dimLights} isHudHidden={hudHidden} />}
       <SpaceKeyboard 
         onAlert={() => setAlertMode(!alertMode)}
         onHud={() => setHudHidden(!hudHidden)}
         onDim={() => setDimLights(!dimLights)}
         onMonitoring={() => config.monitoringUrl && window.open(config.monitoringUrl, '_blank')}
+        onIara={() => setShowIara(prev => !prev)}
+        iaraActive={showIara}
         states={{ alertMode, hudHidden, dimLights }}
       />
 
-      <div style={{ height: '64px', background: alertMode ? '#4A0618' : '#E8E7F2', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 32px', transition: 'all 0.5s ease' }}>
-        <button onClick={onBack} style={{ background: '#fff', border: '1px solid rgba(11,0,51,0.1)', padding: '8px 20px', borderRadius: '30px', color: '#0B0033', fontWeight: 800, fontSize: 11, cursor: 'pointer' }}>
+      <div style={{ height: '84px', background: alertMode ? '#4A0618' : '#E8E7F2', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 32px', transition: 'all 0.5s ease' }}>
+        <button onClick={onBack} style={{ background: '#fff', border: '1px solid rgba(11,0,51,0.1)', padding: '8px 20px', borderRadius: '30px', color: '#0F004F', fontWeight: 800, fontSize: 11, cursor: 'pointer' }}>
           ← SALIR
         </button>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: 10, letterSpacing: '0.4em', color: alertMode ? '#ff5555' : '#64748b', textTransform: 'uppercase', marginBottom: 2, fontWeight: 700 }}>Estación Espacial</div>
-          <div style={{ fontSize: 20, fontWeight: 900, color: alertMode ? '#fff' : '#0B0033', letterSpacing: '0.1em' }}>{stationName} STATION</div>
+        <div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <StationIcon alertMode={alertMode} />
+          <div>
+            <div style={{ fontSize: 11, letterSpacing: '0.4em', color: alertMode ? '#ff5555' : '#64748b', textTransform: 'uppercase', marginBottom: 2, fontWeight: 700 }}>Estación Espacial</div>
+            <div style={{ fontSize: 24, fontWeight: 900, color: alertMode ? '#fff' : '#0F004F', letterSpacing: '0.1em' }}>{stationName} STATION</div>
+          </div>
         </div>
         <div style={{ display: 'flex', gap: 12, color: alertMode ? '#fff' : '#0B0033', fontSize: 10, fontWeight: 800 }}>
           <span>SOFT: 99%</span> | <span>ER: BR</span>
@@ -646,8 +1259,10 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
           />
         </ConsoleSideFrame>
         
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', transform: 'translateY(88px)' }}>
-          <CentralMonitorCard onNavigate={onNavigate} />
+        <div style={{ transform: 'translateY(102px)' }}>
+          <ConsoleCentralFrame>
+            <CentralMonitorCard onNavigate={onNavigate} />
+          </ConsoleCentralFrame>
         </div>
 
         <ConsoleSideFrame side="right">
@@ -662,8 +1277,13 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
         </ConsoleSideFrame>
       </div>
 
-      <div style={{ height: '64px', background: alertMode ? '#4A0618' : '#E8E7F2', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0 32px', borderTop: alertMode ? '1px solid #ff0000' : 'none', transition: 'all 0.5s ease' }}>
-        <div style={{ fontSize: 10, fontWeight: 800, color: alertMode ? '#ffaaaa' : '#64748b' }}>Universo Training | Customer Care & Sales</div>
+      <div style={{ height: '80px', background: alertMode ? '#4A0618' : '#E8E7F2', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 40px', borderTop: alertMode ? '1px solid #ff0000' : 'none', transition: 'all 0.5s ease' }}>
+        <div style={{ transform: 'translateY(4px)' }}>
+          <img src="/por_logo.png" alt="Capacitación Logo" style={{ height: '60px', width: 'auto', opacity: 1, filter: 'brightness(1.2)' }} />
+        </div>
+        <div style={{ transform: 'translateY(4px)' }}>
+          <img src="/guardianes_logo.png" alt="Guardianes Logo" style={{ height: '60px', width: 'auto', opacity: 1, filter: 'brightness(1.1)' }} />
+        </div>
       </div>
     </div>
   );

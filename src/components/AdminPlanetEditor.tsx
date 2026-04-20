@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-    ArrowLeft, Save, CheckCircle2, Plus, Trash2, Database, Layers, Satellite, 
+    ArrowLeft, Save, CheckCircle2, Plus, Trash2, Database, Layers, Satellite, Globe, Shield, Zap,
     Edit3, Briefcase, Rocket, Target, Anchor, ChevronUp, ChevronDown, Monitor, FileText, Link as LinkIcon, AlertTriangle, Clock
 } from 'lucide-react';
 
@@ -17,13 +17,29 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
   const [saved, setSaved] = useState(false);
 
   const data = Array.isArray(dataArray) ? dataArray : [];
-  const currentSections = Array.isArray(data[activePlanet]) ? data[activePlanet] : [];
+  
+  // Normalize current planet data
+  const rawPlanetData = data[activePlanet];
+  const planetObj = (rawPlanetData && !Array.isArray(rawPlanetData)) 
+    ? rawPlanetData 
+    : { 
+        secciones: Array.isArray(rawPlanetData) ? rawPlanetData : [], 
+        materiais: [], 
+        evalKon: [], 
+        evalAec: []
+      };
 
-  const updateSections = (nextSecs: any[]) => {
+  const currentSections = planetObj.secciones || [];
+
+  const updatePlanetData = (nextObj: any) => {
     const nextData = [...data];
     while (nextData.length <= activePlanet) nextData.push([]);
-    nextData[activePlanet] = nextSecs;
+    nextData[activePlanet] = nextObj;
     setDataArray(nextData);
+  };
+
+  const updateSections = (nextSecs: any[]) => {
+    updatePlanetData({ ...planetObj, secciones: nextSecs });
   };
 
   const addSection = (tipo: string) => {
@@ -59,6 +75,26 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
     const next = [...currentSections];
     next[idx] = { ...next[idx], [field]: val };
     updateSections(next);
+  };
+
+  const updateGlobalField = (field: string, val: any) => {
+    updatePlanetData({ ...planetObj, [field]: val });
+  };
+
+  const addGlobalLink = (field: string) => {
+    const prev = Array.isArray(planetObj[field]) ? planetObj[field] : [];
+    updateGlobalField(field, [...prev, { label: 'NUEVO LINK', url: 'https://' }]);
+  };
+
+  const removeGlobalLink = (field: string, idx: number) => {
+    const prev = Array.isArray(planetObj[field]) ? planetObj[field] : [];
+    updateGlobalField(field, prev.filter((_: any, i: number) => i !== idx));
+  };
+
+  const updateGlobalLink = (field: string, idx: number, sub: string, val: any) => {
+    const next = [...(Array.isArray(planetObj[field]) ? planetObj[field] : [])];
+    next[idx] = { ...next[idx], [sub]: val };
+    updateGlobalField(field, next);
   };
 
   const updateRow = (secIdx: number, rowIdx: number, field: string, val: any) => {
@@ -197,6 +233,89 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
         </div>
 
         <div style={{ flex: 1, overflowY: 'auto', padding: '48px 64px' }}>
+          {/* SECCIÓN DE RECURSOS GLOBALES (NUEVO) */}
+          <div style={{ 
+              background: '#ffffff', 
+              borderRadius: '24px', 
+              padding: '32px', 
+              marginBottom: '48px', 
+              border: '1px solid rgba(27,0,136,0.1)',
+              boxShadow: '0 10px 40px rgba(0,0,0,0.02)'
+          }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32, borderBottom: '1px solid #f1f5f9', paddingBottom: 20 }}>
+                  <div style={{ background: 'rgba(27,0,136,0.05)', padding: 12, borderRadius: 12 }}>
+                      <Globe size={24} color="#1B0088" />
+                  </div>
+                  <div>
+                      <div style={{ fontSize: 10, fontWeight: 900, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.15em' }}>CONFIGURACIÓN SECTORIAL</div>
+                      <div style={{ fontSize: 18, fontWeight: 900, color: '#1B0088' }}>Recursos Globales del Planeta</div>
+                  </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
+                  {/* COLUMNA 1: MATERIAIS */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                          <div style={{ fontSize: 11, fontWeight: 900, color: '#1B0088', display: 'flex', alignItems: 'center', gap: 8 }}>
+                              <FileText size={16} /> 📚 MATERIAIS
+                          </div>
+                          <button onClick={() => addGlobalLink('materiais')} style={{ background: '#1B0088', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: 6, fontSize: 10, fontWeight: 800, cursor: 'pointer' }}>+ AÑADIR</button>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                          {(planetObj.materiais || []).map((link: any, i: number) => (
+                              <div key={i} style={{ display: 'flex', gap: 10 }}>
+                                  <input value={link.label} onChange={e => updateGlobalLink('materiais', i, 'label', e.target.value)} style={{ ...inp({ background: '#F8FAFC', flex: 1, fontSize: 11, fontWeight: 700 }) }} placeholder="Nombre" />
+                                  <input value={link.url} onChange={e => updateGlobalLink('materiais', i, 'url', e.target.value)} style={{ ...inp({ background: '#F8FAFC', flex: 2, fontSize: 11, color: '#1a56db' }) }} placeholder="URL" />
+                                  <button onClick={() => removeGlobalLink('materiais', i)} style={{ background: '#fee2e2', border: 'none', padding: '0 10px', borderRadius: 8, color: '#ef4444', cursor: 'pointer' }}><Trash2 size={14}/></button>
+                              </div>
+                          ))}
+                          {(planetObj.materiais || []).length === 0 && <div style={{ fontSize: 11, color: '#94a3b8', fontStyle: 'italic', padding: '10px', background: '#f8fafc', borderRadius: 10, textAlign: 'center' }}>No hay materiales configurados</div>}
+                      </div>
+                  </div>
+
+                  {/* COLUMNA 2: AVALIAÇÕES (KON / AEC) */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                      {/* KON BR */}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                              <div style={{ fontSize: 11, fontWeight: 900, color: '#99CC33', display: 'flex', alignItems: 'center', gap: 8 }}>
+                                  <Shield size={16} /> 🛡️ AVALIAÇÕES: KON BR
+                              </div>
+                              <button onClick={() => addGlobalLink('evalKon')} style={{ background: '#99CC33', color: '#fff', border: 'none', padding: '4px 10px', borderRadius: 6, fontSize: 9, fontWeight: 800, cursor: 'pointer' }}>+ LINK</button>
+                          </div>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                              {(planetObj.evalKon || []).map((link: any, i: number) => (
+                                  <div key={i} style={{ display: 'flex', gap: 8 }}>
+                                      <input value={link.label} onChange={e => updateGlobalLink('evalKon', i, 'label', e.target.value)} style={{ ...inp({ padding: '6px 10px', fontSize: 11, background: '#f0fdf4' }), flex: 1 }} />
+                                      <input value={link.url} onChange={e => updateGlobalLink('evalKon', i, 'url', e.target.value)} style={{ ...inp({ padding: '6px 10px', fontSize: 11, background: '#f0fdf4', color: '#1a56db' }), flex: 2 }} />
+                                      <button onClick={() => removeGlobalLink('evalKon', i)} style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer' }}><Trash2 size={14}/></button>
+                                  </div>
+                              ))}
+                          </div>
+                      </div>
+
+                      {/* AeC */}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                              <div style={{ fontSize: 11, fontWeight: 900, color: '#00D6CC', display: 'flex', alignItems: 'center', gap: 8 }}>
+                                  <Zap size={16} /> 💎 AVALIAÇÕES: AeC
+                              </div>
+                              <button onClick={() => addGlobalLink('evalAec')} style={{ background: '#00D6CC', color: '#fff', border: 'none', padding: '4px 10px', borderRadius: 6, fontSize: 9, fontWeight: 800, cursor: 'pointer' }}>+ LINK</button>
+                          </div>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                              {(planetObj.evalAec || []).map((link: any, i: number) => (
+                                  <div key={i} style={{ display: 'flex', gap: 8 }}>
+                                      <input value={link.label} onChange={e => updateGlobalLink('evalAec', i, 'label', e.target.value)} style={{ ...inp({ padding: '6px 10px', fontSize: 11, background: '#f0f9ff' }), flex: 1 }} />
+                                      <input value={link.url} onChange={e => updateGlobalLink('evalAec', i, 'url', e.target.value)} style={{ ...inp({ padding: '6px 10px', fontSize: 11, background: '#f0f9ff', color: '#1a56db' }), flex: 2 }} />
+                                      <button onClick={() => removeGlobalLink('evalAec', i)} style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer' }}><Trash2 size={14}/></button>
+                                  </div>
+                              ))}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
           {currentSections.length === 0 ? (
             <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div style={{ textAlign: 'center', padding: '80px', color: '#1B0088', background: '#fff', borderRadius: '32px', border: '2px dashed rgba(27,0,136,0.1)', boxShadow: '0 20px 60px rgba(0,0,0,0.03)' }}>

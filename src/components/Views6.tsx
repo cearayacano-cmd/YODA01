@@ -3,32 +3,151 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronRight, ArrowLeft, ExternalLink, Clock, Target, Rocket, 
   Anchor, Activity, Cpu, Shield, Globe, Zap, Radio, Terminal, Map as MapIcon,
-  Navigation, Hexagon, Crosshair
+  Navigation, Hexagon, Crosshair, Lightbulb, BadgeCheck, FileText, Satellite, Gem
 } from 'lucide-react';
 
 /* ── HELPER COMPONENTS ──────────────────────────────────────────────── */
-const StarsBackground = () => (
-  <div style={{ position: 'fixed', inset: 0, backgroundColor: '#040114', zIndex: 0, overflow: 'hidden' }}>
+const JourneyStartShip = () => (
+    <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '350px', marginBottom: '40px' }}>
+      <motion.div 
+        animate={{ y: [-15, 15, -15] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        style={{ position: 'relative', display: 'flex', alignItems: 'center' }}
+      >
+        {/* High-Fidelity Thrusters (Plasma) */}
+        <div style={{ position: 'absolute', top: '50%', left: '15px', transform: 'translateY(-50%)', zIndex: 12, pointerEvents: 'none' }}>
+          <div style={{ position: 'absolute', width: '220px', height: '140px', background: 'radial-gradient(ellipse at center, rgba(174,239,255,0.2) 0%, transparent 80%)', filter: 'blur(30px)', left: '-180px', top: '-70px', borderRadius: '50% 0 0 50%' }} />
+          {[ { top: -25, delay: 0 }, { top: -4, delay: 0.2 }, { top: 24, delay: 0.4 } ].map((beam, i) => (
+            <motion.div 
+              key={`beam-${i}`}
+              animate={{ width: [100, 180, 100], opacity: [0.6, 1, 0.6] }}
+              transition={{ duration: 0.12, repeat: Infinity, delay: beam.delay }}
+              style={{ 
+                position: 'absolute', height: '8px', left: -180, top: beam.top,
+                background: 'linear-gradient(to right, transparent, rgba(153,204,51,0.2), #ffffff, #AEEFFF, transparent)',
+                borderRadius: '50%', filter: 'blur(5px)', transformOrigin: 'right center'
+              }}
+            />
+          ))}
+          {[ { size: 28, top: -38, left: -22 }, { size: 36, top: -17, left: -18 }, { size: 28, top: 12, left: -22 } ].map((bola, i) => (
+            <div key={i}>
+              <motion.div 
+                animate={{ opacity: [0.6, 1, 0.6], scale: [1, 1.2, 1] }}
+                transition={{ duration: 0.8 + i * 0.2, repeat: Infinity }}
+                style={{ 
+                  position: 'absolute', width: bola.size, height: bola.size, borderRadius: '50%', 
+                  background: 'radial-gradient(circle, #ffffff 0%, #AEEFFF 60%, rgba(0,214,204,0.4) 100%)',
+                  filter: 'blur(3px)', left: bola.left, top: bola.top, zIndex: 2,
+                  boxShadow: '0 0 15px rgba(174,239,255,0.5)'
+                }}
+              />
+            </div>
+          ))}
+        </div>
+        <img 
+          src="/ship.png" 
+          alt="Nava Exploracion" 
+          style={{ width: '300px', height: 'auto', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.6))', position: 'relative', zIndex: 10 }}
+        />
+      </motion.div>
+    </div>
+);
+
+const JourneyEndStation = ({ planetColor }: { planetColor: string }) => (
+    <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '400px', marginTop: '60px' }}>
+      <motion.div 
+        animate={{ y: [-10, 10, -10] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      >
+        {/* Holographic Signal Beam (End Goal) */}
+        <motion.div 
+          animate={{ opacity: [0.4, 0.8, 0.4], height: ['200px', '250px', '200px'] }}
+          transition={{ duration: 3, repeat: Infinity }}
+          style={{ 
+            width: '4px', background: `linear-gradient(to top, ${planetColor}, transparent)`, 
+            position: 'absolute', bottom: '80px', filter: 'blur(4px)', zIndex: 1 
+          }}
+        />
+        
+        {/* Space Station Icon (Goal) */}
+        <div style={{ 
+          width: '140px', height: '140px', background: `radial-gradient(circle, ${planetColor}44 0%, transparent 70%)`,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 10
+        }}>
+          <motion.div
+            animate={{ rotate: [0, 90, 180, 270, 360] }}
+            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+            style={{ position: 'absolute', inset: 0, border: `2.5px dashed ${planetColor}66`, borderRadius: '50%' }}
+          />
+          <div style={{ 
+            width: '80px', height: '80px', borderRadius: '50%', background: '#0F004F',
+            border: `3px solid ${planetColor}`, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: `0 0 40px ${planetColor}60`
+          }}>
+            <Target size={40} color="#fff" />
+          </div>
+        </div>
+
+        {/* Completion Text */}
+        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+          <div style={{ fontSize: '10px', color: planetColor, fontWeight: 900, letterSpacing: '5px', textTransform: 'uppercase' }}>MISIÓN CUMPLIDA</div>
+          <div style={{ fontSize: '24px', fontWeight: 900, color: '#fff', letterSpacing: '2px' }}>DESTINO FINAL</div>
+        </div>
+      </motion.div>
+    </div>
+);
+
+const MissionMapBackground = ({ color }: { color: string }) => (
+  <div style={{ position: 'fixed', inset: 0, background: 'radial-gradient(circle at 50% 40%, #1B0088 0%, #0F004F 100%)', zIndex: 0, overflow: 'hidden' }}>
+    {/* High Performance CSS Starfield */}
+    <style>{`
+      @keyframes twinkle {
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.2); }
+      }
+      .star-layer {
+        position: absolute;
+        inset: 0;
+        background-image: 
+          radial-gradient(1.5px 1.5px at 20px 30px, #fff, rgba(0,0,0,0)),
+          radial-gradient(1.5px 1.5px at 100px 350px, #fff, rgba(0,0,0,0)),
+          radial-gradient(1.5px 1.5px at 200px 150px, #fff, rgba(0,0,0,0)),
+          radial-gradient(2px 2px at 300px 480px, #fff, rgba(0,0,0,0)),
+          radial-gradient(1.5px 1.5px at 400px 250px, #fff, rgba(0,0,0,0)),
+          radial-gradient(2px 2px at 500px 50px, #fff, rgba(0,0,0,0)),
+          radial-gradient(1.5px 1.5px at 600px 380px, #fff, rgba(0,0,0,0)),
+          radial-gradient(2px 2px at 750px 180px, #fff, rgba(0,0,0,0)),
+          radial-gradient(1.5px 1.5px at 900px 520px, #fff, rgba(0,0,0,0)),
+          radial-gradient(2px 2px at 150px 650px, #fff, rgba(0,0,0,0));
+        background-size: 800px 800px;
+        opacity: 0.4;
+      }
+    `}</style>
+    <div className="star-layer" style={{ animation: 'twinkle 4s infinite ease-in-out' }} />
+    <div className="star-layer" style={{ backgroundPosition: '400px 400px', animation: 'twinkle 7s infinite ease-in-out reverse', opacity: 0.2 }} />
+
+    {/* Dynamic Tactical Glows */}
     <motion.div 
-      animate={{ opacity: [0.3, 0.5, 0.3], scale: [1, 1.1, 1] }}
-      transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-      style={{
-        position: 'absolute', inset: '-10%',
-        background: 'radial-gradient(circle at 70% 30%, #1B0088 0%, transparent 60%)',
-        filter: 'blur(100px)', zIndex: 1
-      }}
+        animate={{ opacity: [0.2, 0.3, 0.2] }}
+        transition={{ duration: 8, repeat: Infinity }}
+        style={{ position: 'absolute', top: '5%', left: '15%', width: '700px', height: '700px', background: `radial-gradient(circle, ${color}22 0%, transparent 70%)`, filter: 'blur(100px)' }} 
     />
-    {[...Array(50)].map((_, i) => (
-      <motion.div
-        key={i}
-        animate={{ opacity: [0.1, 1, 0.1], scale: [1, 1.2, 1] }}
-        transition={{ duration: Math.random() * 5 + 3, repeat: Infinity, delay: Math.random() * 5 }}
-        style={{
-          position: 'absolute', width: 2, height: 2, background: '#fff', borderRadius: '50%',
-          left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%`, zIndex: 2
-        }}
-      />
-    ))}
+    
+    {/* Vector Tactical Grid */}
+    <div style={{ 
+      position: 'absolute', inset: 0, 
+      backgroundImage: `linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)`, 
+      backgroundSize: '100px 100px',
+      maskImage: 'radial-gradient(circle at center, black 30%, transparent 90%)'
+    }} />
+
+    {/* Lunar Surface at bottom */}
+    <div style={{ 
+      position: 'absolute', bottom: -100, left: '50%', transform: 'translateX(-50%)',
+      width: '140%', height: '400px', background: `radial-gradient(ellipse at center top, ${color}33 0%, #0F004F 70%)`,
+      borderRadius: '50% 50% 0 0', filter: 'blur(30px)', opacity: 0.8
+    }} />
   </div>
 );
 
@@ -43,40 +162,178 @@ const FERR_ICONS: any = {
 };
 
 const MissionHeaderHUD = ({ sectorLabel, planetLabel, planetColor, onBack }: any) => (
-    <div style={{ padding: '30px 60px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 10 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 30 }}>
-            <button 
-                onClick={onBack}
-                style={{ 
-                    background: 'rgba(255,255,255,0.05)', border: `1.5px solid ${planetColor}44`, color: '#fff', 
-                    padding: '12px 28px', borderRadius: 4, cursor: 'pointer', fontSize: 11, fontWeight: 900, 
-                    display: 'flex', alignItems: 'center', gap: 15, letterSpacing: '3px', transition: '0.3s' 
-                }}
-                onMouseEnter={e => { e.currentTarget.style.background = planetColor; e.currentTarget.style.color = '#fff' }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#fff' }}
-            >
-                <ArrowLeft size={16} /> REGRESAR
-            </button>
-            <div style={{ height: 40, width: 2, background: 'rgba(255,255,255,0.1)' }} />
-            <div>
-                <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', fontWeight: 900, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: 4 }}>SECTOR: {sectorLabel}</div>
-                <div style={{ fontSize: 28, fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase', color: '#fff' }}>
-                    {planetLabel || 'PROYECCIÓN_ESTELAR'}
-                </div>
-            </div>
+  <div style={{ 
+    position: 'sticky', top: 0, left: 0, right: 0, zIndex: 100, 
+    background: 'rgba(15,0,79,0.85)', backdropFilter: 'blur(20px)', 
+    borderBottom: `2px solid ${planetColor}`, padding: '15px 40px', 
+    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+    boxShadow: `0 4px 30px rgba(0,0,0,0.4)`
+  }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+      <button 
+        onClick={onBack}
+        style={{ 
+          background: 'transparent', border: `1.5px solid ${planetColor}`, color: planetColor, 
+          padding: '8px 20px', borderRadius: 4, cursor: 'pointer', fontSize: 10, fontWeight: 900, 
+          letterSpacing: '2px', textTransform: 'uppercase', transition: '0.3s' 
+        }}
+        onMouseEnter={e => { e.currentTarget.style.background = planetColor; e.currentTarget.style.color = '#0F004F' }}
+        onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = planetColor }}
+      >
+        ← REGRESAR
+      </button>
+      <div style={{ width: 1, height: 30, background: 'rgba(255,255,255,0.1)' }} />
+      <div>
+        <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.4)', fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase' }}>SECTOR: {sectorLabel}</div>
+        <div style={{ fontSize: 24, fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase', color: '#fff', filter: `drop-shadow(0 0 10px ${planetColor}44)` }}>
+          {planetLabel}
         </div>
-
-        <div style={{ textAlign: 'right' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'flex-end', color: planetColor, fontSize: 10, fontWeight: 900, letterSpacing: '2px' }}>
-                <div style={{ width: 8, height: 8, borderRadius: '50%', background: planetColor, boxShadow: `0 0 10px ${planetColor}` }} />
-                PROVISIÓN DE DATOS ACTIVA // COMM_LINK: STABLE
-            </div>
-            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', fontWeight: 800, letterSpacing: '1px', marginTop: 4 }}>
-                COORDS_GRID: [AX-099 // BX-21] · LATAM_V4
-            </div>
-        </div>
+      </div>
     </div>
+
+    <div style={{ textAlign: 'right' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'flex-end', color: planetColor, fontSize: 10, fontWeight: 900, letterSpacing: '2px' }}>
+        <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 2, repeat: Infinity }} style={{ width: 8, height: 8, borderRadius: '50%', background: planetColor, boxShadow: `0 0 10px ${planetColor}` }} />
+        LATAM_FIELD_LINK: STABLE // SCANNING...
+      </div>
+      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', fontWeight: 800, letterSpacing: '1px', marginTop: 4 }}>
+        COORDS: [FSC-EXP // BX-44] · SECTOR_PRO
+      </div>
+    </div>
+  </div>
 );
+
+const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', directUrl = '', label = '', subGroups = [] }: any) => {
+    const [isOpen, setIsOpen] = React.useState(false);
+    const [activeGroup, setActiveGroup] = React.useState<string | null>(null);
+
+    // Initial check for active group if only one exists
+    React.useEffect(() => {
+        if (subGroups.length === 1) setActiveGroup(subGroups[0].id);
+    }, [subGroups]);
+    
+    if (mode === 'PORTAL' && (!links || links.length === 0) && subGroups.length === 0) return null;
+    if (mode === 'DIRECT' && !directUrl) return null;
+
+    const mainLabel = mode === 'DIRECT' ? label : title;
+
+    return (
+        <div style={{ position: 'relative', zIndex: 110 }}>
+            <motion.div 
+                initial={{ y: 0 }}
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                style={{ position: 'relative' }}
+            >
+                <motion.div 
+                    whileHover={{ scale: 1.05 }}
+                    onClick={() => {
+                        if (mode === 'DIRECT') window.open(directUrl, '_blank');
+                        else setIsOpen(!isOpen);
+                    }}
+                    style={{ 
+                        cursor: 'pointer', padding: '16px 24px', borderRadius: 16,
+                        background: 'rgba(15,0,79,0.7)', backdropFilter: 'blur(16px)',
+                        border: `2px solid ${color}66`, display: 'flex', alignItems: 'center', gap: 18,
+                        boxShadow: `0 12px 40px rgba(0,0,0,0.5), inset 0 0 20px ${color}22`,
+                        minWidth: 200
+                    }}
+                >
+                    <div style={{ position: 'relative' }}>
+                        <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} style={{ position: 'absolute', inset: -8, borderRadius: '50%', border: `1px dashed ${color}44` }} />
+                        <div style={{ 
+                            width: 52, height: 52, borderRadius: 14, 
+                            background: `linear-gradient(135deg, ${color}33, ${color}11)`, 
+                            display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                            color: color, border: `1px solid ${color}44`,
+                            boxShadow: `0 0 20px ${color}33`
+                        }}>
+                            {mode === 'DIRECT' ? <Rocket size={24} /> : (icon || <Satellite size={24} />)}
+                        </div>
+                    </div>
+
+                    <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
+                             <div style={{ width: 6, height: 6, borderRadius: '50%', background: color, boxShadow: `0 0 10px ${color}` }} />
+                             <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase' }}>
+                                {mode === 'DIRECT' ? 'ACCIÓN DIRECTA' : subGroups.length > 0 ? 'GRUPO TÁCTICO' : 'PORTAL DATOS'}
+                             </div>
+                        </div>
+                        <div style={{ fontSize: 16, fontWeight: 900, color: '#fff', letterSpacing: '1px', textTransform: 'uppercase' }}>{mainLabel}</div>
+                    </div>
+
+                    {mode === 'PORTAL' && <ChevronRight size={18} color={color} style={{ transform: isOpen ? 'rotate(90deg)' : 'none', transition: '0.3s', opacity: 0.5 }} />}
+                </motion.div>
+                <div style={{ position: 'absolute', top: '100%', left: '20%', width: 2, height: 20, background: `linear-gradient(to bottom, ${color}66, transparent)` }} />
+            </motion.div>
+
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 20, scale: 0.95 }}
+                        style={{ 
+                            position: 'absolute', top: 'calc(100% + 20px)', right: 0, width: 320,
+                            background: 'rgba(4,1,20,0.98)', backdropFilter: 'blur(20px)',
+                            border: `1px solid ${color}44`, borderRadius: 24, padding: 20,
+                            boxShadow: '0 30px 60px rgba(0,0,0,0.7)', zIndex: 120
+                        }}
+                    >
+                        {/* SELECTOR DE GRUPO (Si hay subGroups) */}
+                        {subGroups.length > 1 && (
+                            <div style={{ display: 'flex', gap: 8, marginBottom: 20, background: 'rgba(255,255,255,0.05)', padding: 4, borderRadius: 12 }}>
+                                {subGroups.map((g: any) => (
+                                    <button 
+                                        key={g.id}
+                                        onClick={() => setActiveGroup(g.id)}
+                                        style={{ 
+                                            flex: 1, padding: '10px 12px', borderRadius: 10, border: 'none', cursor: 'pointer',
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                                            background: activeGroup === g.id ? g.color : 'transparent',
+                                            color: activeGroup === g.id ? '#fff' : 'rgba(255,255,255,0.4)',
+                                            transition: '0.3s'
+                                        }}
+                                    >
+                                        {React.isValidElement(g.icon) ? React.cloneElement(g.icon as React.ReactElement, { size: 14 }) : null}
+                                        <span style={{ fontSize: 10, fontWeight: 900 }}>{g.label.split(' ')[0]}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+
+                        <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', fontWeight: 900, marginBottom: 12, letterSpacing: '2px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                             <div style={{ width: 4, height: 4, borderRadius: '50%', background: color }} />
+                             VÍNCULOS_DETECTADOS:
+                        </div>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                            {((activeGroup ? subGroups.find((g: any) => g.id === activeGroup)?.links : (links || [])) || []).map((link: any, i: number) => (
+                                <motion.a 
+                                    key={i}
+                                    whileHover={{ x: 8, background: 'rgba(255,255,255,0.08)' }}
+                                    href={link.url} target="_blank" rel="noopener noreferrer"
+                                    style={{ 
+                                        padding: '14px 18px', borderRadius: 12, display: 'flex', 
+                                        alignItems: 'center', justifyContent: 'space-between',
+                                        textDecoration: 'none', color: '#fff', transition: '0.2s',
+                                        background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)'
+                                    }}
+                                >
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                        <div style={{ width: 5, height: 5, borderRadius: '50%', background: color }} />
+                                        <span style={{ fontSize: 13, fontWeight: 800 }}>{link.label}</span>
+                                    </div>
+                                    <ExternalLink size={14} color={color} style={{ opacity: 0.6 }} />
+                                </motion.a>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
+};
 
 const FscFerrCell = ({ f, planetColor }: any) => {
   const ferr = (f && typeof f==='object') ? f : {tipo:f||'',url:''};
@@ -191,112 +448,181 @@ const ContentNode = ({ row, type, planetColor, index }: any) => (
     </motion.div>
 );
 
-/* ── INTERACTIVE SECTOR MAP COMPONENTS ──────────────────────────────── */
-const MissionMapNode = ({ section, index, total, planetColor, onClick }: any) => {
-  const isEven = index % 2 === 0;
+const MissionMapNode = ({ section, index, planetColor, onClick }: any) => {
+  const isLeft = index % 2 === 0;
+  const xPos = isLeft ? '20%' : '80%';
+  const yPos = index * 360 + 410;
   
+  const typeIcons: any = {
+      mision1: <Rocket size={40} />,
+      landing: <Anchor size={40} />,
+      ojt: <Target size={40} />
+  };
+
   return (
-    <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: index * 0.2 }}
-        whileHover={{ scale: 1.05 }}
-        onClick={onClick}
-        style={{ 
-            position: 'relative', 
-            zIndex: 10,
-            cursor: 'pointer',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            margin: '0 40px'
-        }}
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      style={{ 
+        position: 'relative', 
+        zIndex: 20, 
+        cursor: 'pointer', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center' 
+      }}
+      onClick={onClick}
     >
-        {/* Node Visual */}
-        <div style={{ position: 'relative', width: 120, height: 120, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <motion.div 
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                style={{ position: 'absolute', inset: -10, border: '1px dashed rgba(255,255,255,0.1)', borderRadius: '50%' }}
-            />
-            <motion.div 
-                animate={{ boxShadow: [`0 0 20px ${planetColor}44`, `0 0 40px ${planetColor}66`, `0 0 20px ${planetColor}44`] }}
-                transition={{ duration: 3, repeat: Infinity }}
-                style={{ 
-                    width: 80, height: 80, borderRadius: '50%', background: planetColor, 
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff',
-                    position: 'relative', zIndex: 2, boxShadow: `0 0 30px ${planetColor}88`
-                }}
-            >
-                <div style={{ fontSize: 32, fontWeight: 900, fontStyle: 'italic' }}>{(index + 1).toString()}</div>
-            </motion.div>
+      <div style={{ position: 'relative', width: '200px', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {/* Holographic Orbital Rings */}
+          <motion.div animate={{ rotate: 360 }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ position: 'absolute', inset: -10, border: `1px dashed ${planetColor}66`, borderRadius: '50%' }} />
+          <motion.div animate={{ rotate: -360 }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} style={{ position: 'absolute', width: '80%', height: '80%', border: `2px solid ${planetColor}22`, borderRadius: '50%' }} />
+          
+          {/* Planet Body (Cinematic Style) */}
+          <motion.div
+            whileHover={{ scale: 1.15, boxShadow: `0 0 40px ${planetColor}80` }}
+            style={{ 
+              width: '120px', height: '120px', borderRadius: '50%', 
+              background: `radial-gradient(circle at 35% 35%, ${planetColor}, #040114)`, 
+              boxShadow: `0 0 30px ${planetColor}44, inset -10px -10px 20px rgba(0,0,0,0.6)`, 
+              display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff',
+              zIndex: 10, position: 'relative', border: `3px solid ${planetColor}`
+            }}
+          >
+            {typeIcons[section.tipo || 'mision1']}
             
-            {/* Pulsing Aura */}
-            <motion.div 
-                animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0, 0.3] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                style={{ position: 'absolute', width: 80, height: 80, borderRadius: '50%', background: planetColor, zIndex: 1 }}
-            />
-        </div>
-
-        {/* Label */}
-        <div style={{ 
-            marginTop: 20, textAlign: 'center', background: 'rgba(255,255,255,0.05)', 
-            backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.1)',
-            padding: '10px 20px', borderRadius: 8, minWidth: 200
-        }}>
-            <div style={{ fontSize: 8, color: planetColor, fontWeight: 900, letterSpacing: '2px', marginBottom: 4 }}>MÓDULO_{String(index + 1).padStart(2, '0')}</div>
-            <div style={{ fontSize: 13, fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                {section.nombre || 'PROTOCOLO_ESTÁNDAR'}
+            <div style={{ position: 'absolute', top: -5, right: -5, width: 32, height: 32, borderRadius: '50%', background: '#fff', color: '#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 900, boxShadow: '0 4px 10px rgba(0,0,0,0.3)', border: `2px solid ${planetColor}` }}>
+                {index + 1}
             </div>
-        </div>
+          </motion.div>
+      </div>
 
-        {/* Tactical Hover Info (shown on hover parent) */}
-        <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            whileHover={{ opacity: 1, y: 0 }}
-            style={{ position: 'absolute', top: -40, fontSize: 9, color: planetColor, fontWeight: 900, letterSpacing: '1px', pointerEvents: 'none' }}
-        >
-            [ CLIC_PARA_ACCEDER_AL_NÚCLEO ]
-        </motion.div>
+      {/* Cinematic Label Box */}
+      <div style={{ marginTop: '20px', textAlign: 'center', background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(5px)', padding: '12px 24px', borderRadius: '12px', border: `1.5px solid ${planetColor}40`, minWidth: '320px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
+        <div style={{ fontSize: '9px', color: planetColor, fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '6px' }}>MÓDULO_{String(index + 1).padStart(2, '0')}</div>
+        <div style={{ fontSize: '20px', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '2px' }}>{section.nombre || 'CARGA DE DATOS...'}</div>
+        <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', fontWeight: 700, marginTop: '8px' }}>⏱ {section.rows?.length || 0} NODOS_TÉCNICOS</div>
+      </div>
     </motion.div>
   );
 };
 
 const MissionSectorMap = ({ secciones, planetColor, onSelectSection }: any) => {
-  return (
-    <div style={{ padding: '60px 20px', position: 'relative', minHeight: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflowX: 'auto' }}>
-       {/* Background Connection Path */}
-       <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
-           <defs>
-             <linearGradient id="pathGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor={planetColor} stopOpacity="0.2" />
-                <stop offset="50%" stopColor={planetColor} stopOpacity="0.8" />
-                <stop offset="100%" stopColor={planetColor} stopOpacity="0.2" />
-             </linearGradient>
-           </defs>
-           {secciones.length > 1 && (
-               <motion.path 
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 2 }}
-                    d={`M 150 300 L ${secciones.length * 280} 300`} // Simple horizontal path for now
-                    stroke="url(#pathGrad)" 
-                    strokeWidth="4" 
-                    fill="none" 
-                    strokeDasharray="15 15"
-                    style={{ filter: `drop-shadow(0 0 10px ${planetColor})` }}
-               />
-           )}
-       </svg>
+  const nodeSpacing = 360;
+  const totalWidth = 1000;
+  const lastNodeY = (secciones.length - 1) * nodeSpacing + 210;
+  const finalPathLength = 180;
+  const svgHeight = lastNodeY + finalPathLength;
 
-       <div style={{ display: 'flex', alignItems: 'center', position: 'relative', zIndex: 10, padding: '0 100px' }}>
-            {secciones.map((sec: any, i: number) => (
-                <MissionMapNode 
-                    key={i} index={i} total={secciones.length} section={sec} 
-                    planetColor={planetColor} onClick={() => onSelectSection(i)} 
+  return (
+    <div style={{ 
+      position: 'relative', 
+      width: '100%',
+      maxWidth: '1200px', 
+      margin: '0 auto',
+      padding: '0 0 100px 0',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    }}>
+       {/* Expedition Ship at Start */}
+       <div style={{ zIndex: 20 }}>
+         <JourneyStartShip />
+       </div>
+
+       {/* Background Connection Path */}
+       <div style={{ position: 'relative', width: '100%', marginTop: '-200px', minHeight: `${svgHeight}px` }}>
+          <svg 
+            viewBox={`0 0 ${totalWidth} ${svgHeight}`}
+            preserveAspectRatio="none"
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 1 }}
+          >
+            <defs>
+              <filter id="missionPathGlow">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            {/* Start Path: Adjusted to emerge from ship's thrusters */}
+            <motion.path 
+                d={`M 500 0 C 500 100, 200 100, 200 210`} stroke={planetColor} strokeWidth="8" fill="none" 
+                strokeDasharray="20 20" filter="url(#missionPathGlow)" 
+                animate={{ strokeDashoffset: [100, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+            />
+
+            {secciones.map((sec: any, i: number) => {
+              const yStart = i * nodeSpacing + 210;
+              const isP1Left = i % 2 === 0;
+              const startX = isP1Left ? 200 : 800;
+
+              if (i < secciones.length - 1) {
+                const yNext = (i + 1) * nodeSpacing + 210;
+                const endX = isP1Left ? 800 : 200;
+                // Cubic Bezier to swap sides naturally
+                const cpX1 = isP1Left ? 800 : 200; 
+                const cpX2 = isP1Left ? 200 : 800; // This was 1000/0 before, creating a huge "ear" or break
+                
+                // Let's use a smoother curve
+                const d = `M ${startX} ${yStart} C ${isP1Left ? 800 : 200} ${yStart}, ${isP1Left ? 200 : 800} ${yNext}, ${endX} ${yNext}`;
+                // Wait, if startX is 200 and endX is 800, a simple curve is M 200 y C 800 y, 800 yNext, 800 yNext is NOT quite right.
+                // Correct logic for zig-zag:
+                // M 200 y1 C 1000 y1, 1000 y2, 800 y2 (for left to right)
+                // M 800 y2 C 0 y2, 0 y3, 200 y3 (for right to left)
+                // The previous code had: const cpX = isP1Left ? 1000 : 0;
+                // M 200 y1 C 1000 y1, 1000 y2, 800 y2
+                // This curve is fine, but if isP1Left is true for i=0, then we go from 200 (left) to 800 (right).
+                
+                const controlX = isP1Left ? 1000 : 0;
+                const dZigZag = `M ${startX} ${yStart} C ${controlX} ${yStart}, ${controlX} ${yNext}, ${endX} ${yNext}`;
+
+                return (
+                  <motion.path 
+                    key={i} d={dZigZag} stroke={planetColor} strokeWidth="8" fill="none" 
+                    strokeDasharray="20 20" filter="url(#missionPathGlow)"
+                    animate={{ strokeDashoffset: [100, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                  />
+                );
+              }
+              
+              // Final Segment to centered End Station - PULLED CLOSER
+              const yEnd = yStart + 180;
+              const dFinal = `M ${startX} ${yStart} C ${startX} ${yEnd - 80}, 500 ${yEnd - 80}, 500 ${yEnd}`;
+              return (
+                <motion.path 
+                  key="final-path" d={dFinal} stroke={planetColor} strokeWidth="8" fill="none" 
+                  strokeDasharray="20 20" filter="url(#missionPathGlow)"
+                  animate={{ strokeDashoffset: [100, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
                 />
-            ))}
+              );
+            })}
+          </svg>
+
+          <div style={{ position: 'relative', zIndex: 10 }}>
+              {secciones.map((sec: any, i: number) => {
+                const yPos = i * nodeSpacing + 210;
+                const isLeft = i % 2 === 0;
+                const xPos = isLeft ? '20%' : '80%';
+                
+                return (
+                  <div key={i} style={{ position: 'absolute', top: yPos, left: xPos, transform: 'translate(-50%, -50%)' }}>
+                     <MissionMapNode 
+                        section={sec} index={i} planetColor={planetColor} 
+                        onClick={() => onSelectSection(i)} 
+                     />
+                  </div>
+                );
+              })}
+          </div>
+       </div>
+
+       {/* End Station at the very bottom - Snapped to path */}
+       <div style={{ zIndex: 20, marginTop: '-120px' }}>
+         <JourneyEndStation planetColor={planetColor} />
        </div>
     </div>
   );
@@ -368,103 +694,337 @@ const GlassMissionBlock = ({ seccion, planetColor, onBackToMap }: any) => {
                     </a>
                 )}
                 <div style={{ minWidth: 100, textAlign: 'center' }}>
-                    <div style={{ fontSize: 9, color: '#94A3B8', fontWeight: 800, textTransform: 'uppercase', marginBottom: 4 }}>Total CH</div>
                     <div style={{ fontSize: 24, fontWeight: 900, color: planetColor, fontFamily: 'monospace' }}>{seccion.totalCh}</div>
                 </div>
             </div>
         )}
     </div>
-  );
+    );
+};
+
+const FscDetailedNodeCard = ({ node, index, planetColor }: any) => {
+    return (
+        <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.1 }}
+            style={{ 
+                background: '#FFFFFF', 
+                border: '1px solid #E2E8F0', 
+                borderRadius: 20, 
+                padding: '32px 40px',
+                display: 'grid', 
+                gridTemplateColumns: '50px 1fr 200px', 
+                gap: 40, 
+                alignItems: 'start',
+                position: 'relative', 
+                boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
+                marginBottom: 20
+            }}
+        >
+            {/* Index Decal */}
+            <div style={{ fontSize: 42, fontWeight: 900, color: '#E2E8F0', lineHeight: 1, fontStyle: 'italic' }}>
+                {(index + 1).toString().padStart(2, '0')}
+            </div>
+
+            {/* Main Content */}
+            <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 12 }}>
+                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: planetColor }} />
+                    <div style={{ fontSize: 20, fontWeight: 900, color: '#1B0088', letterSpacing: '-0.01em' }}>{node.tema}</div>
+                </div>
+                <div style={{ fontSize: 15, color: '#4D4D4D', lineHeight: 1.7, fontWeight: 500 }}>
+                    {node.detalhe || node.desc}
+                </div>
+                
+                {/* Context Stats */}
+                <div style={{ display: 'flex', gap: 15, marginTop: 20 }}>
+                    <div style={{ padding: '6px 12px', background: '#F1F5F9', borderRadius: 6, fontSize: 9, fontWeight: 900, color: '#64748B', display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <Clock size={12} /> DÍA {node.dia || '-'}
+                    </div>
+                    <div style={{ padding: '6px 12px', background: `${planetColor}15`, borderRadius: 6, fontSize: 9, fontWeight: 900, color: planetColor, display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <Activity size={12} /> {node.ch || node.tiempo || '-'}
+                    </div>
+                </div>
+
+                {/* Tactical Tip (If present) */}
+                {node.macroTema && (
+                    <div style={{ 
+                        marginTop: 20, padding: '12px 16px', background: '#FFFBEB', border: '1px solid #FDE68A', 
+                        borderRadius: 10, display: 'flex', gap: 12, alignItems: 'center'
+                    }}>
+                        <Lightbulb size={14} color="#B45309" />
+                        <div style={{ fontSize: 12, color: '#78350F', fontWeight: 600 }}>
+                            <span style={{ fontWeight: 800, textTransform: 'uppercase', fontSize: 9, color: '#B45309', marginRight: 8 }}>Categoría:</span>
+                            {node.macroTema}
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* Actions */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {node.ferramentas && node.ferramentas.url ? (
+                    <motion.a 
+                        whileHover={{ scale: 1.02 }}
+                        href={node.ferramentas.url !== '#' ? node.ferramentas.url : undefined} 
+                        target="_blank" rel="noopener noreferrer"
+                        style={{
+                            background: '#1B0088', color: '#fff', padding: '14px', borderRadius: 10, 
+                            fontWeight: 900, fontSize: 11, textAlign: 'center', textDecoration: 'none',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                            boxShadow: '0 4px 12px rgba(27,0,136,0.2)'
+                        }}
+                    >
+                        ABRIR RECURSO <ExternalLink size={14} />
+                    </motion.a>
+                ) : (
+                    <div style={{ background: '#F8FAFC', color: '#94A3B8', padding: '14px', borderRadius: 10, fontSize: 10, fontWeight: 800, textAlign: 'center', border: '1px dashed #CBD5E1' }}>
+                        RECURSO_NO_VINCULADO
+                    </div>
+                )}
+                
+                {node.iaPic && (
+                    <motion.a 
+                        whileHover={{ scale: 1.02, background: planetColor, color: '#fff' }}
+                        href={node.iaPic} target="_blank" rel="noopener noreferrer"
+                        style={{ border: `1.5px solid ${planetColor}`, color: planetColor, padding: '12px', borderRadius: 10, fontSize: 10, fontWeight: 900, textAlign: 'center', textDecoration: 'none', textTransform: 'uppercase', letterSpacing: '1px' }}
+                    >
+                        IA_LINK
+                    </motion.a>
+                )}
+            </div>
+        </motion.div>
+    );
+};
+
+const FscDetailedTerminal = ({ seccion, planetColor, onBack }: any) => {
+    const rows = seccion.rows || [];
+    const tipo = seccion.tipo || 'mision1';
+
+    const typeIcons: any = {
+        mision1: <Rocket size={24} />,
+        landing: <Anchor size={24} />,
+        ojt: <Target size={24} />
+    };
+
+    return (
+        <motion.div 
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            style={{ 
+                position: 'fixed', inset: 0, backgroundColor: '#F8F7FF', zIndex: 9999,
+                display: 'flex', flexDirection: 'column', overflow: 'hidden',
+                color: '#1B0088'
+            }}
+        >
+            {/* Blueprint Grid Background */}
+            <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(27,0,136,0.02) 2px, transparent 2px), linear-gradient(90deg, rgba(27,0,136,0.02) 2px, transparent 2px)', backgroundSize: '50px 50px', pointerEvents: 'none' }} />
+            
+            {/* Specialized Header (Blueprint Pro Style) */}
+            <div style={{ 
+                height: '90px', background: '#1B0088', borderBottom: `4px solid ${planetColor}`,
+                display: 'flex', alignItems: 'center', padding: '0 60px', gap: 40, zIndex: 10,
+                boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
+            }}>
+                <button 
+                  onClick={onBack}
+                  style={{ 
+                    background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', 
+                    padding: '10px 24px', borderRadius: 8, cursor: 'pointer', fontSize: 11, fontWeight: 900, 
+                    display: 'flex', alignItems: 'center', gap: 12, textTransform: 'uppercase', letterSpacing: '1px'
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}
+                >
+                    <ArrowLeft size={16} /> REGRESAR AL MAPA
+                </button>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+                    <div style={{ width: 56, height: 56, borderRadius: 14, background: planetColor, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 10px 20px ${planetColor}44`, color: '#fff' }}>
+                        {typeIcons[tipo]}
+                    </div>
+                    <div>
+                        <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.6)', fontWeight: 900, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: 2 }}>PROTOCOLO DE SEGMENTO</div>
+                        <div style={{ fontSize: 26, fontWeight: 900, color: '#FFF' }}>{seccion.nombre?.toUpperCase() || 'MÓDULO DE EXPLORACIÓN'}</div>
+                    </div>
+                </div>
+
+                <div style={{ marginLeft: 'auto', display: 'flex', gap: 48, alignItems: 'center' }}>
+                    <div style={{ textAlign: 'right' }}>
+                        <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>ESTADO</div>
+                        <div style={{ fontSize: 13, color: '#99CC33', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'flex-end' }}>
+                            <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 1.5, repeat: Infinity }} style={{ width: 8, height: 8, borderRadius: '50%', background: '#99CC33' }} /> EXPLORACIÓN ACTIVA
+                        </div>
+                    </div>
+                    <div style={{ height: 40, width: 2, background: 'rgba(255,255,255,0.1)' }} />
+                    <div style={{ textAlign: 'right' }}>
+                        <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>NODOS DETECTADOS</div>
+                        <div style={{ fontSize: 22, color: '#FFF', fontWeight: 900 }}>{rows.length}</div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Main Content Grid (Two Columns) */}
+            <div style={{ flex: 1, padding: '40px 60px', overflowY: 'auto', zIndex: 10, display: 'grid', gridTemplateColumns: '1fr 400px', gap: 60, maxWidth: '1600px', margin: '0 auto', width: '100%' }}>
+                
+                {/* Left: Scrollable List of Cards */}
+                <div style={{ paddingBottom: 60 }}>
+                    {rows.map((row: any, i: number) => (
+                        <FscDetailedNodeCard key={i} node={row} index={i} planetColor={planetColor} />
+                    ))}
+                </div>
+
+                {/* Right: Specialist Sidebar */}
+                <div style={{ position: 'sticky', top: 0, height: 'max-content', display: 'flex', flexDirection: 'column', gap: 30 }}>
+                    {/* Summary Block */}
+                    <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 24, padding: 40, boxShadow: '0 10px 30px rgba(0,0,0,0.04)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24 }}>
+                            <Zap size={20} color={planetColor} />
+                            <div style={{ fontWeight: 900, fontSize: 13, letterSpacing: '1.5px', color: '#0F004F' }}>RESUMEN DE PODER</div>
+                        </div>
+                        <div style={{ fontSize: 15, color: '#4D4D4D', lineHeight: 1.8, marginBottom: 30, fontWeight: 500 }}>
+                            Esta misión contempla el análisis y ejecución de protocolos específicos del sector. Cada nodo representa una etapa crítica en la capacitación del Guardián JETS.
+                        </div>
+                        
+                        <div style={{ height: '1.5px', background: '#F1F5F9', marginBottom: 30 }} />
+                        
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
+                            <span style={{ fontSize: 13, color: '#858585', fontWeight: 600 }}>Carga Horaria</span>
+                            <span style={{ fontSize: 14, fontWeight: 900, color: '#1B0088' }}>{seccion.totalCh || 'N/A'}</span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 40 }}>
+                            <span style={{ fontSize: 13, color: '#858585', fontWeight: 600 }}>Protocolo</span>
+                            <span style={{ fontSize: 14, fontWeight: 900, color: '#1B0088' }}>{tipo.toUpperCase()}</span>
+                        </div>
+
+                        <button 
+                            onClick={onBack}
+                            style={{ 
+                                width: '100%', background: '#99CC33', color: '#fff', border: 'none', padding: '18px', borderRadius: 12, 
+                                fontWeight: 900, fontSize: 14, cursor: 'pointer', boxShadow: '0 10px 25px rgba(153,204,51,0.3)',
+                                transition: 'all 0.3s ease'
+                            }}
+                            onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+                            onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+                        >
+                            MARCAR COMO COMPLETADO
+                        </button>
+                    </div>
+
+                    {/* Support Block */}
+                    <div style={{ background: '#0F004F', borderRadius: 24, padding: 36, position: 'relative', overflow: 'hidden' }}>
+                        <div style={{ position: 'absolute', top: -40, right: -40, fontSize: 160, opacity: 0.05, filter: 'blur(2px)' }}>{typeIcons[tipo]}</div>
+                        <div style={{ fontWeight: 900, fontSize: 11, color: planetColor, letterSpacing: '2px', marginBottom: 16 }}>SOPORTE INTELIGENTE</div>
+                        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 1.7, fontStyle: 'italic', position: 'relative', zIndex: 1 }}>
+                            "La excelencia operativa en LATAM se construye con la atención al detalle. Mantén el enfoque en los estándares de calidad definidos para este sector."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </motion.div>
+    );
 };
 
 export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sectorLabel="SECTOR" }: any) => {
-  const [viewMode, setViewMode] = React.useState<'map' | 'detail'>('map');
-  const [selectedIdx, setSelectedIdx] = React.useState(0);
-  
-  const planetObj = (Array.isArray(data) && data[planetIdx]) ? data[planetIdx] : null;
-  const planetColor = planetObj?.color || '#ED1650';
+    const [viewMode, setViewMode] = React.useState<'map' | 'detail'>('map');
+    const [selectedIdx, setSelectedIdx] = React.useState(0);
+    
+    // Safety check for data
+    if (!data) return null;
 
-  let secciones = [];
-  if (planetObj) {
-    if (planetObj.secciones) {
-      secciones = planetObj.secciones;
-    } else if (Array.isArray(planetObj)) { 
-      secciones = (planetObj.length > 0 && (planetObj[0].tipo || planetObj[0].rows)) ? planetObj : [{ tipo: 'mision1', nombre: '', rows: planetObj }];
-    } else if (planetObj.rows) {
-      secciones = [{ tipo: planetObj.tipo || 'mision1', nombre: '', rows: planetObj.rows }];
+    const planetObj = (Array.isArray(data) && data[planetIdx]) ? data[planetIdx] : null;
+    const planetColor = planetObj?.color || '#ED1650';
+
+    let secciones = [];
+    if (planetObj) {
+        if (planetObj.secciones) {
+            secciones = planetObj.secciones;
+        } else if (Array.isArray(planetObj)) { 
+            secciones = (planetObj.length > 0 && (planetObj[0].tipo || planetObj[0].rows)) ? planetObj : [{ tipo: 'mision1', nombre: '', rows: planetObj }];
+        } else if (planetObj.rows) {
+            secciones = [{ tipo: planetObj.tipo || 'mision1', nombre: '', rows: planetObj.rows }];
+        }
     }
-  }
 
-  const handleSelectSection = (idx: number) => {
-    setSelectedIdx(idx);
-    setViewMode('detail');
-  };
+    const handleSelectSection = (idx: number) => {
+        setSelectedIdx(idx);
+        setViewMode('detail');
+    };
 
-  return (
-    <div style={{ minHeight: '100vh', background: '#040114', color: '#fff', position: 'relative', paddingBottom: 100 }}>
-      <StarsBackground />
-      
-      <div style={{ position: 'relative', zIndex: 10 }}>
-        <MissionHeaderHUD 
-          sectorLabel={sectorLabel} 
-          planetLabel={planetLabel} 
-          planetColor={planetColor} 
-          onBack={onBack} 
-        />
-
-        <div style={{ padding: '0 60px', maxWidth: 1600, margin: '0 auto' }}>
-            {secciones.length === 0 ? (
-                <div style={{ textAlign: 'center', padding: '100px', marginTop: 60, background: 'rgba(255,255,255,0.02)', border: '1.5px dashed rgba(255,255,255,0.1)', borderRadius: 12 }}>
-                    <Activity size={48} style={{ opacity: 0.1, marginBottom: 20 }} />
-                    <div style={{ fontSize: 14, fontWeight: 900, color: 'rgba(255,255,255,0.3)', letterSpacing: '4px' }}>ESTRUCTURA DE DATOS VACÍA // SIN MISIONES</div>
-                </div>
+    return (
+        <div style={{ minHeight: '100vh', background: '#040114', color: '#fff', position: 'relative', paddingBottom: 100 }}>
+            {/* Conditional background based on viewMode */}
+            {viewMode === 'map' ? (
+                <>
+                    <MissionMapBackground color={planetColor} />
+                    <div style={{ position: 'relative', zIndex: 10 }}>
+                        <MissionHeaderHUD 
+                            sectorLabel={sectorLabel} 
+                            planetLabel={planetLabel} 
+                            planetColor={planetColor} 
+                            onBack={onBack} 
+                        />
+                        <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '24px 60px 0 60px', position: 'relative', zIndex: 110, gap: 20 }}>
+                             <TacticalSatelliteWidget 
+                                title="MATERIAIS" 
+                                icon={<FileText size={24} />} 
+                                links={planetObj?.materiais} 
+                                color={planetColor} 
+                             />
+                             <TacticalSatelliteWidget 
+                                title="AVALIAÇÕES" 
+                                icon={<BadgeCheck size={24} />} 
+                                color="#00D6CC"
+                                subGroups={[
+                                    { id: 'kon', label: 'KON BR', color: '#99CC33', icon: <Shield />, links: planetObj?.evalKon || [] },
+                                    { id: 'aec', label: 'AeC', color: '#00D6CC', icon: <Gem />, links: planetObj?.evalAec || [] }
+                                ].filter(g => g.links.length > 0)}
+                             />
+                        </div>
+                        <div style={{ padding: '0 60px', maxWidth: 1200, margin: '0 auto' }}>
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key="map"
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 1.1, filter: 'blur(20px)' }}
+                                    transition={{ duration: 0.6 }}
+                                >
+                                    <div style={{ textAlign: 'center', marginTop: 20, marginBottom: 40 }}>
+                                        <div style={{ fontSize: 10, color: planetColor, fontWeight: 900, letterSpacing: '6px', marginBottom: 12, textTransform: 'uppercase' }}>MAPA TÁCTICO DE EXPLORACIÓN</div>
+                                        <div style={{ fontSize: 36, fontWeight: 900, color: '#fff', letterSpacing: '4px', textTransform: 'uppercase' }}>MISIÓN: {planetLabel}</div>
+                                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>
+                                            <div style={{ width: 140, height: 2, background: `linear-gradient(90deg, transparent, ${planetColor}, transparent)` }} />
+                                        </div>
+                                    </div>
+                                    <MissionSectorMap secciones={secciones} planetColor={planetColor} onSelectSection={handleSelectSection} />
+                                </motion.div>
+                            </AnimatePresence>
+                        </div>
+                    </div>
+                </>
             ) : (
-                <AnimatePresence mode="wait">
-                    {viewMode === 'map' ? (
-                        <motion.div
-                            key="map"
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 1.1, filter: 'blur(20px)' }}
-                            transition={{ duration: 0.6 }}
-                        >
-                            <div style={{ textAlign: 'center', marginTop: 40 }}>
-                                <div style={{ fontSize: 10, color: planetColor, fontWeight: 900, letterSpacing: '5px', marginBottom: 12 }}>MAPA TÁCTICO DE SECTOR</div>
-                                <div style={{ fontSize: 32, fontWeight: 900, color: '#fff', letterSpacing: '2px' }}>EXPLORE LOS MÓDULOS DE APRENDIZAJE</div>
-                                <div style={{ display: 'flex', justifyContent: 'center', marginTop: 15 }}>
-                                    <div style={{ width: 100, height: 2, background: `linear-gradient(90deg, transparent, ${planetColor}, transparent)` }} />
-                                </div>
-                            </div>
-                            <MissionSectorMap secciones={secciones} planetColor={planetColor} onSelectSection={handleSelectSection} />
-                        </motion.div>
-                    ) : (
-                        <motion.div
-                            key="detail"
-                            initial={{ opacity: 0, x: 50, filter: 'blur(10px)' }}
-                            animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                            exit={{ opacity: 0, x: -50 }}
-                            transition={{ duration: 0.5 }}
-                            style={{ paddingTop: 40 }}
-                        >
-                            <GlassMissionBlock 
-                              seccion={secciones[selectedIdx]} 
-                              planetColor={planetColor} 
-                              onBackToMap={() => setViewMode('map')}
-                            />
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                <FscDetailedTerminal 
+                    seccion={secciones[selectedIdx]} 
+                    planetColor={planetColor} 
+                    onBack={() => setViewMode('map')} 
+                />
+            )}
+
+            {/* Background HUD Accents */}
+            {viewMode === 'map' && (
+                <>
+                    <div style={{ position: 'fixed', bottom: 40, left: 40, zIndex: 5, pointerEvents: 'none', opacity: 0.3 }}>
+                        <div style={{ width: 60, height: 60, borderLeft: '2px solid #fff', borderBottom: '2px solid #fff' }} />
+                    </div>
+                    <div style={{ position: 'fixed', bottom: 40, right: 40, zIndex: 5, pointerEvents: 'none', opacity: 0.3 }}>
+                        <div style={{ width: 60, height: 60, borderRight: '2px solid #fff', borderBottom: '2px solid #fff', marginLeft: 'auto' }} />
+                    </div>
+                </>
             )}
         </div>
-      </div>
-
-      {/* Background HUD Accents */}
-      <div style={{ position: 'fixed', bottom: 40, left: 40, zIndex: 5, pointerEvents: 'none', opacity: 0.3 }}>
-          <div style={{ width: 60, height: 60, borderLeft: '2px solid #fff', borderBottom: '2px solid #fff' }} />
-      </div>
-      <div style={{ position: 'fixed', bottom: 40, right: 40, zIndex: 5, pointerEvents: 'none', opacity: 0.3 }}>
-          <div style={{ width: 60, height: 60, borderRight: '2px solid #fff', borderBottom: '2px solid #fff', marginLeft: 'auto' }} />
-      </div>
-    </div>
-  );
+    );
 };
+

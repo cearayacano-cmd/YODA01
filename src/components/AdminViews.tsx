@@ -146,20 +146,41 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
             overflow: 'hidden'
           }}>
             <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: '#99CC33' }} />
-            <div style={{display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20}}>
-              <Activity size={20} color="#1B0088" />
-              <div style={{fontSize:14, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
-                LIVE TELEMETRY · MONITORING URL
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
+              <div>
+                <div style={{display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20}}>
+                  <Activity size={20} color="#1B0088" />
+                  <div style={{fontSize:14, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
+                    LIVE TELEMETRY · MONITORING URL
+                  </div>
+                </div>
+                <input 
+                  value={tempConfig[sk].monitoringUrl||''} 
+                  onChange={e=>updateF('monitoringUrl',e.target.value)}
+                  style={{...inp({ padding: '14px 20px', border: '1px solid #E2E8F0', fontSize: 14, background: '#F8FAFC' }), width:'100%'}} 
+                  placeholder="https://lookerstudio.google.com/..."
+                  onFocus={e => { e.currentTarget.style.borderColor = '#1B0088'; e.currentTarget.style.background = '#fff'; }}
+                  onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#F8FAFC'; }}
+                />
+              </div>
+
+              <div>
+                <div style={{display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20}}>
+                  <Globe size={20} color="#1B0088" />
+                  <div style={{fontSize:14, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
+                    IARA LINK · ASISTENTE
+                  </div>
+                </div>
+                <input 
+                  value={tempConfig[sk].iaraLink !== undefined ? tempConfig[sk].iaraLink : 'https://amelia.appslatam.com/#/assistants/chat/aa857c06-5a06-4450-8518-8568cdd28dfd'} 
+                  onChange={e=>updateF('iaraLink',e.target.value)}
+                  style={{...inp({ padding: '14px 20px', border: '1px solid #E2E8F0', fontSize: 14, background: '#F8FAFC' }), width:'100%'}} 
+                  placeholder="https://amelia.appslatam.com/..."
+                  onFocus={e => { e.currentTarget.style.borderColor = '#1B0088'; e.currentTarget.style.background = '#fff'; }}
+                  onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#F8FAFC'; }}
+                />
               </div>
             </div>
-            <input 
-              value={tempConfig[sk].monitoringUrl||''} 
-              onChange={e=>updateF('monitoringUrl',e.target.value)}
-              style={{...inp({ padding: '14px 20px', border: '1px solid #E2E8F0', fontSize: 14, background: '#F8FAFC' }), width:'100%'}} 
-              placeholder="https://lookerstudio.google.com/..."
-              onFocus={e => (e.target.style.borderColor = '#1B0088', e.target.style.background = '#fff')}
-              onBlur={e => (e.target.style.borderColor = '#E2E8F0', e.target.style.background = '#F8FAFC')}
-            />
           </div>
 
           <div style={{display: 'flex', alignItems: 'center', gap: 14, marginBottom: 28}}>

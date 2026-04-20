@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BackBtn } from './Shared';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Save, CheckCircle2, Plus, Trash2, Database, Layers, Satellite, Edit3, Briefcase } from 'lucide-react';
+import { ArrowLeft, Save, CheckCircle2, Plus, Trash2, Database, Layers, Satellite, Edit3, Briefcase, Settings } from 'lucide-react';
 
 export const AdminSatelites = (props) => {
   const { initialPortal, satelitesData, setSatelitesData, onBack, pk: oldPk, satelites: oldSatelites, setSatelites: oldSetSatelites } = props;
@@ -244,8 +244,8 @@ export const AdminAdvancedContent = ({ sectorId, courseIdx, config, updateConfig
                   cursor:'pointer', fontSize:12, fontWeight:800, borderRadius:8, letterSpacing: '0.05em',
                   transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: 8
                 }}
-                onMouseEnter={e => e.currentTarget.style.background = '#EF4444E0', e.currentTarget.style.color = '#fff'}
-                onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)', e.currentTarget.style.color = '#FCA5A5'}
+                onMouseEnter={e => { e.currentTarget.style.background = '#EF4444E0'; e.currentTarget.style.color = '#fff'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#FCA5A5'; }}
                 >
                   <Trash2 size={14} /> ELIMINAR MISIÓN
                 </button>

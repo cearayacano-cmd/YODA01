@@ -14,9 +14,6 @@ import {
 } from 'lucide-react';
 
 const GalaxyVisual = ({ color }: { color: string }) => {
-  const numStars = 60;
-  const numArms = 3;
-  
   return (
     <div style={{ 
       position: 'relative', 
@@ -27,15 +24,14 @@ const GalaxyVisual = ({ color }: { color: string }) => {
       justifyContent: 'center',
       perspective: '1200px'
     }}>
-      {/* 3D Tilted Container */}
       <motion.div
         animate={{ 
-          rotateX: 55, 
-          rotateY: 15,
+          rotateX: 50, 
+          rotateY: 10,
           rotateZ: [0, -360] 
         }}
         transition={{ 
-          rotateZ: { duration: 120, repeat: Infinity, ease: "linear" },
+          rotateZ: { duration: 180, repeat: Infinity, ease: "linear" },
           default: { duration: 0 }
         }}
         style={{
@@ -48,102 +44,82 @@ const GalaxyVisual = ({ color }: { color: string }) => {
           transformStyle: 'preserve-3d'
         }}
       >
-        {/* Deep Volumetric Nebula Layer 1 */}
+        {/* EXTERNAL NEBULA CLOUD */}
         <motion.div 
-          animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.3, 0.15] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.1, 1] }}
+          transition={{ duration: 10, repeat: Infinity }}
           style={{
             position: 'absolute',
             width: '180%',
             height: '180%',
-            background: `radial-gradient(circle, ${color}33 0%, transparent 70%)`,
-            filter: 'blur(60px)',
-            transform: 'translateZ(-40px)'
+            background: `radial-gradient(circle, ${color}22 0%, transparent 70%)`,
+            filter: 'blur(50px)',
+            transform: 'translateZ(-20px)'
           }} 
         />
 
-        {/* Core Volumetric Nebula Layer 2 */}
+        {/* BRIGHT GASEOUS ARMS (NEBULA STRANDS) */}
+        {[0, 120, 240].map((rot) => (
+          <div key={rot} style={{ position: 'absolute', width: '100%', height: '100%', transform: `rotate(${rot}deg)` }}>
+            <div style={{
+              position: 'absolute',
+              top: '20%',
+              left: '50%',
+              width: '40%',
+              height: '60%',
+              background: `radial-gradient(ellipse at center, ${color}44 0%, transparent 80%)`,
+              filter: 'blur(35px)',
+              borderRadius: '50%',
+              transform: 'rotate(-30deg)'
+            }} />
+          </div>
+        ))}
+
+        {/* DENSE STAR CORE */}
         <div style={{
           position: 'absolute',
-          width: '120%',
-          height: '120%',
-          background: `radial-gradient(circle, #fff2 0%, ${color}22 40%, transparent 80%)`,
-          filter: 'blur(30px)',
-          transform: 'translateZ(10px)'
+          width: '20px',
+          height: '20px',
+          background: '#fff',
+          borderRadius: '50%',
+          boxShadow: `0 0 20px #fff, 0 0 50px ${color}, 0 0 100px ${color}66`,
+          zIndex: 10
         }} />
 
-        <svg viewBox="-20 -20 140 140" style={{ width: '140%', height: '140%', overflow: 'visible' }}>
-          <defs>
-            <filter id="proGlow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="1.2" result="blur" />
-              <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="hardGlow" />
-              <feComposite in="SourceGraphic" in2="hardGlow" operator="over" />
-            </filter>
-          </defs>
-
-          {/* Central Galactic Hub */}
-          <g transform="translate(50, 50)" style={{ filter: 'url(#proGlow)' }}>
-              <circle r="7" fill="#fff" style={{ filter: `drop-shadow(0 0 10px #fff) drop-shadow(0 0 25px ${color})` }} />
-              <motion.circle
-                r="10"
-                fill="none"
-                stroke={color}
-                strokeWidth="0.5"
-                animate={{ scale: [1, 2.5], opacity: [0.4, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeOut" }}
-              />
-          </g>
-
-          {/* Logarithmic Spiral Arms */}
-          {[...Array(numArms)].map((_, armIdx) => {
-            const armOffset = (armIdx * 2 * Math.PI) / numArms;
+        {/* LOGARITHMIC DUST PARTICLES (Simulating stars) */}
+        <svg viewBox="-50 -50 100 100" style={{ width: '140%', height: '140%', overflow: 'visible', opacity: 0.8 }}>
+          {[...Array(120)].map((_, i) => {
+            const angle = i * 0.4;
+            const r = 4 * Math.exp(0.25 * angle);
+            if (r > 60) return null;
+            const x = r * Math.cos(angle + (i % 3) * (Math.PI * 2 / 3));
+            const y = r * Math.sin(angle + (i % 3) * (Math.PI * 2 / 3));
+            const size = Math.random() * 1.5;
             return (
-              <g key={armIdx} transform="translate(50, 50)">
-                {[...Array(numStars)].map((_, i) => {
-                  const a = 3.5; 
-                  const b = 0.32;
-                  const theta = i * 0.18;
-                  const r = a * Math.exp(b * theta);
-                  
-                  if (r > 75) return null;
-
-                  const x = r * Math.cos(theta + armOffset);
-                  const y = r * Math.sin(theta + armOffset);
-                  const isTopStar = i % 12 === 0;
-                  const size = isTopStar ? Math.random() * 1.5 + 0.8 : Math.random() * 0.8 + 0.3;
-
-                  return (
-                    <motion.g key={i}>
-                      <motion.circle
-                        cx={x}
-                        cy={y}
-                        r={size}
-                        fill={isTopStar ? '#fff' : color}
-                        style={{ opacity: Math.random() * 0.7 + 0.3 }}
-                        animate={{ 
-                          opacity: [0.3, 1, 0.3],
-                          scale: [1, isTopStar ? 1.3 : 1.1, 1]
-                        }}
-                        transition={{ 
-                          duration: 2 + Math.random() * 4, 
-                          repeat: Infinity, 
-                          delay: Math.random() * 10 
-                        }}
-                      />
-                      {/* Cinematic Cross Lens Flare for bright stars */}
-                      {isTopStar && (
-                        <g transform={`translate(${x}, ${y})`}>
-                          <line x1="-4" y1="0" x2="4" y2="0" stroke="#fff" strokeWidth="0.15" opacity="0.4" />
-                          <line x1="0" y1="-4" x2="0" y2="4" stroke="#fff" strokeWidth="0.15" opacity="0.4" />
-                        </g>
-                      )}
-                    </motion.g>
-                  );
-                })}
-              </g>
+              <motion.circle
+                key={i}
+                cx={x} cy={y} r={size}
+                fill={i % 5 === 0 ? '#fff' : color}
+                animate={{ opacity: [0.4, 1, 0.4] }}
+                transition={{ duration: 2 + Math.random() * 3, repeat: Infinity, delay: Math.random() * 5 }}
+              />
             );
           })}
         </svg>
+
+        {/* CORE GLOW PULSE */}
+        <motion.div 
+          animate={{ scale: [0.8, 1.2, 0.8], opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 4, repeat: Infinity }}
+          style={{
+            position: 'absolute',
+            width: '80px',
+            height: '80px',
+            background: `radial-gradient(circle, ${color}66 0%, transparent 70%)`,
+            filter: 'blur(20px)',
+            zIndex: 5
+          }}
+        />
       </motion.div>
     </div>
   );
@@ -156,8 +132,8 @@ const TacticalSectorCard = ({ color, id, label, desc, onClick, tag }: any) => {
       onClick={() => onClick(id)}
       style={{
         width: 380,
-        height: 520,
-        background: 'rgba(27, 0, 136, 0.4)',
+        height: 580,
+        background: '#0F004F',
         backdropFilter: 'blur(10px)',
         border: `1px solid ${color}30`,
         position: 'relative',
@@ -203,7 +179,6 @@ const TacticalSectorCard = ({ color, id, label, desc, onClick, tag }: any) => {
         alignItems: 'center',
         justifyContent: 'center',
         position: 'relative',
-        paddingTop: 40
       }}>
         <GalaxyVisual color={color} />
       </div>
@@ -211,8 +186,8 @@ const TacticalSectorCard = ({ color, id, label, desc, onClick, tag }: any) => {
       {/* LOWER TEXT AREA (GLASSMORPISM) */}
       <div style={{
         padding: '30px 40px',
-        background: 'rgba(255, 255, 255, 0.03)',
-        borderTop: `1px solid rgba(255,255,255,0.05)`,
+        background: '#0F004F',
+        borderTop: `1px solid rgba(255,255,255,0.08)`,
         textAlign: 'center'
       }}>
         <div style={{ 
@@ -226,7 +201,7 @@ const TacticalSectorCard = ({ color, id, label, desc, onClick, tag }: any) => {
           GEOMETRÍA {idxLabel(id)}
         </div>
         <div style={{ 
-          fontSize: 42, 
+          fontSize: 36, 
           fontWeight: 900, 
           color: '#fff', 
           letterSpacing: '0.05em', 
@@ -304,10 +279,7 @@ export const GalaxySelection = ({ onNavigate, onBack }: any) => {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#1B0088',
-      backgroundImage: `
-         radial-gradient(circle at 50% 50%, #1B0088 0%, #040114 100%)
-      `,
+      background: 'radial-gradient(circle at 50% 50%, #1B0088 0%, #0F004F 100%)',
       color: '#ffffff',
       display: 'flex',
       flexDirection: 'column',
@@ -322,14 +294,14 @@ export const GalaxySelection = ({ onNavigate, onBack }: any) => {
         zIndex: 0
       }}>
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          {[...Array(200)].map((_, i) => (
+          {[...Array(500)].map((_, i) => (
             <circle
               key={i}
               cx={`${Math.random() * 100}%`}
               cy={`${Math.random() * 100}%`}
               r={Math.random() * 0.8 + 0.2}
               fill="white"
-              opacity={Math.random() * 0.5 + 0.1}
+              opacity={Math.random() * 0.6 + 0.1}
             />
           ))}
         </svg>
@@ -337,19 +309,27 @@ export const GalaxySelection = ({ onNavigate, onBack }: any) => {
 
       {/* HEADER */}
       <div style={{
-        padding: '40px 60px',
+        padding: '60px 0',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        zIndex: 10
+        justifyContent: 'center',
+        zIndex: 10,
+        position: 'relative'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 30 }}>
+        <div style={{ position: 'absolute', left: 60 }}>
           <BackBtn onClick={onBack} label="VOLVER" />
-          <div style={{ height: 30, width: 2, background: 'rgba(255,255,255,0.1)' }} />
-          <span style={{ fontSize: 24, fontWeight: 900, letterSpacing: '0.4em', textTransform: 'uppercase', textShadow: '0 0 10px rgba(0,0,0,0.5)' }}>
-            EXPLORACIÓN DE SECTORES
-          </span>
         </div>
+        
+        <span style={{ 
+          fontSize: 32, 
+          fontWeight: 900, 
+          letterSpacing: '0.4em', 
+          textTransform: 'uppercase', 
+          textAlign: 'center',
+          textShadow: '0 0 20px rgba(0,0,0,0.5)' 
+        }}>
+          Selecione a expedição
+        </span>
       </div>
 
       {/* CONTENT */}
@@ -367,7 +347,8 @@ export const GalaxySelection = ({ onNavigate, onBack }: any) => {
           alignItems: 'center',
           width: '100%',
           padding: '0 20px',
-          perspective: '1500px'
+          perspective: '1500px',
+          transform: 'translateY(-30px)'
         }}>
           {sectors.map((s, idx) => (
             <motion.div
@@ -385,20 +366,7 @@ export const GalaxySelection = ({ onNavigate, onBack }: any) => {
         </div>
       </div>
 
-      {/* FOOTER DECOR */}
-      <div style={{
-        position: 'absolute',
-        bottom: 40,
-        width: '100%',
-        textAlign: 'center',
-        fontSize: 10,
-        color: 'rgba(255,255,255,0.2)',
-        fontWeight: 900,
-        letterSpacing: '1em',
-        zIndex: 10
-      }}>
-        LATAM_STATION // NAVIGATION_SYSTEM_BETA
-      </div>
+      {/* FOOTER DECOR REMOVED */}
     </div>
   );
 };
