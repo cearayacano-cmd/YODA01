@@ -562,7 +562,7 @@ export const TechBaseView = ({
 
       {/* Background Decals */}
       <div style={{ position: 'absolute', top: 100, left: 40, display: 'flex', alignItems: 'center', gap: 15, zIndex: 1 }}>
-        <img src="/por_logo.png" alt="Logo Capacitación" style={{ height: 45, filter: 'brightness(1.1) drop-shadow(0 0 10px rgba(153,204,51,0.3))' }} />
+        <img src="/guardioes_capacitacion_pt.png" alt="Logo Capacitación PT" style={{ height: 45, filter: 'brightness(1.1) drop-shadow(0 0 10px rgba(153,204,51,0.3))' }} />
         <div style={{ fontSize: 10, color: '#64748B', fontWeight: 700, letterSpacing: '0.1em', lineHeight: 1.8, textTransform: 'uppercase' }}>
           <div>UNIVERSO TRAINING</div>
           <div>CUSTOMER CARE & SALES</div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Lock, ChevronLeft, Beaker, Settings, Package, Webcam, Rocket, Radar, Microscope, Cpu, Box, Activity, Monitor, Eye } from 'lucide-react';
+import { Lock, ChevronLeft, Beaker, Settings, Package, Webcam, Rocket, Radar, Microscope, Cpu, Box, Activity, Monitor, Eye, Sun, Layers } from 'lucide-react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import { Btn, BackBtn } from './Shared';
+import { Btn, BackBtn, TacticalSatelliteIcon } from './Shared';
 
 const MissionIcon = ({ color, alertMode }: any) => (
   <motion.div
@@ -14,24 +14,9 @@ const MissionIcon = ({ color, alertMode }: any) => (
       repeat: Infinity, 
       ease: 'easeInOut' 
     }}
-    style={{ position: 'relative', width: 60, height: 60, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 15 }}
+    style={{ position: 'relative', width: 200, height: 140, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}
   >
-    <svg width="50" height="50" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g opacity="0.9">
-        <rect x="8" y="18" width="24" height="4" rx="1" transform="rotate(45 20 20)" fill="#0F004F" />
-        <rect x="8" y="18" width="24" height="4" rx="1" transform="rotate(-45 20 20)" fill="#0F004F" />
-        <rect x="12" y="19.5" width="6" height="1" rx="0.5" transform="rotate(45 20 20)" fill={color} opacity="0.6" />
-        <rect x="22" y="19.5" width="6" height="1" rx="0.5" transform="rotate(45 20 20)" fill={color} opacity="0.6" />
-        <rect x="12" y="19.5" width="6" height="1" rx="0.5" transform="rotate(-45 20 20)" fill={color} opacity="0.6" />
-        <rect x="22" y="19.5" width="6" height="1" rx="0.5" transform="rotate(-45 20 20)" fill={color} opacity="0.6" />
-      </g>
-      <path d="M18 10C18 8.89543 18.8954 8 20 8C21.1046 8 22 8.89543 22 10V26H18V10Z" fill="#0F004F" />
-      <rect x="18.5" y="12" width="3" height="1" fill={color} opacity="0.8" />
-      <path d="M14 30C14 28 16 26 20 26C24 26 26 28 26 30L20 34L14 30Z" fill="#0F004F" />
-      <circle cx="20" cy="34" r="2" fill={color}>
-        <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite" />
-      </circle>
-    </svg>
+    <TacticalSatelliteIcon size={180} color={color} />
   </motion.div>
 );
 
@@ -43,11 +28,11 @@ const LandingMissionCard = ({ title, subtitle, id, color, onClick }: any) => (
       background: 'rgba(15, 0, 79, 0.4)',
       backdropFilter: 'blur(12px)',
       border: `1px solid ${color}40`,
-      padding: '40px 32px',
+      padding: '50px 40px',
       cursor: 'pointer',
       textAlign: 'center',
       borderRadius: 12,
-      minWidth: 240,
+      minWidth: 320,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -59,10 +44,10 @@ const LandingMissionCard = ({ title, subtitle, id, color, onClick }: any) => (
     {/* Decorative corner light */}
     <div style={{ position: 'absolute', top: 0, right: 0, width: 40, height: 40, background: `radial-gradient(circle at top right, ${color}30, transparent)`, borderRadius: '0 12px 0 0' }} />
     
-    <div style={{ fontSize: 10, color: '#999', letterSpacing: '0.4em', marginBottom: 12, fontWeight: 700 }}>MISIÓN • {id.toUpperCase()}</div>
+    <div style={{ fontSize: 11, color: '#999', letterSpacing: '0.4em', marginBottom: 15, fontWeight: 700 }}>MISIÓN • {id.toUpperCase()}</div>
     <MissionIcon color={color} />
-    <div style={{ fontSize: 44, fontWeight: 900, color: '#fff', marginBottom: 6, letterSpacing: '0.05em' }}>{id.toUpperCase()}</div>
-    <div style={{ fontSize: 12, color: '#bbb', marginBottom: 25, fontWeight: 500 }}>{subtitle}</div>
+    <div style={{ fontSize: 72, fontWeight: 900, color: '#fff', marginBottom: 8, letterSpacing: '0.05em' }}>{id.toUpperCase()}</div>
+    <div style={{ fontSize: 14, color: '#bbb', marginBottom: 30, fontWeight: 500 }}>{subtitle}</div>
     
     <div style={{ 
       padding: '10px 24px', 
@@ -80,44 +65,44 @@ const LandingMissionCard = ({ title, subtitle, id, color, onClick }: any) => (
 
 export const Landing = ({ onNavigate, onAdmin }: any) => (
   <div style={{minHeight:'100vh', background:'#0F004F', display:'flex', flexDirection:'column', position: 'relative', overflow: 'hidden'}}>
-    <SpaceBackground />
+    <SpaceBackground showEarth={false} showShip={false} showHorizon={true} />
     {/* Header */}
-    <div style={{background:'rgba(15, 0, 79, 0.8)', backdropFilter: 'blur(10px)', padding:'15px 32px', display:'flex', justifyContent:'space-between', alignItems:'center', borderBottom: '1px solid rgba(255,255,255,0.1)', zIndex: 10}}>
-      <div style={{display: 'flex', alignItems: 'center', gap: 12}}>
-        <div style={{width: 32, height: 32, borderRadius: '50%', border: '1px solid #99CC33', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <Rocket size={16} color="#99CC33" />
+    <div style={{background:'linear-gradient(to bottom, rgba(15, 0, 79, 0.9), transparent)', padding:'24px 48px', display:'flex', justifyContent:'space-between', alignItems:'center', zIndex: 10}}>
+      <div style={{display: 'flex', alignItems: 'center', gap: 14}}>
+        <div style={{width: 36, height: 36, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.05)'}}>
+          <Rocket size={18} color="#fff" />
         </div>
-        <span style={{color:'#ffffff', fontSize:13, fontWeight:900, letterSpacing:'0.2em'}}>MISSION CONTROL • LATAM CARRIER</span>
+        <span style={{color:'#ffffff', fontSize:12, fontWeight:900, letterSpacing:'0.3em', opacity: 0.8}}>Capacitación | Customer Care & Sales</span>
       </div>
-      <button onClick={onAdmin} style={{background:'transparent', border:'1px solid #99CC33', padding:'7px 18px', cursor:'pointer', fontSize:11, fontWeight:900, color:'#99CC33', borderRadius:30, letterSpacing: '0.1em'}}>
+      <button onClick={onAdmin} style={{background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.2)', padding:'8px 24px', cursor:'pointer', fontSize:10, fontWeight:900, color:'#fff', borderRadius:30, letterSpacing: '0.15em', backdropFilter: 'blur(10px)'}}>
         SYS.ADMIN
       </button>
     </div>
 
     {/* Content */}
-    <div style={{flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:40, zIndex: 10}}>
+    <div style={{flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', paddingBottom: 100, zIndex: 10}}>
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        style={{textAlign: 'center', marginBottom: 60}}
+        transition={{ duration: 1 }}
+        style={{textAlign: 'center', marginBottom: 50}}
       >
-        <div style={{fontSize:14, color:'#99CC33', letterSpacing:'0.6em', textTransform:'uppercase', marginBottom:12, fontWeight: 900}}>PREPARE FOR LAUNCH</div>
-        <div style={{fontSize:82, fontWeight:900, letterSpacing:'0.1em', color:'#fff', marginBottom:4, textShadow: '0 0 40px rgba(153,204,51,0.3)'}}>UNIVERSO</div>
-        <div style={{fontSize:18, fontWeight:700, letterSpacing:'0.6em', color:'rgba(255,255,255,0.6)', textTransform: 'uppercase'}}>Customer Care & Sales</div>
+        <div style={{fontSize:12, color:'rgba(255,255,255,0.6)', letterSpacing:'0.8em', textTransform:'uppercase', marginBottom:16, fontWeight: 900}}>PREPARE FOR LAUNCH</div>
+        <div style={{fontSize:110, fontWeight:900, letterSpacing:'0.05em', color:'#fff', marginBottom:8, lineHeight: 1, textShadow: '0 0 60px rgba(0,255,242,0.3)'}}>UNIVERSO</div>
+        <div style={{fontSize:20, fontWeight:500, letterSpacing:'0.7em', color:'rgba(255,255,255,0.5)', textTransform: 'uppercase'}}>Customer Care & Sales</div>
       </motion.div>
 
-      <div style={{display:'flex', gap:32, marginBottom:16}}>
+      <div style={{display:'flex', gap:40, alignItems: 'center'}}>
         <LandingMissionCard 
           id="ssc" 
           subtitle="Satellite Alpha • Orbit 1" 
-          color="#00FFF2" /* SSC uses Cyan/Blue */
+          color="#7000AB" 
           onClick={() => onNavigate('ssc')} 
         />
         <LandingMissionCard 
           id="br" 
           subtitle="Satellite Beta • Orbit 2" 
-          color="#99CC33" /* BR uses Green */
+          color="#99CC33" 
           onClick={() => onNavigate('br')} 
         />
       </div>
@@ -269,7 +254,7 @@ const FloatingSpaceship = () => {
         width: '260px',
         zIndex: 2,
         pointerEvents: 'none',
-        mixBlendMode: 'screen', // Re-enabled for optimal transparency with the new image
+        mixBlendMode: 'screen',
       }}
       initial={{ x: -150, opacity: 0, rotate: -5 }}
       animate={{ 
@@ -288,14 +273,10 @@ const FloatingSpaceship = () => {
       <img 
         src="/nava_exploracion.png" 
         alt="Nava exploracion" 
-        style={{ 
-          width: '100%', 
-          height: 'auto',
-          display: 'block',
-        }} 
+        style={{ width: '100%', height: 'auto', display: 'block' }} 
       />
       
-      {/* Dynamic Cinematic Thrusters - Repositioned using RIGHT anchor for better precision */}
+      {/* Dynamic Cinematic Thrusters */}
       <Thruster top="36%" right="95%" scale={0.8} delay={0} />
       <Thruster top="52%" right="90%" scale={1.3} delay={0.05} />
       <Thruster top="68%" right="95%" scale={0.8} delay={0.1} />
@@ -303,7 +284,198 @@ const FloatingSpaceship = () => {
   );
 };
 
-const SpaceBackground = () => {
+const EarthHorizon = () => {
+  return (
+    <div style={{
+      position: 'absolute',
+      bottom: '-1080px', // Lowered just a bit more as requested
+      left: '50%',
+      transform: 'translateX(-50%)',
+      width: '120vw', // Narrowed further for a sharper 'oval' curve as requested
+      height: '1400px', // Taller for deeper oval curve
+      borderRadius: '50%',
+      zIndex: 1,
+      pointerEvents: 'none',
+      // Deep space gradient with star-field simulation
+      background: 'radial-gradient(ellipse at top, #1B0088 0%, #0F004F 85%)',
+      boxShadow: `
+        0 -60px 160px rgba(0, 255, 242, 0.4),
+        inset 0 0 200px rgba(0, 0, 0, 0.95)
+      `,
+      overflow: 'hidden',
+    }}>
+      {/* BACKGROUND LAYER: CSS STARFIELD */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        opacity: 0.4,
+        backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.8) 1px, transparent 0)',
+        backgroundSize: '100px 100px'
+      }} />
+
+      {/* 3D SQUASH CONTAINER FOR PROJECTION EFFECT */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        display: 'flex',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        perspective: '1200px' // Enhanced perspective
+      }}>
+        {/* LAYER 1: USER-PROVIDED VECTOR MAP SILHOUETTE (Processed into Hologram) */}
+        <div 
+          style={{
+            position: 'absolute',
+            top: 0, 
+            width: '100%',
+            height: '240%', 
+            opacity: 1, 
+            backgroundImage: 'url("/user_map_vector.png")',
+            backgroundSize: '1500px auto',
+            backgroundPosition: 'top center',
+            backgroundRepeat: 'repeat-x',
+            // Invert the black lines to white, tint cyan, and boost contrast
+            filter: 'invert(1) hue-rotate(180deg) brightness(2) contrast(1.5)',
+            mixBlendMode: 'screen', 
+            transformOrigin: 'top center',
+            // significantly increased scaleY (0.6) and rotateX (20deg) for the final 'oval' look
+            transform: 'scaleY(0.6) rotateX(20deg)', 
+          }} 
+        />
+
+        {/* MAP LAYER 1.5: PRECISION SOFT FILL (Using your same silhouette as a mask) */}
+        <div 
+          style={{
+            position: 'absolute',
+            top: 0, 
+            width: '100%',
+            height: '240%', 
+            opacity: 0.15, 
+            maskImage: 'url("/user_map_vector.png")',
+            WebkitMaskImage: 'url("/user_map_vector.png")',
+            maskSize: '1500px auto',
+            WebkitMaskSize: '1500px auto',
+            maskPosition: 'top center',
+            WebkitMaskPosition: 'top center',
+            maskRepeat: 'repeat-x',
+            WebkitMaskRepeat: 'repeat-x',
+            
+            // The trick to fill the 'inside': The mask is inverted so white landmasses are revealed
+            filter: 'invert(1) blur(6px) contrast(100) brightness(1.1)', 
+            
+            background: 'white',
+            mixBlendMode: 'screen', 
+            transformOrigin: 'top center',
+            transform: 'scaleY(0.6) rotateX(20deg)', 
+          }} 
+        />
+
+        {/* MAP LAYER 1.7: GLOWING STARLIGHT DOTS (City Lights Effect) */}
+        <div 
+          style={{
+            position: 'absolute',
+            top: 0, 
+            width: '100%',
+            height: '240%', 
+            opacity: 0.6, 
+            maskImage: 'url("/user_map_vector.png")',
+            WebkitMaskImage: 'url("/user_map_vector.png")',
+            maskSize: '1500px auto',
+            WebkitMaskSize: '1500px auto',
+            maskPosition: 'top center',
+            WebkitMaskPosition: 'top center',
+            maskRepeat: 'repeat-x',
+            WebkitMaskRepeat: 'repeat-x',
+            
+            // This inversion makes sure the dots ONLY appear inside the landmasses
+            filter: 'invert(1)', 
+            
+            // Procedural white dot pattern (Micro-LEDs)
+            backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.8) 0.8px, transparent 1px)',
+            backgroundSize: '10px 10px',
+            
+            mixBlendMode: 'screen', 
+            // Glowing effect
+            filter: 'invert(1) drop-shadow(0 0 3px rgba(255, 255, 255, 0.8))',
+            transformOrigin: 'top center',
+            transform: 'scaleY(0.6) rotateX(20deg)', 
+          }} 
+        />
+      </div>
+
+      {/* LAYER 2: CINEMATIC HORIZON FLARE (RAZOR SHARP LINE) */}
+      <div style={{
+        position: 'absolute',
+        top: 0, left: 0, right: 0, height: '180px',
+        background: 'linear-gradient(to bottom, rgba(0, 255, 242, 0.3) 0%, rgba(0, 255, 242, 0.1) 15%, transparent 60%)',
+        zIndex: 2,
+        borderTop: '2.5px solid rgba(255, 255, 255, 0.85)', // High-intensity flare
+        filter: 'drop-shadow(0 0 10px rgba(0, 255, 242, 1))'
+      }} />
+
+      {/* LAYER 3: COMPLEX GLOBAL NETWORK (REPLICATING REFERENCE SVG) */}
+      <div style={{ position: 'absolute', inset: 0, display: 'flex', justifyContent: 'center', pointerEvents: 'none' }}>
+        <svg width="1500" height="700" viewBox="0 0 1500 700" style={{ position: 'absolute', top: '-100px', zIndex: 3, overflow: 'visible' }}>
+          <defs>
+            <filter id="nodeGlow">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+            <linearGradient id="linkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="transparent" />
+              <stop offset="50%" stopColor="#00FFF2" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="transparent" />
+            </linearGradient>
+          </defs>
+
+          {/* DENSE NETWORK ARCS - REPLICATING THE WEB EFFECT */}
+          {[
+            "M 250,300 Q 500,100 750,250", "M 150,350 Q 400,150 650,300", 
+            "M 450,280 Q 750,50 1050,250", "M 600,320 Q 900,100 1200,300",
+            "M 800,250 Q 1100,80 1400,350", "M 350,400 Q 750,150 1150,400",
+            "M 520,450 Q 800,200 1080,450", "M 200,450 Q 500,300 800,450",
+            "M 700,200 Q 1000,50 1300,200", "M 100,500 Q 450,300 800,450",
+            "M 1200,200 Q 1350,100 1500,250", "M 850,220 Q 950,150 1050,220"
+          ].map((path, i) => (
+            <motion.path 
+              key={i} d={path} stroke="url(#linkGrad)" 
+              strokeWidth={i % 2 === 0 ? "1.5" : "0.8"} fill="none" opacity={0.4 + (i % 5) * 0.1}
+              animate={{ strokeDashoffset: i % 2 === 0 ? [2000, 0] : [-2000, 0] }}
+              transition={{ duration: 10 + i * 2, repeat: Infinity, ease: "linear" }}
+              style={{ strokeDasharray: i % 3 === 0 ? '100 1900' : '50 1950' }}
+            />
+          ))}
+
+          {/* BRIGHT MISSION NODES (INTERSECTIONS) */}
+          {[
+            {x: 250, y: 300, r: 4}, {x: 750, y: 250, r: 6}, {x: 450, y: 280, r: 3},
+            {x: 1050, y: 250, r: 5}, {x: 600, y: 320, r: 4}, {x: 1200, y: 300, r: 5},
+            {x: 1400, y: 350, r: 3}, {x: 350, y: 400, r: 5}, {x: 1150, y: 400, r: 6},
+            {x: 520, y: 450, r: 4}, {x: 800, y: 450, r: 7}, {x: 200, y: 450, r: 4},
+            {x: 700, y: 200, r: 8}, {x: 100, y: 500, r: 3}, {x: 850, y: 220, r: 4},
+            {x: 1300, y: 200, r: 5}, {x: 1050, y: 220, r: 4}
+          ].map((pt, i) => (
+            <React.Fragment key={i}>
+              <motion.circle 
+                cx={pt.x} cy={pt.y} r={pt.r + (i%2?2:0)} fill="white" filter="url(#nodeGlow)"
+                animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.3, 1] }}
+                transition={{ duration: 2 + (i%3), repeat: Infinity, delay: i*0.2 }}
+                style={{ filter: 'drop-shadow(0 0 8px rgba(0, 255, 242, 1))' }}
+              />
+              <motion.circle 
+                cx={pt.x} cy={pt.y} r={pt.r + 15} stroke="rgba(0, 255, 242, 0.3)" fill="none" strokeWidth="0.5"
+                animate={{ scale: [1, 3], opacity: [0.5, 0] }}
+                transition={{ duration: 4, repeat: Infinity, delay: i*0.5 }}
+              />
+            </React.Fragment>
+          ))}
+        </svg>
+      </div>
+    </div>
+  );
+};
+
+const SpaceBackground = ({ showEarth = true, showShip = true, showHorizon = false }: any) => {
   const [isMounted, setIsMounted] = React.useState(false);
   React.useEffect(() => setIsMounted(true), []);
   if (!isMounted) return <div style={{ position: 'absolute', inset: 0, background: '#0F004F' }} />;
@@ -311,8 +483,9 @@ const SpaceBackground = () => {
   return (
     <div style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden', background: '#0F004F' }}>
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 30%, #1B0088 0%, #0F004F 80%)' }} />
-      <RotatingEarth />
-      <FloatingSpaceship />
+      {showEarth && <RotatingEarth />}
+      {showShip && <FloatingSpaceship />}
+      {showHorizon && <EarthHorizon />}
 
       {/* High Performance CSS Starfield */}
       <style>{`
@@ -916,106 +1089,106 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
         <path d="M 60,0 L 560,0 L 620,100 L 0,100 Z" fill="none" stroke="rgba(180,210,230,0.6)" strokeWidth="1.5" />
       </svg>
 
-      {/* STATUS BAR */}
+      {/* TACTICAL STATUS BAR with Mini-Controls */}
       <div style={{ 
         marginTop: '12px', 
         width: '420px', 
-        height: '18px', 
+        height: '24px', 
         background: '#0F004F',
-        border: '1px solid rgba(255,255,255,0.2)',
-        borderRadius: '2px', 
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        border: '1px solid rgba(255,255,255,0.25)',
+        borderRadius: '3px', 
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '0 10px',
         color: '#ffffff', fontFamily: 'monospace', fontSize: '8px', fontWeight: 900,
-        letterSpacing: '1.5px', position: 'relative', zIndex: 2, gap: 6
+        letterSpacing: '1.5px', position: 'relative', zIndex: 2
       }}>
-        <motion.div animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
-          style={{ width: 4, height: 4, borderRadius: '50%', background: '#fff', boxShadow: '0 0 5px #fff', flexShrink: 0 }} />
-        <span>Treinamento Customer Care &amp; Sales</span>
-      </div>
-
-      {/* DISTRIBUTED ROW — Corners + Middle */}
-      <div style={{ 
-        marginTop: '7px', width: '480px', display: 'flex', justifyContent: 'space-between', 
-        alignItems: 'center', position: 'relative', zIndex: 2 
-      }}>
-        {/* LEFT CORNER: LT */}
-        <motion.div
-          whileHover={{ backgroundColor: 'rgba(0,184,204,0.3)', boxShadow: '0 0 16px rgba(0,200,220,0.8)' }}
-          whileTap={{ scale: 0.95 }}
-          onClick={onDim}
-          style={{
-            height: '34px', width: '50px',
-            background: !dimLights ? 'rgba(0,184,204,0.35)' : 'transparent',
-            border: `1.5px solid ${!dimLights ? '#00DDEE' : 'rgba(0,200,220,0.38)'}`,
-            boxShadow: !dimLights ? '0 0 12px rgba(0,200,220,0.55)' : 'none',
-            borderRadius: '3px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer', transition: 'background 0.3s, box-shadow 0.3s',
-          }}
-          title="Alternar Iluminación"
-        >
-          <Monitor size={18} color="#fff" style={{ filter: !dimLights ? 'drop-shadow(0 0 5px #00FFFF)' : 'none' }} />
-        </motion.div>
-
-        {/* CENTER GROUP: PAINÉIS + IARA */}
-        <div style={{ display: 'flex', gap: '8px' }}>
-          {/* PAINÉIS & RELATÓRIOS */}
-          <motion.div
-            animate={{ boxShadow: ['0 0 6px rgba(153,204,51,0.25)', '0 0 16px rgba(153,204,51,0.6)', '0 0 6px rgba(153,204,51,0.25)'] }}
-            transition={{ duration: 2.5, repeat: Infinity }}
-            whileHover={{ backgroundColor: 'rgba(153,204,51,0.22)', boxShadow: '0 0 18px rgba(153,204,51,0.8), 0 0 36px rgba(153,204,51,0.35)' }}
-            whileTap={{ scale: 0.97, backgroundColor: 'rgba(153,204,51,0.4)' }}
-            onClick={onMonitoring}
-            style={{
-              height: '34px', padding: '0 12px',
-              background: 'transparent', border: '1.5px solid rgba(153,204,51,0.55)',
-              borderRadius: '3px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              cursor: 'pointer', position: 'relative', overflow: 'hidden', gap: 6,
-              transition: 'background 0.3s, box-shadow 0.3s',
-            }}
-          >
-            <motion.div animate={{ x: ['-100%', '200%'] }} transition={{ duration: 2.5, repeat: Infinity, ease: 'linear', repeatDelay: 2 }}
-              style={{ position: 'absolute', top: 0, left: 0, width: '35%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(153,204,51,0.12), transparent)', pointerEvents: 'none' }} />
-            <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '0.1em', textShadow: '0 0 8px rgba(153,204,51,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>📊 PAINÉIS</span>
-          </motion.div>
-
-          {/* IARA */}
-          <motion.div
-            animate={{ boxShadow: iaraActive
-              ? ['0 0 14px rgba(123,64,255,0.6)', '0 0 26px rgba(123,64,255,1)', '0 0 14px rgba(123,64,255,0.6)']
-              : ['0 0 5px rgba(123,64,255,0.2)', '0 0 10px rgba(123,64,255,0.4)', '0 0 5px rgba(123,64,255,0.2)'] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            whileHover={{ backgroundColor: iaraActive ? 'rgba(160,80,255,0.45)' : 'rgba(100,20,220,0.3)', boxShadow: '0 0 18px rgba(130,60,255,0.8)' }}
-            whileTap={{ scale: 0.97 }}
-            onClick={onIara}
-            style={{
-              height: '34px', padding: '0 14px',
-              background: iaraActive ? 'rgba(100,32,200,0.45)' : 'transparent',
-              border: `1.5px solid ${iaraActive ? '#A060FF' : 'rgba(123,64,255,0.45)'}`,
-              borderRadius: '3px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              cursor: 'pointer', position: 'relative', overflow: 'hidden',
-              transition: 'background 0.3s, box-shadow 0.3s',
-            }}
-          >
-            <span style={{ fontSize: 10, fontWeight: 900, color: '#fff', letterSpacing: '0.2em', fontFamily: 'monospace', textShadow: iaraActive ? '0 0 10px #C090FF, 0 0 3px #fff' : 'none', whiteSpace: 'nowrap' }}>IARA</span>
-          </motion.div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <motion.div animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
+            style={{ width: 4, height: 4, borderRadius: '50%', background: '#fff', boxShadow: '0 0 5px #fff', flexShrink: 0 }} />
+          <span>Treinamento Customer Care &amp; Sales</span>
         </div>
 
-        {/* RIGHT CORNER: TOGGLE HUD VIEW */}
+        <div style={{ display: 'flex', gap: '6px' }}>
+          {/* Mini Sun Toggle (Illumination) */}
+          <motion.div
+            whileHover={{ backgroundColor: 'rgba(0,184,204,0.3)', boxShadow: '0 0 10px rgba(0,200,220,0.8)' }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onDim}
+            style={{
+              height: '18px', width: '28px',
+              background: !dimLights ? 'rgba(0,184,204,0.35)' : 'transparent',
+              border: `1px solid ${!dimLights ? '#00DDEE' : 'rgba(255,255,255,0.2)'}`,
+              borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', transition: 'all 0.3s',
+            }}
+            title="Alternar Iluminación"
+          >
+            <Sun size={12} color="#fff" style={{ filter: !dimLights ? 'drop-shadow(0 0 4px #00FFFF)' : 'none' }} />
+          </motion.div>
+
+          {/* Mini Layers Toggle (HUD) */}
+          <motion.div
+            whileHover={{ backgroundColor: 'rgba(0,184,204,0.3)', boxShadow: '0 0 10px rgba(0,200,220,0.8)' }}
+            whileTap={{ scale: 0.97 }}
+            onClick={onHud}
+            style={{
+              height: '18px', width: '28px',
+              background: !hudHidden ? 'rgba(0,184,204,0.35)' : 'transparent',
+              border: `1px solid ${!hudHidden ? '#00DDEE' : 'rgba(255,255,255,0.2)'}`,
+              borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', transition: 'all 0.3s',
+            }}
+            title="Alternar HUD"
+          >
+            <Layers size={12} color="#fff" style={{ filter: !hudHidden ? 'drop-shadow(0 0 4px #00FFFF)' : 'none' }} />
+          </motion.div>
+        </div>
+      </div>
+
+      {/* MAIN CONSOLE ROW — Focused Actions */}
+      <div style={{ 
+        marginTop: '8px', display: 'flex', justifyContent: 'center', gap: '10px',
+        alignItems: 'center', position: 'relative', zIndex: 2 
+      }}>
+        {/* PAINÉIS & RELATÓRIOS */}
         <motion.div
-          whileHover={{ backgroundColor: 'rgba(0,184,204,0.3)', boxShadow: '0 0 16px rgba(0,200,220,0.8)' }}
-          whileTap={{ scale: 0.97 }}
-          onClick={onHud}
+          animate={{ boxShadow: ['0 0 6px rgba(153,204,51,0.25)', '0 0 16px rgba(153,204,51,0.6)', '0 0 6px rgba(153,204,51,0.25)'] }}
+          transition={{ duration: 2.5, repeat: Infinity }}
+          whileHover={{ backgroundColor: 'rgba(153,204,51,0.22)', boxShadow: '0 0 18px rgba(153,204,51,0.8), 0 0 36px rgba(153,204,51,0.35)' }}
+          whileTap={{ scale: 0.97, backgroundColor: 'rgba(153,204,51,0.4)' }}
+          onClick={onMonitoring}
           style={{
-            height: '34px', width: '50px',
-            background: !hudHidden ? 'rgba(0,184,204,0.35)' : 'transparent',
-            border: `1.5px solid ${!hudHidden ? '#00DDEE' : 'rgba(0,200,220,0.38)'}`,
-            boxShadow: !hudHidden ? '0 0 12px rgba(0,200,220,0.55)' : 'none',
-            borderRadius: '3px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer', transition: 'background 0.3s, box-shadow 0.3s',
+            height: '36px', padding: '0 16px',
+            background: 'transparent', border: '1.5px solid rgba(153,204,51,0.55)',
+            borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer', position: 'relative', overflow: 'hidden', gap: 8,
+            transition: 'background 0.3s, box-shadow 0.3s',
           }}
-          title="Alternar HUD"
         >
-          <Eye size={18} color="#fff" style={{ filter: !hudHidden ? 'drop-shadow(0 0 5px #00FFFF)' : 'none' }} />
+          <motion.div animate={{ x: ['-100%', '200%'] }} transition={{ duration: 2.5, repeat: Infinity, ease: 'linear', repeatDelay: 2 }}
+            style={{ position: 'absolute', top: 0, left: 0, width: '35%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(153,204,51,0.12), transparent)', pointerEvents: 'none' }} />
+          <span style={{ fontSize: 10, fontWeight: 900, color: '#fff', letterSpacing: '0.12em', textShadow: '0 0 8px rgba(153,204,51,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>📊 PAINÉIS</span>
+        </motion.div>
+
+        {/* IARA */}
+        <motion.div
+          animate={{ boxShadow: iaraActive
+            ? ['0 0 14px rgba(123,64,255,0.6)', '0 0 26px rgba(123,64,255,1)', '0 0 14px rgba(123,64,255,0.6)']
+            : ['0 0 5px rgba(123,64,255,0.2)', '0 0 10px rgba(123,64,255,0.4)', '0 0 5px rgba(123,64,255,0.2)'] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          whileHover={{ backgroundColor: iaraActive ? 'rgba(160,80,255,0.45)' : 'rgba(100,20,220,0.3)', boxShadow: '0 0 18px rgba(130,60,255,0.8)' }}
+          whileTap={{ scale: 0.97 }}
+          onClick={onIara}
+          style={{
+            height: '36px', padding: '0 18px',
+            background: iaraActive ? 'rgba(100,32,200,0.45)' : 'transparent',
+            border: `1.5px solid ${iaraActive ? '#A060FF' : 'rgba(123,64,255,0.45)'}`,
+            borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer', position: 'relative', overflow: 'hidden',
+            transition: 'background 0.3s, box-shadow 0.3s',
+          }}
+        >
+          <span style={{ fontSize: 11, fontWeight: 900, color: '#fff', letterSpacing: '0.2em', fontFamily: 'monospace', textShadow: iaraActive ? '0 0 10px #C090FF, 0 0 3px #fff' : 'none', whiteSpace: 'nowrap' }}>IARA</span>
         </motion.div>
       </div>
     </div>
@@ -1163,8 +1336,7 @@ const IaraHologram = ({ isVisible, onClose, iaraLink }: any) => {
 };
 
 const StationIcon = ({ alertMode }: any) => {
-  const mainColor = alertMode ? "#ff0000" : "#99CC33";
-  const brandColor = "#0F004F";
+  const mainColor = alertMode ? "#ff0000" : "#0F004F";
   
   return (
     <motion.div
@@ -1179,33 +1351,25 @@ const StationIcon = ({ alertMode }: any) => {
       }}
       style={{ position: 'relative', width: 70, height: 70, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
     >
-      <svg width="64" height="64" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Crossed Solar Panels (X-Formation) */}
-        <g opacity="0.9">
-          <rect x="8" y="18" width="24" height="4" rx="1" transform="rotate(45 20 20)" fill={brandColor} />
-          <rect x="8" y="18" width="24" height="4" rx="1" transform="rotate(-45 20 20)" fill={brandColor} />
-          {/* Panel Highlights */}
-          <rect x="12" y="19.5" width="6" height="1" rx="0.5" transform="rotate(45 20 20)" fill={mainColor} opacity="0.6" />
-          <rect x="22" y="19.5" width="6" height="1" rx="0.5" transform="rotate(45 20 20)" fill={mainColor} opacity="0.6" />
-          <rect x="12" y="19.5" width="6" height="1" rx="0.5" transform="rotate(-45 20 20)" fill={mainColor} opacity="0.6" />
-          <rect x="22" y="19.5" width="6" height="1" rx="0.5" transform="rotate(-45 20 20)" fill={mainColor} opacity="0.6" />
-        </g>
-        
-        {/* Main Body (Cylinder) */}
-        <path d="M18 10C18 8.89543 18.8954 8 20 8C21.1046 8 22 8.89543 22 10V26H18V10Z" fill={brandColor} />
-        <rect x="18.5" y="12" width="3" height="1" fill={mainColor} opacity="0.8" />
-        <rect x="18.5" y="15" width="3" height="4" fill={mainColor} opacity="0.4" />
-        
-        {/* Communication Dish */}
-        <path d="M14 30C14 28 16 26 20 26C24 26 26 28 26 30L20 34L14 30Z" fill={brandColor} />
-        <circle cx="20" cy="34" r="2.5" fill={mainColor}>
-          <animate attributeName="r" values="2;3;2" dur="2s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite" />
-        </circle>
-        
-        {/* Antenna Tip */}
-        <rect x="19.5" y="5" width="1" height="4" fill={mainColor} />
-      </svg>
+      <div style={{ 
+        position: 'relative', 
+        filter: alertMode 
+          ? `drop-shadow(0 0 15px #ff0000aa)` 
+          : `drop-shadow(0 0 10px rgba(153, 204, 51, 0.5))` // Sutil resplandor verde
+      }}>
+        <TacticalSatelliteIcon size={84} color={mainColor} />
+        {/* Additional decorative rim for the header version */}
+        <motion.div 
+            animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 3, repeat: Infinity }}
+            style={{ 
+              position: 'absolute', 
+              inset: -6, 
+              border: `1px solid ${alertMode ? '#ff000044' : '#99CC3344'}`, // Rim inherits the glow color
+              borderRadius: '50%' 
+            }} 
+        />
+      </div>
     </motion.div>
   );
 };
@@ -1218,7 +1382,7 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
 
   return (
     <div style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden', backgroundColor: '#0F004F', fontFamily: '"Inter", sans-serif', display: 'flex', flexDirection: 'column' }}>
-      <SpaceBackground />
+      <SpaceBackground showEarth={true} showShip={true} />
       <IaraHologram isVisible={showIara} onClose={() => setShowIara(false)} iaraLink={config.iaraLink} />
       {!hudHidden && <CommandCenterInterior isAlert={alertMode} isDim={dimLights} isHudHidden={hudHidden} />}
       <SpaceKeyboard 

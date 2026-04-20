@@ -5,6 +5,7 @@ import {
   Anchor, Activity, Cpu, Shield, Globe, Zap, Radio, Terminal, Map as MapIcon,
   Navigation, Hexagon, Crosshair, Lightbulb, BadgeCheck, FileText, Satellite, Gem
 } from 'lucide-react';
+import { TacticalSatelliteIcon } from './Shared';
 
 /* ── HELPER COMPONENTS ──────────────────────────────────────────────── */
 const JourneyStartShip = () => (
@@ -248,7 +249,7 @@ const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', d
                             color: color, border: `1px solid ${color}44`,
                             boxShadow: `0 0 20px ${color}33`
                         }}>
-                            {mode === 'DIRECT' ? <Rocket size={24} /> : (icon || <Satellite size={24} />)}
+                            {mode === 'DIRECT' ? <Rocket size={24} /> : (icon || <TacticalSatelliteIcon size={62} color={color} />)}
                         </div>
                     </div>
 
