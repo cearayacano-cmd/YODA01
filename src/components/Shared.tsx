@@ -16,9 +16,8 @@ export const BackBtn = ({ onClick, label='VOLVER' }) => (
   </Btn>
 );
 
-export const TacticalSatelliteIcon = ({ size = 24, color = 'currentColor' }: any) => {
+export const TacticalSatelliteIcon = ({ size = 24, color = 'currentColor', bgColor = "#0F004F" }: any) => {
     const accentColor = color; 
-    const bgColor = "#0F004F";
     
     return (
         <motion.div
