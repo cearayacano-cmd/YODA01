@@ -152,15 +152,32 @@ export const Landing = ({ onNavigate, onAdmin }: any) => (
             { bottom: -2, left: '52.0%', isOuter: false }
           ].map((pos: any, i) => (
             <div key={i} style={{ position: 'absolute', bottom: pos.bottom, left: pos.left, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              {/* Breathing corona behind the sphere */}
+              <motion.div
+                animate={{ scale: [1, 1.5, 1], opacity: [0.25, 0.55, 0.25] }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: i * 0.4 }}
+                style={{
+                  position: 'absolute',
+                  width: pos.isOuter ? 70 : 52,
+                  height: pos.isOuter ? 70 : 52,
+                  background: 'radial-gradient(circle, #00FFF2, transparent 70%)',
+                  borderRadius: '50%',
+                  filter: 'blur(10px)',
+                  zIndex: 4,
+                  pointerEvents: 'none'
+                }}
+              />
+              {/* Core sphere — high-freq flicker */}
               <motion.div
                 animate={{ 
-                  scale: [1, 1.15, 1],
-                  opacity: [0.9, 1, 0.9]
+                  scale: [1, 1.12, 0.96, 1.08, 1],
+                  opacity: [0.9, 1, 0.82, 1, 0.9]
                 }}
                 transition={{ 
-                  duration: 2, 
+                  duration: 0.18, 
                   repeat: Infinity, 
-                  ease: "easeInOut" 
+                  ease: 'linear',
+                  delay: i * 0.07
                 }}
                 style={{
                   width: pos.isOuter ? 28 : 20, 
@@ -168,22 +185,41 @@ export const Landing = ({ onNavigate, onAdmin }: any) => (
                   background: '#fff',
                   borderRadius: '50%',
                   boxShadow: `0 0 ${pos.isOuter ? '40px' : '25px'} #00FFF2, 0 0 10px #fff`,
-                  zIndex: 6
+                  zIndex: 6,
+                  position: 'relative'
                 }}
               />
-              {/* Propulsor Beam - Pegado a la nave */}
-              <div
+              {/* Dynamic exhaust beam */}
+              <motion.div
+                animate={{ 
+                  height: [95, 118, 102, 128, 98],
+                  opacity: [0.6, 0.85, 0.7, 0.9, 0.6]
+                }}
+                transition={{ duration: 0.22, repeat: Infinity, ease: 'linear', delay: i * 0.05 }}
                 style={{
                   width: pos.isOuter ? 22 : 16,
-                  height: 100,
-                  opacity: 0.6,
-                  background: 'linear-gradient(to bottom, #00FFF2, transparent)',
-                  filter: 'blur(6px)',
-                  marginTop: -15, 
+                  background: 'linear-gradient(to bottom, #00FFF2 0%, rgba(0,255,242,0.4) 50%, transparent 100%)',
+                  filter: 'blur(5px)',
+                  marginTop: -12,
                   borderRadius: '0 0 25px 25px',
-                  zIndex: 5
+                  zIndex: 5,
+                  position: 'relative',
+                  overflow: 'hidden',
+                  transformOrigin: 'top center'
                 }}
-              />
+              >
+                {/* Energy pulse wave scrolling downward */}
+                <motion.div
+                  animate={{ y: [-10, 140] }}
+                  transition={{ duration: 0.55, repeat: Infinity, ease: 'linear', delay: i * 0.15 }}
+                  style={{
+                    position: 'absolute', top: 0, left: 0, right: 0,
+                    height: '30%',
+                    background: 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.5), transparent)',
+                    filter: 'blur(2px)'
+                  }}
+                />
+              </motion.div>
             </div>
           ))}
         </motion.div>
