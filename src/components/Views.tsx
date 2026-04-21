@@ -434,14 +434,14 @@ const EarthHorizon = () => {
           }} 
         />
 
-        {/* MAP LAYER 1.7: GLOWING STARLIGHT DOTS (City Lights Effect) */}
+        {/* MAP LAYER 1.7: DENSE STARLIGHT MESH (Landmass core glow) */}
         <div 
           style={{
             position: 'absolute',
             top: 0, 
             width: '100%',
             height: '240%', 
-            opacity: 0.6, 
+            opacity: 0.8, 
             maskImage: 'url("/user_map_vector.png")',
             WebkitMaskImage: 'url("/user_map_vector.png")',
             maskSize: '1500px auto',
@@ -449,27 +449,22 @@ const EarthHorizon = () => {
             maskPosition: 'top center',
             WebkitMaskPosition: 'top center',
             maskRepeat: 'repeat-x',
-            WebkitMaskRepeat: 'repeat-x',
             
-            // This inversion makes sure the dots ONLY appear inside the landmasses
             filter: 'invert(1)', 
-            
-            // Procedural white dot pattern (Micro-LEDs)
-            backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.8) 0.8px, transparent 1px)',
-            backgroundSize: '10px 10px',
+            // Denser white core
+            backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.9) 0.6px, transparent 1px)',
+            backgroundSize: '4px 4px',
             
             mixBlendMode: 'screen', 
-            // Glowing effect
-            filter: 'invert(1) drop-shadow(0 0 3px rgba(255, 255, 255, 0.8))',
             transformOrigin: 'top center',
             transform: 'scaleY(0.6) rotateX(20deg)', 
           }} 
         />
 
-        {/* MAP LAYER 1.8: MICRO-PULSE DATA NODES (Detailed twinkling city lights) */}
+        {/* MAP LAYER 1.8: MICRO-PULSE DATA NODES (Vibrant twinkling energy) */}
         <motion.div 
-          animate={{ opacity: [0.3, 0.8, 0.3] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          animate={{ opacity: [0.4, 1, 0.4] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           style={{
             position: 'absolute',
             top: 0, 
@@ -483,14 +478,42 @@ const EarthHorizon = () => {
             WebkitMaskPosition: 'top center',
             maskRepeat: 'repeat-x',
             
-            filter: 'invert(1)', 
-            backgroundImage: 'radial-gradient(rgba(153, 204, 51, 0.9) 0.5px, transparent 1px)',
-            backgroundSize: '6px 6px',
+            filter: 'invert(1) drop-shadow(0 0 2px #99CC33)', 
+            // Hyper-dense green energy dots
+            backgroundImage: 'radial-gradient(rgba(153, 204, 51, 1) 0.5px, transparent 1px)',
+            backgroundSize: '3px 3px',
             
             mixBlendMode: 'screen', 
             transformOrigin: 'top center',
             transform: 'scaleY(0.6) rotateX(20deg)', 
             zIndex: 2
+          }} 
+        />
+
+        {/* MAP LAYER 1.9: ATMOSPHERIC CITY GLOW (Slight noise for organic feel) */}
+        <div 
+          style={{
+            position: 'absolute',
+            top: 0, 
+            width: '100%',
+            height: '240%', 
+            opacity: 0.25,
+            maskImage: 'url("/user_map_vector.png")',
+            WebkitMaskImage: 'url("/user_map_vector.png")',
+            maskSize: '1500px auto',
+            WebkitMaskSize: '1500px auto',
+            maskPosition: 'top center',
+            WebkitMaskPosition: 'top center',
+            maskRepeat: 'repeat-x',
+            
+            filter: 'invert(1) blur(2px)', 
+            backgroundImage: 'radial-gradient(rgba(0, 255, 242, 0.4) 2px, transparent 4px)',
+            backgroundSize: '15px 15px',
+            
+            mixBlendMode: 'screen', 
+            transformOrigin: 'top center',
+            transform: 'scaleY(0.6) rotateX(20deg)', 
+            zIndex: 1
           }} 
         />
       </div>
