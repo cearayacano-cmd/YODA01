@@ -1455,23 +1455,23 @@ const IaraHologram = ({ isVisible, onClose, iaraLink }: any) => {
             rotate: [-1.5, 1.5, -0.5, 1, -1.5],
           }}
           transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ position: 'relative', zIndex: 5, width: '100%', height: '100%', background: 'transparent' }}
+          style={{ 
+            position: 'relative', zIndex: 5, width: '100%', height: '100%', 
+            background: 'transparent',
+            mixBlendMode: 'screen',
+          }}
         >
-          {/* Glitch flicker */}
-          <motion.div
-            animate={{ opacity: [0, 0, 0, 0.5, 0, 0, 0, 0.3, 0, 0] }}
-            transition={{ duration: 5, repeat: Infinity }}
-            style={{ position: 'absolute', inset: 0, zIndex: 8, background: 'rgba(0,243,255,0.08)', pointerEvents: 'none', mixBlendMode: 'screen' }}
-          />
-
-          <img
-            src="/iara.png"
-            alt="IARA"
+          <video
+            src="/iara_animacion.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
             style={{
               width: '100%', height: '100%', objectFit: 'contain',
-              position: 'relative', zIndex: 5,
+              position: 'relative', zIndex: 10,
               mixBlendMode: 'screen',
-              filter: 'drop-shadow(0 0 25px rgba(0,243,255,1)) drop-shadow(0 0 8px #00F3FF) brightness(1.2) contrast(1.1)',
+              filter: 'brightness(1.2) contrast(1.2)',
             }}
           />
         </motion.div>
@@ -1632,6 +1632,15 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
           <img src="/guardianes_logo.png" alt="Guardianes Logo" style={{ height: '60px', width: 'auto', opacity: 1, filter: 'brightness(1.1)' }} />
         </div>
       </div>
+      {/* Global SVG Filters for Holograms */}
+      <svg width="0" height="0" style={{ position: 'absolute', pointerEvents: 'none', visibility: 'hidden' }}>
+        <filter id="remove-black" colorInterpolationFilters="sRGB">
+          <feColorMatrix type="matrix" values="1 0 0 0 0
+                                               0 1 0 0 0
+                                               0 0 1 0 0
+                                               -1 -1 -1 1 0" />
+        </filter>
+      </svg>
     </div>
   );
 };
