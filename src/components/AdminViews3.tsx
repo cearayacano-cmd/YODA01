@@ -68,9 +68,9 @@ export const AdminRutaLider = ({ rutaData, setRutaData, onBack, title }: any) =>
           whileTap={{ scale: 0.98 }}
           onClick={saveFlash}
           style={{
-            marginLeft: 'auto', background: saved ? '#00D6CC' : '#99CC33', color: '#ffffff', border: 'none', padding: '12px 32px',
+            marginLeft: 'auto', background: saved ? '#22c55e' : '#99CC33', color: '#ffffff', border: 'none', padding: '12px 32px',
             cursor: 'pointer', fontSize: 13, fontWeight: 800, borderRadius: 8, display: 'flex', alignItems: 'center', gap: 10,
-            boxShadow: `0 10px 20px ${saved ? '#00D6CC' : '#99CC33'}40`, transition: 'all 0.3s ease'
+            boxShadow: `0 10px 20px ${saved ? '#22c55e' : '#99CC33'}40`, transition: 'all 0.3s ease'
           }}
         >
           {saved ? <><CheckCircle2 size={18} /> GUARDADO PROFESIONAL</> : <><Save size={18} /> GUARDAR ESTRUCTURA</>}
@@ -102,7 +102,7 @@ export const AdminRutaLider = ({ rutaData, setRutaData, onBack, title }: any) =>
         {poderes.map((pName, pIdx) => {
           const pNodes = (rutaData || []).filter((r: any) => r.poder === pName);
           const pTime = pNodes[0]?.tiempo || '';
-          const pColor = ['#99CC33', '#FF00FF', '#00D6CC', '#1B0088', '#ED1650'][pIdx % 5];
+          const pColor = ['#99CC33', '#FF00FF', '#1B0088', '#ED1650', '#99CC33'][pIdx % 5];
 
           return (
             <div key={`planet-${pIdx}`} style={{ 

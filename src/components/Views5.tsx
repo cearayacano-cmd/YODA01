@@ -35,15 +35,15 @@ const MapBackground = () => (
     <motion.div 
         animate={{ opacity: [0.1, 0.3, 0.1], scale: [1.1, 1, 1.1] }}
         transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
-        style={{ position: 'absolute', bottom: '10%', right: '5%', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(0,214,204,0.3) 0%, transparent 70%)', filter: 'blur(80px)' }} 
+        style={{ position: 'absolute', bottom: '10%', right: '5%', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(153,204,51,0.3) 0%, transparent 70%)', filter: 'blur(80px)' }} 
     />
     
     {/* Vector Tactical Grid */}
     <div style={{ 
       position: 'absolute', inset: 0, 
       backgroundImage: `
-        linear-gradient(rgba(0,214,204,0.05) 1px, transparent 1px), 
-        linear-gradient(90deg, rgba(0,214,204,0.05) 1px, transparent 1px)
+        linear-gradient(rgba(153,204,51,0.05) 1px, transparent 1px), 
+        linear-gradient(90deg, rgba(153,204,51,0.05) 1px, transparent 1px)
       `, 
       backgroundSize: '100px 100px',
       maskImage: 'radial-gradient(circle at center, black 40%, transparent 95%)'
@@ -55,8 +55,8 @@ const MapBackground = () => (
 );
 
 const HUD = ({ level, xp, totalXp, activePowers, onBack }: any) => (
-  <div style={{ position: 'sticky', top: 0, background: 'rgba(15, 0, 79, 0.95)', backdropFilter: 'blur(20px)', borderBottom: '2px solid #00D6CC', padding: '14px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 100, boxShadow: '0 4px 30px rgba(0,0,0,0.3)' }}>
-    <button onClick={onBack} style={{ background: 'transparent', border: '1.5px solid rgba(0,214,204,0.4)', color: '#00D6CC', padding: '8px 18px', borderRadius: '4px', cursor: 'pointer', fontSize: '10px', fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase', transition: '0.3s' }} onMouseEnter={e => { e.currentTarget.style.background = '#00D6CC'; e.currentTarget.style.color = '#0F004F'; }}>
+  <div style={{ position: 'sticky', top: 0, background: 'rgba(15, 0, 79, 0.95)', backdropFilter: 'blur(20px)', borderBottom: '2px solid #99CC33', padding: '14px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 100, boxShadow: '0 4px 30px rgba(0,0,0,0.3)' }}>
+    <button onClick={onBack} style={{ background: 'transparent', border: '1.5px solid rgba(153, 204, 51, 0.4)', color: '#99CC33', padding: '8px 18px', borderRadius: '4px', cursor: 'pointer', fontSize: '10px', fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase', transition: '0.3s' }} onMouseEnter={e => { e.currentTarget.style.background = '#99CC33'; e.currentTarget.style.color = '#0F004F'; }}>
       ← SALIR AL ESPACIO
     </button>
     
@@ -66,33 +66,26 @@ const HUD = ({ level, xp, totalXp, activePowers, onBack }: any) => (
         fontSize: '28px', 
         fontWeight: 900, 
         letterSpacing: '2px', 
-        background: 'linear-gradient(to bottom, #FFFFFF 0%, #D1D5DB 40%, #9CA3AF 50%, #4B5563 100%)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
+        color: '#FFFFFF',
         filter: 'drop-shadow(0 0 15px rgba(255,255,255,0.2))',
         textTransform: 'uppercase'
       }}>
-        RUTA DEL <span style={{ 
-          background: 'linear-gradient(to bottom, #FFE017 0%, #FFD700 40%, #FF8A00 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          filter: 'drop-shadow(0 0 10px rgba(255,224,23,0.3))'
-        }}>LÍDER GUARDIÁN</span>
+        RUTA DEL LÍDER GUARDIÁN
       </div>
     </div>
 
     <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
-      <div style={{ border: '2.5px solid #00D6CC', borderRadius: '8px', padding: '6px 16px', textAlign: 'center', minWidth: '80px', background: 'rgba(0,214,204,0.05)' }}>
-        <div style={{ fontSize: '8px', color: '#00D6CC', fontWeight: 900 }}>NIVEL</div>
+      <div style={{ border: '2.5px solid #99CC33', borderRadius: '8px', padding: '6px 16px', textAlign: 'center', minWidth: '80px', background: 'rgba(153, 204, 51, 0.05)' }}>
+        <div style={{ fontSize: '8px', color: '#99CC33', fontWeight: 900 }}>NIVEL</div>
         <div style={{ fontSize: '22px', color: '#fff', fontWeight: 900 }}>{level}</div>
       </div>
       <div>
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', color: 'rgba(255,255,255,0.6)', fontWeight: 800, marginBottom: '6px' }}>
           <span>PROGRESO DE COMPRENSIÓN</span>
-          <span style={{ color: '#00D6CC' }}>{xp} / {totalXp} XP</span>
+          <span style={{ color: '#99CC33' }}>{xp} / {totalXp} XP</span>
         </div>
         <div style={{ width: '160px', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '10px', overflow: 'hidden' }}>
-          <div style={{ width: `${(xp / totalXp) * 100}%`, height: '100%', background: 'linear-gradient(90deg, #00D6CC, #4257E8)', boxShadow: '0 0 10px #00D6CC', transition: 'width 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }} />
+          <div style={{ width: `${(xp / totalXp) * 100}%`, height: '100%', background: 'linear-gradient(90deg, #99CC33, #4257E8)', boxShadow: '0 0 10px #99CC33', transition: 'width 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }} />
         </div>
       </div>
     </div>
@@ -161,7 +154,7 @@ const PowerNode = ({ p, index, isCompleted, onOpen }: any) => {
             onClick={() => onOpen(p.name)}
             style={{ 
               width: '100%', padding: '16px', background: isCompleted ? '#99CC33' : '#1B0088', 
-              color: '#fff', border: isCompleted ? 'none' : '1px solid #00D6CC', borderRadius: '10px',
+              color: '#fff', border: isCompleted ? 'none' : '1px solid #99CC33', borderRadius: '10px',
               fontWeight: 900, fontSize: '13px', letterSpacing: '1.5px', cursor: 'pointer',
               transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
               boxShadow: isCompleted ? '0 10px 20px rgba(153,204,51,0.2)' : '0 10px 20px rgba(27,0,136,0.3)'
@@ -366,7 +359,7 @@ const PowerDiscoveryTerminal = ({ p, nodes, onBack, onComplete }: any) => {
 
           <div style={{ background: '#0F004F', borderRadius: 24, padding: 36, position: 'relative', overflow: 'hidden' }}>
              <div style={{ position: 'absolute', top: -30, right: -30, fontSize: 140, opacity: 0.05, transform: 'rotate(-20deg)' }}>{p.icon}</div>
-             <div style={{ fontWeight: 900, fontSize: 11, color: '#00D6CC', letterSpacing: '2px', marginBottom: 16 }}>SOPORTE INTELIGENTE</div>
+             <div style={{ fontWeight: 900, fontSize: 11, color: '#99CC33', letterSpacing: '2px', marginBottom: 16 }}>SOPORTE INTELIGENTE</div>
              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', lineHeight: 1.7, fontStyle: 'italic', position: 'relative', zIndex: 1 }}>
                "Los conceptos JETS vinculan la cultura LATAM con la excelencia operativa. Mantenga el enfoque en la mirada del líder."
              </div>
@@ -433,8 +426,8 @@ export const RutaLiderView = ({ links, rutaData, onBack }: any) => {
         {/* Banner Pill */}
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '60px' }}>
           <div style={{ 
-            background: 'rgba(3, 5, 15, 0.6)', backdropFilter: 'blur(10px)', border: '1px solid #FFD700', borderRadius: '30px', padding: '10px 32px',
-            fontSize: '11px', fontWeight: 900, color: '#FFD700', letterSpacing: '2px', boxShadow: '0 0 20px rgba(255,215,0,0.2)'
+            background: 'rgba(3, 5, 15, 0.6)', backdropFilter: 'blur(10px)', border: '1px solid #99CC33', borderRadius: '30px', padding: '10px 32px',
+            fontSize: '11px', fontWeight: 900, color: '#99CC33', letterSpacing: '2px', boxShadow: '0 0 20px rgba(153, 204, 51, 0.2)'
           }}>
             🗺️ ELIGE TU CAMINO · TODOS LOS PODERES DISPONIBLES ✨
           </div>

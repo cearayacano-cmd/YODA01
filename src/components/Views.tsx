@@ -87,18 +87,82 @@ export const Landing = ({ onNavigate, onAdmin }: any) => (
         transition={{ duration: 1 }}
         style={{textAlign: 'center', marginBottom: 50}}
       >
-        <div style={{fontSize:12, color:'rgba(255,255,255,0.6)', letterSpacing:'0.8em', textTransform:'uppercase', marginBottom:16, fontWeight: 900}}>PREPARE FOR LAUNCH</div>
-        <div style={{fontSize:110, fontWeight:900, letterSpacing:'0.05em', color:'#fff', marginBottom:8, lineHeight: 1, textShadow: '0 0 60px rgba(0,255,242,0.3)'}}>UNIVERSO</div>
-        <div style={{fontSize:20, fontWeight:500, letterSpacing:'0.7em', color:'rgba(255,255,255,0.5)', textTransform: 'uppercase'}}>Customer Care & Sales</div>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{fontSize:110, fontWeight:900, letterSpacing:'0.05em', color:'#fff', lineHeight: 0.9, textShadow: '0 0 60px rgba(0,255,242,0.3)', marginBottom: 12}}>UNIVERSO</div>
+          <div style={{fontSize:20, fontWeight:500, letterSpacing:'0.7em', color:'rgba(255,255,255,0.5)', textTransform: 'uppercase'}}>Customer Care & Sales</div>
+        </div>
       </motion.div>
 
-      <div style={{display:'flex', gap:40, alignItems: 'center'}}>
+      <div style={{display:'flex', gap:60, alignItems: 'center'}}>
         <LandingMissionCard 
           id="ssc" 
           subtitle="Satellite Alpha • Orbit 1" 
           color="#7000AB" 
           onClick={() => onNavigate('ssc')} 
         />
+
+        {/* Center Nave with floating animation and thruster effects */}
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ 
+            opacity: 1, 
+            y: [0, -15, 0]
+          }}
+          transition={{ 
+            opacity: { duration: 1 },
+            y: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+          }}
+          style={{ position: 'relative', width: 400, display: 'flex', justifyContent: 'center' }}
+        >
+          <img 
+            src="/Nave.png" 
+            alt="Nave" 
+            style={{ height: 460, width: 'auto', filter: 'drop-shadow(0 0 60px rgba(0,255,242,0.6))' }} 
+          />
+          {/* 4 Thruster Glow Spheres & Propulsores - Perfectly Synchronized */}
+          {[
+            { bottom: 24, left: '36.0%', isOuter: true },
+            { bottom: 24, left: '58.0%', isOuter: true },
+            { bottom: -2, left: '44.0%', isOuter: false },
+            { bottom: -2, left: '52.0%', isOuter: false }
+          ].map((pos: any, i) => (
+            <div key={i} style={{ position: 'absolute', bottom: pos.bottom, left: pos.left, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <motion.div
+                animate={{ 
+                  scale: [1, 1.15, 1],
+                  opacity: [0.9, 1, 0.9]
+                }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+                style={{
+                  width: pos.isOuter ? 28 : 20, 
+                  height: pos.isOuter ? 28 : 20,
+                  background: '#fff',
+                  borderRadius: '50%',
+                  boxShadow: `0 0 ${pos.isOuter ? '40px' : '25px'} #00FFF2, 0 0 10px #fff`,
+                  zIndex: 6
+                }}
+              />
+              {/* Propulsor Beam - Pegado a la nave */}
+              <div
+                style={{
+                  width: pos.isOuter ? 22 : 16,
+                  height: 100,
+                  opacity: 0.6,
+                  background: 'linear-gradient(to bottom, #00FFF2, transparent)',
+                  filter: 'blur(6px)',
+                  marginTop: -15, 
+                  borderRadius: '0 0 25px 25px',
+                  zIndex: 5
+                }}
+              />
+            </div>
+          ))}
+        </motion.div>
+
         <LandingMissionCard 
           id="br" 
           subtitle="Satellite Beta • Orbit 2" 
@@ -448,11 +512,11 @@ const EarthHorizon = () => {
 
           {/* BRIGHT MISSION NODES (INTERSECTIONS) */}
           {[
-            {x: 250, y: 300, r: 4}, {x: 750, y: 250, r: 6}, {x: 450, y: 280, r: 3},
+            {x: 250, y: 300, r: 4}, {x: 450, y: 280, r: 3},
             {x: 1050, y: 250, r: 5}, {x: 600, y: 320, r: 4}, {x: 1200, y: 300, r: 5},
             {x: 1400, y: 350, r: 3}, {x: 350, y: 400, r: 5}, {x: 1150, y: 400, r: 6},
-            {x: 520, y: 450, r: 4}, {x: 800, y: 450, r: 7}, {x: 200, y: 450, r: 4},
-            {x: 700, y: 200, r: 8}, {x: 100, y: 500, r: 3}, {x: 850, y: 220, r: 4},
+            {x: 520, y: 450, r: 4}, {x: 200, y: 450, r: 4},
+            {x: 100, y: 500, r: 3}, {x: 850, y: 220, r: 4},
             {x: 1300, y: 200, r: 5}, {x: 1050, y: 220, r: 4}
           ].map((pt, i) => (
             <React.Fragment key={i}>
@@ -1335,8 +1399,8 @@ const IaraHologram = ({ isVisible, onClose, iaraLink }: any) => {
   );
 };
 
-const StationIcon = ({ alertMode }: any) => {
-  const mainColor = alertMode ? "#ff0000" : "#0F004F";
+const StationIcon = ({ alertMode, color }: any) => {
+  const mainColor = alertMode ? "#ff0000" : (color || "#99CC33");
   
   return (
     <motion.div
@@ -1355,7 +1419,7 @@ const StationIcon = ({ alertMode }: any) => {
         position: 'relative', 
         filter: alertMode 
           ? `drop-shadow(0 0 15px #ff0000aa)` 
-          : `drop-shadow(0 0 10px rgba(153, 204, 51, 0.5))` // Sutil resplandor verde
+          : `drop-shadow(0 0 15px ${mainColor}aa)` // Intense resplandor
       }}>
         <TacticalSatelliteIcon size={84} color={mainColor} />
         {/* Additional decorative rim for the header version */}
@@ -1365,7 +1429,7 @@ const StationIcon = ({ alertMode }: any) => {
             style={{ 
               position: 'absolute', 
               inset: -6, 
-              border: `1px solid ${alertMode ? '#ff000044' : '#99CC3344'}`, // Rim inherits the glow color
+              border: `1px solid ${alertMode ? '#ff000044' : `${mainColor}44`}`, // Rim inherits the glow color
               borderRadius: '50%' 
             }} 
         />
@@ -1400,7 +1464,7 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
           ← SALIR
         </button>
         <div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <StationIcon alertMode={alertMode} />
+          <StationIcon alertMode={alertMode} color={stationName === "BR" ? "#99CC33" : "#7000AB"} />
           <div>
             <div style={{ fontSize: 11, letterSpacing: '0.4em', color: alertMode ? '#ff5555' : '#64748b', textTransform: 'uppercase', marginBottom: 2, fontWeight: 700 }}>Estación Espacial</div>
             <div style={{ fontSize: 24, fontWeight: 900, color: alertMode ? '#fff' : '#0F004F', letterSpacing: '0.1em' }}>{stationName} STATION</div>
