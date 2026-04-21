@@ -124,10 +124,10 @@ export const Landing = ({ onNavigate, onAdmin }: any) => (
 
           {/* 4 Thruster Ping-Ripple Effect */}
           {[
-            { bottom: 24, left: '36.0%', size: 28 },
-            { bottom: 24, left: '58.0%', size: 28 },
-            { bottom: -2,  left: '44.0%', size: 20 },
-            { bottom: -2,  left: '52.0%', size: 20 }
+            { bottom: 100, left: '36.0%', size: 28 },
+            { bottom: 100, left: '58.0%', size: 28 },
+            { bottom: 88,  left: '44.0%', size: 20 },
+            { bottom: 88,  left: '52.0%', size: 20 }
           ].map((pos: any, i) => (
             <div key={i} style={{ position: 'absolute', bottom: pos.bottom, left: pos.left, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
