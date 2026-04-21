@@ -120,106 +120,78 @@ export const Landing = ({ onNavigate, onAdmin }: any) => (
             alt="Nave" 
             style={{ height: 460, width: 'auto', filter: 'drop-shadow(0 0 60px rgba(0,255,242,0.6))' }} 
           />
-          {/* Ship Hull Logo Overlay (marca_logo) */}
-          <div style={{
-            position: 'absolute',
-            top: '48.5%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 80,
-            height: 80,
-            background: 'radial-gradient(circle, rgba(27,0,136,0.9) 0%, rgba(15,0,79,0.7) 60%, transparent 100%)',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            border: '1px solid rgba(255,255,255,0.2)',
-            boxShadow: '0 0 20px rgba(0,255,242,0.3)',
-            zIndex: 10
-          }}>
-            <img 
-              src="/marca_logo.png" 
-              alt="Marca Logo" 
-              style={{ width: 45, height: 'auto', filter: 'brightness(1.5) drop-shadow(0 0 5px rgba(255,255,255,0.4))' }} 
-            />
-          </div>
 
-          {/* 4 Thruster Glow Spheres & Propulsores - Perfectly Synchronized */}
+
+          {/* 4 Thruster Ping-Ripple Effect */}
           {[
-            { bottom: 24, left: '36.0%', isOuter: true },
-            { bottom: 24, left: '58.0%', isOuter: true },
-            { bottom: -2, left: '44.0%', isOuter: false },
-            { bottom: -2, left: '52.0%', isOuter: false }
+            { bottom: 24, left: '36.0%', size: 28 },
+            { bottom: 24, left: '58.0%', size: 28 },
+            { bottom: -2,  left: '44.0%', size: 20 },
+            { bottom: -2,  left: '52.0%', size: 20 }
           ].map((pos: any, i) => (
-            <div key={i} style={{ position: 'absolute', bottom: pos.bottom, left: pos.left, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              {/* Breathing corona behind the sphere */}
+            <div key={i} style={{ position: 'absolute', bottom: pos.bottom, left: pos.left, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+
+              {/* Outer expanding ring (slow, large) */}
               <motion.div
-                animate={{ scale: [1, 1.5, 1], opacity: [0.25, 0.55, 0.25] }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: i * 0.4 }}
+                animate={{ scale: [0.3, 3], opacity: [0.7, 0] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: 'easeOut', delay: i * 0.45 }}
                 style={{
                   position: 'absolute',
-                  width: pos.isOuter ? 70 : 52,
-                  height: pos.isOuter ? 70 : 52,
-                  background: 'radial-gradient(circle, #00FFF2, transparent 70%)',
+                  width: pos.size,
+                  height: pos.size,
                   borderRadius: '50%',
-                  filter: 'blur(10px)',
-                  zIndex: 4,
-                  pointerEvents: 'none'
+                  border: '2px solid #00FFF2',
+                  boxShadow: '0 0 12px #00FFF2',
+                  pointerEvents: 'none',
+                  zIndex: 4
                 }}
               />
-              {/* Core sphere — high-freq flicker */}
+
+              {/* Inner expanding ring (fast, medium) */}
               <motion.div
-                animate={{ 
-                  scale: [1, 1.12, 0.96, 1.08, 1],
-                  opacity: [0.9, 1, 0.82, 1, 0.9]
-                }}
-                transition={{ 
-                  duration: 0.18, 
-                  repeat: Infinity, 
-                  ease: 'linear',
-                  delay: i * 0.07
-                }}
+                animate={{ scale: [0.3, 2], opacity: [0.9, 0] }}
+                transition={{ duration: 1.1, repeat: Infinity, ease: 'easeOut', delay: i * 0.45 + 0.3 }}
                 style={{
-                  width: pos.isOuter ? 28 : 20, 
-                  height: pos.isOuter ? 28 : 20,
-                  background: '#fff',
+                  position: 'absolute',
+                  width: pos.size,
+                  height: pos.size,
                   borderRadius: '50%',
-                  boxShadow: `0 0 ${pos.isOuter ? '40px' : '25px'} #00FFF2, 0 0 10px #fff`,
+                  border: '2px solid rgba(0,255,255,0.9)',
+                  boxShadow: '0 0 8px #00FFF2',
+                  pointerEvents: 'none',
+                  zIndex: 4
+                }}
+              />
+
+              {/* Solid core — pulses from small to big and back */}
+              <motion.div
+                animate={{ scale: [0.5, 1.3, 0.5], opacity: [0.8, 1, 0.8] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut', delay: i * 0.45 }}
+                style={{
+                  width: pos.size,
+                  height: pos.size,
+                  background: 'radial-gradient(circle, #ffffff 30%, #00FFF2 70%)',
+                  borderRadius: '50%',
+                  boxShadow: `0 0 ${pos.size * 1.5}px #00FFF2, 0 0 8px #fff`,
                   zIndex: 6,
                   position: 'relative'
                 }}
               />
-              {/* Dynamic exhaust beam */}
-              <motion.div
-                animate={{ 
-                  height: [95, 118, 102, 128, 98],
-                  opacity: [0.6, 0.85, 0.7, 0.9, 0.6]
-                }}
-                transition={{ duration: 0.22, repeat: Infinity, ease: 'linear', delay: i * 0.05 }}
+
+              {/* Exhaust beam below */}
+              <div
                 style={{
-                  width: pos.isOuter ? 22 : 16,
-                  background: 'linear-gradient(to bottom, #00FFF2 0%, rgba(0,255,242,0.4) 50%, transparent 100%)',
+                  position: 'absolute',
+                  bottom: -(pos.size * 0.5 + 90),
+                  width: pos.size * 0.75,
+                  height: 90,
+                  background: 'linear-gradient(to bottom, rgba(0,255,242,0.7), transparent)',
                   filter: 'blur(5px)',
-                  marginTop: -12,
-                  borderRadius: '0 0 25px 25px',
-                  zIndex: 5,
-                  position: 'relative',
-                  overflow: 'hidden',
-                  transformOrigin: 'top center'
+                  borderRadius: '0 0 20px 20px',
+                  zIndex: 3,
+                  pointerEvents: 'none'
                 }}
-              >
-                {/* Energy pulse wave scrolling downward */}
-                <motion.div
-                  animate={{ y: [-10, 140] }}
-                  transition={{ duration: 0.55, repeat: Infinity, ease: 'linear', delay: i * 0.15 }}
-                  style={{
-                    position: 'absolute', top: 0, left: 0, right: 0,
-                    height: '30%',
-                    background: 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.5), transparent)',
-                    filter: 'blur(2px)'
-                  }}
-                />
-              </motion.div>
+              />
             </div>
           ))}
         </motion.div>
