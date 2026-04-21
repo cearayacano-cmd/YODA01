@@ -69,9 +69,10 @@ export const Landing = ({ onNavigate, onAdmin }: any) => (
     {/* Header */}
     <div style={{background:'linear-gradient(to bottom, rgba(15, 0, 79, 0.9), transparent)', padding:'24px 48px', display:'flex', justifyContent:'space-between', alignItems:'center', zIndex: 10}}>
       <div style={{display: 'flex', alignItems: 'center', gap: 14}}>
-        <div style={{width: 36, height: 36, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.05)'}}>
-          <Rocket size={18} color="#fff" />
+        <div style={{width: 36, height: 36, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.1)', boxShadow: '0 0 15px rgba(255,255,255,0.1)'}}>
+          <img src="/marca_logo.png" alt="Logo" style={{ width: 20, height: 'auto', filter: 'brightness(2)' }} />
         </div>
+
         <span style={{color:'#ffffff', fontSize:12, fontWeight:900, letterSpacing:'0.3em', opacity: 0.8}}>Capacitación | Customer Care & Sales</span>
       </div>
       <button onClick={onAdmin} style={{background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.2)', padding:'8px 24px', cursor:'pointer', fontSize:10, fontWeight:900, color:'#fff', borderRadius:30, letterSpacing: '0.15em', backdropFilter: 'blur(10px)'}}>
@@ -119,6 +120,30 @@ export const Landing = ({ onNavigate, onAdmin }: any) => (
             alt="Nave" 
             style={{ height: 460, width: 'auto', filter: 'drop-shadow(0 0 60px rgba(0,255,242,0.6))' }} 
           />
+          {/* Ship Hull Logo Overlay (marca_logo) */}
+          <div style={{
+            position: 'absolute',
+            top: '48.5%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 80,
+            height: 80,
+            background: 'radial-gradient(circle, rgba(27,0,136,0.9) 0%, rgba(15,0,79,0.7) 60%, transparent 100%)',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: '1px solid rgba(255,255,255,0.2)',
+            boxShadow: '0 0 20px rgba(0,255,242,0.3)',
+            zIndex: 10
+          }}>
+            <img 
+              src="/marca_logo.png" 
+              alt="Marca Logo" 
+              style={{ width: 45, height: 'auto', filter: 'brightness(1.5) drop-shadow(0 0 5px rgba(255,255,255,0.4))' }} 
+            />
+          </div>
+
           {/* 4 Thruster Glow Spheres & Propulsores - Perfectly Synchronized */}
           {[
             { bottom: 24, left: '36.0%', isOuter: true },
