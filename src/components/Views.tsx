@@ -465,6 +465,34 @@ const EarthHorizon = () => {
             transform: 'scaleY(0.6) rotateX(20deg)', 
           }} 
         />
+
+        {/* MAP LAYER 1.8: MICRO-PULSE DATA NODES (Detailed twinkling city lights) */}
+        <motion.div 
+          animate={{ opacity: [0.3, 0.8, 0.3] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            position: 'absolute',
+            top: 0, 
+            width: '100%',
+            height: '240%', 
+            maskImage: 'url("/user_map_vector.png")',
+            WebkitMaskImage: 'url("/user_map_vector.png")',
+            maskSize: '1500px auto',
+            WebkitMaskSize: '1500px auto',
+            maskPosition: 'top center',
+            WebkitMaskPosition: 'top center',
+            maskRepeat: 'repeat-x',
+            
+            filter: 'invert(1)', 
+            backgroundImage: 'radial-gradient(rgba(153, 204, 51, 0.9) 0.5px, transparent 1px)',
+            backgroundSize: '6px 6px',
+            
+            mixBlendMode: 'screen', 
+            transformOrigin: 'top center',
+            transform: 'scaleY(0.6) rotateX(20deg)', 
+            zIndex: 2
+          }} 
+        />
       </div>
 
       {/* LAYER 2: CINEMATIC HORIZON FLARE (RAZOR SHARP LINE) */}
