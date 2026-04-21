@@ -1511,9 +1511,10 @@ const IaraHologram = ({ isVisible, onClose, iaraLink }: any) => {
   );
 };
 
-const StationIcon = ({ alertMode, color, bgColor }: any) => {
+const StationIcon = ({ alertMode, color, bgColor, panelColor }: any) => {
   const mainColor = alertMode ? "#ff0000" : (color || "#99CC33");
   const mainBg = alertMode ? "#4A0618" : (bgColor || "#0F004F");
+  const mainPanel = alertMode ? "#4A0618" : (panelColor || mainBg);
   
   return (
     <motion.div
@@ -1534,7 +1535,7 @@ const StationIcon = ({ alertMode, color, bgColor }: any) => {
           ? `drop-shadow(0 0 15px #ff0000aa)` 
           : `drop-shadow(0 0 15px ${mainColor}aa)` // Intense resplandor
       }}>
-        <TacticalSatelliteIcon size={84} color={mainColor} bgColor={mainBg} />
+        <TacticalSatelliteIcon size={84} color={mainColor} bgColor={mainBg} panelColor={mainPanel} />
         {/* Additional decorative rim for the header version */}
         <motion.div 
             animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
@@ -1581,6 +1582,7 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
             alertMode={alertMode} 
             color={stationName === "BR" ? "#0F004F" : "#7000AB"} 
             bgColor={stationName === "BR" ? "#99CC33" : "#0F004F"}
+            panelColor={stationName === "BR" ? "#0F004F" : undefined}
           />
           <div>
             <div style={{ fontSize: 11, letterSpacing: '0.4em', color: alertMode ? '#ff5555' : '#64748b', textTransform: 'uppercase', marginBottom: 2, fontWeight: 700 }}>Estación Espacial</div>

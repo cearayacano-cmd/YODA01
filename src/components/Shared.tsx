@@ -16,8 +16,9 @@ export const BackBtn = ({ onClick, label='VOLVER' }) => (
   </Btn>
 );
 
-export const TacticalSatelliteIcon = ({ size = 24, color = 'currentColor', bgColor = "#0F004F" }: any) => {
+export const TacticalSatelliteIcon = ({ size = 24, color = 'currentColor', bgColor = "#0F004F", panelColor }: any) => {
     const accentColor = color; 
+    const pColor = panelColor || bgColor;
     
     return (
         <motion.div
@@ -48,7 +49,7 @@ export const TacticalSatelliteIcon = ({ size = 24, color = 'currentColor', bgCol
                 />
 
                 {/* Left Solar Panel */}
-                <rect x="5" y="28" width="35" height="28" rx="2" fill={bgColor} stroke={color} strokeWidth="1.5" strokeOpacity="1" />
+                <rect x="5" y="28" width="35" height="28" rx="2" fill={pColor} stroke={color} strokeWidth="1.5" strokeOpacity="1" />
                 <line x1="5" y1="37" x2="40" y2="37" stroke={color} strokeWidth="0.5" strokeOpacity="0.4" />
                 <line x1="5" y1="46" x2="40" y2="46" stroke={color} strokeWidth="0.5" strokeOpacity="0.4" />
 
@@ -71,7 +72,7 @@ export const TacticalSatelliteIcon = ({ size = 24, color = 'currentColor', bgCol
                 />
 
                 {/* Right Solar Panel */}
-                <rect x="100" y="28" width="35" height="28" rx="2" fill={bgColor} stroke={color} strokeWidth="1.5" strokeOpacity="1" />
+                <rect x="100" y="28" width="35" height="28" rx="2" fill={pColor} stroke={color} strokeWidth="1.5" strokeOpacity="1" />
                 <line x1="100" y1="37" x2="135" y2="37" stroke={color} strokeWidth="0.5" strokeOpacity="0.4" />
                 <line x1="100" y1="46" x2="135" y2="46" stroke={color} strokeWidth="0.5" strokeOpacity="0.4" />
 
