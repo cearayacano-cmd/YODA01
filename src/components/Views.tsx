@@ -434,14 +434,14 @@ const EarthHorizon = () => {
           }} 
         />
 
-        {/* MAP LAYER 1.7: DENSE STARLIGHT MESH (Landmass core glow) */}
+        {/* MAP LAYER 1.7: ORGANIC CITY CLUSTERS - PRIMARY GLOW */}
         <div 
           style={{
             position: 'absolute',
             top: 0, 
             width: '100%',
             height: '240%', 
-            opacity: 0.8, 
+            opacity: 0.85, 
             maskImage: 'url("/user_map_vector.png")',
             WebkitMaskImage: 'url("/user_map_vector.png")',
             maskSize: '1500px auto',
@@ -450,10 +450,16 @@ const EarthHorizon = () => {
             WebkitMaskPosition: 'top center',
             maskRepeat: 'repeat-x',
             
-            filter: 'invert(1)', 
-            // Denser white core
-            backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.9) 0.6px, transparent 1px)',
-            backgroundSize: '4px 4px',
+            filter: 'invert(1) drop-shadow(0 0 5px rgba(255, 255, 255, 0.4))', 
+            // Multiple overlapping gradients to create clusters
+            backgroundImage: `
+              radial-gradient(circle at 10% 20%, rgba(255,255,255,0.8) 1px, transparent 2.5px),
+              radial-gradient(circle at 35% 45%, rgba(255,255,255,0.9) 1.5px, transparent 3px),
+              radial-gradient(circle at 80% 15%, rgba(255,255,255,0.7) 1px, transparent 2px),
+              radial-gradient(circle at 60% 70%, rgba(255,255,255,0.8) 1.2px, transparent 2.8px),
+              radial-gradient(rgba(255, 255, 255, 0.8) 0.8px, transparent 1.2px)
+            `,
+            backgroundSize: '120px 120px, 180px 180px, 150px 150px, 90px 90px, 8px 8px',
             
             mixBlendMode: 'screen', 
             transformOrigin: 'top center',
@@ -461,9 +467,9 @@ const EarthHorizon = () => {
           }} 
         />
 
-        {/* MAP LAYER 1.8: MICRO-PULSE DATA NODES (Vibrant twinkling energy) */}
+        {/* MAP LAYER 1.8: ENERGY NODES - VIBRANT TWINKLE */}
         <motion.div 
-          animate={{ opacity: [0.4, 1, 0.4] }}
+          animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           style={{
             position: 'absolute',
@@ -478,10 +484,14 @@ const EarthHorizon = () => {
             WebkitMaskPosition: 'top center',
             maskRepeat: 'repeat-x',
             
-            filter: 'invert(1) drop-shadow(0 0 2px #99CC33)', 
-            // Hyper-dense green energy dots
-            backgroundImage: 'radial-gradient(rgba(153, 204, 51, 1) 0.5px, transparent 1px)',
-            backgroundSize: '3px 3px',
+            filter: 'invert(1) drop-shadow(0 0 4px #00FFF2)', 
+            // Cyan energy pulses
+            backgroundImage: `
+              radial-gradient(circle at 20% 30%, #00FFF2 1.5px, transparent 4px),
+              radial-gradient(circle at 75% 65%, #00FFF2 2px, transparent 5px),
+              radial-gradient(rgba(0, 255, 242, 0.9) 0.5px, transparent 1px)
+            `,
+            backgroundSize: '200px 200px, 250px 250px, 6px 6px',
             
             mixBlendMode: 'screen', 
             transformOrigin: 'top center',
@@ -490,58 +500,65 @@ const EarthHorizon = () => {
           }} 
         />
 
-        {/* MAP LAYER 1.9: ATMOSPHERIC CITY GLOW (Slight noise for organic feel) */}
+        {/* MAP LAYER 1.9: HOLOGRAPHIC GEOMETRY GRID */}
         <div 
           style={{
             position: 'absolute',
             top: 0, 
             width: '100%',
             height: '240%', 
-            opacity: 0.25,
-            maskImage: 'url("/user_map_vector.png")',
-            WebkitMaskImage: 'url("/user_map_vector.png")',
-            maskSize: '1500px auto',
-            WebkitMaskSize: '1500px auto',
-            maskPosition: 'top center',
-            WebkitMaskPosition: 'top center',
-            maskRepeat: 'repeat-x',
+            opacity: 0.35,
             
-            filter: 'invert(1) blur(2px)', 
-            backgroundImage: 'radial-gradient(rgba(0, 255, 242, 0.4) 2px, transparent 4px)',
-            backgroundSize: '15px 15px',
+            // Curved Latitude/Longitude lines using SVG-like CSS pattern
+            backgroundImage: `
+              linear-gradient(rgba(0, 255, 242, 0.2) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0, 255, 242, 0.2) 1px, transparent 1px)
+            `,
+            backgroundSize: '80px 40px',
             
             mixBlendMode: 'screen', 
             transformOrigin: 'top center',
-            transform: 'scaleY(0.6) rotateX(20deg)', 
+            transform: 'scaleY(0.6) rotateX(20deg) skewX(-2deg)', 
             zIndex: 1
           }} 
         />
+
       </div>
 
       {/* LAYER 2: CINEMATIC HORIZON FLARE (RAZOR SHARP LINE) */}
       <div style={{
         position: 'absolute',
-        top: 0, left: 0, right: 0, height: '180px',
-        background: 'linear-gradient(to bottom, rgba(0, 255, 242, 0.3) 0%, rgba(0, 255, 242, 0.1) 15%, transparent 60%)',
+        top: 0, left: 0, right: 0, height: '240px', // Taller flare
+        background: 'linear-gradient(to bottom, rgba(0, 255, 242, 0.45) 0%, rgba(0, 255, 242, 0.2) 20%, transparent 80%)',
         zIndex: 2,
-        borderTop: '2.5px solid rgba(255, 255, 255, 0.85)', // High-intensity flare
-        filter: 'drop-shadow(0 0 10px rgba(0, 255, 242, 1))'
+        borderTop: '3px solid rgba(255, 255, 255, 0.95)', // Stronger line
+        filter: 'drop-shadow(0 0 20px rgba(0, 255, 242, 1))'
       }} />
 
       {/* LAYER 3: COMPLEX GLOBAL NETWORK (REPLICATING REFERENCE SVG) */}
       <div style={{ position: 'absolute', inset: 0, display: 'flex', justifyContent: 'center', pointerEvents: 'none' }}>
-        <svg width="1500" height="700" viewBox="0 0 1500 700" style={{ position: 'absolute', top: '-100px', zIndex: 3, overflow: 'visible' }}>
+        <svg width="1500" height="700" viewBox="0 0 1500 700" style={{ position: 'absolute', top: '-120px', zIndex: 10, overflow: 'visible' }}>
           <defs>
             <filter id="nodeGlow">
-              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feGaussianBlur stdDeviation="5" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
             <linearGradient id="linkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="transparent" />
-              <stop offset="50%" stopColor="#00FFF2" stopOpacity="0.8" />
+              <stop offset="50%" stopColor="#00FFF2" stopOpacity="0.9" />
               <stop offset="100%" stopColor="transparent" />
             </linearGradient>
           </defs>
+
+          {/* BACKGROUND HOLOGRAPHIC GRID (SVG Version for better curves) */}
+          <g opacity="0.2">
+            {[...Array(12)].map((_, i) => (
+              <path key={`lat-${i}`} d={`M 0,${i * 60} Q 750,${i * 60 - 50} 1500,${i * 60}`} stroke="#00FFF2" strokeWidth="0.5" fill="none" />
+            ))}
+            {[...Array(20)].map((_, i) => (
+              <path key={`lon-${i}`} d={`M ${i * 80},0 Q ${i * 80 + 40},350 ${i * 80},700`} stroke="#00FFF2" strokeWidth="0.5" fill="none" />
+            ))}
+          </g>
 
           {/* DENSE NETWORK ARCS - REPLICATING THE WEB EFFECT */}
           {[
@@ -561,29 +578,40 @@ const EarthHorizon = () => {
             />
           ))}
 
-          {/* BRIGHT MISSION NODES (INTERSECTIONS) */}
+          {/* BRIGHT MISSION NODES (INTERSECTIONS) - LARGER & GLOWIER */}
           {[
-            {x: 250, y: 300, r: 4}, {x: 450, y: 280, r: 3},
-            {x: 1050, y: 250, r: 5}, {x: 600, y: 320, r: 4}, {x: 1200, y: 300, r: 5},
-            {x: 1400, y: 350, r: 3}, {x: 350, y: 400, r: 5}, {x: 1150, y: 400, r: 6},
-            {x: 520, y: 450, r: 4}, {x: 200, y: 450, r: 4},
-            {x: 100, y: 500, r: 3}, {x: 850, y: 220, r: 4},
-            {x: 1300, y: 200, r: 5}, {x: 1050, y: 220, r: 4}
+            {x: 250, y: 300, r: 8}, {x: 450, y: 280, r: 6},
+            {x: 1050, y: 250, r: 10}, {x: 600, y: 320, r: 8}, {x: 1200, y: 300, r: 10},
+            {x: 1400, y: 350, r: 6}, {x: 350, y: 400, r: 10}, {x: 1150, y: 400, r: 12},
+            {x: 520, y: 450, r: 8}, {x: 200, y: 450, r: 8},
+            {x: 100, y: 500, r: 6}, {x: 850, y: 220, r: 8},
+            {x: 1300, y: 200, r: 10}, {x: 1050, y: 220, r: 8}
           ].map((pt, i) => (
             <React.Fragment key={i}>
+              {/* Outer Bloom Halo */}
               <motion.circle 
-                cx={pt.x} cy={pt.y} r={pt.r + (i%2?2:0)} fill="white" filter="url(#nodeGlow)"
-                animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.3, 1] }}
-                transition={{ duration: 2 + (i%3), repeat: Infinity, delay: i*0.2 }}
-                style={{ filter: 'drop-shadow(0 0 8px rgba(0, 255, 242, 1))' }}
+                cx={pt.x} cy={pt.y} r={pt.r * 5} fill="url(#linkGrad)" opacity="0.1"
+                animate={{ scale: [1, 1.4, 1], opacity: [0.05, 0.15, 0.05] }}
+                transition={{ duration: 4, repeat: Infinity }}
               />
+              {/* Secondary Glow */}
               <motion.circle 
-                cx={pt.x} cy={pt.y} r={pt.r + 15} stroke="rgba(0, 255, 242, 0.3)" fill="none" strokeWidth="0.5"
-                animate={{ scale: [1, 3], opacity: [0.5, 0] }}
-                transition={{ duration: 4, repeat: Infinity, delay: i*0.5 }}
+                cx={pt.x} cy={pt.y} r={pt.r + (i%2?4:2)} fill="#00FFF2" filter="url(#nodeGlow)"
+                animate={{ opacity: [0.6, 1, 0.6], scale: [1, 1.2, 1] }}
+                transition={{ duration: 2, repeat: Infinity, delay: i*0.1 }}
+                opacity="0.8"
+              />
+              {/* Core Node */}
+              <circle cx={pt.x} cy={pt.y} r={pt.r} fill="white" filter="url(#nodeGlow)" style={{ filter: 'drop-shadow(0 0 12px rgba(0, 255, 242, 1))' }} />
+              {/* Expanding Pulse Ring */}
+              <motion.circle 
+                cx={pt.x} cy={pt.y} r={pt.r + 25} stroke="rgba(0, 255, 242, 0.4)" fill="none" strokeWidth="1"
+                animate={{ scale: [1, 4], opacity: [0.6, 0] }}
+                transition={{ duration: 5, repeat: Infinity, delay: i*0.5 }}
               />
             </React.Fragment>
           ))}
+
         </svg>
       </div>
     </div>
