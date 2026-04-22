@@ -25,7 +25,13 @@ const Stars = () => (
 );
 
 const MapBackground = () => (
-  <div style={{ position: 'fixed', inset: 0, backgroundColor: '#0F004F', zIndex: 0, overflow: 'hidden' }}>
+  <div style={{ 
+    position: 'fixed', 
+    inset: 0, 
+    background: 'radial-gradient(circle at center, #1B0088 0%, #0F004F 100%)', 
+    zIndex: 0, 
+    overflow: 'hidden' 
+  }}>
     {/* Dynamic Tactical Glows */}
     <motion.div 
         animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.1, 1] }}

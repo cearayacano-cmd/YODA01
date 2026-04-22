@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Lock, ChevronLeft, Beaker, Settings, Package, Webcam, Rocket, Radar, Microscope, Cpu, Box, Activity, Monitor, Eye, Sun, Layers } from 'lucide-react';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { Btn, BackBtn, TacticalSatelliteIcon } from './Shared';
 
 const MissionIcon = ({ color, alertMode }: any) => (
@@ -897,16 +897,16 @@ const ModuleCard = ({ sec, title, subtitle, color, icon, stats, onClick }: any) 
             }}
           />
 
-          <motion.div 
-            animate={{ 
-              filter: [`drop-shadow(0 0 20px ${color})`, `drop-shadow(0 0 10px ${color}80)`],
-              scale: 1.3
+          <div 
+            style={{ 
+              color: color,
+              filter: `drop-shadow(0 0 15px ${color})`,
+              transform: 'scale(1.2)',
+              zIndex: 5
             }}
-            transition={{ duration: 2, repeat: Infinity, alternate: true }}
-            style={{ color: color }}
           >
             {React.cloneElement(icon, { color: 'currentColor', strokeWidth: 1.5, size: 28 })}
-          </motion.div>
+          </div>
         </div>
       </div>
 
@@ -1372,6 +1372,24 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
 };
 
 const IaraHologram = ({ isVisible, onClose, iaraLink }: any) => {
+  const [iaraConnected, setIaraConnected] = useState(false);
+  const [frame, setFrame] = useState(1);
+  const dirRef = useRef(1); // 1 = forward, -1 = backward
+  const totalFrames = 19;
+
+  useEffect(() => {
+    if (!isVisible) return;
+    const interval = setInterval(() => {
+      setFrame((prev) => {
+        let next = prev + dirRef.current;
+        if (next >= totalFrames) { dirRef.current = -1; return totalFrames; }
+        if (next <= 1) { dirRef.current = 1; return 1; }
+        return next;
+      });
+    }, 180); // Slower, more natural 'Pro' pace
+    return () => clearInterval(interval);
+  }, [isVisible]);
+
   if (!isVisible) return null;
 
   const scanlineStyle: React.CSSProperties = {
@@ -1390,7 +1408,7 @@ const IaraHologram = ({ isVisible, onClose, iaraLink }: any) => {
       exit={{ opacity: 0, y: 40 }}
       style={{
         position: 'fixed',
-        bottom: '140px',
+        bottom: '80px',
         left: 'calc(50% + 220px)',
         zIndex: 9999,
         display: 'flex',
@@ -1416,7 +1434,19 @@ const IaraHologram = ({ isVisible, onClose, iaraLink }: any) => {
       <motion.div
         animate={{ opacity: [0.6, 1, 0.6] }}
         transition={{ duration: 2, repeat: Infinity }}
-        style={{ fontSize: 7, color: '#00F3FF', letterSpacing: '0.4em', fontFamily: 'monospace', marginBottom: 6, textTransform: 'uppercase' }}
+        style={{ 
+          fontSize: 7, 
+          color: '#00F3FF', 
+          letterSpacing: '0.4em', 
+          fontFamily: 'monospace', 
+          marginBottom: 6, 
+          textTransform: 'uppercase',
+          background: 'rgba(0, 20, 60, 0.5)',
+          padding: '3px 10px',
+          borderRadius: '4px',
+          backdropFilter: 'blur(4px)',
+          border: '1px solid rgba(0, 243, 255, 0.2)'
+        }}
       >
         ◉ TRANSMISIÓN ACTIVA
       </motion.div>
@@ -1453,27 +1483,62 @@ const IaraHologram = ({ isVisible, onClose, iaraLink }: any) => {
           animate={{
             y: [0, -14, 0, -8, 0],
             rotate: [-1.5, 1.5, -0.5, 1, -1.5],
+            filter: [
+              'brightness(1.2) contrast(1.2) drop-shadow(0 0 5px rgba(0,243,255,0.4))',
+              'brightness(1.4) contrast(1.3) drop-shadow(0 0 12px rgba(0,243,255,0.7))',
+              'brightness(1.2) contrast(1.2) drop-shadow(0 0 5px rgba(0,243,255,0.4))'
+            ]
           }}
-          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ 
+            y: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
+            rotate: { duration: 7, repeat: Infinity, ease: 'easeInOut' },
+            filter: { duration: 0.15, repeat: Infinity, repeatType: 'reverse' } // Subtle electronic flicker
+          }}
           style={{ 
             position: 'relative', zIndex: 5, width: '100%', height: '100%', 
             background: 'transparent',
-            mixBlendMode: 'screen',
+            // High-precision transparency: SVG Luma Filter + Ultra-Soft Edge Feathering
+            filter: 'url(#luma-transparency) contrast(1.5) brightness(1.1)',
+            WebkitMaskImage: 'radial-gradient(ellipse at center, black 60%, transparent 98%)',
+            maskImage: 'radial-gradient(ellipse at center, black 60%, transparent 98%)',
           }}
         >
-          <video
-            src="/iara_animacion.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            style={{
-              width: '100%', height: '100%', objectFit: 'contain',
-              position: 'relative', zIndex: 10,
-              mixBlendMode: 'screen',
-              filter: 'brightness(1.2) contrast(1.2)',
-            }}
-          />
+          {/* Internal Scanlines Overlay */}
+          <div style={scanlineStyle} />
+          
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={frame}
+              src={`/iara-frames/frame_${frame}.png`}
+              alt="IARA Sequence"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }} // 150ms cross-fade
+              style={{
+                width: '100%', height: '100%', objectFit: 'contain', 
+                position: 'relative', zIndex: 10,
+                // Adding a subtle blue tint and glow directly to the sprite if needed
+                filter: 'drop-shadow(0 0 8px rgba(0,243,255,0.4)) saturate(1.2)',
+              }}
+            />
+          </AnimatePresence>
+
+          {/* Telemetry drifting labels */}
+          <motion.div
+            animate={{ opacity: [0, 0.8, 0], x: [0, 10] }}
+            transition={{ duration: 4, repeat: Infinity }}
+            style={{ position: 'absolute', top: '20%', right: '-30px', fontSize: 6, color: '#00F3FF', fontFamily: 'monospace', opacity: 0.4 }}
+          >
+            SYS_SYNC_ACTIVE
+          </motion.div>
+          <motion.div
+            animate={{ opacity: [0, 0.6, 0], x: [0, -8] }}
+            transition={{ duration: 3, repeat: Infinity, delay: 1 }}
+            style={{ position: 'absolute', bottom: '30%', left: '-40px', fontSize: 6, color: '#00F3FF', fontFamily: 'monospace', opacity: 0.3 }}
+          >
+            LINK_STABLE_88%
+          </motion.div>
         </motion.div>
       </div>
 
@@ -1481,32 +1546,58 @@ const IaraHologram = ({ isVisible, onClose, iaraLink }: any) => {
       <motion.div
         animate={{ opacity: [0.8, 1, 0.8] }}
         transition={{ duration: 3, repeat: Infinity }}
-        style={{ fontSize: 9, color: '#00F3FF', letterSpacing: '0.5em', fontFamily: 'monospace', fontWeight: 900, marginBottom: 10 }}
+        style={{ 
+          fontSize: 9, 
+          color: '#00F3FF', 
+          letterSpacing: '0.5em', 
+          fontFamily: 'monospace', 
+          fontWeight: 900, 
+          marginBottom: 10,
+          background: 'rgba(0, 20, 60, 0.5)',
+          padding: '4px 15px',
+          borderRadius: '20px',
+          backdropFilter: 'blur(4px)',
+          border: '1px solid rgba(0, 243, 255, 0.2)',
+          textShadow: '0 0 8px rgba(0, 243, 255, 0.5)'
+        }}
       >
         I · A · R · A
       </motion.div>
 
-      <motion.button
-        animate={{ boxShadow: ['0 0 12px rgba(0,243,255,0.4)', '0 0 28px rgba(0,243,255,0.9)', '0 0 12px rgba(0,243,255,0.4)'] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => { if (iaraLink) window.open(iaraLink, '_blank'); }}
-        style={{
-          background: 'rgba(0,15,50,0.75)',
-          color: '#00F3FF',
-          border: '1px solid #00F3FF',
-          padding: '7px 18px',
-          borderRadius: 20,
-          fontSize: 9,
-          fontFamily: 'monospace',
-          fontWeight: 900,
-          cursor: 'pointer',
-          letterSpacing: '0.2em',
-        }}
-      >
-        ▶ CONECTAR
-      </motion.button>
+      {!iaraConnected ? (
+        <Btn
+          onClick={() => {
+            setIaraConnected(true);
+            if (iaraLink) window.open(iaraLink, '_blank');
+          }}
+          style={{
+            background: 'rgba(0,15,50,0.75)',
+            boxShadow: '0 0 12px rgba(0,243,255,0.4)',
+            border: '1px solid #00F3FF'
+          }}
+        >
+          ▶ CONECTAR
+        </Btn>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          style={{ 
+            fontSize: 8, 
+            color: '#00F3FF', 
+            opacity: 0.9, 
+            letterSpacing: '0.2em', 
+            fontWeight: 700,
+            background: 'rgba(0, 20, 60, 0.4)',
+            padding: '3px 12px',
+            borderRadius: '12px',
+            backdropFilter: 'blur(4px)',
+            border: '1px solid rgba(0, 243, 255, 0.1)'
+          }}
+        >
+          ENLACE ESTABLECIDO
+        </motion.div>
+      )}
     </motion.div>
   );
 };
@@ -1574,14 +1665,12 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
       />
 
       <div style={{ height: '84px', background: alertMode ? '#4A0618' : '#E8E7F2', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 32px', transition: 'all 0.5s ease' }}>
-        <button onClick={onBack} style={{ background: '#fff', border: '1px solid rgba(11,0,51,0.1)', padding: '8px 20px', borderRadius: '30px', color: '#0F004F', fontWeight: 800, fontSize: 11, cursor: 'pointer' }}>
-          ← SALIR
-        </button>
+        <BackBtn onClick={onBack} label="SALIR" />
         <div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', gap: '20px' }}>
           <StationIcon 
             alertMode={alertMode} 
-            color={stationName === "BR" ? "#0F004F" : "#7000AB"} 
-            bgColor={stationName === "BR" ? "#99CC33" : "#0F004F"}
+            color={stationName === "BR" ? "#99CC33" : "#7000AB"} 
+            bgColor={stationName === "BR" ? "#0F004F" : "#0F004F"}
             panelColor={stationName === "BR" ? "#0F004F" : undefined}
           />
           <div>
@@ -1632,15 +1721,33 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
           <img src="/guardianes_logo.png" alt="Guardianes Logo" style={{ height: '60px', width: 'auto', opacity: 1, filter: 'brightness(1.1)' }} />
         </div>
       </div>
-      {/* Global SVG Filters for Holograms */}
-      <svg width="0" height="0" style={{ position: 'absolute', pointerEvents: 'none', visibility: 'hidden' }}>
-        <filter id="remove-black" colorInterpolationFilters="sRGB">
-          <feColorMatrix type="matrix" values="1 0 0 0 0
-                                               0 1 0 0 0
-                                               0 0 1 0 0
-                                               -1 -1 -1 1 0" />
-        </filter>
-      </svg>
+      {/* Global SVG Filters and Masks for Holograms */}
+      <div style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+        <svg width="0" height="0">
+          <defs>
+            {/* LUMA-TO-ALPHA FILTER: The 'Pro' industry standard for web holograms. 
+                Takes RGB brightness and maps it directly to the Alpha channel. 
+                Black parts (0,0,0) result in Alpha 0 (Transparent).
+                Bright parts result in Alpha 1 (Opaque). */}
+            <filter id="luma-transparency" colorInterpolationFilters="sRGB">
+              <feColorMatrix type="matrix" values="
+                1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0.8 0.8 0.8 0 -0.2" /> 
+                {/* Note: Increased multiplier (0.8) and offset (-0.2) to aggressively remove dark noise */}
+            </filter>
+
+            {/* GLITCH FILTER */}
+            <filter id="hologram-glitch">
+              <feTurbulence type="fractalNoise" baseFrequency="0.00001 0.1" numOctaves="1" result="noise">
+                <animate attributeName="baseFrequency" values="0.00001 0.1; 0.00001 0.5; 0.00001 0.1" dur="2s" repeatCount="indefinity" />
+              </feTurbulence>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
+            </filter>
+          </defs>
+        </svg>
+      </div>
     </div>
   );
 };

@@ -1,18 +1,39 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import { ChevronLeft } from 'lucide-react';
 
 export const Btn = ({ onClick, children, style={} }) => (
-  <button onClick={onClick} style={{
-    background:'#ffffff', border:'2px solid #111111', padding:'8px 18px',
-    cursor:'pointer', fontSize:13, fontWeight:700, color:'#111111',
-    fontFamily:'Trebuchet MS,Trebuchet,Arial,sans-serif',
-    borderRadius:4, ...style
-  }}>{children}</button>
+  <motion.button 
+    onClick={onClick} 
+    whileHover={{ scale: 1.05, boxShadow: '0 0 15px rgba(0,243,255,0.4)' }}
+    whileTap={{ scale: 0.95 }}
+    style={{
+      background: 'rgba(0,10,40,0.8)', 
+      border: '1px solid rgba(0,243,255,0.5)', 
+      padding: '8px 20px',
+      cursor: 'pointer', 
+      fontSize: 11, 
+      fontWeight: 900, 
+      color: '#00F3FF',
+      fontFamily: 'monospace',
+      borderRadius: 20,
+      letterSpacing: '0.15em',
+      textTransform: 'uppercase',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 8,
+      boxShadow: '0 0 5px rgba(0,243,255,0.2)',
+      ...style
+    }}
+  >
+    {children}
+  </motion.button>
 );
 
 export const BackBtn = ({ onClick, label='VOLVER' }) => (
-  <Btn onClick={onClick} style={{display:'flex',alignItems:'center',gap:6}}>
-    ← {label}
+  <Btn onClick={onClick} style={{ padding: '6px 14px' }}>
+    <ChevronLeft size={16} strokeWidth={3} />
+    {label}
   </Btn>
 );
 

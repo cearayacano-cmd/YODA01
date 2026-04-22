@@ -134,6 +134,7 @@ export default function App() {
   const [appConfig, setAppConfig] = useState({
     br: {
       monitoringUrl:"https://lookerstudio.google.com/u/0/reporting/9d1f44d6-e585-4a9c-af76-c0883ed691e2/page/p_wtg2od23vd",
+      iaraLink: "https://amelia.appslatam.com/#/assistants/chat/aa857c06-5a06-4450-8518-8568cdd28dfd",
       suministros:[{label:"Formularios BR",url:"#"}],
       ingenieria:[{label:"Manuales Técnicos",url:"#"}],
       laboratorio:[{label:"KPIs Estratégicos",url:"#"}],
@@ -151,6 +152,7 @@ export default function App() {
     },
     ssc: {
       monitoringUrl:"",
+      iaraLink: "https://amelia.appslatam.com/#/assistants/chat/aa857c06-5a06-4450-8518-8568cdd28dfd",
       suministros:[],ingenieria:[],laboratorio:[],operaciones:[],
       rutaLider:[],
       frontLineContent: [],
@@ -214,6 +216,7 @@ export default function App() {
             config={appConfig} 
             setConfig={setAppConfig} 
             onBack={()=>go('landing')}
+            onViewStation={(st: string) => go(st.toLowerCase())}
             onExploracion={(st: string)=>{setAdminStation(st);go('admin-exploracion')}}
             onRutaLider={(st: string)=>{setAdminStation(st);go('admin-ruta-lider')}}
           />

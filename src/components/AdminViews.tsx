@@ -53,40 +53,57 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
         boxShadow: '0 8px 32px rgba(27,0,136,0.15)',
         zIndex: 100
       }}>
-        <button onClick={onBack} style={{ 
-          background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#ffffff', padding: '10px 24px', 
-          borderRadius: 8, cursor: 'pointer', fontSize: 13, fontWeight: 800, textTransform: 'uppercase',
-          display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s'
-        }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}>
-          <ArrowLeft size={16} /> CERRAR PORTAL
-        </button>
+        <BackBtn onClick={onBack} label="CERRAR PORTAL" />
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <Settings size={22} color="#99CC33" />
           <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>ADMIN CENTER <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> {activeStation} STATION</span>
         </div>
-        <motion.button 
-          whileHover={{ scale: 1.02, translateY: -1 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={handleSave} 
-          style={{
-            marginLeft:'auto', 
-            background: saved ? '#00D6CC' : '#99CC33', 
-            color: '#ffffff', 
-            border: 'none', 
-            padding: '12px 32px', 
-            cursor: 'pointer', 
-            fontSize: 13, 
-            fontWeight: 800, 
-            borderRadius: 8,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 10,
-            boxShadow: `0 10px 20px ${saved ? '#00D6CC' : '#99CC33'}40`,
-            transition: 'all 0.3s ease'
-          }}
-        >
-          {saved ? <><CheckCircle2 size={18}/> GUARDADO PROFESIONAL</> : <><Save size={18}/> GUARDAR CONFIGURACIÓN</>}
-        </motion.button>
+        <div style={{ marginLeft: 'auto', display: 'flex', gap: 12 }}>
+          <motion.button 
+            whileHover={{ scale: 1.02, translateY: -1 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => onViewStation(activeStation)} 
+            style={{
+              background: 'rgba(255,255,255,0.1)', 
+              color: '#ffffff', 
+              border: '1px solid rgba(255,255,255,0.3)', 
+              padding: '12px 24px', 
+              cursor: 'pointer', 
+              fontSize: 13, 
+              fontWeight: 800, 
+              borderRadius: 8,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              transition: 'all 0.3s ease'
+            }}
+          >
+            <Globe size={18} color="#99CC33" /> VER ESTACIÓN
+          </motion.button>
+
+          <motion.button 
+            whileHover={{ scale: 1.02, translateY: -1 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={handleSave} 
+            style={{
+              background: saved ? '#00D6CC' : '#99CC33', 
+              color: '#ffffff', 
+              border: 'none', 
+              padding: '12px 32px', 
+              cursor: 'pointer', 
+              fontSize: 13, 
+              fontWeight: 800, 
+              borderRadius: 8,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              boxShadow: `0 10px 20px ${saved ? '#00D6CC' : '#99CC33'}40`,
+              transition: 'all 0.3s ease'
+            }}
+          >
+            {saved ? <><CheckCircle2 size={18}/> GUARDADO PROFESIONAL</> : <><Save size={18}/> GUARDAR CONFIGURACIÓN</>}
+          </motion.button>
+        </div>
       </div>
       
       <div style={{display:'flex', flex:1, overflow: 'hidden'}}>
