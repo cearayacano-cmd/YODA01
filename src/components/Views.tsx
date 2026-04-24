@@ -20,9 +20,11 @@ const MissionIcon = ({ color, alertMode }: any) => (
   </motion.div>
 );
 
-const LandingMissionCard = ({ title, subtitle, id, color, onClick }: any) => (
+const LandingMissionCard = ({ title, subtitle, id, color, onClick, onMouseEnter, onMouseLeave }: any) => (
   <motion.div 
     onClick={onClick}
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
     whileHover={{ scale: 1.05, translateY: -10 }}
     style={{
       background: 'rgba(15, 0, 79, 0.4)',
@@ -42,12 +44,14 @@ const LandingMissionCard = ({ title, subtitle, id, color, onClick }: any) => (
     }}
   >
     {/* Decorative corner light */}
-    <div style={{ position: 'absolute', top: 0, right: 0, width: 40, height: 40, background: `radial-gradient(circle at top right, ${color}30, transparent)`, borderRadius: '0 12px 0 0' }} />
+    <div style={{ position: 'absolute', top: 0, right: 0, width: 40, height: 40, background: `radial-gradient(circle at top right, ${color}30, transparent)`, borderRadius: '0 12px 0 0', pointerEvents: 'none' }} />
     
-    <div style={{ fontSize: 11, color: '#999', letterSpacing: '0.4em', marginBottom: 15, fontWeight: 700 }}>MISIÓN • {id.toUpperCase()}</div>
-    <MissionIcon color={color} />
-    <div style={{ fontSize: 72, fontWeight: 900, color: '#fff', marginBottom: 8, letterSpacing: '0.05em' }}>{id.toUpperCase()}</div>
-    <div style={{ fontSize: 14, color: '#bbb', marginBottom: 30, fontWeight: 500 }}>{subtitle}</div>
+    <div style={{ fontSize: 11, color: '#999', letterSpacing: '0.4em', marginBottom: 15, fontWeight: 700, pointerEvents: 'none' }}>MISIÓN • {id.toUpperCase()}</div>
+    <div style={{ pointerEvents: 'none' }}>
+      <MissionIcon color={color} />
+    </div>
+    <div style={{ fontSize: 72, fontWeight: 900, color: '#fff', marginBottom: 8, letterSpacing: '0.05em', pointerEvents: 'none' }}>{id.toUpperCase()}</div>
+    <div style={{ fontSize: 14, color: '#bbb', marginBottom: 30, fontWeight: 500, pointerEvents: 'none' }}>{subtitle}</div>
     
     <div style={{ 
       padding: '10px 24px', 
@@ -56,14 +60,29 @@ const LandingMissionCard = ({ title, subtitle, id, color, onClick }: any) => (
       fontSize: 10, 
       fontWeight: 900, 
       borderRadius: 4, 
-      letterSpacing: '0.2em' 
+      letterSpacing: '0.2em',
+      pointerEvents: 'none'
     }}>
       INICIAR SECUENCIA
     </div>
   </motion.div>
 );
 
-export const Landing = ({ onNavigate, onAdmin }: any) => (
+export const Landing = ({ onNavigate, onAdmin }: any) => {
+  const [hoveredStation, setHoveredStation] = useState<string | null>(null);
+  
+  const handleEnter = (st: string) => {
+    setHoveredStation(st);
+  };
+
+  const handleLeave = () => {
+    setHoveredStation(null);
+  };
+
+  // Decide which ship to show
+  const shipSrc = hoveredStation === 'br' ? '/nave_pt.png' : '/nave_es.png';
+
+  return (
   <div style={{minHeight:'100vh', background:'#0F004F', display:'flex', flexDirection:'column', position: 'relative', overflow: 'hidden'}}>
     <SpaceBackground showEarth={false} showShip={false} showHorizon={true} />
     {/* Header */}
@@ -100,6 +119,8 @@ export const Landing = ({ onNavigate, onAdmin }: any) => (
           subtitle="Satellite Alpha • Orbit 1" 
           color="#7000AB" 
           onClick={() => onNavigate('ssc')} 
+          onMouseEnter={() => handleEnter('ssc')}
+          onMouseLeave={handleLeave}
         />
 
         {/* Center Nave with floating animation and thruster effects */}
@@ -113,21 +134,28 @@ export const Landing = ({ onNavigate, onAdmin }: any) => (
             opacity: { duration: 1 },
             y: { duration: 6, repeat: Infinity, ease: "easeInOut" }
           }}
-          style={{ position: 'relative', width: 400, display: 'flex', justifyContent: 'center' }}
+          style={{ position: 'relative', width: 400, height: 460, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
         >
-          <img 
-            src="/Nave.png" 
-            alt="Nave" 
-            style={{ height: 460, width: 'auto', filter: 'drop-shadow(0 0 60px rgba(0,255,242,0.6))' }} 
-          />
+          <AnimatePresence mode="popLayout">
+            <motion.img 
+              key={shipSrc}
+              src={shipSrc} 
+              alt="Nave" 
+              initial={{ opacity: 0, filter: 'drop-shadow(0 0 30px rgba(0,255,242,0.3))' }}
+              animate={{ opacity: 1, filter: 'drop-shadow(0 0 60px rgba(0,255,242,0.6))' }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 5 }}
+              style={{ height: 460, width: 'auto' }} 
+            />
+          </AnimatePresence>
 
 
-          {/* 4 Thruster Ping-Ripple Effect */}
+          {/* 4 Thruster Ping-Ripple Effect — Aligned with numbered ship image */}
           {[
-            { bottom: 100, left: '36.0%', size: 28 },
-            { bottom: 100, left: '58.0%', size: 28 },
-            { bottom: 88,  left: '44.0%', size: 20 },
-            { bottom: 88,  left: '52.0%', size: 20 }
+            { bottom: 115, left: '35.0%', size: 24 }, // 1 (Outer Left, Higher)
+            { bottom: 115, left: '59.2%', size: 24 }, // 4 (Outer Right, Higher)
+            { bottom: 82,  left: '41.8%', size: 32 }, // 2 (Inner Left, Lower)
+            { bottom: 82,  left: '51.0%', size: 32 }  // 3 (Inner Right, Lower)
           ].map((pos: any, i) => (
             <div key={i} style={{ position: 'absolute', bottom: pos.bottom, left: pos.left, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
@@ -201,6 +229,8 @@ export const Landing = ({ onNavigate, onAdmin }: any) => (
           subtitle="Satellite Beta • Orbit 2" 
           color="#99CC33" 
           onClick={() => onNavigate('br')} 
+          onMouseEnter={() => handleEnter('br')}
+          onMouseLeave={handleLeave}
         />
       </div>
     </div>
@@ -210,7 +240,8 @@ export const Landing = ({ onNavigate, onAdmin }: any) => (
       <span style={{color:'rgba(255,255,255,0.5)', fontSize:11, letterSpacing:'0.4em', fontWeight: 700}}>SELECCIONA TU DESTINO • CHOOSE YOUR STATION</span>
     </div>
   </div>
-);
+  );
+};
 
 const RotatingEarth = () => {
   return (
