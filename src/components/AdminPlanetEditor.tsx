@@ -11,6 +11,24 @@ const TIPO_INFO: any = {
   ojt:     { label: 'DESAFIO OJT', emoji: <Target size={20} />, accent: '#00D6CC' }
 };
 
+const timeToSeconds = (timeStr: string) => {
+  if (!timeStr) return 0;
+  // Handle HH:MM:SS or MM:SS or HHh MMm
+  const clean = timeStr.replace(/[hm\s]/g, ':').replace(/:+/g, ':').replace(/:$/, '');
+  const parts = clean.split(':').map(Number).filter(n => !isNaN(n));
+  if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+  if (parts.length === 2) return parts[0] * 60 + parts[1];
+  if (parts.length === 1) return parts[0] * 60; // assume minutes if only one number
+  return 0;
+};
+
+const secondsToTime = (secs: number) => {
+  const h = Math.floor(secs / 3600);
+  const m = Math.floor((secs % 3600) / 60);
+  const s = secs % 60;
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+};
+
 export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, initialPlanet, title = "EDITOR" }: any) => {
   const [activePlanet, setActivePlanet] = useState(initialPlanet || 0);
   const [editingSecIdx, setEditingSecIdx] = useState<number | null>(null);
@@ -107,7 +125,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
 
   const addRow = (secIdx: number) => {
     const next = [...currentSections];
-    const rows = [...next[secIdx].rows, { macroTema: '', dia: '', tema: '', detalhe: '', herramientas: { tipo: 'PPT', url: '' }, iaPic: '', tiempo: '' }];
+    const rows = [...next[secIdx].rows, { macroTema: '', dia: '', tema: '', detalhe: '', consejo: '', herramientas: { tipo: 'PPT', url: '' }, iaPic: '', tiempo: '' }];
     next[secIdx] = { ...next[secIdx], rows };
     updateSections(next);
   };
@@ -213,15 +231,18 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
             </div>
           </div>
           <div style={{ display: 'flex', gap: '12px' }}>
-            {['mision1', 'landing', 'ojt'].map(t => (
+            {['mision1', 'landing', 'ojt'].map(t => {
+                const totalTypeTime = currentSections.filter((s:any) => s.tipo === t).reduce((acc:any, s:any) => acc + (s.rows||[]).reduce((a:any, r:any) => a + timeToSeconds(r.tiempo || r.ch || ''), 0), 0);
+                return (
                 <button key={t} onClick={() => addSection(t)} style={{ 
                     background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', padding: '10px 20px', 
                     borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, color: '#ffffff',
                     display: 'flex', alignItems: 'center', gap: 8, transition: 'all 0.2s'
                 }} onMouseEnter={e => e.currentTarget.style.background = TIPO_INFO[t].accent} onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}>
-                    {TIPO_INFO[t].emoji} {TIPO_INFO[t].label}
+                    {TIPO_INFO[t].emoji} {TIPO_INFO[t].label} 
+                    {totalTypeTime > 0 && <span style={{ background: 'rgba(0,0,0,0.2)', padding: '2px 6px', borderRadius: 6, fontSize: 10 }}>{secondsToTime(totalTypeTime)}</span>}
                 </button>
-            ))}
+            )})}
             <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -345,7 +366,13 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                         onFocus={e => e.target.style.borderBottom = `2px solid ${TIPO_INFO[sec.tipo].accent}`}
                         onBlur={e => e.target.style.borderBottom = 'none'}
                     />
-                    <div style={{ fontSize: '11px', color: '#64748b', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', paddingLeft: 8 }}>{(sec.rows||[]).length} NODOS CONFIGURADOS</div>
+                    <div style={{ fontSize: '11px', color: '#64748b', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', paddingLeft: 8, display: 'flex', alignItems: 'center' }}>
+                        <span>{(sec.rows||[]).length} NODOS CONFIGURADOS</span>
+                        <span style={{ margin: '0 8px', color: '#cbd5e1' }}>•</span>
+                        <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#1B0088' }}>
+                            ⏱ TIEMPO TOTAL: {secondsToTime((sec.rows||[]).reduce((a:any, r:any) => a + timeToSeconds(r.tiempo || r.ch || ''), 0))}
+                        </span>
+                    </div>
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: '12px' }}>
@@ -359,54 +386,139 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                 </div>
               </div>
 
-              <div style={{ background: '#ffffff', border: '1px solid rgba(27,0,136,0.08)', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 40px rgba(0,0,0,0.04)' }}>
-                <div style={{ overflowX: 'auto' }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 1000 }}>
-                    <thead>
-                        <tr style={{ background: '#1B0088' }}>
-                            {['MACRO TEMA','DÍA','TEMA', ...(sec.tipo !== 'ojt' ? ['DETALLE TÉCNICO'] : []), 'HERRAMIENTAS', ...(sec.tipo !== 'ojt' ? ['IA-PIC'] : []), sec.tipo === 'ojt' ? 'CH' : 'TIEMPO', ''].map((h, i) => (
-                                <th key={i} style={{ padding: '18px 20px', fontSize: '10px', color: '#ffffff', textTransform: 'uppercase', fontWeight: 900, letterSpacing: '0.1em', textAlign: 'left' }}>{h}</th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {sec.rows.map((row: any, ri: number) => (
-                        <tr key={ri} style={{ verticalAlign: 'middle', transition: 'background 0.2s ease', borderBottom: '1px solid #E2E8F0', background: ri % 2 === 0 ? '#ffffff' : 'rgba(27,0,136,0.01)' }} onMouseEnter={e => e.currentTarget.style.background = 'rgba(27,0,136,0.04)'} onMouseLeave={e => e.currentTarget.style.background = ri % 2 === 0 ? '#ffffff' : 'rgba(27,0,136,0.01)'}>
-                            <td style={{ padding: '16px 20px' }}><input value={row.macroTema} onChange={e => updateRow(si, ri, 'macroTema', e.target.value)} style={{ ...inp({ fontWeight: 800 }), width: '100%' }} /></td>
-                            <td style={{ padding: '16px 20px', width: 64 }}><input value={row.dia} onChange={e => updateRow(si, ri, 'dia', e.target.value)} style={{ ...inp({ textAlign: 'center', fontWeight: 900 }), width: '100%' }} /></td>
-                            <td style={{ padding: '16px 20px' }}><input value={row.tema} onChange={e => updateRow(si, ri, 'tema', e.target.value)} style={{ ...inp({ fontWeight: 800 }), width: '100%' }} /></td>
-                            {sec.tipo !== 'ojt' && (
-                            <td style={{ padding: '16px 20px' }}><textarea value={row.detalhe} onChange={e => updateRow(si, ri, 'detalhe', e.target.value)} style={{ ...inp({ minHeight: 44, fontSize: 12, lineHeight: 1.4 }), width: '100%', resize: 'vertical' }} /></td>
-                            )}
-                            <td style={{ padding: '16px 20px' }}>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                                <select value={row.ferramentas?.tipo || 'PPT'} onChange={e => updateRow(si, ri, 'ferramentas', { ...row.ferramentas, tipo: e.target.value })} style={{ ...inp({ padding: '6px 12px', fontSize: 11, background: '#F8FAFC' }), cursor: 'pointer' }}>
-                                    <option value="PPT">📊 PPT</option>
-                                    <option value="Vídeo">🎬 VÍDEO</option>
-                                    <option value="Operação">⚙️ OPERACIÓN</option>
-                                    <option value="Simulador">💻 SIMULADOR</option>
-                                    <option value="Quiz">📝 QUIZ</option>
-                                </select>
-                                <input value={row.ferramentas?.url || ''} onChange={e => updateRow(si, ri, 'ferramentas', { ...row.ferramentas, url: e.target.value })} placeholder="URL Recurso" style={{ ...inp({ padding: '6px 12px', fontSize: 10, color: '#1a56db', background: '#F8FAFC' }) }} />
-                            </div>
-                            </td>
-                            {sec.tipo !== 'ojt' && (
-                            <td style={{ padding: '16px 20px' }}><input value={row.iaPic} onChange={e => updateRow(si, ri, 'iaPic', e.target.value)} style={{ ...inp({ fontSize: 10, color: '#666', background: '#F8FAFC' }), width: '100%' }} /></td>
-                            )}
-                            <td style={{ padding: '16px 20px', width: 100 }}><input value={row.tiempo || row.ch || ''} onChange={e => updateRow(si, ri, 'tiempo', e.target.value)} style={{ ...inp({ fontWeight: 900, textAlign: 'center' }), width: '100%' }} /></td>
-                            <td style={{ padding: '16px 20px' }}>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                                <button onClick={() => moveRow(si, ri, -1)} style={{ background: '#fff', border: '1px solid #E2E8F0', width: 28, height: 28, borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ChevronUp size={14}/></button>
-                                <button onClick={() => moveRow(si, ri, 1)} style={{ background: '#fff', border: '1px solid #E2E8F0', width: 28, height: 28, borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ChevronDown size={14}/></button>
-                                <button onClick={() => deleteRow(si, ri)} style={{ background: '#fee2e2', border: 'none', width: 28, height: 28, borderRadius: 8, cursor: 'pointer', color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Trash2 size={16}/></button>
-                            </div>
-                            </td>
-                        </tr>
-                        ))}
-                    </tbody>
-                    </table>
-                </div>
+          <div style={{ padding: '40px' }}>
+              <div style={{ 
+                background: '#ffffff', 
+                borderRadius: '16px', 
+                padding: '40px',
+                border: '1px solid #E2E8F0',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.05)'
+              }}>
+                        {(() => {
+                          const groupedRows: { [key: string]: any[] } = {};
+                          sec.rows.forEach((row: any, idx: number) => {
+                            const mt = row.macroTema || 'SIN MACROTEMA';
+                            if (!groupedRows[mt]) groupedRows[mt] = [];
+                            groupedRows[mt].push({ ...row, originalIndex: idx });
+                          });
+
+                          return Object.entries(groupedRows).map(([mt, rows], gi) => {
+                            const totalSecs = rows.reduce((acc, r) => acc + timeToSeconds(r.tiempo || r.ch || ''), 0);
+                            let runningAcc = 0;
+                            // Need to find the global running acc up to the start of this group
+                            let previousSecs = 0;
+                            for (let i = 0; i < sec.rows.indexOf(rows[0]); i++) {
+                                previousSecs += timeToSeconds(sec.rows[i].tiempo || sec.rows[i].ch || '');
+                            }
+                            runningAcc = previousSecs;
+
+                            return (
+                              <div key={mt} style={{ marginBottom: '48px' }}>
+                                {/* MACROTEMA HEADER (CLASSIC STYLE) */}
+                                <div style={{ 
+                                  display: 'flex', 
+                                  alignItems: 'center', 
+                                  justifyContent: 'space-between',
+                                  background: '#f8fafc',
+                                  border: '2px solid #1B0088',
+                                  padding: '12px 24px',
+                                  borderRadius: '8px',
+                                  marginBottom: '16px'
+                                }}>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                                    <span style={{ fontSize: '11px', fontWeight: 900, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '0.1em' }}>MACROTEMA:</span>
+                                    <input 
+                                      value={mt === 'SIN MACROTEMA' ? '' : mt}
+                                      onChange={e => {
+                                        const newVal = e.target.value;
+                                        rows.forEach(r => updateRow(si, r.originalIndex, 'macroTema', newVal));
+                                      }}
+                                      style={{ background: 'transparent', border: 'none', color: '#1B0088', fontSize: '16px', fontWeight: 900, outline: 'none', width: '400px' }}
+                                      placeholder="DEFINA MACRO TEMA..."
+                                    />
+                                  </div>
+                                  <div style={{ background: '#1B0088', color: '#fff', padding: '6px 14px', borderRadius: '20px', fontSize: '11px', fontWeight: 900 }}>
+                                    ⏱ TOTAL BLOQUE: {secondsToTime(totalSecs)}
+                                  </div>
+                                </div>
+
+                                {/* DATA TABLE */}
+                                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                  <thead>
+                                    <tr style={{ background: '#f1f5f9' }}>
+                                      <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0' }}>TEMA</th>
+                                      <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0' }}>DETALLE</th>
+                                      <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0', width: '200px' }}>RECURSOS (TIPO / URL)</th>
+                                      <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0', width: '200px' }}>CONSEJO TÁCTICO</th>
+                                      <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'center', border: '1px solid #e2e8f0', width: '60px' }}>IA</th>
+                                      <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'center', border: '1px solid #e2e8f0', width: '90px' }}>DURACIÓN</th>
+                                      <th style={{ padding: '10px', border: '1px solid #e2e8f0', width: '40px' }}></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {rows.map((row: any, ri: number) => {
+                                      runningAcc += timeToSeconds(row.tiempo || row.ch || '');
+                                      const oi = row.originalIndex;
+                                      return (
+                                        <tr key={oi} style={{ background: ri % 2 === 0 ? '#fff' : '#fafafa' }}>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
+                                            <input value={row.tema} onChange={e => updateRow(si, oi, 'tema', e.target.value)} placeholder="Título..." style={{ background: 'transparent', border: 'none', color: '#111', fontSize: '13px', fontWeight: 700, width: '100%', outline: 'none' }} />
+                                          </td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
+                                            <textarea value={row.detalhe} onChange={e => updateRow(si, oi, 'detalhe', e.target.value)} placeholder="Detalle..." style={{ background: 'transparent', border: 'none', color: '#64748b', fontSize: '11px', width: '100%', outline: 'none', resize: 'none', height: '60px' }} />
+                                          </td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
+                                            {(Array.isArray(row.herramientas) ? row.herramientas : row.herramientas ? [row.herramientas] : []).map((h: any, hi: number) => (
+                                              <div key={hi} style={{ marginBottom: 8, paddingBottom: 8, borderBottom: '1px dashed #e2e8f0', position: 'relative' }}>
+                                                <select value={h.tipo || 'PPT'} onChange={e => {
+                                                  const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : [row.herramientas || {}];
+                                                  newH[hi] = { ...newH[hi], tipo: e.target.value };
+                                                  updateRow(si, oi, 'herramientas', newH);
+                                                }} style={{ background: '#fff', border: '1px solid #ccc', fontSize: '10px', padding: '2px', width: '100%', marginBottom: 4 }}>
+                                                  {['Slide','Docs','Sheets','PDF','Video','Form','Form AeC','Form Kon BR','NA','Genially','Educaplay','Latam.com','Youtube','Link','Actividad'].map(t => <option key={t} value={t}>{t}</option>)}
+                                                </select>
+                                                <input value={h.url || ''} onChange={e => {
+                                                  const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : [row.herramientas || {}];
+                                                  newH[hi] = { ...newH[hi], url: e.target.value };
+                                                  updateRow(si, oi, 'herramientas', newH);
+                                                }} placeholder="URL" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid #eee', color: '#1a56db', fontSize: '9px', width: '100%' }} />
+                                                <button onClick={() => {
+                                                  const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : [row.herramientas || {}];
+                                                  newH.splice(hi, 1);
+                                                  updateRow(si, oi, 'herramientas', newH);
+                                                }} style={{ position: 'absolute', top: 2, right: -4, background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '10px' }}>x</button>
+                                              </div>
+                                            ))}
+                                            <button onClick={() => {
+                                              const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : (row.herramientas ? [row.herramientas] : []);
+                                              newH.push({ tipo: 'PPT', url: '' });
+                                              updateRow(si, oi, 'herramientas', newH);
+                                            }} style={{ background: '#f1f5f9', border: '1px dashed #cbd5e1', width: '100%', padding: '4px', fontSize: '9px', cursor: 'pointer', borderRadius: 4, color: '#64748b' }}>+ AÑADIR RECURSO</button>
+                                          </td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
+                                            <textarea value={row.consejo} onChange={e => updateRow(si, oi, 'consejo', e.target.value)} placeholder="Consejo..." style={{ background: 'transparent', border: 'none', fontSize: '10px', color: '#333', width: '100%', resize: 'none', height: '60px' }} />
+                                          </td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}>
+                                            {/* IA Placeholder */}
+                                          </td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}>
+                                            <input value={row.tiempo || row.ch} onChange={e => updateRow(si, oi, 'tiempo', e.target.value)} style={{ background: 'transparent', border: 'none', color: '#111', fontSize: '12px', fontWeight: 800, textAlign: 'center', width: '100%' }} />
+                                          </td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}>
+                                            <button onClick={() => deleteRow(si, oi)} style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', opacity: 0.5 }} onMouseEnter={e=>e.currentTarget.style.opacity='1'} onMouseLeave={e=>e.currentTarget.style.opacity='0.5'}><Trash2 size={14}/></button>
+                                          </td>
+                                        </tr>
+                                      );
+                                    })}
+                                  </tbody>
+                                </table>
+                              </div>
+                            );
+                          });
+                        })()}
               </div>
+          </div>
+
 
               {sec.tipo === 'ojt' && editingSecIdx === si && (
                 <motion.div 

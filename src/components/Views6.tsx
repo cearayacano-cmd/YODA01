@@ -104,24 +104,17 @@ const MissionMapBackground = ({ color }: { color: string }) => (
     {/* High Performance CSS Starfield */}
     <style>{`
       @keyframes twinkle {
-        0%, 100% { opacity: 0.3; transform: scale(1); }
-        50% { opacity: 1; transform: scale(1.2); }
+        0%, 100% { opacity: 0.1; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.2); }
       }
       .star-layer {
-        position: absolute;
-        inset: 0;
+        position: absolute; inset: 0;
         background-image: 
-          radial-gradient(1.5px 1.5px at 20px 30px, #fff, rgba(0,0,0,0)),
-          radial-gradient(1.5px 1.5px at 100px 350px, #fff, rgba(0,0,0,0)),
-          radial-gradient(1.5px 1.5px at 200px 150px, #fff, rgba(0,0,0,0)),
-          radial-gradient(2px 2px at 300px 480px, #fff, rgba(0,0,0,0)),
-          radial-gradient(1.5px 1.5px at 400px 250px, #fff, rgba(0,0,0,0)),
-          radial-gradient(2px 2px at 500px 50px, #fff, rgba(0,0,0,0)),
-          radial-gradient(1.5px 1.5px at 600px 380px, #fff, rgba(0,0,0,0)),
-          radial-gradient(2px 2px at 750px 180px, #fff, rgba(0,0,0,0)),
-          radial-gradient(1.5px 1.5px at 900px 520px, #fff, rgba(0,0,0,0)),
-          radial-gradient(2px 2px at 150px 650px, #fff, rgba(0,0,0,0));
-        background-size: 800px 800px;
+          radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+          radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+          radial-gradient(2px 2px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+          radial-gradient(2.5px 2.5px at 160px 120px, #ffffff, rgba(0,0,0,0));
+        background-size: 200px 200px;
         opacity: 0.4;
       }
     `}</style>
@@ -165,40 +158,37 @@ const FERR_ICONS: any = {
 const MissionHeaderHUD = ({ sectorLabel, planetLabel, planetColor, onBack }: any) => (
   <div style={{ 
     position: 'sticky', top: 0, left: 0, right: 0, zIndex: 100, 
-    background: 'rgba(15,0,79,0.85)', backdropFilter: 'blur(20px)', 
-    borderBottom: `2px solid ${planetColor}`, padding: '15px 40px', 
+    background: '#ffffff', borderBottom: `4px solid ${planetColor}`, padding: '15px 40px', 
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    boxShadow: `0 4px 30px rgba(0,0,0,0.4)`
+    boxShadow: `0 4px 10px rgba(0,0,0,0.05)`
   }}>
     <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
       <button 
         onClick={onBack}
         style={{ 
-          background: 'transparent', border: `1.5px solid ${planetColor}`, color: planetColor, 
+          background: '#f8fafc', border: `1.5px solid #ccc`, color: '#64748b', 
           padding: '8px 20px', borderRadius: 4, cursor: 'pointer', fontSize: 10, fontWeight: 900, 
           letterSpacing: '2px', textTransform: 'uppercase', transition: '0.3s' 
         }}
-        onMouseEnter={e => { e.currentTarget.style.background = planetColor; e.currentTarget.style.color = '#0F004F' }}
-        onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = planetColor }}
       >
         ← REGRESAR
       </button>
-      <div style={{ width: 1, height: 30, background: 'rgba(255,255,255,0.1)' }} />
+      <div style={{ width: 1, height: 30, background: '#eee' }} />
       <div>
-        <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.4)', fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase' }}>SECTOR: {sectorLabel}</div>
-        <div style={{ fontSize: 24, fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase', color: '#fff', filter: `drop-shadow(0 0 10px ${planetColor}44)` }}>
+        <div style={{ fontSize: 8, color: '#94a3b8', fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase' }}>SECTOR: {sectorLabel}</div>
+        <div style={{ fontSize: 24, fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase', color: '#1B0088' }}>
           {planetLabel}
         </div>
       </div>
     </div>
 
     <div style={{ textAlign: 'right' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'flex-end', color: planetColor, fontSize: 10, fontWeight: 900, letterSpacing: '2px' }}>
-        <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 2, repeat: Infinity }} style={{ width: 8, height: 8, borderRadius: '50%', background: planetColor, boxShadow: `0 0 10px ${planetColor}` }} />
-        LATAM_FIELD_LINK: STABLE // SCANNING...
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'flex-end', color: '#64748b', fontSize: 10, fontWeight: 900, letterSpacing: '2px' }}>
+        <div style={{ width: 8, height: 8, borderRadius: '50%', background: planetColor }} />
+        SISTEMA: EN LÍNEA
       </div>
-      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', fontWeight: 800, letterSpacing: '1px', marginTop: 4 }}>
-        COORDS: [FSC-EXP // BX-44] · SECTOR_PRO
+      <div style={{ fontSize: 9, color: '#94a3b8', fontWeight: 800, letterSpacing: '1px', marginTop: 4 }}>
+        SECTOR_PRO_CLASSIC // {new Date().toLocaleDateString()}
       </div>
     </div>
   </div>
@@ -502,8 +492,29 @@ const MissionMapNode = ({ section, index, planetColor, onClick }: any) => {
       {/* Cinematic Label Box */}
       <div style={{ marginTop: '20px', textAlign: 'center', background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(5px)', padding: '12px 24px', borderRadius: '12px', border: `1.5px solid ${planetColor}40`, minWidth: '320px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
         <div style={{ fontSize: '9px', color: planetColor, fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '6px' }}>MÓDULO_{String(index + 1).padStart(2, '0')}</div>
-        <div style={{ fontSize: '20px', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '2px' }}>{section.nombre || 'CARGA DE DATOS...'}</div>
-        <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', fontWeight: 700, marginTop: '8px' }}>⏱ {section.rows?.length || 0} NODOS_TÉCNICOS</div>
+        <div style={{ fontSize: '20px', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '2px' }}>{section.label || section.nombre || 'CARGA DE DATOS...'}</div>
+        <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', fontWeight: 700, marginTop: '8px' }}>
+          ⏱ {section.rows?.length || 0} NODOS_TÉCNICOS • TIEMPO: {
+            (function(){
+              let secs = 0;
+              (section.rows || []).forEach((r:any) => {
+                let t = r.tiempo || r.ch || '';
+                if(typeof t === 'string' && t.includes(':')) {
+                  const p = t.replace(/[hm\s]/g, ':').replace(/:+/g, ':').replace(/:$/, '').split(':').map(Number).filter(n => !isNaN(n));
+                  if(p.length===3) secs += p[0]*3600+p[1]*60+p[2];
+                  else if(p.length===2) secs += p[0]*60+p[1];
+                  else if(p.length===1) secs += p[0]*60;
+                } else if (typeof t === 'number') {
+                  secs += t*60;
+                }
+              });
+              const h = Math.floor(secs / 3600);
+              const m = Math.floor((secs % 3600) / 60);
+              const s = secs % 60;
+              return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+            })()
+          }
+        </div>
       </div>
     </motion.div>
   );
@@ -629,79 +640,100 @@ const MissionSectorMap = ({ secciones, planetColor, onSelectSection }: any) => {
   );
 };
 
-const GlassMissionBlock = ({ seccion, planetColor, onBackToMap }: any) => {
-  const tipo = seccion.tipo || 'mision1';
+const ClassicMissionBlock = ({ seccion, planetColor, onBackToMap }: any) => {
   const rows = seccion.rows || [];
   
-  const typeIcons: any = {
-      mision1: <Rocket size={18} />,
-      landing: <Anchor size={18} />,
-      ojt: <Target size={18} />
-  };
-
-  const typeLabels: any = {
-      mision1: 'MÓDULO DE APRENDIZAJE_01',
-      landing: 'PROTOCOLO DE DESEMBARQUE',
-      ojt: 'DESAFÍO OJT - OPERATIVO'
-  };
+  // Grouping logic
+  const groupedRows: { [key: string]: any[] } = {};
+  rows.forEach((row: any) => {
+    const mt = row.macroTema || 'CONTENIDO GENERAL';
+    if (!groupedRows[mt]) groupedRows[mt] = [];
+    groupedRows[mt].push(row);
+  });
 
   return (
-    <div style={{ marginBottom: 80 }}>
-        {/* BLOCK HEADER (Pro Look) */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 30, paddingLeft: 10 }}>
-            <div style={{ width: 56, height: 56, borderRadius: 12, background: planetColor, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 15px 30px ${planetColor}44` }}>
-                {typeIcons[tipo]}
-            </div>
-            <div>
-                <div style={{ fontSize: 10, color: planetColor, fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase' }}>{typeLabels[tipo]}</div>
-                <div style={{ fontSize: 24, fontWeight: 900, color: '#fff', letterSpacing: '2px', textTransform: 'uppercase' }}>{seccion.nombre || 'CARNA DE OPERACIONES'}</div>
-            </div>
-            <div style={{ marginLeft: 'auto', textAlign: 'right', display: 'flex', gap: 24, alignItems: 'center' }}>
-                <button 
-                  onClick={onBackToMap}
-                  style={{ background: 'rgba(255,255,255,0.05)', border: `1px solid ${planetColor}66`, color: planetColor, padding: '10px 20px', borderRadius: 6, fontSize: 10, fontWeight: 900, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10, letterSpacing: '1px' }}
-                >
-                    <MapIcon size={14} /> SALIR AL MAPA
-                </button>
-                <div style={{ height: 30, width: 1, background: 'rgba(255,255,255,0.1)' }} />
-                <div>
-                  <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', fontWeight: 800, letterSpacing: '1px', marginBottom: 4 }}>PROTOCOLO_SEGMENTO</div>
-                  <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', fontWeight: 900 }}>NODOS_DETECTADOS: {rows.length}</div>
-                </div>
-            </div>
+    <div style={{ padding: '0 20px', marginBottom: 100 }}>
+      {/* HEADER CONTROLS */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 30, borderBottom: '1px solid #eee', paddingBottom: 15 }}>
+        <div>
+          <div style={{ fontSize: 10, color: planetColor, fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase' }}>MISIÓN DE APRENDIZAJE</div>
+          <div style={{ fontSize: 24, fontWeight: 900, color: '#1B0088', textTransform: 'uppercase' }}>{seccion.nombre}</div>
         </div>
+        <button 
+          onClick={onBackToMap}
+          style={{ background: '#f8fafc', border: '1px solid #ccc', color: '#64748b', padding: '8px 16px', borderRadius: 4, fontSize: 11, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8 }}
+        >
+          <MapIcon size={14} /> VOLVER AL MAPA
+        </button>
+      </div>
 
-        {/* BLOCK BODY - List of Cards */}
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {rows.map((row: any, i: number) => (
-                <ContentNode key={i} index={i} row={row} type={tipo} planetColor={planetColor} />
-            ))}
-        </div>
-
-        {/* Footer Specialist Info for OJT */}
-        {tipo === 'ojt' && (
-            <div style={{ background: '#FFFFFF', borderRadius: 16, padding: '30px 40px', marginTop: 10, display: 'flex', alignItems: 'center', gap: 30, boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
-                <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 20 }}>
-                    <div style={{ width: 44, height: 44, borderRadius: '50%', background: `${planetColor}22`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <Terminal size={20} color={planetColor} />
-                    </div>
-                    <span style={{ fontSize: 13, fontWeight: 700, color: '#4D4D4D', lineHeight: 1.6 }}>
-                        <span style={{ color: planetColor, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px' }}>Notificación Operativa:</span> Reservar tiempo para completar el cuaderno de registro de prácticas según protocolo operativo de la estación.
-                    </span>
-                </div>
-                {seccion.dbOjtUrl && seccion.dbOjtUrl !== '#' && (
-                    <a href={seccion.dbOjtUrl} target="_blank" rel="noopener noreferrer" style={{ background: planetColor, color: '#fff', padding: '16px 32px', borderRadius: 10, fontSize: 12, fontWeight: 900, textDecoration: 'none', letterSpacing: '1px', boxShadow: `0 10px 20px ${planetColor}33` }}>
-                        {seccion.dbOjtLabel || 'DB OJT'} →
-                    </a>
-                )}
-                <div style={{ minWidth: 100, textAlign: 'center' }}>
-                    <div style={{ fontSize: 24, fontWeight: 900, color: planetColor, fontFamily: 'monospace' }}>{seccion.totalCh}</div>
-                </div>
+      {Object.entries(groupedRows).map(([mt, mtRows], gi) => {
+        const totalSecs = mtRows.reduce((acc, r) => acc + (r.tiempo ? (typeof r.tiempo === 'string' ? (r.tiempo.includes(':') ? r.tiempo.split(':').reduce((a:any,b:any)=>a*60+parseInt(b),0) : parseInt(r.tiempo)*60) : r.tiempo) : 0), 0);
+        // Note: Simplified time calculation for brevity, could use timeToSeconds if exported
+        
+        return (
+          <div key={gi} style={{ marginBottom: 40 }}>
+            {/* MACROTEMA HEADER */}
+            <div style={{ 
+              display: 'flex', alignItems: 'center', gap: 16, marginBottom: 15, 
+              borderBottom: `2px solid ${planetColor}`, paddingBottom: 10 
+            }}>
+              <div style={{ fontSize: 16, fontWeight: 900, color: '#111', textTransform: 'uppercase' }}>{mt}</div>
+              <div style={{ fontSize: 11, color: '#64748b', background: '#f1f5f9', padding: '2px 10px', borderRadius: 12, fontWeight: 700 }}>
+                ⏱ BLOQUE: {mtRows[0]?.tiempo?.includes(':') ? 'SUMA TÁCTICA' : `${mtRows.length} NODOS`}
+              </div>
             </div>
-        )}
+
+            {/* TABLE */}
+            <table style={{ width: '100%', borderCollapse: 'collapse', background: '#fff', boxShadow: '0 2px 10px rgba(0,0,0,0.05)', borderRadius: 8, overflow: 'hidden' }}>
+              <thead>
+                <tr style={{ background: '#f8fafc' }}>
+                  <th style={{ padding: '12px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', borderBottom: '1px solid #eee' }}>TEMA / ACTIVIDAD</th>
+                  <th style={{ padding: '12px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', borderBottom: '1px solid #eee', width: 250 }}>DETALLE TÉCNICO</th>
+                  <th style={{ padding: '12px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'center', borderBottom: '1px solid #eee', width: 150 }}>RECURSOS</th>
+                  <th style={{ padding: '12px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'center', borderBottom: '1px solid #eee', width: 100 }}>TIEMPO</th>
+                </tr>
+              </thead>
+              <tbody>
+                {mtRows.map((row: any, ri: number) => (
+                  <tr key={ri} style={{ borderBottom: '1px solid #eee' }}>
+                    <td style={{ padding: '12px' }}>
+                      <div style={{ fontSize: 14, fontWeight: 800, color: '#1B0088' }}>{row.tema}</div>
+                    </td>
+                    <td style={{ padding: '12px', fontSize: 12, color: '#444', lineHeight: 1.5, whiteSpace: 'pre-line' }}>{row.detalhe}</td>
+                    <td style={{ padding: '12px', textAlign: 'center' }}>
+                      {(() => {
+                        const recs = Array.isArray(row.herramientas) ? row.herramientas : 
+                                     Array.isArray(row.ferramentas) ? row.ferramentas : 
+                                     (row.herramientas ? [row.herramientas] : 
+                                     (row.ferramentas ? [row.ferramentas] : []));
+                        return (
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'center' }}>
+                            {recs.filter((r:any) => r && r.url && r.url !== '#').map((r:any, i:number) => (
+                              <a 
+                                key={i}
+                                href={r.url} target="_blank" rel="noopener noreferrer"
+                                style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: planetColor, color: '#fff', padding: '6px 12px', borderRadius: 4, textDecoration: 'none', fontSize: 10, fontWeight: 900, whiteSpace: 'nowrap' }}
+                              >
+                                <ExternalLink size={12} /> VER {r.tipo || 'LINK'}
+                              </a>
+                            ))}
+                          </div>
+                        );
+                      })()}
+                    </td>
+                    <td style={{ padding: '12px', textAlign: 'center', fontSize: 12, fontWeight: 800, color: '#111' }}>{row.tiempo || row.ch}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      })}
     </div>
-    );
+  );
 };
+
 
 const FscDetailedNodeCard = ({ node, index, planetColor }: any) => {
     return (

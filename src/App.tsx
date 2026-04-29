@@ -19,7 +19,8 @@ import {
   SOPORTE_PLANET_1, 
   FSC_DATA_DEFAULT, 
   CONHECENDO_DATA, 
-  IMERSAO_DATA 
+  IMERSAO_DATA,
+  BASE_PLANET_DATA
 } from './lib/data';
 
 import { AdminCenter } from './components/AdminViews';
@@ -140,14 +141,14 @@ export default function App() {
       laboratorio:[{label:"KPIs Estratégicos",url:"#"}],
       operaciones:[{label:"Entrenamiento Tripulación",url:"#"}],
       rutaLider: RUTA_DATA_DEFAULT,
-      frontLineContent: Array.from({length: 8}, ()=>[]),
+      frontLineContent: [BASE_PLANET_DATA, ...Array.from({length: 7}, ()=>[])],
       soporteContent: [ SOPORTE_PLANET_1, [] ],
       satelites: { conhecendo: CONHECENDO_DATA, imersao: IMERSAO_DATA },
       fsc: [ FSC_DATA_DEFAULT ],
       exploracion:{
-        frontLine:initGalaxy(["Base 🪐","Pos Venta 1 🪐","Pos Venta 2 🪐","HVC 🪐","DT Bagagens 🪐","DT Devoluciones 🪐","RRSS 🪐","LAE 🪐"]),
-        soporte:initGalaxy(["Soporte BO (Pendiente) 🪐","Soporte FFP (Pendiente) 🪐"]),
-        fieldSupport:initGalaxy(["FSC (Pendiente) 🪐"])
+        frontLine:initGalaxy(["Base","Pos Venta 1","Pos Venta 2","HVC","DT Bagagens","DT Devoluciones","RRSS","LAE"]),
+        soporte:initGalaxy(["Soporte BO (Pendiente)","Soporte FFP (Pendiente)"]),
+        fieldSupport:initGalaxy(["FSC (Pendiente)"])
       }
     },
     ssc: {
@@ -162,6 +163,7 @@ export default function App() {
       exploracion:{frontLine:[],soporte:[],fieldSupport:[]}
     }
   });
+
 
   const activeConfig = currentStation==='BR' ? appConfig.br : appConfig.ssc;
   const go = (v: string, sector: string | null = null, courseIdx: number | null = null) => {
