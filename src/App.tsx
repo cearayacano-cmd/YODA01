@@ -137,6 +137,7 @@ export default function App() {
     br: {
       monitoringUrl:"https://lookerstudio.google.com/u/0/reporting/9d1f44d6-e585-4a9c-af76-c0883ed691e2/page/p_wtg2od23vd",
       iaraLink: "https://amelia.appslatam.com/#/assistants/chat/aa857c06-5a06-4450-8518-8568cdd28dfd",
+      preparacaoLink: "https://docs.google.com/spreadsheets/d/1KU429FHAX7vfvelvC1qJV8yNVr2IVtjvG_uxnX4AO_E/edit?gid=1618918374#gid=1618918374",
       suministros:[{label:"Formularios BR",url:"#"}],
       ingenieria:[{label:"Manuales Técnicos",url:"#"}],
       laboratorio:[{label:"KPIs Estratégicos",url:"#"}],
@@ -157,6 +158,7 @@ export default function App() {
     ssc: {
       monitoringUrl:"",
       iaraLink: "https://amelia.appslatam.com/#/assistants/chat/aa857c06-5a06-4450-8518-8568cdd28dfd",
+      preparacaoLink: "",
       suministros:[],ingenieria:[],laboratorio:[],operaciones:[],
       lastUpdate: "---",
       rutaLider:[],

@@ -205,6 +205,25 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                 />
               </div>
             </div>
+
+            {/* Third row: Preparação full width */}
+            <div style={{ marginTop: 24 }}>
+              <div style={{display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12}}>
+                <Database size={20} color="#00D6CC" />
+                <div style={{fontSize:14, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
+                  MIGRAÇÃO · REQUISITOS
+                </div>
+                <span style={{ fontSize:11, color:'#00D6CC', fontWeight:700, background:'rgba(0,214,204,0.08)', border:'1px solid rgba(0,214,204,0.3)', borderRadius:6, padding:'2px 10px' }}>Preparação</span>
+              </div>
+              <input 
+                value={tempConfig[sk].preparacaoLink || ''} 
+                onChange={e=>updateF('preparacaoLink',e.target.value)}
+                style={{...inp({ padding: '14px 20px', border: '1px solid #E2E8F0', fontSize: 14, background: '#F8FAFC' }), width:'100%'}} 
+                placeholder="https://docs.google.com/spreadsheets/..."
+                onFocus={e => { e.currentTarget.style.borderColor = '#00D6CC'; e.currentTarget.style.background = '#fff'; }}
+                onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#F8FAFC'; }}
+              />
+            </div>
           </div>
 
           <div style={{display: 'flex', alignItems: 'center', gap: 14, marginBottom: 28}}>

@@ -1255,7 +1255,7 @@ const TacticalKey = ({ label, color, active = false, onClick, large = false }: a
   </motion.div>
 );
 
-const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive, states }: any) => {
+const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive, onPreparacao, states }: any) => {
   const { alertMode, hudHidden, dimLights } = states;
   const color = alertMode ? "#B20F3B" : "#99CC33";
 
@@ -1413,7 +1413,27 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
             transition: 'background 0.3s, box-shadow 0.3s',
           }}
         >
-          <span style={{ fontSize: 11, fontWeight: 900, color: '#fff', letterSpacing: '0.2em', fontFamily: 'monospace', textShadow: iaraActive ? '0 0 10px #C090FF, 0 0 3px #fff' : 'none', whiteSpace: 'nowrap' }}>IARA</span>
+          <span style={{ fontSize: 11, fontWeight: 900, color: '#fff', letterSpacing: '0.2em', fontFamily: 'monospace', textShadow: iaraActive ? '0 0 10px #C090FF, 0 0 3px #fff' : 'none', whiteSpace: 'nowrap' }}>🤖 IARA</span>
+        </motion.div>
+
+        {/* PREPARAÇÃO */}
+        <motion.div
+          animate={{ boxShadow: ['0 0 6px rgba(0,214,204,0.25)', '0 0 16px rgba(0,214,204,0.6)', '0 0 6px rgba(0,214,204,0.25)'] }}
+          transition={{ duration: 2.8, repeat: Infinity }}
+          whileHover={{ backgroundColor: 'rgba(0,214,204,0.22)', boxShadow: '0 0 18px rgba(0,214,204,0.8)' }}
+          whileTap={{ scale: 0.97, backgroundColor: 'rgba(0,214,204,0.4)' }}
+          onClick={onPreparacao}
+          style={{
+            height: '36px', padding: '0 16px',
+            background: 'transparent', border: '1.5px solid rgba(0,214,204,0.55)',
+            borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer', position: 'relative', overflow: 'hidden', gap: 8,
+            transition: 'background 0.3s, box-shadow 0.3s',
+          }}
+        >
+          <motion.div animate={{ x: ['-100%', '200%'] }} transition={{ duration: 2.8, repeat: Infinity, ease: 'linear', repeatDelay: 2 }}
+            style={{ position: 'absolute', top: 0, left: 0, width: '35%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(0,214,204,0.12), transparent)', pointerEvents: 'none' }} />
+          <span style={{ fontSize: 10, fontWeight: 900, color: '#fff', letterSpacing: '0.12em', textShadow: '0 0 8px rgba(0,214,204,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>📋 PREPARAÇÃO</span>
         </motion.div>
       </div>
     </div>
@@ -1710,6 +1730,7 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
         onMonitoring={() => config.monitoringUrl && window.open(config.monitoringUrl, '_blank')}
         onIara={() => setShowIara(prev => !prev)}
         iaraActive={showIara}
+        onPreparacao={() => config.preparacaoLink && window.open(config.preparacaoLink, '_blank')}
         states={{ alertMode, hudHidden, dimLights }}
       />
 
