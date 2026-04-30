@@ -42,3 +42,11 @@ export const BASE_PLANET_DATA = [
     rows: []
   }
 ];
+
+export const ONBOARDING_DATA_DEFAULT = [
+  {
+    tipo: 'mision1',
+    label: 'ONBOARDING',
+    rows: []
+  }
+];

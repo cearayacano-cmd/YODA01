@@ -522,7 +522,7 @@ export const TechBaseView = ({
   footerTitle = "TERMINAL DE INGENIERÍA",
   topDecalLeft = "Universo Training",
   topDecalRight = "Customer Care & Sales",
-  sideDecalLeft = "Guardianes",
+  sideDecalLeft = "Guardiões",
   sideDecalRight = "Capacitación",
   footerLogo = null,
   description = "Accedé a manuales técnicos, guías de procedimientos y recursos de soporte para operaciones."
@@ -572,7 +572,7 @@ export const TechBaseView = ({
       <div style={{ position: 'absolute', top: '40%', left: -80, display: 'flex', alignItems: 'center', gap: 15, transform: 'rotate(-90deg)', transformOrigin: 'center', zIndex: 1 }}>
         <div style={{ width: 40, height: 2, background: themeColor, boxShadow: `0 0 10px ${themeColor}` }} />
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ fontSize: 12, fontWeight: 900, color: '#64748B', letterSpacing: '0.2em' }}>Guardianes</div>
+          <div style={{ fontSize: 12, fontWeight: 900, color: '#64748B', letterSpacing: '0.2em' }}>Guardiões</div>
           <img src="/guardianes_logo.png" alt="Logo Guardianes" style={{ height: 32, filter: 'brightness(1.1) drop-shadow(0 0 8px rgba(153,204,51,0.2))' }} />
         </div>
         <div style={{ width: 40, height: 2, background: themeColor, boxShadow: `0 0 10px ${themeColor}40` }} />
@@ -756,8 +756,8 @@ export const TechBaseView = ({
           </div>
         </div>
 
-        {/* List Items */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        {/* List Items Grid (3 Columns) */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
           {(!links || links.length === 0) ? (
             <div style={{ textAlign: 'center', padding: 60, color: '#888888', border: '2px dashed #cccccc', borderRadius: 8, background: 'rgba(255,255,255,0.5)' }}>
               NO HAY RECURSOS CONFIGURADOS EN ESTA TERMINAL
@@ -765,98 +765,55 @@ export const TechBaseView = ({
           ) : links.map((link: any, i: number) => (
             <motion.div
               key={i}
-              whileHover={{ scale: 1.01 }}
+              whileHover={{ translateY: -5, scale: 1.02 }}
               style={{ 
                 position: 'relative', 
                 overflow: 'hidden',
                 transition: 'all 0.3s ease',
                 display: 'flex', 
-                alignItems: 'center', 
-                gap: 24,
-                padding: '20px 24px',
+                flexDirection: 'column',
+                gap: 16,
+                padding: '24px',
                 cursor: 'pointer',
                 background: '#1B0088', 
                 backdropFilter: 'blur(10px)',
                 WebkitBackdropFilter: 'blur(10px)',
                 border: `1px solid ${themeColor}40`,
-                boxShadow: `inset 0 0 20px ${themeColor}10`
+                boxShadow: `0 10px 30px rgba(0,0,0,0.15), inset 0 0 20px ${themeColor}10`,
+                borderRadius: '8px'
               }} 
               onClick={() => link.url !== '#' && window.open(link.url, '_blank')}
             >
               {/* Tactical Corners */}
-              <div style={{ position: 'absolute', top: 0, left: 0, width: 12, height: 12, borderTop: `3px solid ${themeColor}`, borderLeft: `3px solid ${themeColor}`, zIndex: 3 }} />
-              <div style={{ position: 'absolute', top: 0, right: 0, width: 12, height: 12, borderTop: `3px solid ${themeColor}`, borderRight: `3px solid ${themeColor}`, zIndex: 3 }} />
-              <div style={{ position: 'absolute', bottom: 0, left: 0, width: 12, height: 12, borderBottom: `3px solid ${themeColor}`, borderLeft: `3px solid ${themeColor}`, zIndex: 3 }} />
-              <div style={{ position: 'absolute', bottom: 0, right: 0, width: 12, height: 12, borderBottom: `3px solid ${themeColor}`, borderRight: `3px solid ${themeColor}`, zIndex: 3 }} />
+              <div style={{ position: 'absolute', top: 0, left: 0, width: 10, height: 10, borderTop: `2px solid ${themeColor}`, borderLeft: `2px solid ${themeColor}`, zIndex: 3 }} />
+              <div style={{ position: 'absolute', top: 0, right: 0, width: 10, height: 10, borderTop: `2px solid ${themeColor}`, borderRight: `2px solid ${themeColor}`, zIndex: 3 }} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, width: 10, height: 10, borderBottom: `2px solid ${themeColor}`, borderLeft: `2px solid ${themeColor}`, zIndex: 3 }} />
+              <div style={{ position: 'absolute', bottom: 0, right: 0, width: 10, height: 10, borderBottom: `2px solid ${themeColor}`, borderRight: `2px solid ${themeColor}`, zIndex: 3 }} />
 
-              {/* ICON SCAN AREA */}
-              <div style={{
-                width: 80, height: 80,
-                background: 'rgba(0,0,0,0.5)',
-                borderRadius: '4px',
-                position: 'relative',
-                border: `1px solid ${themeColor}40`,
-                overflow: 'hidden',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                flexShrink: 0,
-                backgroundImage: `linear-gradient(${themeColor}10 1px, transparent 1px), linear-gradient(90deg, ${themeColor}10 1px, transparent 1px)`,
-                backgroundSize: '10px 10px'
-              }}>
-                {/* SCANNER LINE */}
-                <motion.div 
-                  animate={{ top: ['0%', '100%'] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  style={{
-                    position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    height: '2px',
-                    background: `linear-gradient(90deg, transparent, ${themeColor}, transparent)`,
-                    boxShadow: `0 0 15px ${themeColor}`,
-                    zIndex: 10,
-                    pointerEvents: 'none',
-                    opacity: 0.8
-                  }}
-                />
-                <motion.div 
-                  animate={{ 
-                    filter: [`drop-shadow(0 0 15px ${themeColor})`, `drop-shadow(0 0 8px ${themeColor})`],
-                    scale: 1.1
-                  }}
-                  transition={{ duration: 2, repeat: Infinity, alternate: true }}
-                  style={{ color: themeColor, zIndex: 2 }}
-                >
-                  {listIcon}
-                </motion.div>
-              </div>
-
-              <div style={{ flex: 1, zIndex: 2 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-                  <div style={{ fontSize: 20, fontWeight: 900, color: '#ED1650', opacity: 0.8 }}>{String(i + 1).padStart(2, '0')}</div>
-                  <div style={{ fontSize: 18, fontWeight: 900, letterSpacing: '0.02em', color: '#ffffff', textTransform: 'uppercase' }}>{link.label}</div>
+              <div style={{ zIndex: 2 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                  <div style={{ fontSize: 16, fontWeight: 900, color: '#ED1650', opacity: 0.8 }}>{(i + 1).toString().padStart(2, '0')}</div>
+                  <div style={{ fontSize: 14, fontWeight: 900, letterSpacing: '0.02em', color: '#ffffff', textTransform: 'uppercase', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{link.label}</div>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 16, fontSize: 10, fontWeight: 800, color: 'rgba(255,255,255,0.4)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                  <div>STATUS: <span style={{ color: '#22c55e' }}>● AVAILABLE</span></div>
-                  <div style={{ color: 'rgba(255,255,255,0.1)' }}>|</div>
-                  <div>ACCESS: <span style={{ color: '#22c55e' }}>ENABLED</span></div>
-                </div>
-                <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', fontWeight: 500, lineHeight: 1.4 }}>
-                  {description}
+                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', fontWeight: 500, lineHeight: 1.5, height: '50px', overflow: 'hidden', marginBottom: 16 }}>
+                  {link.concepto || description}
                 </div>
               </div>
 
               <div style={{
-                position: 'relative',
-                padding: '10px 20px',
+                marginTop: 'auto',
+                padding: '8px 16px',
                 background: themeColor,
                 borderRadius: '4px',
                 color: '#ffffff',
-                fontSize: 12,
+                fontSize: 10,
                 fontWeight: 900,
                 zIndex: 2,
-                boxShadow: `0 0 15px ${themeColor}40`
+                textAlign: 'center',
+                letterSpacing: '1.5px',
+                boxShadow: `0 4px 10px ${themeColor}40`
               }}>
-                {link.url && link.url !== '#' ? 'ABRIR' : 'SIN ENLACE'}
+                {link.url && link.url !== '#' ? 'ABRIR RECURSO' : 'SIN ENLACE'}
               </div>
             </motion.div>
           ))}
@@ -910,7 +867,7 @@ export const IngenieriaView = ({ links, onBack, title, subtitle }: any) => {
   
   return (
     <TechBaseView
-      title={title || 'TALLER TÉCNICO'}
+      title={title || 'Taller'}
       subtitle={subtitle}
       links={links}
       onBack={onBack}
@@ -918,7 +875,7 @@ export const IngenieriaView = ({ links, onBack, title, subtitle }: any) => {
       heroIcon={heroIcon}
       listIcon={<Cpu size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
       headerTitle="MANTENIMIENTO · PROTOCOLOS · SOPORTE"
-      footerTitle="TALLER TÉCNICO"
+      footerTitle="Taller"
     />
   );
 };
@@ -1060,7 +1017,7 @@ export const SuministrosView = ({ links, onBack, title, subtitle }: any) => {
 
   return (
     <TechBaseView
-      title={title || 'MÓDULO SUMINISTROS'}
+      title={title || 'Formularios'}
       subtitle={subtitle || 'Gestión de recursos, formularios operativos y control de inventario.'}
       links={links}
       onBack={onBack}
@@ -1068,7 +1025,7 @@ export const SuministrosView = ({ links, onBack, title, subtitle }: any) => {
       heroIcon={heroIcon}
       listIcon={<Package size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
       headerTitle="MANTENIMIENTO · PROTOCOLOS · SOPORTE"
-      footerTitle="MÓDULO SUMINISTROS"
+      footerTitle="Formularios"
       description="Formularios de solicitud, inventario y recursos logísticos."
     />
   );
@@ -1087,7 +1044,7 @@ export const OperacionesView = ({ links, onBack, title, subtitle }: any) => {
 
   return (
     <TechBaseView
-      title={title || 'CENTRO DE OPERACIONES'}
+      title={title || 'Portal Instructor'}
       subtitle={subtitle || 'Monitoreo en tiempo real, portal de instructores y control de misiones.'}
       links={links}
       onBack={onBack}
@@ -1095,7 +1052,7 @@ export const OperacionesView = ({ links, onBack, title, subtitle }: any) => {
       heroIcon={heroIcon}
       listIcon={<Radar size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
       headerTitle="MANTENIMIENTO · PROTOCOLOS · SOPORTE"
-      footerTitle="CENTRO DE OPERACIONES"
+      footerTitle="Portal Instructor"
       description="Recursos de instrucción, monitoreo y operaciones de vuelo."
     />
   );

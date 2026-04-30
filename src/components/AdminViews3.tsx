@@ -99,7 +99,8 @@ export const AdminRutaLider = ({ rutaData, setRutaData, onBack, title }: any) =>
           </button>
         </div>
 
-        {poderes.map((pName, pIdx) => {
+        {poderes.map((pName: any, pIdx: number) => {
+          const pNameStr = pName as string;
           const pNodes = (rutaData || []).filter((r: any) => r.poder === pName);
           const pTime = pNodes[0]?.tiempo || '';
           const pColor = ['#99CC33', '#FF00FF', '#1B0088', '#ED1650', '#99CC33'][pIdx % 5];
@@ -134,8 +135,8 @@ export const AdminRutaLider = ({ rutaData, setRutaData, onBack, title }: any) =>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 10, color: pColor, fontWeight: 900, letterSpacing: '0.15em', marginBottom: 6 }}>PLANETA / CATEGORÍA {pIdx + 1}</div>
                   <input
-                    value={pName}
-                    onChange={e => updateGroupHeader(pName, 'poder', e.target.value)}
+                    value={pNameStr}
+                    onChange={e => updateGroupHeader(pNameStr, 'poder', e.target.value)}
                     placeholder="Nombre del Poder"
                     style={{ 
                       background: 'transparent', border: 'none', borderBottom: `2px solid rgba(255,255,255,0.1)`, 
@@ -152,13 +153,13 @@ export const AdminRutaLider = ({ rutaData, setRutaData, onBack, title }: any) =>
                   </div>
                   <input
                     value={pTime}
-                    onChange={e => updateGroupHeader(pName, 'tiempo', e.target.value)}
+                    onChange={e => updateGroupHeader(pNameStr, 'tiempo', e.target.value)}
                     placeholder="Ej: 3 horas"
                     style={{ ...inp({ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: 15, fontWeight: 800, width: '100%' }) }}
                   />
                 </div>
                 <button
-                  onClick={() => addNodeToGroup(pName)}
+                  onClick={() => addNodeToGroup(pNameStr)}
                   style={{ 
                     background: pColor, color: '#fff', border: 'none', padding: '14px 24px', 
                     borderRadius: 12, fontWeight: 900, fontSize: 12, cursor: 'pointer', 

@@ -7,7 +7,7 @@ import {
   Activity, Radio, Compass, Cpu, Crosshair, Anchor, Rocket, ArrowLeft,
   LayoutGrid, Share2, Award, Terminal
 } from 'lucide-react';
-import { PlanetContentView } from './Views6';
+import { PlanetContentView, ClassicMissionBlock, JourneyStartShip } from './Views6';
 
 /* ── HYPER-PRO HUD & BACKGROUND ───────────────────────────────────────── */
 const HyperProBackground = () => {
@@ -210,23 +210,14 @@ const TacticalPlanetCard = ({ course, index, color, type, onClick }: any) => {
           overflow: 'hidden'
         }}
       >
-          {/* Scanning Line Animation */}
-          <motion.div 
-            animate={{ top: ['-10%', '110%'] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-            style={{
-               position: 'absolute', left: 0, right: 0, height: '2px',
-               background: `linear-gradient(90deg, transparent, ${color}, transparent)`,
-               boxShadow: `0 0 15px ${color}`, opacity: 0.3, zIndex: 10
-            }}
-          />
+
 
           <div style={{ position: 'relative', zIndex: 2 }}>
               <div style={{ fontSize: 9, color: color, fontWeight: 900, letterSpacing: '3px', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 10, justifyContent: 'center' }}>
                   <div style={{ width: 4, height: 4, background: color }} />
-                  {type} // PLN-{String(index + 1).padStart(3, '0')}
+                  PLN-{String(index + 1).padStart(3, '0')}
               </div>
-              <div style={{ fontSize: 24, fontWeight: 900, color: '#fff', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: 15, textShadow: '0 0 10px rgba(255,255,255,0.2)' }}>
+              <div style={{ fontSize: 24, fontWeight: 900, color: '#fff', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: 15, textShadow: '0 0 10px rgba(255,255,255,0.2)', textAlign: 'center' }}>
                   {course.label}
               </div>
               
@@ -261,7 +252,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
   const satelites = config.satelites || {};
   const [activeMap, setActiveMap] = useState<string | null>(null);
   
-  const COLORS = ['#ED1650', '#00D6CC', '#D400FF', '#FFE017'];
+  const COLORS = ['#3B82F6', '#00D6CC', '#D400FF', '#FFE017'];
   const TYPES = ['INFERNO_CORE', 'AQUA_STREAM', 'VOID_VOID', 'SOLAR_FLARE'];
 
   const PORTALS = [
@@ -271,13 +262,13 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
 
   if(activeMap === 'conhecendo') return <ConhecendoRutaView data={satelites.conhecendo} onBack={()=>setActiveMap(null)}/>;
   if(activeMap === 'imersao')    return <ImersaoRutaView    data={satelites.imersao}    onBack={()=>setActiveMap(null)}/>;
+  if(activeMap === 'onboarding') return <OnboardingRutaView data={config.onboarding}    onBack={()=>setActiveMap(null)}/>;
   
   const sectorLabel = sectorId==='frontLine'?'FRONT LINE':sectorId==='soporte'?'SOPORTE':'FIELD SUPPORT';
   
   return (
     <div style={{ minHeight: '100vh', background: 'radial-gradient(circle at 50% 50%, #1B0088 0%, #0F004F 100%)', color: '#fff', position: 'relative', overflow: 'hidden', paddingBottom: 150 }}>
        <HyperProBackground />
-       <CornerHUD />
        
        <div style={{ position: 'relative', zIndex: 10 }}>
            
@@ -298,14 +289,14 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                </div>
 
                <div style={{ flex: 1, textAlign: 'center' }}>
-                    <div style={{ fontSize: 10, color: '#ED1650', fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 15 }}>
+                    <div style={{ fontSize: 10, color: '#00D6CC', fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 15 }}>
                         <Compass size={12} /> MAPA ESTELAR · SECTOR ACTIVO <Compass size={12} />
                     </div>
                     <div style={{ fontSize: 48, fontWeight: 900, letterSpacing: '8px', textTransform: 'uppercase', color: '#fff' }}>{sectorLabel}</div>
                     <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10 }}>
-                        <div style={{ flex: 1, maxWidth: 120, height: 1.5, background: 'linear-gradient(90deg, transparent, #ED1650)' }} />
-                        <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#ED1650', boxShadow: '0 0 10px #ED1650' }} />
-                        <div style={{ flex: 1, maxWidth: 120, height: 1.5, background: 'linear-gradient(-90deg, transparent, #ED1650)' }} />
+                        <div style={{ flex: 1, maxWidth: 120, height: 1.5, background: 'linear-gradient(90deg, transparent, #00D6CC)' }} />
+                        <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#00D6CC', boxShadow: '0 0 10px #00D6CC' }} />
+                        <div style={{ flex: 1, maxWidth: 120, height: 1.5, background: 'linear-gradient(-90deg, transparent, #00D6CC)' }} />
                     </div>
                </div>
 
@@ -319,7 +310,8 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
            {/* CONTENT */}
            <div style={{ padding: '40px 80px 0', maxWidth: 1600, margin: '0 auto' }}>
                 
-                {/* SATELLITES */}
+                {/* SATELLITES HIDDEN BY USER REQUEST - KEPT IN CONFIG FOR ADMIN USE */}
+                {/* 
                 {sectorId === 'frontLine' && (
                     <div style={{ marginBottom: 60 }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 15, marginBottom: 20 }}>
@@ -346,7 +338,6 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                                     >
                                         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: 1.5, background: `linear-gradient(90deg, ${pColor}88, transparent)` }} />
                                         
-                                        {/* Mini Satellite Visual */}
                                         <div style={{ position: 'relative', width: 60, height: 60, flexShrink: 0, borderRadius: '50%', background: `radial-gradient(circle at 30% 30%, ${pColor}, #040114)`, boxShadow: `0 0 20px ${pColor}33`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                             <div style={{ position: 'absolute', inset: -5, borderRadius: '50%', border: `1px solid ${pColor}33`, filter: 'blur(2px)' }} />
                                             {isLeft ? <Moon size={24} color="#040114" /> : <Star size={24} color="#040114" />}
@@ -367,6 +358,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                         </div>
                     </div>
                 )}
+                */}
 
                 {/* PLANETS SEPARATOR */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 20, marginBottom: 80 }}>
@@ -518,5 +510,19 @@ export const ImersaoRutaView = ({ onBack, data }: any) => {
           planetLabel="IMERSÃO OPERACIONAL" 
           sectorLabel="SATÉLITE DE ENTRENAMIENTO" 
       />
+  );
+};
+
+export const OnboardingRutaView = ({ onBack, data }: any) => {
+  return (
+      <div style={{ minHeight: '100vh', background: '#040114', color: '#fff', position: 'relative', paddingBottom: 100 }}>
+          <ClassicMissionBlock 
+              seccion={data[0] || {rows:[]}} 
+              planetColor="#FFB800" 
+              titleOverride="PROTOCOLO DE PREPARACIÓN"
+              subtitleOverride="NAVE DE ONBOARDING"
+              onBackToMap={onBack} 
+          />
+      </div>
   );
 };

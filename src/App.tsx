@@ -20,7 +20,8 @@ import {
   FSC_DATA_DEFAULT, 
   CONHECENDO_DATA, 
   IMERSAO_DATA,
-  BASE_PLANET_DATA
+  BASE_PLANET_DATA,
+  ONBOARDING_DATA_DEFAULT
 } from './lib/data';
 
 import { AdminCenter } from './components/AdminViews';
@@ -140,7 +141,9 @@ export default function App() {
       ingenieria:[{label:"Manuales Técnicos",url:"#"}],
       laboratorio:[{label:"KPIs Estratégicos",url:"#"}],
       operaciones:[{label:"Entrenamiento Tripulación",url:"#"}],
+      lastUpdate: "30/04/2026",
       rutaLider: RUTA_DATA_DEFAULT,
+      onboarding: [ONBOARDING_DATA_DEFAULT],
       frontLineContent: [BASE_PLANET_DATA, ...Array.from({length: 7}, ()=>[])],
       soporteContent: [ SOPORTE_PLANET_1, [] ],
       satelites: { conhecendo: CONHECENDO_DATA, imersao: IMERSAO_DATA },
@@ -155,7 +158,9 @@ export default function App() {
       monitoringUrl:"",
       iaraLink: "https://amelia.appslatam.com/#/assistants/chat/aa857c06-5a06-4450-8518-8568cdd28dfd",
       suministros:[],ingenieria:[],laboratorio:[],operaciones:[],
+      lastUpdate: "---",
       rutaLider:[],
+      onboarding: [[]],
       frontLineContent: [],
       soporteContent: [],
       satelites: { conhecendo: [], imersao: [] },
@@ -199,6 +204,7 @@ export default function App() {
               data={sectorData}
               planetLabel={planetLabel}
               sectorLabel={sectorLabel}
+              onboardingData={activeConfig.onboarding}
             />
           );
         }
@@ -207,11 +213,11 @@ export default function App() {
       case 'laboratorio':
         return <LaboratorioView links={activeConfig.laboratorio} rutaData={activeConfig.rutaLider} onBack={()=>go('br')} onNavigateRuta={()=>go('ruta-lider')} title={activeConfig.moduleMeta?.lab?.title} subtitle={activeConfig.moduleMeta?.lab?.subtitle}/>;
       case 'ingenieria':
-        return <IngenieriaView title={activeConfig.moduleMeta?.eng?.title||'TALLER TÉCNICO'} subtitle={activeConfig.moduleMeta?.eng?.subtitle} links={activeConfig.ingenieria} onBack={()=>go('br')}/>;
+        return <IngenieriaView title={activeConfig.moduleMeta?.eng?.title||'Taller'} subtitle={activeConfig.moduleMeta?.eng?.subtitle} links={activeConfig.ingenieria} onBack={()=>go('br')}/>;
       case 'suministros':
-        return <SuministrosView title={activeConfig.moduleMeta?.sup?.title||'MÓDULO SUMINISTROS'} subtitle={activeConfig.moduleMeta?.sup?.subtitle} links={activeConfig.suministros} onBack={()=>go('br')}/>;
+        return <SuministrosView title={activeConfig.moduleMeta?.sup?.title||'Formularios'} subtitle={activeConfig.moduleMeta?.sup?.subtitle} links={activeConfig.suministros} onBack={()=>go('br')}/>;
       case 'operaciones':
-        return <OperacionesView title={activeConfig.moduleMeta?.ops?.title||'CENTRO DE OPERACIONES'} subtitle={activeConfig.moduleMeta?.ops?.subtitle} links={activeConfig.operaciones} onBack={()=>go('br')}/>;
+        return <OperacionesView title={activeConfig.moduleMeta?.ops?.title||'Portal Instructor'} subtitle={activeConfig.moduleMeta?.ops?.subtitle} links={activeConfig.operaciones} onBack={()=>go('br')}/>;
       case 'admin':
         return (
           <AdminCenter 
@@ -272,6 +278,9 @@ export default function App() {
           } else if (adminSector === 'soporte') {
             contentKey = 'soporteContent';
             title = 'EDITOR SOPORTE';
+          } else if (adminSector === 'onboarding') {
+            contentKey = 'onboarding';
+            title = 'EDITOR DE ONBOARDING (NAVE)';
           }
 
           return (
@@ -286,10 +295,11 @@ export default function App() {
                   }
                 }));
               }}
-              planets={appConfig[sk].exploracion[adminSector]}
+              planets={adminSector === 'onboarding' ? [{label: 'ONBOARDING'}] : appConfig[sk].exploracion[adminSector]}
               onBack={() => go('admin-exploracion')}
               initialPlanet={adminCourseIdx}
               title={title}
+              isOnboarding={adminSector === 'onboarding'}
             />
           );
         }

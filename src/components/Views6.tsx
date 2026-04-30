@@ -3,12 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronRight, ArrowLeft, ExternalLink, Clock, Target, Rocket, 
   Anchor, Activity, Cpu, Shield, Globe, Zap, Radio, Terminal, Map as MapIcon,
-  Navigation, Hexagon, Crosshair, Lightbulb, BadgeCheck, FileText, Satellite, Gem
+  Navigation, Hexagon, Crosshair, Lightbulb, BadgeCheck, FileText, Satellite, Gem, CheckCircle2
 } from 'lucide-react';
 import { TacticalSatelliteIcon } from './Shared';
 
 /* ── HELPER COMPONENTS ──────────────────────────────────────────────── */
-const JourneyStartShip = () => (
+export const JourneyStartShip = ({ onboardingData, onClick }: any) => {
+    return (
     <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '350px', marginBottom: '40px' }}>
       <motion.div 
         animate={{ y: [-15, 15, -15] }}
@@ -45,18 +46,28 @@ const JourneyStartShip = () => (
             </div>
           ))}
         </div>
-        <img 
-          src="/ship.png" 
-          alt="Nava Exploracion" 
-          style={{ width: '300px', height: 'auto', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.6))', position: 'relative', zIndex: 10 }}
-        />
+        <motion.div
+          whileHover={onClick ? { scale: 1.05, filter: 'drop-shadow(0 0 30px rgba(255,184,0,0.8))' } : {}}
+          onClick={onClick}
+          style={{ position: 'relative', zIndex: 10, cursor: onClick ? 'pointer' : 'default' }}
+        >
+          <img 
+            src="/ship.png" 
+            alt="Nava Exploracion" 
+            style={{ width: '300px', height: 'auto', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.6))' }}
+          />
+        </motion.div>
       </motion.div>
     </div>
-);
+  );
+};
 
-const JourneyEndStation = ({ planetColor }: { planetColor: string }) => (
+const JourneyEndStation = ({ planetColor, onClick }: any) => (
     <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '400px', marginTop: '60px' }}>
       <motion.div 
+        whileHover={{ scale: 1.1, cursor: 'pointer' }}
+        whileTap={{ scale: 0.95 }}
+        onClick={onClick}
         animate={{ y: [-10, 10, -10] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
@@ -157,39 +168,31 @@ const FERR_ICONS: any = {
 
 const MissionHeaderHUD = ({ sectorLabel, planetLabel, planetColor, onBack }: any) => (
   <div style={{ 
-    position: 'sticky', top: 0, left: 0, right: 0, zIndex: 100, 
-    background: '#ffffff', borderBottom: `4px solid ${planetColor}`, padding: '15px 40px', 
+    position: 'absolute', top: 0, left: 0, right: 0, zIndex: 100, 
+    background: 'transparent', 
+    borderBottom: 'none', padding: '30px 60px', 
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    boxShadow: `0 4px 10px rgba(0,0,0,0.05)`
   }}>
-    <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-      <button 
-        onClick={onBack}
-        style={{ 
-          background: '#f8fafc', border: `1.5px solid #ccc`, color: '#64748b', 
-          padding: '8px 20px', borderRadius: 4, cursor: 'pointer', fontSize: 10, fontWeight: 900, 
-          letterSpacing: '2px', textTransform: 'uppercase', transition: '0.3s' 
-        }}
-      >
-        ← REGRESAR
-      </button>
-      <div style={{ width: 1, height: 30, background: '#eee' }} />
-      <div>
-        <div style={{ fontSize: 8, color: '#94a3b8', fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase' }}>SECTOR: {sectorLabel}</div>
-        <div style={{ fontSize: 24, fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase', color: '#1B0088' }}>
-          {planetLabel}
-        </div>
-      </div>
-    </div>
+    <button 
+      onClick={onBack}
+      style={{ 
+        background: planetColor, border: 'none', color: '#fff', 
+        padding: '10px 24px', borderRadius: 8, cursor: 'pointer', fontSize: 11, fontWeight: 900, 
+        letterSpacing: '2px', textTransform: 'uppercase', transition: '0.3s',
+        boxShadow: `0 0 20px ${planetColor}44`,
+        display: 'flex', alignItems: 'center', gap: 10
+      }}
+      onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = `0 0 30px ${planetColor}` }}
+      onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = `0 0 20px ${planetColor}44` }}
+    >
+      ← REGRESAR AL ESPACIO
+    </button>
 
-    <div style={{ textAlign: 'right' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'flex-end', color: '#64748b', fontSize: 10, fontWeight: 900, letterSpacing: '2px' }}>
-        <div style={{ width: 8, height: 8, borderRadius: '50%', background: planetColor }} />
-        SISTEMA: EN LÍNEA
-      </div>
-      <div style={{ fontSize: 9, color: '#94a3b8', fontWeight: 800, letterSpacing: '1px', marginTop: 4 }}>
-        SECTOR_PRO_CLASSIC // {new Date().toLocaleDateString()}
-      </div>
+    <div style={{ width: 220 }}>
+        <div style={{ fontSize: 9, color: '#fff', fontWeight: 900, opacity: 0.6, marginBottom: 8, letterSpacing: '1px', textAlign: 'right' }}>PROGRESO DE MISIÓN / 0 XP</div>
+        <div style={{ height: 6, background: 'rgba(255,255,255,0.1)', borderRadius: 10, overflow: 'hidden' }}>
+            <motion.div initial={{ width: 0 }} animate={{ width: '15%' }} style={{ height: '100%', background: planetColor }} />
+        </div>
     </div>
   </div>
 );
@@ -447,8 +450,19 @@ const MissionMapNode = ({ section, index, planetColor, onClick }: any) => {
   const typeIcons: any = {
       mision1: <Rocket size={40} />,
       landing: <Anchor size={40} />,
-      ojt: <Target size={40} />
+      ojt: <Target size={40} />,
+      imersao: <Cpu size={40} />
   };
+
+  const typeColors: any = {
+      mision1: '#00D6CC', // Teal/Cyan
+      landing: '#99CC33', // Lime
+      ojt:     '#FFB800', // Amber/Yellow
+      imersao: '#D400FF'  // Purple
+  };
+
+  const nodeColor = typeColors[section.tipo] || planetColor;
+
 
   return (
     <motion.div 
@@ -467,33 +481,43 @@ const MissionMapNode = ({ section, index, planetColor, onClick }: any) => {
     >
       <div style={{ position: 'relative', width: '200px', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           {/* Holographic Orbital Rings */}
-          <motion.div animate={{ rotate: 360 }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ position: 'absolute', inset: -10, border: `1px dashed ${planetColor}66`, borderRadius: '50%' }} />
-          <motion.div animate={{ rotate: -360 }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} style={{ position: 'absolute', width: '80%', height: '80%', border: `2px solid ${planetColor}22`, borderRadius: '50%' }} />
+          <motion.div animate={{ rotate: 360 }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ position: 'absolute', inset: -10, border: `1px dashed ${nodeColor}66`, borderRadius: '50%' }} />
+          <motion.div animate={{ rotate: -360 }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} style={{ position: 'absolute', width: '80%', height: '80%', border: `2px solid ${nodeColor}22`, borderRadius: '50%' }} />
           
           {/* Planet Body (Cinematic Style) */}
           <motion.div
-            whileHover={{ scale: 1.15, boxShadow: `0 0 40px ${planetColor}80` }}
+            whileHover={{ scale: 1.15, boxShadow: `0 0 40px ${nodeColor}80` }}
             style={{ 
               width: '120px', height: '120px', borderRadius: '50%', 
-              background: `radial-gradient(circle at 35% 35%, ${planetColor}, #040114)`, 
-              boxShadow: `0 0 30px ${planetColor}44, inset -10px -10px 20px rgba(0,0,0,0.6)`, 
+              background: `radial-gradient(circle at 35% 35%, ${nodeColor}, #040114)`, 
+              boxShadow: `0 0 30px ${nodeColor}44, inset -10px -10px 20px rgba(0,0,0,0.6)`, 
               display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff',
-              zIndex: 10, position: 'relative', border: `3px solid ${planetColor}`
+              zIndex: 10, position: 'relative', border: `3px solid ${nodeColor}`
             }}
           >
             {typeIcons[section.tipo || 'mision1']}
             
-            <div style={{ position: 'absolute', top: -5, right: -5, width: 32, height: 32, borderRadius: '50%', background: '#fff', color: '#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 900, boxShadow: '0 4px 10px rgba(0,0,0,0.3)', border: `2px solid ${planetColor}` }}>
+            <div style={{ position: 'absolute', top: -5, right: -5, width: 32, height: 32, borderRadius: '50%', background: '#fff', color: '#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 900, boxShadow: '0 4px 10px rgba(0,0,0,0.3)', border: `2px solid ${nodeColor}` }}>
                 {index + 1}
             </div>
           </motion.div>
       </div>
 
-      {/* Cinematic Label Box */}
-      <div style={{ marginTop: '20px', textAlign: 'center', background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(5px)', padding: '12px 24px', borderRadius: '12px', border: `1.5px solid ${planetColor}40`, minWidth: '320px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
-        <div style={{ fontSize: '9px', color: planetColor, fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '6px' }}>MÓDULO_{String(index + 1).padStart(2, '0')}</div>
-        <div style={{ fontSize: '20px', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '2px' }}>{section.label || section.nombre || 'CARGA DE DATOS...'}</div>
-        <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', fontWeight: 700, marginTop: '8px' }}>
+      {/* Cinematic Label Box - CYBER HOLOGRAM */}
+      <div style={{ 
+          marginTop: '20px', textAlign: 'center', 
+          background: 'rgba(15, 0, 79, 0.5)', backdropFilter: 'blur(15px)', 
+          padding: '16px 24px', borderRadius: '16px', 
+          border: `2px solid ${nodeColor}`, 
+          minWidth: '320px', boxShadow: `0 0 30px ${nodeColor}44`,
+          position: 'relative', overflow: 'hidden'
+      }}>
+        {/* Subtle scanline effect */}
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 50%, rgba(255,255,255,0.02) 50%)', backgroundSize: '100% 4px', pointerEvents: 'none' }} />
+        
+        <div style={{ fontSize: '9px', color: nodeColor, fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '8px', position: 'relative' }}>MÓDULO_{String(index + 1).padStart(2, '0')}</div>
+        <div style={{ fontSize: '20px', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '2px', position: 'relative' }}>{section.label || section.nombre || 'CARGA DE DATOS...'}</div>
+        <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)', fontWeight: 800, marginTop: '8px', position: 'relative' }}>
           ⏱ {section.rows?.length || 0} NODOS_TÉCNICOS • TIEMPO: {
             (function(){
               let secs = 0;
@@ -520,7 +544,7 @@ const MissionMapNode = ({ section, index, planetColor, onClick }: any) => {
   );
 };
 
-const MissionSectorMap = ({ secciones, planetColor, onSelectSection }: any) => {
+const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onboardingData, onSelectOnboarding, isFirstPlanet, onBackToPlanets }: any) => {
   const nodeSpacing = 360;
   const totalWidth = 1000;
   const lastNodeY = (secciones.length - 1) * nodeSpacing + 210;
@@ -540,7 +564,7 @@ const MissionSectorMap = ({ secciones, planetColor, onSelectSection }: any) => {
     }}>
        {/* Expedition Ship at Start */}
        <div style={{ zIndex: 20 }}>
-         <JourneyStartShip />
+         <JourneyStartShip onboardingData={onboardingData} onClick={isFirstPlanet ? onSelectOnboarding : undefined} />
        </div>
 
        {/* Background Connection Path */}
@@ -559,7 +583,7 @@ const MissionSectorMap = ({ secciones, planetColor, onSelectSection }: any) => {
 
             {/* Start Path: Adjusted to emerge from ship's thrusters */}
             <motion.path 
-                d={`M 500 0 C 500 100, 200 100, 200 210`} stroke={planetColor} strokeWidth="8" fill="none" 
+                d={`M 500 0 C 500 100, 200 100, 200 210`} stroke="#3B82F6" strokeWidth="8" fill="none" 
                 strokeDasharray="20 20" filter="url(#missionPathGlow)" 
                 animate={{ strokeDashoffset: [100, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
@@ -592,7 +616,7 @@ const MissionSectorMap = ({ secciones, planetColor, onSelectSection }: any) => {
 
                 return (
                   <motion.path 
-                    key={i} d={dZigZag} stroke={planetColor} strokeWidth="8" fill="none" 
+                    key={i} d={dZigZag} stroke="#3B82F6" strokeWidth="8" fill="none" 
                     strokeDasharray="20 20" filter="url(#missionPathGlow)"
                     animate={{ strokeDashoffset: [100, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
@@ -605,7 +629,7 @@ const MissionSectorMap = ({ secciones, planetColor, onSelectSection }: any) => {
               const dFinal = `M ${startX} ${yStart} C ${startX} ${yEnd - 80}, 500 ${yEnd - 80}, 500 ${yEnd}`;
               return (
                 <motion.path 
-                  key="final-path" d={dFinal} stroke={planetColor} strokeWidth="8" fill="none" 
+                  key="final-path" d={dFinal} stroke="#3B82F6" strokeWidth="8" fill="none" 
                   strokeDasharray="20 20" filter="url(#missionPathGlow)"
                   animate={{ strokeDashoffset: [100, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
@@ -634,13 +658,13 @@ const MissionSectorMap = ({ secciones, planetColor, onSelectSection }: any) => {
 
        {/* End Station at the very bottom - Snapped to path */}
        <div style={{ zIndex: 20, marginTop: '-120px' }}>
-         <JourneyEndStation planetColor={planetColor} />
+         <JourneyEndStation planetColor={planetColor} onClick={onBackToPlanets} />
        </div>
     </div>
   );
 };
 
-const ClassicMissionBlock = ({ seccion, planetColor, onBackToMap }: any) => {
+export const ClassicMissionBlock = ({ seccion, planetColor, onBackToMap, titleOverride, subtitleOverride }: any) => {
   const rows = seccion.rows || [];
   
   // Grouping logic
@@ -652,12 +676,12 @@ const ClassicMissionBlock = ({ seccion, planetColor, onBackToMap }: any) => {
   });
 
   return (
-    <div style={{ padding: '0 20px', marginBottom: 100 }}>
+    <div style={{ padding: '40px 60px', marginBottom: 100, background: '#ffffff', borderRadius: 24, margin: '40px', boxShadow: '0 20px 50px rgba(0,0,0,0.5)' }}>
       {/* HEADER CONTROLS */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 30, borderBottom: '1px solid #eee', paddingBottom: 15 }}>
         <div>
-          <div style={{ fontSize: 10, color: planetColor, fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase' }}>MISIÓN DE APRENDIZAJE</div>
-          <div style={{ fontSize: 24, fontWeight: 900, color: '#1B0088', textTransform: 'uppercase' }}>{seccion.nombre}</div>
+          <div style={{ fontSize: 10, color: planetColor, fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase' }}>{titleOverride || 'MISIÓN DE APRENDIZAJE'}</div>
+          <div style={{ fontSize: 24, fontWeight: 900, color: '#1B0088', textTransform: 'uppercase' }}>{subtitleOverride || seccion.nombre}</div>
         </div>
         <button 
           onClick={onBackToMap}
@@ -667,7 +691,13 @@ const ClassicMissionBlock = ({ seccion, planetColor, onBackToMap }: any) => {
         </button>
       </div>
 
-      {Object.entries(groupedRows).map(([mt, mtRows], gi) => {
+      {rows.length === 0 ? (
+        <div style={{ padding: '60px', textAlign: 'center', background: '#f8fafc', borderRadius: 16, border: '2px dashed #cbd5e1' }}>
+          <div style={{ fontSize: 48, marginBottom: 20 }}>🛸</div>
+          <div style={{ fontSize: 18, fontWeight: 900, color: '#1B0088', marginBottom: 8 }}>SIN INFORMACIÓN CONFIGURADA</div>
+          <div style={{ fontSize: 14, color: '#64748b' }}>Aún no se han agregado módulos. Ingresa al panel de administrador para configurar esta sección.</div>
+        </div>
+      ) : Object.entries(groupedRows).map(([mt, mtRows], gi) => {
         const totalSecs = mtRows.reduce((acc, r) => acc + (r.tiempo ? (typeof r.tiempo === 'string' ? (r.tiempo.includes(':') ? r.tiempo.split(':').reduce((a:any,b:any)=>a*60+parseInt(b),0) : parseInt(r.tiempo)*60) : r.tiempo) : 0), 0);
         // Note: Simplified time calculation for brevity, could use timeToSeconds if exported
         
@@ -832,15 +862,26 @@ const FscDetailedNodeCard = ({ node, index, planetColor }: any) => {
     );
 };
 
-const FscDetailedTerminal = ({ seccion, planetColor, onBack }: any) => {
+const FscDetailedTerminal = ({ seccion, planetColor, onBack, titleOverride, subtitleOverride }: any) => {
     const rows = seccion.rows || [];
     const tipo = seccion.tipo || 'mision1';
 
     const typeIcons: any = {
         mision1: <Rocket size={24} />,
         landing: <Anchor size={24} />,
-        ojt: <Target size={24} />
+        ojt: <Target size={24} />,
+        imersao: <Cpu size={24} />
     };
+
+    const typeColors: any = {
+        mision1: '#00D6CC',
+        landing: '#99CC33',
+        ojt:     '#FFB800',
+        imersao: '#D400FF'
+    };
+
+    const nodeColor = typeColors[tipo] || planetColor;
+
 
     return (
         <motion.div 
@@ -875,12 +916,12 @@ const FscDetailedTerminal = ({ seccion, planetColor, onBack }: any) => {
                 </button>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-                    <div style={{ width: 56, height: 56, borderRadius: 14, background: planetColor, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 10px 20px ${planetColor}44`, color: '#fff' }}>
+                    <div style={{ width: 56, height: 56, borderRadius: 14, background: nodeColor, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 10px 20px ${nodeColor}44`, color: '#fff' }}>
                         {typeIcons[tipo]}
                     </div>
                     <div>
-                        <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.6)', fontWeight: 900, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: 2 }}>PROTOCOLO DE SEGMENTO</div>
-                        <div style={{ fontSize: 26, fontWeight: 900, color: '#FFF' }}>{seccion.nombre?.toUpperCase() || 'MÓDULO DE EXPLORACIÓN'}</div>
+                        <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.6)', fontWeight: 900, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: 2 }}>{subtitleOverride || 'PROTOCOLO DE SEGMENTO'}</div>
+                        <div style={{ fontSize: 26, fontWeight: 900, color: '#FFF' }}>{titleOverride || seccion.nombre?.toUpperCase() || seccion.label?.toUpperCase() || 'MÓDULO DE EXPLORACIÓN'}</div>
                     </div>
                 </div>
 
@@ -904,9 +945,17 @@ const FscDetailedTerminal = ({ seccion, planetColor, onBack }: any) => {
                 
                 {/* Left: Scrollable List of Cards */}
                 <div style={{ paddingBottom: 60 }}>
-                    {rows.map((row: any, i: number) => (
-                        <FscDetailedNodeCard key={i} node={row} index={i} planetColor={planetColor} />
-                    ))}
+                    {rows.length === 0 ? (
+                        <div style={{ padding: '60px', textAlign: 'center', background: 'rgba(27,0,136,0.02)', borderRadius: 16, border: '1px dashed rgba(27,0,136,0.1)' }}>
+                            <div style={{ fontSize: 48, marginBottom: 20 }}>🛸</div>
+                            <div style={{ fontSize: 18, fontWeight: 900, color: '#1B0088', marginBottom: 8 }}>SIN INFORMACIÓN CONFIGURADA</div>
+                            <div style={{ fontSize: 14, color: '#1B0088', opacity: 0.7 }}>Aún no se han agregado módulos. Ingresa al panel de administrador para configurar esta sección.</div>
+                        </div>
+                    ) : (
+                        rows.map((row: any, i: number) => (
+                            <FscDetailedNodeCard key={i} node={row} index={i} planetColor={planetColor} />
+                        ))
+                    )}
                 </div>
 
                 {/* Right: Specialist Sidebar */}
@@ -937,12 +986,12 @@ const FscDetailedTerminal = ({ seccion, planetColor, onBack }: any) => {
                             style={{ 
                                 width: '100%', background: '#99CC33', color: '#fff', border: 'none', padding: '18px', borderRadius: 12, 
                                 fontWeight: 900, fontSize: 14, cursor: 'pointer', boxShadow: '0 10px 25px rgba(153,204,51,0.3)',
-                                transition: 'all 0.3s ease'
+                                transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10
                             }}
                             onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
                             onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
                         >
-                            MARCAR COMO COMPLETADO
+                            <CheckCircle2 size={18} /> MARCAR COMO COMPLETADO
                         </button>
                     </div>
 
@@ -960,8 +1009,8 @@ const FscDetailedTerminal = ({ seccion, planetColor, onBack }: any) => {
     );
 };
 
-export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sectorLabel="SECTOR" }: any) => {
-    const [viewMode, setViewMode] = React.useState<'map' | 'detail'>('map');
+export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sectorLabel="SECTOR", onboardingData }: any) => {
+    const [viewMode, setViewMode] = React.useState<'map' | 'detail' | 'onboarding'>('map');
     const [selectedIdx, setSelectedIdx] = React.useState(0);
     
     // Safety check for data
@@ -1025,23 +1074,39 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                     exit={{ opacity: 0, scale: 1.1, filter: 'blur(20px)' }}
                                     transition={{ duration: 0.6 }}
                                 >
-                                    <div style={{ textAlign: 'center', marginTop: 20, marginBottom: 40 }}>
+                                    <div style={{ textAlign: 'center', marginTop: 100, marginBottom: 40 }}>
                                         <div style={{ fontSize: 10, color: planetColor, fontWeight: 900, letterSpacing: '6px', marginBottom: 12, textTransform: 'uppercase' }}>MAPA TÁCTICO DE EXPLORACIÓN</div>
                                         <div style={{ fontSize: 36, fontWeight: 900, color: '#fff', letterSpacing: '4px', textTransform: 'uppercase' }}>MISIÓN: {planetLabel}</div>
                                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>
                                             <div style={{ width: 140, height: 2, background: `linear-gradient(90deg, transparent, ${planetColor}, transparent)` }} />
                                         </div>
                                     </div>
-                                    <MissionSectorMap secciones={secciones} planetColor={planetColor} onSelectSection={handleSelectSection} />
+                                    <MissionSectorMap 
+                                        secciones={secciones} 
+                                        planetColor={planetColor} 
+                                        onSelectSection={handleSelectSection} 
+                                        onboardingData={onboardingData}
+                                        onSelectOnboarding={() => setViewMode('onboarding')}
+                                        isFirstPlanet={planetIdx === 0 && sectorLabel === 'FRONT LINE'}
+                                        onBackToPlanets={onBack}
+                                    />
                                 </motion.div>
                             </AnimatePresence>
                         </div>
                     </div>
                 </>
+            ) : viewMode === 'detail' ? (
+                <FscDetailedTerminal 
+                    seccion={secciones[selectedIdx] || {rows:[]}} 
+                    planetColor={planetColor} 
+                    onBack={() => setViewMode('map')} 
+                />
             ) : (
                 <FscDetailedTerminal 
-                    seccion={secciones[selectedIdx]} 
-                    planetColor={planetColor} 
+                    seccion={onboardingData[0] || {rows:[]}} 
+                    planetColor="#FFB800" 
+                    subtitleOverride="PROTOCOLO DE PREPARACIÓN"
+                    titleOverride="NAVE DE ONBOARDING"
                     onBack={() => setViewMode('map')} 
                 />
             )}
@@ -1049,11 +1114,11 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
             {/* Background HUD Accents */}
             {viewMode === 'map' && (
                 <>
-                    <div style={{ position: 'fixed', bottom: 40, left: 40, zIndex: 5, pointerEvents: 'none', opacity: 0.3 }}>
-                        <div style={{ width: 60, height: 60, borderLeft: '2px solid #fff', borderBottom: '2px solid #fff' }} />
+                    <div style={{ position: 'fixed', bottom: 40, left: 40, zIndex: 5, pointerEvents: 'none', opacity: 0.4 }}>
+                        <div style={{ width: 80, height: 80, borderLeft: `3px solid ${planetColor}`, borderBottom: `3px solid ${planetColor}` }} />
                     </div>
-                    <div style={{ position: 'fixed', bottom: 40, right: 40, zIndex: 5, pointerEvents: 'none', opacity: 0.3 }}>
-                        <div style={{ width: 60, height: 60, borderRight: '2px solid #fff', borderBottom: '2px solid #fff', marginLeft: 'auto' }} />
+                    <div style={{ position: 'fixed', bottom: 40, right: 40, zIndex: 5, pointerEvents: 'none', opacity: 0.4 }}>
+                        <div style={{ width: 80, height: 80, borderRight: `3px solid ${planetColor}`, borderBottom: `3px solid ${planetColor}`, marginLeft: 'auto' }} />
                     </div>
                 </>
             )}

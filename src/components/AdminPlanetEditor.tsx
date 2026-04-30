@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
     ArrowLeft, Save, CheckCircle2, Plus, Trash2, Database, Layers, Satellite, Globe, Shield, Zap,
-    Edit3, Briefcase, Rocket, Target, Anchor, ChevronUp, ChevronDown, Monitor, FileText, Link as LinkIcon, AlertTriangle, Clock
+    Edit3, Briefcase, Rocket, Target, Anchor, ChevronUp, ChevronDown, Monitor, FileText, Link as LinkIcon, AlertTriangle, Clock, Cpu
 } from 'lucide-react';
 
 const TIPO_INFO: any = {
   mision1: { label: 'MISSÃO 1', emoji: <Rocket size={20} />, accent: '#1B0088' },
   landing: { label: 'LANDING', emoji: <Anchor size={20} />, accent: '#99CC33' },
-  ojt:     { label: 'DESAFIO OJT', emoji: <Target size={20} />, accent: '#00D6CC' }
+  ojt:     { label: 'DESAFIO OJT', emoji: <Target size={20} />, accent: '#00D6CC' },
+  imersao: { label: 'IMERSÃO',     emoji: <Cpu size={20} />,    accent: '#D400FF' }
 };
 
 const timeToSeconds = (timeStr: string) => {
@@ -29,7 +30,7 @@ const secondsToTime = (secs: number) => {
   return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 };
 
-export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, initialPlanet, title = "EDITOR" }: any) => {
+export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, initialPlanet, title = "EDITOR", isOnboarding }: any) => {
   const [activePlanet, setActivePlanet] = useState(initialPlanet || 0);
   const [editingSecIdx, setEditingSecIdx] = useState<number | null>(null);
   const [saved, setSaved] = useState(false);
@@ -231,7 +232,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
             </div>
           </div>
           <div style={{ display: 'flex', gap: '12px' }}>
-            {['mision1', 'landing', 'ojt'].map(t => {
+            {(isOnboarding ? ['mision1'] : ['mision1', 'landing', 'ojt', 'imersao']).map(t => {
                 const totalTypeTime = currentSections.filter((s:any) => s.tipo === t).reduce((acc:any, s:any) => acc + (s.rows||[]).reduce((a:any, r:any) => a + timeToSeconds(r.tiempo || r.ch || ''), 0), 0);
                 return (
                 <button key={t} onClick={() => addSection(t)} style={{ 
@@ -255,8 +256,9 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
 
         <div style={{ flex: 1, overflowY: 'auto', padding: '48px 64px' }}>
           {/* SECCIÓN DE RECURSOS GLOBALES (NUEVO) */}
-          <div style={{ 
-              background: '#ffffff', 
+          {!isOnboarding && (
+            <div style={{ 
+                background: '#ffffff', 
               borderRadius: '24px', 
               padding: '32px', 
               marginBottom: '48px', 
@@ -336,6 +338,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                   </div>
               </div>
           </div>
+          )}
 
           {currentSections.length === 0 ? (
             <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -345,25 +348,27 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                     <div style={{ fontSize: 14, color: '#64748b', marginTop: 8 }}>Inicia la construcción agregando una misión desde el panel superior.</div>
                 </div>
             </div>
-          ) : currentSections.map((sec: any, si: number) => (
-            <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: si * 0.1 }}
-                key={si} 
-                style={{ marginBottom: '64px' }}
-            >
+          ) : currentSections.map((sec: any, si: number) => {
+            const secInfo = TIPO_INFO[sec.tipo] || TIPO_INFO['mision1'];
+            return (
+              <motion.div 
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: si * 0.1 }}
+                  key={si} 
+                  style={{ background: '#ffffff', borderRadius: '24px', padding: '32px', marginBottom: '32px', boxShadow: '0 10px 40px rgba(0,0,0,0.02)', border: '1px solid rgba(27,0,136,0.1)' }}
+              >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '24px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 12, background: TIPO_INFO[sec.tipo].accent, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>
-                    {TIPO_INFO[sec.tipo].emoji}
+                  <div style={{ width: 44, height: 44, borderRadius: 12, background: secInfo.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>
+                    {secInfo.emoji}
                   </div>
                   <div>
                     <input 
                         value={sec.label} 
                         onChange={e => updateSecField(si, 'label', e.target.value)} 
-                        style={{ background: 'transparent', border: 'none', fontSize: '20px', fontWeight: 900, color: '#1B0088', outline: 'none', padding: '4px 8px', letterSpacing: '-0.02em' }} 
-                        onFocus={e => e.target.style.borderBottom = `2px solid ${TIPO_INFO[sec.tipo].accent}`}
+                        style={{ background: 'transparent', border: 'none', fontSize: '20px', fontWeight: 900, color: '#1B0088', outline: 'none', padding: '4px 8px', letterSpacing: '-0.02em', borderBottom: '2px solid transparent' }} 
+                        onFocus={e => e.target.style.borderBottom = `2px solid ${secInfo.accent}`}
                         onBlur={e => e.target.style.borderBottom = 'none'}
                     />
                     <div style={{ fontSize: '11px', color: '#64748b', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', paddingLeft: 8, display: 'flex', alignItems: 'center' }}>
@@ -475,7 +480,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                                   newH[hi] = { ...newH[hi], tipo: e.target.value };
                                                   updateRow(si, oi, 'herramientas', newH);
                                                 }} style={{ background: '#fff', border: '1px solid #ccc', fontSize: '10px', padding: '2px', width: '100%', marginBottom: 4 }}>
-                                                  {['Slide','Docs','Sheets','PDF','Video','Form','Form AeC','Form Kon BR','NA','Genially','Educaplay','Latam.com','Youtube','Link','Actividad'].map(t => <option key={t} value={t}>{t}</option>)}
+                                                  {['🖼️ Slide','📄 Docs','📊 Sheets','📕 PDF','🎬 Video','📝 Form','📋 Form AeC','📋 Form Kon BR','➖ NA','🌟 Genially','🎮 Educaplay','✈️ Latam.com','▶️ Youtube','🔗 Link','🎯 Actividad','🖥️ Painel','🔄 Fluxo','🌐 Plataforma','🗂️ PIC','📂 CDA','⏱️ WTD'].map(t => <option key={t} value={t}>{t}</option>)}
                                                 </select>
                                                 <input value={h.url || ''} onChange={e => {
                                                   const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : [row.herramientas || {}];
@@ -580,7 +585,8 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                 </motion.div>
               )}
             </motion.div>
-          ))}
+            );
+          })}
           <div style={{ height: 100 }} />
         </div>
       </div>

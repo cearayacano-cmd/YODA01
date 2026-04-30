@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Lock, ChevronLeft, Beaker, Settings, Package, Webcam, Rocket, Radar, Microscope, Cpu, Box, Activity, Monitor, Eye, Sun, Layers } from 'lucide-react';
+import { Lock, ChevronLeft, Beaker, Settings, Package, Webcam, Rocket, Radar, Microscope, Cpu, Box, Activity, Monitor, Eye, Sun, Layers, GraduationCap } from 'lucide-react';
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { Btn, BackBtn, TacticalSatelliteIcon } from './Shared';
 
@@ -46,12 +46,12 @@ const LandingMissionCard = ({ title, subtitle, id, color, onClick, onMouseEnter,
     {/* Decorative corner light */}
     <div style={{ position: 'absolute', top: 0, right: 0, width: 40, height: 40, background: `radial-gradient(circle at top right, ${color}30, transparent)`, borderRadius: '0 12px 0 0', pointerEvents: 'none' }} />
     
-    <div style={{ fontSize: 11, color: '#999', letterSpacing: '0.4em', marginBottom: 15, fontWeight: 700, pointerEvents: 'none' }}>MISIÓN • {id.toUpperCase()}</div>
+    <div style={{ fontSize: 11, color: '#999', letterSpacing: '0.4em', marginBottom: 40, fontWeight: 700, pointerEvents: 'none' }}>STATION • {id.toUpperCase()}</div>
     <div style={{ pointerEvents: 'none' }}>
       <MissionIcon color={color} />
     </div>
     <div style={{ fontSize: 72, fontWeight: 900, color: '#fff', marginBottom: 8, letterSpacing: '0.05em', pointerEvents: 'none' }}>{id.toUpperCase()}</div>
-    <div style={{ fontSize: 14, color: '#bbb', marginBottom: 30, fontWeight: 500, pointerEvents: 'none' }}>{subtitle}</div>
+    {subtitle && <div style={{ fontSize: 14, color: '#bbb', marginBottom: 30, fontWeight: 500, pointerEvents: 'none' }}>{subtitle}</div>}
     
     <div style={{ 
       padding: '10px 24px', 
@@ -70,6 +70,15 @@ const LandingMissionCard = ({ title, subtitle, id, color, onClick, onMouseEnter,
 
 export const Landing = ({ onNavigate, onAdmin }: any) => {
   const [hoveredStation, setHoveredStation] = useState<string | null>(null);
+  const [autoVariant, setAutoVariant] = useState('es');
+
+  // Rotate variant every 30 seconds automatically
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setAutoVariant(prev => prev === 'es' ? 'pt' : 'es');
+    }, 30000);
+    return () => clearInterval(timer);
+  }, []);
   
   const handleEnter = (st: string) => {
     setHoveredStation(st);
@@ -79,8 +88,9 @@ export const Landing = ({ onNavigate, onAdmin }: any) => {
     setHoveredStation(null);
   };
 
-  // Decide which ship to show
-  const shipSrc = hoveredStation === 'br' ? '/nave_pt.png' : '/nave_es.png';
+  // Determine current variant: Hover takes priority, otherwise use auto-rotation
+  const currentVariant = hoveredStation === 'br' ? 'pt' : (hoveredStation === 'ssc' ? 'es' : autoVariant);
+  const shipSrc = currentVariant === 'pt' ? '/nave_pt.png' : '/nave_es.png';
 
   return (
   <div style={{minHeight:'100vh', background:'#0F004F', display:'flex', flexDirection:'column', position: 'relative', overflow: 'hidden'}}>
@@ -116,7 +126,7 @@ export const Landing = ({ onNavigate, onAdmin }: any) => {
       <div style={{display:'flex', gap:60, alignItems: 'center'}}>
         <LandingMissionCard 
           id="ssc" 
-          subtitle="Satellite Alpha • Orbit 1" 
+          subtitle="" 
           color="#7000AB" 
           onClick={() => onNavigate('ssc')} 
           onMouseEnter={() => handleEnter('ssc')}
@@ -145,7 +155,13 @@ export const Landing = ({ onNavigate, onAdmin }: any) => {
               animate={{ opacity: 1, filter: 'drop-shadow(0 0 60px rgba(0,255,242,0.6))' }}
               exit={{ opacity: 0 }}
               transition={{ duration: 5 }}
-              style={{ height: 460, width: 'auto' }} 
+              style={{ 
+                height: 460, 
+                width: 'auto',
+                position: 'absolute', // Fixed centering during cross-fade
+                left: '50%',
+                x: '-50%'
+              }} 
             />
           </AnimatePresence>
 
@@ -226,7 +242,7 @@ export const Landing = ({ onNavigate, onAdmin }: any) => {
 
         <LandingMissionCard 
           id="br" 
-          subtitle="Satellite Beta • Orbit 2" 
+          subtitle="" 
           color="#99CC33" 
           onClick={() => onNavigate('br')} 
           onMouseEnter={() => handleEnter('br')}
@@ -237,7 +253,7 @@ export const Landing = ({ onNavigate, onAdmin }: any) => {
 
     {/* Footer */}
     <div style={{background:'rgba(15, 0, 79, 0.8)', padding:'12px 24px', display:'flex', justifyContent:'center', borderTop: '1px solid rgba(255,255,255,0.1)', zIndex: 10}}>
-      <span style={{color:'rgba(255,255,255,0.5)', fontSize:11, letterSpacing:'0.4em', fontWeight: 700}}>SELECCIONA TU DESTINO • CHOOSE YOUR STATION</span>
+      <span style={{color:'rgba(255,255,255,0.5)', fontSize:11, letterSpacing:'0.4em', fontWeight: 700}}>SELECCIONA TU DESTINO • SELECIONE SEU DESTINO</span>
     </div>
   </div>
   );
@@ -954,17 +970,19 @@ const ModuleCard = ({ sec, title, subtitle, color, icon, stats, onClick }: any) 
           <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em', fontWeight: 900, marginBottom: 2, textTransform: 'uppercase' }}>{stats[0].label}</div>
           <div style={{ fontSize: 16, fontWeight: 900, color: '#ffffff' }}>{stats[0].val}</div>
         </div>
-        <div style={{ 
-          flex: 0.8, 
-          background: 'rgba(0, 0, 0, 0.3)', 
-          padding: '8px 12px', 
-          border: '1px solid rgba(255,255,255,0.1)',
-          display: 'flex',
-          flexDirection: 'column'
-        }}>
-          <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em', fontWeight: 900, marginBottom: 2, textTransform: 'uppercase' }}>ACTIVOS</div>
-          <div style={{ fontSize: 16, fontWeight: 900, color: color }}>OK</div>
-        </div>
+        {stats[1] && (
+          <div style={{ 
+            flex: 0.8, 
+            background: 'rgba(0, 0, 0, 0.3)', 
+            padding: '8px 12px', 
+            border: '1px solid rgba(255,255,255,0.1)',
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em', fontWeight: 900, marginBottom: 2, textTransform: 'uppercase' }}>{stats[1].label}</div>
+            <div style={{ fontSize: 13, fontWeight: 900, color: color }}>{stats[1].val}</div>
+          </div>
+        )}
       </div>
     </motion.div>
   );
@@ -1093,8 +1111,8 @@ const CentralMonitorCard = ({ onNavigate }: any) => {
       <div style={{ position: 'absolute', bottom: 4, right: 4, width: 5, height: 5, background: color, borderRadius: '50%', boxShadow: `0 0 8px ${color}`, zIndex: 14 }} />
 
       <div style={{ zIndex: 2, position: 'relative', width: '100%', textAlign: 'center' }}>
-        <div style={{ fontSize: 9, color: color, letterSpacing: '0.3em', fontWeight: 900, marginBottom: 4, textTransform: 'uppercase' }}>ESTADO_ESTACIÓN: ÓPTIMO</div>
-        <div style={{ fontSize: 24, fontWeight: 900, color: '#ffffff', marginBottom: 12, letterSpacing: '0.05em' }}>NAVE DE EXPLORACIÓN</div>
+        <div style={{ fontSize: 9, color: '#FF7D9B', letterSpacing: '0.3em', fontWeight: 900, marginBottom: 4, textTransform: 'uppercase' }}>NAVE EXPLORACION</div>
+        <div style={{ fontSize: 24, fontWeight: 900, color: '#ffffff', marginBottom: 12, letterSpacing: '0.05em' }}>ENTRENAMIENTO</div>
 
         {/* SECTOR SCAN AREA (Widescreen tactical display) */}
         <div style={{ 
@@ -1312,7 +1330,7 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <motion.div animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
             style={{ width: 4, height: 4, borderRadius: '50%', background: '#fff', boxShadow: '0 0 5px #fff', flexShrink: 0 }} />
-          <span>Treinamento Customer Care &amp; Sales</span>
+          <span>ELEVAR EL CONOCIMIENTO SIEMPRE.</span>
         </div>
 
         <div style={{ display: 'flex', gap: '6px' }}>
@@ -1710,19 +1728,18 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
           </div>
         </div>
         <div style={{ display: 'flex', gap: 12, color: alertMode ? '#fff' : '#0B0033', fontSize: 10, fontWeight: 800 }}>
-          <span>SOFT: 99%</span> | <span>ER: BR</span>
         </div>
       </div>
 
       <div style={{ flex: 1, position: 'relative', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
         <ConsoleSideFrame side="left">
           <ModuleCard 
-            sec="SEC-A1" title="PORTAL DE LÍDERES" subtitle="LAB. DE ESTRATEGIA" color="#A4FF00" side="left"
-            icon={<Microscope />} stats={[{label: 'RECURSOS', val: config.laboratorio?.length || 0}]} onClick={() => onNavigate('laboratorio')} 
+            sec="SEC-A1" title="PORTAL INSTRUCTOR" subtitle="CENTRO DE OPERACIONES" color="#FFE017" side="left"
+            icon={<GraduationCap />} stats={[{label: 'MÓDULOS', val: config.operaciones?.length || 0}, {label: 'ACTUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('operaciones')} 
           />
           <ModuleCard 
-            sec="SEC-A2" title="TALLERES" subtitle="TALLER DE INGENIERÍA" color="#D400FF" side="left"
-            icon={<Cpu />} stats={[{label: 'TALLERES', val: config.ingenieria?.length || 0}]} onClick={() => onNavigate('ingenieria')} 
+            sec="SEC-A2" title="FORMULARIOS" subtitle="MÓDULO DE SUMINISTROS" color="#00FFF2" side="left"
+            icon={<Package />} stats={[{label: 'MÓDULOS', val: config.suministros?.length || 0}, {label: 'ACTUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('suministros')} 
           />
         </ConsoleSideFrame>
         
@@ -1734,12 +1751,12 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
 
         <ConsoleSideFrame side="right">
           <ModuleCard 
-            sec="SEC-B1" title="FORMULARIOS" subtitle="MÓDULO DE SUMINISTROS" color="#00FFF2" side="right"
-            icon={<Package />} stats={[{label: 'FORMULARIOS', val: config.suministros?.length || 0}]} onClick={() => onNavigate('suministros')} 
+            sec="SEC-B1" title="PORTAL DE LÍDERES" subtitle="LAB. DE ESTRATEGIA" color="#A4FF00" side="right"
+            icon={<Microscope />} stats={[{label: 'MÓDULOS', val: config.laboratorio?.length || 0}, {label: 'ACTUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('laboratorio')} 
           />
           <ModuleCard 
-            sec="SEC-B2" title="PORTAL INSTRUCTOR" subtitle="CENTRO DE OPERACIONES" color="#FFE017" side="right"
-            icon={<Radar />} stats={[{label: 'MÓDULOS', val: config.operaciones?.length || 0}]} onClick={() => onNavigate('operaciones')} 
+            sec="SEC-B2" title="TALLERES" subtitle="TALLER DE INGENIERÍA" color="#D400FF" side="right"
+            icon={<Cpu />} stats={[{label: 'MÓDULOS', val: config.ingenieria?.length || 0}, {label: 'ACTUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('ingenieria')} 
           />
         </ConsoleSideFrame>
       </div>

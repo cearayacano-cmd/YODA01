@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BackBtn } from './Shared';
 import { motion } from 'framer-motion';
-import { Globe, Satellite, Layers, Plus, Trash2, Edit3, Settings, Database, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { Globe, Layers, Plus, Trash2, Edit3, Settings, Database, ArrowLeft, CheckCircle2 } from 'lucide-react';
 
 export const AdminExploracion = ({ currentStationConfig, updateStationConfig, onBack, onSatelites, onAdvancedContent }: any) => {
   const [activeSector, setActiveSector] = useState('frontLine');
@@ -133,46 +133,43 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
               overflow: 'hidden'
             }}>
               <div style={{ position: 'absolute', top: 0, left: 0, width: '6px', height: '100%', background: '#1B0088' }} />
-              <div style={{display: 'flex', alignItems: 'center', gap: 14, marginBottom: 28}}>
-                <Satellite size={20} color="#1B0088" />
-                <div style={{fontSize:14, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
-                  SATELLITE SYSTEMS · FORMAÇÃO BASE
-                </div>
-              </div>
-              <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:28}}>
-                {[{pk:'conhecendo', l:'Conhecendo...'}, {pk:'imersao', l:'Imersão...'}].map(({pk, l}) => (
-                  <div key={pk} style={{
-                    background: '#F8FAFC',
-                    borderRadius: 20,
-                    padding: 32,
-                    border: '1px solid #E2E8F0',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 24,
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#1B0088'; e.currentTarget.style.background = '#ffffff'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#F8FAFC'; }}
-                  >
-                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                      <div style={{fontSize:18, color:'#1B0088', fontWeight:900}}>{l}</div>
-                      <div style={{background: 'rgba(153,204,51,0.15)', color: '#99CC33', padding: '6px 14px', borderRadius: 12, fontSize: 12, fontWeight: 900}}>
-                        {(satelites[pk]||[]).length} NODOS ACTIVOS
-                      </div>
-                    </div>
-                    <button 
-                      onClick={()=>onSatelites(pk)} 
-                      style={{
-                        background:'#1B0088', color:'#ffffff', border:'none', 
-                        padding:'14px 20px', cursor:'pointer', fontSize:13, fontWeight:800, 
-                        borderRadius:10, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-                        transition: 'all 0.2s ease', width: '100%', boxShadow: '0 4px 12px rgba(27,0,136,0.15)'
-                      }}
-                    >
-                      <Edit3 size={18} /> EDITAR SATÉLITE
-                    </button>
+
+              {/* ONBOARDING BLOCK INSIDE THE SAME WHITE CONTAINER */}
+              <div style={{ paddingTop: 8 }}>
+                <div style={{display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20}}>
+                  <span style={{ fontSize: 20 }}>🚀</span>
+                  <div style={{fontSize:14, color:'#FF8C00', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
+                    PROTOCOLO DE PREPARACIÓN
                   </div>
-                ))}
+                </div>
+                <div style={{
+                  background: '#F8FAFC',
+                  borderRadius: 20,
+                  padding: '24px 32px',
+                  border: '1px solid #E2E8F0',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#FFB800'; e.currentTarget.style.background = '#ffffff'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#F8FAFC'; }}
+                >
+                  <div style={{display: 'flex', alignItems: 'center', gap: 16}}>
+                    <div style={{fontSize:18, color:'#1B0088', fontWeight:900}}>NAVE DE ONBOARDING</div>
+                  </div>
+                  <button 
+                    onClick={() => onAdvancedContent('onboarding', 0)}
+                    style={{
+                      background:'#FFB800', color:'#ffffff', border:'none', 
+                      padding:'14px 24px', cursor:'pointer', fontSize:13, fontWeight:800, 
+                      borderRadius:10, display: 'flex', alignItems: 'center', gap: 10,
+                      transition: 'all 0.2s ease', boxShadow: '0 4px 12px rgba(255,184,0,0.3)'
+                    }}
+                  >
+                    <Edit3 size={18} /> CONFIGURAR NAVE
+                  </button>
+                </div>
               </div>
             </div>
           )}

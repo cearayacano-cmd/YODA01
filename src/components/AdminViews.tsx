@@ -3,23 +3,30 @@ import { BackBtn } from './Shared';
 import { motion } from 'framer-motion';
 import { Save, Rocket, Settings, Database, Edit3, Trash2, Plus, Link as LinkIcon, CheckCircle2, Activity, LayoutGrid, GraduationCap, ArrowUpRight, Globe, ArrowLeft } from 'lucide-react';
 
-export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLider }: any) => {
+export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLider, onViewStation }: any) => {
   const [activeStation, setActiveStation] = useState('BR');
   const [saved, setSaved] = useState(false);
   const handleSave = () => { setSaved(true); setTimeout(()=>setSaved(false),2200); };
   const sk = activeStation.toLowerCase();
-  const updateF = (field: any, val: any) => setConfig((prev: any)=>({...prev,[sk]:{...prev[sk],[field]:val}}));
+  const updateF = (field: any, val: any) => {
+    const now = new Date();
+    const dd = String(now.getDate()).padStart(2, '0');
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const yyyy = now.getFullYear();
+    const dateStr = `${dd}/${mm}/${yyyy}`;
+    setConfig((prev: any)=>({...prev,[sk]:{...prev[sk],[field]:val, lastUpdate: dateStr}}));
+  };
   const tempConfig = config;
-  const addItem = (field: any) => updateF(field,[...tempConfig[sk][field],{label:'NUEVO_LINK',url:'https://'}]);
+  const addItem = (field: any) => updateF(field,[...tempConfig[sk][field],{label:'NUEVO_LINK',url:'https://', concepto:'Breve descripción del recurso'}]);
   const removeItem = (field: any, idx: any) => updateF(field,tempConfig[sk][field].filter((_: any,i: any)=>i!==idx));
   const updateLink = (f: any, i: any, sub: any, v: any) => {
     const next=[...tempConfig[sk][f]]; next[i]={...next[i],[sub]:v}; updateF(f,next);
   };
   const MODULE_FIELDS = [
-    { field:'laboratorio', key:'lab',  defaultTitle:'Lab. de Estrategia',   defaultSub:'Portal de Líderes', color: '#99CC33' },
-    { field:'ingenieria',  key:'eng',  defaultTitle:'Taller de Ingeniería',   defaultSub:'Talleres', color: '#B200FF' },
-    { field:'suministros', key:'sup',  defaultTitle:'Módulo de Suministros',  defaultSub:'Formularios', color: '#00D6CC' },
-    { field:'operaciones', key:'ops',  defaultTitle:'Centro de Operaciones',  defaultSub:'Portal Instructor', color: '#FFE017' },
+    { field:'laboratorio', key:'lab',  defaultTitle:'Portal de Líderes',   defaultSub:'Portal lideres', color: '#99CC33' },
+    { field:'ingenieria',  key:'eng',  defaultTitle:'Talleres',   defaultSub:'Talleres', color: '#B200FF' },
+    { field:'suministros', key:'sup',  defaultTitle:'Formularios',  defaultSub:'Formularios', color: '#00D6CC' },
+    { field:'operaciones', key:'ops',  defaultTitle:'Portal Instructor',  defaultSub:'Portal Instructor', color: '#FFE017' },
   ];
   const getModuleMeta = (key: any) => tempConfig[sk]?.moduleMeta?.[key] || {};
   const updateModuleMeta = (key: any, field: any, val: any) => {
@@ -225,19 +232,19 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                 onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-4px)'}
                 onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
                 >
-                  <div style={{
-                    background:'#1B0088', 
-                    padding:'20px 24px',
-                    borderBottom: `4px solid ${color}`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 16
-                  }}>
-                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: color, boxShadow: `0 0 12px ${color}` }} />
-                    <div style={{fontSize:14, color:'#ffffff', fontWeight:900, textTransform:'uppercase', letterSpacing: '0.1em'}}>
-                      {field.toUpperCase()}
+                    <div style={{
+                      background:'#1B0088', 
+                      padding:'20px 24px',
+                      borderBottom: `4px solid ${color}`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 16
+                    }}>
+                      <div style={{ width: 10, height: 10, borderRadius: '50%', background: color, boxShadow: `0 0 12px ${color}` }} />
+                      <div style={{fontSize:14, color:'#ffffff', fontWeight:900, textTransform:'uppercase', letterSpacing: '0.1em'}}>
+                        {field === 'laboratorio' ? 'PORTAL LIDERES' : field === 'ingenieria' ? 'TALLERES' : field === 'suministros' ? 'FORMULARIOS' : 'PORTAL INSTRUCTOR'}
+                      </div>
                     </div>
-                  </div>
                   
                   <div style={{padding:28, flex: 1, display: 'flex', flexDirection: 'column', gap: 24}}>
                     <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:20}}>
@@ -266,32 +273,40 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                       
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
                         {items.map((item: any,i: number)=>(
-                          <motion.div key={i} layout style={{display:'flex', gap:10, alignItems:'center', background: '#F8FAFC', padding: '10px 14px', borderRadius: 12, border: '1px solid #E2E8F0'}}>
-                            <input 
-                              value={item.label} 
-                              onChange={e=>updateLink(field,i,'label',e.target.value)} 
-                              style={{...inp({ padding: '8px 12px', fontSize: 13, background: '#fff' }), flex:1, fontWeight: 700}}
-                              placeholder="Firma"
+                          <motion.div key={i} layout style={{display:'flex', flexDirection:'column', gap:10, background: '#F8FAFC', padding: '16px', borderRadius: 12, border: '1px solid #E2E8F0'}}>
+                            <div style={{display:'flex', gap:10, alignItems:'center'}}>
+                              <input 
+                                value={item.label} 
+                                onChange={e=>updateLink(field,i,'label',e.target.value)} 
+                                style={{...inp({ padding: '8px 12px', fontSize: 13, background: '#fff' }), flex:1, fontWeight: 700}}
+                                placeholder="Nombre"
+                              />
+                              <input 
+                                value={item.url} 
+                                onChange={e=>updateLink(field,i,'url',e.target.value)} 
+                                style={{...inp({ padding: '8px 12px', fontSize: 12, color: '#1B0088', background: '#fff' }), flex:2}}
+                                placeholder="https://..."
+                              />
+                              <button 
+                                onClick={()=>removeItem(field,i)} 
+                                style={{
+                                  background:'#fee2e2', border:'none', width: 36, height: 36,
+                                  cursor:'pointer', borderRadius:10, color:'#ef4444',
+                                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                  transition: 'all 0.2s'
+                                }}
+                                onMouseEnter={e => (e.currentTarget.style.background = '#FCA5A5', e.currentTarget.style.transform = 'scale(1.05)')}
+                                onMouseLeave={e => (e.currentTarget.style.background = '#fee2e2', e.currentTarget.style.transform = 'scale(1)')}
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            </div>
+                            <textarea 
+                              value={item.concepto||''} 
+                              onChange={e=>updateLink(field,i,'concepto',e.target.value)}
+                              placeholder="Breve concepto del recurso..."
+                              style={{...inp({ padding: '8px 12px', fontSize: 12, background: '#fff', height: 44, resize: 'none' }), width: '100%'}}
                             />
-                            <input 
-                              value={item.url} 
-                              onChange={e=>updateLink(field,i,'url',e.target.value)} 
-                              style={{...inp({ padding: '8px 12px', fontSize: 12, color: '#1B0088', background: '#fff' }), flex:2}}
-                              placeholder="https://..."
-                            />
-                            <button 
-                              onClick={()=>removeItem(field,i)} 
-                              style={{
-                                background:'#fee2e2', border:'none', width: 36, height: 36,
-                                cursor:'pointer', borderRadius:10, color:'#ef4444',
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                transition: 'all 0.2s'
-                              }}
-                              onMouseEnter={e => (e.currentTarget.style.background = '#FCA5A5', e.currentTarget.style.transform = 'scale(1.05)')}
-                              onMouseLeave={e => (e.currentTarget.style.background = '#fee2e2', e.currentTarget.style.transform = 'scale(1)')}
-                            >
-                              <Trash2 size={16} />
-                            </button>
                           </motion.div>
                         ))}
                       </div>
@@ -344,7 +359,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
           <div style={{display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24}}>
             <Database size={22} color="#1B0088" />
             <div style={{fontSize:15, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
-              DATABASE: EXPLORACIÓN GALÁCTICA
+              DATABASE: ENTRENAMIENTO
             </div>
           </div>
           

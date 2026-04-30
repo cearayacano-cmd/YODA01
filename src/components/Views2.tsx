@@ -190,16 +190,7 @@ const TacticalSectorCard = ({ color, id, label, desc, onClick, tag }: any) => {
         borderTop: `1px solid rgba(255,255,255,0.08)`,
         textAlign: 'center'
       }}>
-        <div style={{ 
-          fontSize: 10, 
-          color: color, 
-          letterSpacing: '0.5em', 
-          fontWeight: 900, 
-          marginBottom: 10,
-          textTransform: 'uppercase'
-        }}>
-          GEOMETRÍA {idxLabel(id)}
-        </div>
+          EXPEDIÇÃO
         <div style={{ 
           fontSize: 36, 
           fontWeight: 900, 
@@ -256,21 +247,21 @@ export const GalaxySelection = ({ onNavigate, onBack }: any) => {
     { 
       id: 'frontLine', 
       label: 'FRONT LINE', 
-      desc: 'Atención primaria y gestión comercial directa.', 
+      desc: '', 
       color: '#00A9E0', 
       tag: 'GLX-001'
     },
     { 
       id: 'soporte',   
       label: 'SOPORTE',    
-      desc: 'Back office, procesos y fidelización de socios.', 
+      desc: '', 
       color: '#D400FF', 
       tag: 'GLX-002'
     },
     { 
       id: 'fieldSupport', 
       label: 'FIELD SUPPORT', 
-      desc: 'Mantenimiento técnico y operaciones tácticas.', 
+      desc: '', 
       color: '#99CC33', 
       tag: 'GLX-003'
     },
