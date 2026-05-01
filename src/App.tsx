@@ -138,10 +138,19 @@ export default function App() {
       monitoringUrl:"https://lookerstudio.google.com/u/0/reporting/9d1f44d6-e585-4a9c-af76-c0883ed691e2/page/p_wtg2od23vd",
       iaraLink: "https://amelia.appslatam.com/#/assistants/chat/aa857c06-5a06-4450-8518-8568cdd28dfd",
       preparacaoLink: "https://docs.google.com/spreadsheets/d/1KU429FHAX7vfvelvC1qJV8yNVr2IVtjvG_uxnX4AO_E/edit?gid=1618918374#gid=1618918374",
-      suministros:[{label:"Formularios BR",url:"#"}],
+      suministros:[
+        {label: "Solicitação Validação Novos Instrutores", url: "https://docs.google.com/forms/d/e/1FAIpQLSd-8RqlYtBRf52-BD3DguIBI5avHCTL_W1Iubo61zKiNHJTnw/viewform"},
+        {label: "BD KON BR", url: "https://docs.google.com/spreadsheets/d/13DSQiW2usoVceoS8dzIcRpE7zwS4DrRq0xWLOWe4ikc/edit?gid=415048431#gid=415048431"},
+        {label: "BD AEC", url: "https://docs.google.com/spreadsheets/d/19Po56LC5YYTLnQLpVwsFaQIRwAroJos7hd6OqTubxRI/edit?gid=2137519498#gid=2137519498"}
+      ],
       ingenieria:[{label:"Manuales Técnicos",url:"#"}],
       laboratorio:[{label:"KPIs Estratégicos",url:"#"}],
-      operaciones:[{label:"Entrenamiento Tripulación",url:"#"}],
+      operaciones:[
+        {label: "Usuários Treinamento", url: "https://docs.google.com/spreadsheets/d/1m3MQb4O517HkmrvECuAeyTTlAo9XGHPpLrhk294eXvI/edit?gid=683623643#gid=683623643"},
+        {label: "Indução Instrutor Guardião", url: "https://docs.google.com/presentation/d/1pagklV4v8J09sciVVeFR5ZA3fRIHDJ5hoyXKWYSWXtc/edit?slide=id.g366a722ea15_0_5562#slide=id.g366a722ea15_0_5562"},
+        {label: "Gravações Meet", url: "https://drive.google.com/drive/folders/10U847otVlc8CgVicdDvhGjDJD7X4rjO-"},
+        {label: "Rota de Saber/ Escuta de Chamadas", url: "https://docs.google.com/forms/d/e/1FAIpQLSc6skAZ2tsMQx3b5uMjVzI_0kbafi11Bj7rsOJgVbrOzgLWtw/viewform"}
+      ],
       lastUpdate: "30/04/2026",
       rutaLider: RUTA_DATA_DEFAULT,
       onboarding: [ONBOARDING_DATA_DEFAULT],

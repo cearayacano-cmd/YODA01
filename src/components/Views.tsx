@@ -1671,44 +1671,15 @@ const IaraHologram = ({ isVisible, onClose, iaraLink }: any) => {
   );
 };
 
-const StationIcon = ({ alertMode, color, bgColor, panelColor }: any) => {
-  const mainColor = alertMode ? "#ff0000" : (color || "#99CC33");
-  const mainBg = alertMode ? "#4A0618" : (bgColor || "#0F004F");
-  const mainPanel = alertMode ? "#4A0618" : (panelColor || mainBg);
-  
+const StationIcon = () => {
   return (
-    <motion.div
-      animate={{ 
-        y: [0, -5, 0],
-        rotate: [0, 3, 0]
-      }}
-      transition={{ 
-        duration: 5, 
-        repeat: Infinity, 
-        ease: 'easeInOut' 
-      }}
-      style={{ position: 'relative', width: 70, height: 70, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-    >
-      <div style={{ 
-        position: 'relative', 
-        filter: alertMode 
-          ? `drop-shadow(0 0 15px #ff0000aa)` 
-          : `drop-shadow(0 0 15px ${mainColor}aa)` // Intense resplandor
-      }}>
-        <TacticalSatelliteIcon size={84} color={mainColor} bgColor={mainBg} panelColor={mainPanel} />
-        {/* Additional decorative rim for the header version */}
-        <motion.div 
-            animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
-            transition={{ duration: 3, repeat: Infinity }}
-            style={{ 
-              position: 'absolute', 
-              inset: -6, 
-              border: `1px solid ${alertMode ? '#ff000044' : `${mainColor}44`}`, // Rim inherits the glow color
-              borderRadius: '50%' 
-            }} 
-        />
-      </div>
-    </motion.div>
+    <div style={{ position: 'relative', width: 70, height: 70, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <img 
+        src="/guardioes_pt_shield.png" 
+        alt="Shield Icon" 
+        style={{ width: 70, height: 'auto', display: 'block' }} 
+      />
+    </div>
   );
 };
 
@@ -1736,13 +1707,17 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
 
       <div style={{ height: '84px', background: alertMode ? '#4A0618' : '#E8E7F2', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 32px', transition: 'all 0.5s ease' }}>
         <BackBtn onClick={onBack} label="SALIR" />
-        <div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <StationIcon 
-            alertMode={alertMode} 
-            color={stationName === "BR" ? "#99CC33" : "#7000AB"} 
-            bgColor={stationName === "BR" ? "#0F004F" : "#0F004F"}
-            panelColor={stationName === "BR" ? "#0F004F" : undefined}
-          />
+        <div style={{ 
+          position: 'absolute', 
+          left: '50%', 
+          top: '50%', 
+          transform: 'translate(-50%, -50%)',
+          textAlign: 'center', 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: '20px' 
+        }}>
+          <StationIcon />
           <div>
             <div style={{ fontSize: 11, letterSpacing: '0.4em', color: alertMode ? '#ff5555' : '#64748b', textTransform: 'uppercase', marginBottom: 2, fontWeight: 700 }}>Estación Espacial</div>
             <div style={{ fontSize: 24, fontWeight: 900, color: alertMode ? '#fff' : '#0F004F', letterSpacing: '0.1em' }}>{stationName} STATION</div>

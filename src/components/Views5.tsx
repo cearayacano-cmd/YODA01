@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Wrench, BookOpen, Settings, Hexagon, Network, Microscope, Package, Box, Radar, Activity, Cpu, ArrowLeft, Zap, Target, Info, ExternalLink, X, CheckCircle2, Lightbulb, Rocket, Shield, Award, Star } from 'lucide-react';
+import { Wrench, BookOpen, Settings, Hexagon, Network, Microscope, Package, Box, Radar, Activity, Cpu, ArrowLeft, Zap, Target, Info, ExternalLink, X, CheckCircle2, Lightbulb, Rocket, Shield, Award, Star, GraduationCap } from 'lucide-react';
 
 const Stars = () => (
   <div className="stars-container" style={{ position: 'fixed', inset: 0, pointerEvents: 'none' }}>
@@ -559,14 +559,7 @@ export const TechBaseView = ({
         zIndex: 0
       }} />
 
-      {/* Background Decals */}
-      <div style={{ position: 'absolute', top: 100, left: 40, display: 'flex', alignItems: 'center', gap: 15, zIndex: 1 }}>
-        <img src="/guardioes_capacitacion_pt.png" alt="Logo Capacitación PT" style={{ height: 45, filter: 'brightness(1.1) drop-shadow(0 0 10px rgba(153,204,51,0.3))' }} />
-        <div style={{ fontSize: 10, color: '#64748B', fontWeight: 700, letterSpacing: '0.1em', lineHeight: 1.8, textTransform: 'uppercase' }}>
-          <div>UNIVERSO TRAINING</div>
-          <div>CUSTOMER CARE & SALES</div>
-        </div>
-      </div>
+      {/* Logo moved to header */}
 
       {/* Left Vertical Decal */}
       <div style={{ position: 'absolute', top: '40%', left: -80, display: 'flex', alignItems: 'center', gap: 15, transform: 'rotate(-90deg)', transformOrigin: 'center', zIndex: 1 }}>
@@ -590,14 +583,14 @@ export const TechBaseView = ({
 
       {/* Header */}
       <div style={{ 
-        background: '#ffffff', 
+        background: '#E8E7F2', 
         padding: '16px 32px', 
         display: 'flex', 
         alignItems: 'center', 
         justifyContent: 'space-between', 
         position: 'relative', 
         zIndex: 10,
-        borderBottom: `4px solid ${themeColor}`,
+        borderBottom: `1px solid rgba(0,0,0,0.1)`,
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 30 }}>
@@ -616,84 +609,74 @@ export const TechBaseView = ({
           }}>
             ← VOLVER
           </button>
-          <div style={{ textAlign: 'left' }}>
-            <div style={{ fontSize: 10, color: themeColor, letterSpacing: '0.3em', fontWeight: 900 }}>{headerTitle}</div>
-            <div style={{ fontSize: 24, fontWeight: 900, letterSpacing: '0.1em', color: '#1B0088' }}>
-              {title}
+          <div style={{ 
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: 16 
+          }}>
+            <img src="/guardioes_pt_shield.png" alt="Logo" style={{ height: 54 }} />
+            <div style={{ fontSize: 13, color: '#0F004F', fontWeight: 900, letterSpacing: '0.12em', lineHeight: 1.2, textTransform: 'uppercase' }}>
+              <div>UNIVERSO TRAINING</div>
+              <div style={{ opacity: 0.7, fontSize: 11 }}>CUSTOMER CARE & SALES</div>
             </div>
           </div>
         </div>
-        <div style={{ display: 'flex', gap: 16 }}>
-          <div style={{ border: `1px solid ${themeColor}40`, background: '#F1F5F9', color: '#1B0088', padding: '6px 16px', borderRadius: 4, fontSize: 11, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, boxShadow: `inset 0 0 10px rgba(0,0,0,0.02)` }}>
-            CORE_STATUS: <span style={{ color: '#1B0088' }}>NUEVOS INGRESOS</span>
-            <motion.div 
-              animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              style={{ width: 6, height: 6, borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 8px #22c55e' }} 
-            />
-          </div>
-          <div style={{ border: `1px solid ${themeColor}40`, background: '#F1F5F9', color: '#1B0088', padding: '6px 16px', borderRadius: 4, fontSize: 11, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, boxShadow: `inset 0 0 10px rgba(0,0,0,0.02)` }}>
-            PÁGINAS PUBLICADAS: <span style={{ color: '#1B0088' }}>{links ? links.length : 0}</span>
-          </div>
-        </div>
+        <div />
       </div>
 
-      <div style={{ padding: '60px 40px', maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 5, flex: 1, width: '100%' }}>
+      <div style={{ padding: '20px 40px', maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 5, flex: 1, width: '100%' }}>
         
         {/* Hero Section */}
-        <div style={{ position: 'relative', marginBottom: 50, width: '100%', maxWidth: 900, margin: '0 auto 50px auto' }}>
+        <div style={{ position: 'relative', marginBottom: 40, width: '100%', maxWidth: 1050, margin: '0 auto 40px auto' }}>
           {/* Outer Border Layer (Window Frame) */}
           <div style={{
             position: 'absolute', inset: 0,
-            background: `linear-gradient(135deg, ${themeColor} 0%, #00F3FF 50%, ${themeColor} 100%)`,
-            clipPath: 'polygon(24px 0, calc(100% - 24px) 0, 100% 24px, 100% calc(100% - 24px), calc(100% - 24px) 100%, 24px 100%, 0 calc(100% - 24px), 0 24px)',
+            background: `linear-gradient(90deg, ${themeColor} 0%, #00F3FF 50%, ${themeColor} 100%)`,
+            clipPath: 'polygon(40px 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%, 0 40px)',
             zIndex: 1,
-            boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
+            boxShadow: '0 10px 40px rgba(0,0,0,0.3)'
           }} />
           
           {/* Inner Background Layer (Window Glass) */}
           <motion.div 
-            initial={{ opacity: 0, scale: 0.98 }}
+            initial={{ opacity: 0, scale: 0.99 }}
             animate={{ opacity: 1, scale: 1 }}
             style={{ 
               position: 'relative',
               top: 2, left: 2, right: 2, bottom: 2,
               width: 'calc(100% - 4px)', height: 'calc(100% - 4px)',
               background: '#1B0088', 
-              clipPath: 'polygon(23px 0, calc(100% - 23px) 0, 100% 23px, 100% calc(100% - 23px), calc(100% - 23px) 100%, 23px 100%, 0 calc(100% - 23px), 0 23px)',
-              padding: '36px 48px', 
+              clipPath: 'polygon(39px 0, 100% 0, 100% calc(100% - 39px), calc(100% - 39px) 100%, 0 100%, 0 39px)',
+              padding: '24px 60px', 
               display: 'flex', 
               alignItems: 'center', 
-              gap: 40, 
+              gap: 50, 
               zIndex: 2,
-              boxShadow: 'inset 0 0 60px rgba(0,0,0,0.8)'
+              boxShadow: 'inset 0 0 80px rgba(0,0,0,0.9)',
+              overflow: 'hidden'
             }}
           >
             <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
               <Stars />
-              {/* Extra Depth Stars for the "Window" */}
-              {[...Array(20)].map((_, i) => (
-                <motion.div 
-                  key={`wstar-${i}`}
-                  animate={{ opacity: [0.2, 0.8, 0.2], scale: [1, 1.2, 1] }}
-                  transition={{ duration: 3 + Math.random() * 4, repeat: Infinity }}
-                  style={{ 
-                    position: 'absolute', left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%`,
-                    width: 2, height: 2, background: i % 2 === 0 ? '#ffffff' : '#00F3FF', borderRadius: '50%',
-                    boxShadow: `0 0 10px ${i % 2 === 0 ? '#fff' : '#00F3FF'}`
-                  }}
-                />
-              ))}
+              {/* Data stream effect */}
+              <motion.div 
+                animate={{ x: ['-100%', '100%'] }}
+                transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
+                style={{ position: 'absolute', top: '20%', left: 0, right: 0, height: 1, background: 'linear-gradient(90deg, transparent, rgba(0,243,255,0.2), transparent)', zIndex: 1 }}
+              />
             </div>
             
-            <div style={{ position: 'absolute', top: 12, left: 12, width: 6, height: 3, background: '#fff', transform: 'rotate(-45deg)', opacity: 0.8 }} />
-            <div style={{ position: 'absolute', top: 12, right: 12, width: 6, height: 3, background: '#fff', transform: 'rotate(45deg)', opacity: 0.8 }} />
-            <div style={{ position: 'absolute', bottom: 12, left: 12, width: 6, height: 3, background: '#fff', transform: 'rotate(45deg)', opacity: 0.8 }} />
-            <div style={{ position: 'absolute', bottom: 12, right: 12, width: 6, height: 3, background: '#fff', transform: 'rotate(-45deg)', opacity: 0.8 }} />
+            {/* Geometric Decorative Elements */}
+            <div style={{ position: 'absolute', top: 0, right: 100, width: 60, height: 4, background: themeColor, opacity: 0.6 }} />
+            <div style={{ position: 'absolute', bottom: 0, left: 100, width: 60, height: 4, background: themeColor, opacity: 0.6 }} />
 
-            {/* Inner Chamfered Icon Box */}
+            {/* Inner Geometric Icon Box */}
             <div style={{
-              width: 110, height: 110,
+              width: 90, height: 90,
               position: 'relative',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               flexShrink: 0
@@ -701,13 +684,13 @@ export const TechBaseView = ({
               <div style={{
                 position: 'absolute', inset: 0,
                 background: themeColor,
-                clipPath: 'polygon(16px 0, calc(100% - 16px) 0, 100% 16px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 16px 100%, 0 calc(100% - 16px), 0 16px)',
+                clipPath: 'polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%)',
                 opacity: 0.9
               }} />
               <div style={{
                 position: 'absolute', inset: 2,
-                background: '#0B0033',
-                clipPath: 'polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px)',
+                background: '#1B0088',
+                clipPath: 'polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 boxShadow: 'inset 0 0 20px rgba(0,0,0,0.5)'
               }}>
@@ -717,23 +700,19 @@ export const TechBaseView = ({
 
             {/* Text Content */}
             <div style={{ flex: 1, position: 'relative', zIndex: 5 }}>
-              <div style={{ fontSize: 11, color: '#ED1650', letterSpacing: '0.3em', marginBottom: 10, fontWeight: 900, textTransform: 'uppercase' }}>
-                MANTENIMIENTO · PROTOCOLOS · SOPORTE
-              </div>
-              <div style={{ fontSize: 42, fontWeight: 900, marginBottom: 12, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <div style={{ fontSize: 48, fontWeight: 900, marginBottom: 8, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.05em', textShadow: '0 0 20px rgba(255,255,255,0.2)' }}>
                 {title}
               </div>
               
-              <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.8)', lineHeight: 1.6, maxWidth: 600, fontWeight: 500 }}>
+              <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', lineHeight: 1.5, maxWidth: 700, fontWeight: 500, letterSpacing: '0.02em' }}>
                 {subtitle || description}
               </div>
 
-              {/* Line Separator */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 20 }}>
-                <div style={{ height: 2, background: themeColor, width: '25%' }} />
-                <div style={{ height: 2, background: themeColor, width: '12px', transform: 'skewX(-45deg)' }} />
-                <div style={{ height: 2, background: themeColor, width: '6px', transform: 'skewX(-45deg)' }} />
-                <div style={{ height: 2, background: themeColor, width: '3px', transform: 'skewX(-45deg)' }} />
+              {/* Geometric Line Separator */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 0, marginTop: 16 }}>
+                <div style={{ height: 3, background: themeColor, width: 100 }} />
+                <div style={{ width: 0, height: 0, borderTop: '3px solid transparent', borderBottom: '3px solid transparent', borderLeft: `8px solid ${themeColor}` }} />
+                <div style={{ height: 1, background: 'rgba(255,255,255,0.2)', flex: 1, marginLeft: 10 }} />
               </div>
             </div>
           </motion.div>
@@ -747,13 +726,7 @@ export const TechBaseView = ({
             <div style={{ fontSize: 11, color: '#ED1650', letterSpacing: '0.2em', marginBottom: 4, fontWeight: 900, textTransform: 'uppercase' }}>REGISTROS TÉCNICOS</div>
             <div style={{ fontSize: 22, fontWeight: 900, letterSpacing: '0.05em', color: '#0B0033', textTransform: 'uppercase' }}>RECURSOS DISPONIBLES</div>
           </div>
-          <div style={{ flex: 1, height: 1, background: 'rgba(11,0,51,0.2)', position: 'relative' }}>
-            <div style={{ position: 'absolute', left: 20, top: -3, display: 'flex', gap: 10 }}>
-              <div style={{ width: 6, height: 6, borderRadius: '50%', background: themeColor }} />
-              <div style={{ width: 6, height: 6, borderRadius: '50%', background: themeColor }} />
-              <div style={{ width: 6, height: 6, borderRadius: '50%', background: themeColor }} />
-            </div>
-          </div>
+          <div style={{ flex: 1 }} />
         </div>
 
         {/* List Items Grid (3 Columns) */}
@@ -765,7 +738,7 @@ export const TechBaseView = ({
           ) : links.map((link: any, i: number) => (
             <motion.div
               key={i}
-              whileHover={{ translateY: -5, scale: 1.02 }}
+              whileHover={{ x: 10, background: '#2500A5' }}
               style={{ 
                 position: 'relative', 
                 overflow: 'hidden',
@@ -776,44 +749,40 @@ export const TechBaseView = ({
                 padding: '24px',
                 cursor: 'pointer',
                 background: '#1B0088', 
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                border: `1px solid ${themeColor}40`,
-                boxShadow: `0 10px 30px rgba(0,0,0,0.15), inset 0 0 20px ${themeColor}10`,
-                borderRadius: '8px'
+                borderLeft: `4px solid ${themeColor}`,
+                borderRight: '1px solid rgba(255,255,255,0.1)',
+                borderTop: '1px solid rgba(255,255,255,0.1)',
+                borderBottom: '1px solid rgba(255,255,255,0.1)',
+                boxShadow: `0 10px 30px rgba(0,0,0,0.2)`,
+                borderRadius: '0 8px 8px 0'
               }} 
               onClick={() => link.url !== '#' && window.open(link.url, '_blank')}
             >
-              {/* Tactical Corners */}
-              <div style={{ position: 'absolute', top: 0, left: 0, width: 10, height: 10, borderTop: `2px solid ${themeColor}`, borderLeft: `2px solid ${themeColor}`, zIndex: 3 }} />
-              <div style={{ position: 'absolute', top: 0, right: 0, width: 10, height: 10, borderTop: `2px solid ${themeColor}`, borderRight: `2px solid ${themeColor}`, zIndex: 3 }} />
-              <div style={{ position: 'absolute', bottom: 0, left: 0, width: 10, height: 10, borderBottom: `2px solid ${themeColor}`, borderLeft: `2px solid ${themeColor}`, zIndex: 3 }} />
-              <div style={{ position: 'absolute', bottom: 0, right: 0, width: 10, height: 10, borderBottom: `2px solid ${themeColor}`, borderRight: `2px solid ${themeColor}`, zIndex: 3 }} />
-
               <div style={{ zIndex: 2 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-                  <div style={{ fontSize: 16, fontWeight: 900, color: '#ED1650', opacity: 0.8 }}>{(i + 1).toString().padStart(2, '0')}</div>
-                  <div style={{ fontSize: 14, fontWeight: 900, letterSpacing: '0.02em', color: '#ffffff', textTransform: 'uppercase', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{link.label}</div>
+                  <div style={{ fontSize: 16, fontWeight: 900, color: themeColor }}>{(i + 1).toString().padStart(2, '0')}</div>
+                  <div style={{ fontSize: 15, fontWeight: 900, letterSpacing: '0.02em', color: '#ffffff', textTransform: 'uppercase', flex: 1 }}>{link.label}</div>
                 </div>
-                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', fontWeight: 500, lineHeight: 1.5, height: '50px', overflow: 'hidden', marginBottom: 16 }}>
+                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', fontWeight: 500, lineHeight: 1.5, height: '50px', overflow: 'hidden', marginBottom: 16 }}>
                   {link.concepto || description}
                 </div>
               </div>
 
               <div style={{
                 marginTop: 'auto',
-                padding: '8px 16px',
-                background: themeColor,
+                padding: '10px 16px',
+                background: 'transparent',
+                border: `1.5px solid ${themeColor}`,
                 borderRadius: '4px',
-                color: '#ffffff',
-                fontSize: 10,
+                color: themeColor,
+                fontSize: 11,
                 fontWeight: 900,
                 zIndex: 2,
                 textAlign: 'center',
-                letterSpacing: '1.5px',
-                boxShadow: `0 4px 10px ${themeColor}40`
+                letterSpacing: '1px',
+                transition: 'all 0.2s ease'
               }}>
-                {link.url && link.url !== '#' ? 'ABRIR RECURSO' : 'SIN ENLACE'}
+                {link.url && link.url !== '#' ? 'ACCEDER AL MÓDULO' : 'SIN ENLACE'}
               </div>
             </motion.div>
           ))}
@@ -842,12 +811,18 @@ export const TechBaseView = ({
           )}
           <span style={{ fontWeight: 900 }}>{footerTitle}</span>
         </div>
-        <div style={{ display: 'flex', gap: 24, fontSize: 10 }}>
-          <div style={{ color: '#64748B' }}>POWER: <span style={{ color: '#00C853' }}>STABLE</span></div>
-          <div style={{ color: '#CBD5E1' }}>|</div>
-          <div style={{ color: '#64748B' }}>TEMP: <span style={{ color: '#00C853' }}>22°C</span></div>
-          <div style={{ color: '#CBD5E1' }}>|</div>
-          <div style={{ color: '#64748B' }}>AUTH: <span style={{ color: '#00C853' }}>GRANTED</span></div>
+        <div style={{ display: 'flex', gap: 16 }}>
+          <div style={{ border: `1px solid ${themeColor}40`, background: '#F1F5F9', color: '#1B0088', padding: '6px 16px', borderRadius: 4, fontSize: 11, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, boxShadow: `inset 0 0 10px rgba(0,0,0,0.02)` }}>
+            CORE_STATUS: <span style={{ color: '#1B0088' }}>NUEVOS INGRESOS</span>
+            <motion.div 
+              animate={{ opacity: [0.4, 1, 0.4] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              style={{ width: 6, height: 6, borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 8px #22c55e' }} 
+            />
+          </div>
+          <div style={{ border: `1px solid ${themeColor}40`, background: '#F1F5F9', color: '#1B0088', padding: '6px 16px', borderRadius: 4, fontSize: 11, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, boxShadow: `inset 0 0 10px rgba(0,0,0,0.02)` }}>
+            PÁGINAS PUBLICADAS: <span style={{ color: '#1B0088' }}>{links ? links.length : 0}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -912,7 +887,7 @@ export const LaboratorioView = ({ links, rutaData, onBack, onNavigateRuta, title
     >
       {rutaData && rutaData.length > 0 && (
         <motion.div
-          whileHover={{ scale: 1.01 }}
+          whileHover={{ x: 10, background: '#2500A5' }}
           style={{ 
             position: 'relative', 
             overflow: 'hidden',
@@ -920,34 +895,28 @@ export const LaboratorioView = ({ links, rutaData, onBack, onNavigateRuta, title
             display: 'flex', 
             alignItems: 'center', 
             gap: 24,
-            padding: '20px 24px',
+            padding: '24px 32px',
             cursor: 'pointer',
             background: '#1B0088',
-            backdropFilter: 'blur(10px)',
-            WebkitBackdropFilter: 'blur(10px)',
-            border: `1px solid ${themeColor}40`,
-            boxShadow: `inset 0 0 20px ${themeColor}10`,
+            borderLeft: `6px solid ${themeColor}`,
+            borderRight: '1px solid rgba(255,255,255,0.1)',
+            borderTop: '1px solid rgba(255,255,255,0.1)',
+            borderBottom: '1px solid rgba(255,255,255,0.1)',
+            boxShadow: `0 20px 40px rgba(0,0,0,0.2)`,
+            borderRadius: '0 12px 12px 0',
             marginBottom: 32
           }} 
           onClick={onNavigateRuta}
         >
-          {/* Tactical Corners */}
-          <div style={{ position: 'absolute', top: 0, left: 0, width: 12, height: 12, borderTop: `3px solid ${themeColor}`, borderLeft: `3px solid ${themeColor}`, zIndex: 3 }} />
-          <div style={{ position: 'absolute', top: 0, right: 0, width: 12, height: 12, borderTop: `3px solid ${themeColor}`, borderRight: `3px solid ${themeColor}`, zIndex: 3 }} />
-          <div style={{ position: 'absolute', bottom: 0, left: 0, width: 12, height: 12, borderBottom: `3px solid ${themeColor}`, borderLeft: `3px solid ${themeColor}`, zIndex: 3 }} />
-          <div style={{ position: 'absolute', bottom: 0, right: 0, width: 12, height: 12, borderBottom: `3px solid ${themeColor}`, borderRight: `3px solid ${themeColor}`, zIndex: 3 }} />
-
           <div style={{
-            width: 80, height: 80,
-            background: 'rgba(0,0,0,0.5)',
-            borderRadius: '4px',
+            width: 84, height: 84,
+            background: 'rgba(255,255,255,0.05)',
+            borderRadius: '8px',
             position: 'relative',
-            border: `1px solid ${themeColor}40`,
+            border: `1px solid rgba(255,255,255,0.1)`,
             overflow: 'hidden',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             flexShrink: 0,
-            backgroundImage: `linear-gradient(${themeColor}10 1px, transparent 1px), linear-gradient(90deg, ${themeColor}10 1px, transparent 1px)`,
-            backgroundSize: '10px 10px'
           }}>
             {/* SCANNER LINE */}
             <motion.div 
@@ -965,36 +934,30 @@ export const LaboratorioView = ({ links, rutaData, onBack, onNavigateRuta, title
                 opacity: 0.8
               }}
             />
-            <motion.div 
-              animate={{ 
-                filter: [`drop-shadow(0 0 20px ${themeColor})`, `drop-shadow(0 0 10px ${themeColor})`],
-                rotate: [0, 5, -5, 0]
-              }}
-              transition={{ duration: 3, repeat: Infinity }}
-              style={{ color: themeColor, zIndex: 2 }}
-            >
-              <Rocket size={36} color="currentColor" strokeWidth={1.5} />
-            </motion.div>
+            <div style={{ color: themeColor, zIndex: 2 }}>
+              <Rocket size={40} color="currentColor" strokeWidth={1.5} />
+            </div>
           </div>
 
           <div style={{ flex: 1, zIndex: 2 }}>
-            <div style={{ fontSize: 10, color: themeColor, letterSpacing: '0.2em', fontWeight: 900, marginBottom: 4, textShadow: `0 0 8px ${themeColor}` }}>PROGRAMA FORMATIVO · CAPA LIDERAZGO</div>
-            <div style={{ fontSize: 22, fontWeight: 900, letterSpacing: '0.02em', color: '#ffffff', textTransform: 'uppercase', marginBottom: 8 }}>RUTA DEL LÍDER GUARDIÁN</div>
-            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', fontWeight: 500 }}>
+            <div style={{ fontSize: 10, color: themeColor, letterSpacing: '0.2em', fontWeight: 900, marginBottom: 6 }}>PROGRAMA FORMATIVO · CAPA LIDERAZGO</div>
+            <div style={{ fontSize: 24, fontWeight: 900, letterSpacing: '0.02em', color: '#ffffff', textTransform: 'uppercase', marginBottom: 6 }}>RUTA DEL LÍDER GUARDIÁN</div>
+            <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', fontWeight: 500 }}>
               {rutaData.length} Nodos · Mapa Visual Interactivo
             </div>
           </div>
 
           <div style={{
             position: 'relative',
-            padding: '10px 20px',
-            background: themeColor,
-            borderRadius: '4px',
-            color: '#ffffff',
+            padding: '12px 24px',
+            background: 'transparent',
+            border: `2px solid ${themeColor}`,
+            borderRadius: '6px',
+            color: themeColor,
             fontSize: 12,
             fontWeight: 900,
             zIndex: 2,
-            boxShadow: `0 0 15px ${themeColor}40`
+            letterSpacing: '1px'
           }}>
             ABRIR MAPA
           </div>
@@ -1009,9 +972,9 @@ export const SuministrosView = ({ links, onBack, title, subtitle }: any) => {
   const heroIcon = (
     <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <motion.div animate={{ y: [-5, 5, -5] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}>
-        <Package size={48} color={themeColor} strokeWidth={1.5} style={{ filter: `drop-shadow(0 0 12px ${themeColor})` }} />
+        <Box size={48} color={themeColor} strokeWidth={1.5} style={{ filter: `drop-shadow(0 0 12px ${themeColor})` }} />
       </motion.div>
-      <Box size={20} color="#ffffff" style={{ position: 'absolute', bottom: 10, right: 10, filter: 'drop-shadow(0 0 5px #ffffff)' }} />
+      <Package size={20} color="#ffffff" style={{ position: 'absolute', bottom: 10, right: 10, filter: 'drop-shadow(0 0 5px #ffffff)' }} />
     </div>
   );
 
@@ -1023,7 +986,7 @@ export const SuministrosView = ({ links, onBack, title, subtitle }: any) => {
       onBack={onBack}
       themeColor={themeColor}
       heroIcon={heroIcon}
-      listIcon={<Package size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
+      listIcon={<Box size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
       headerTitle="MANTENIMIENTO · PROTOCOLOS · SOPORTE"
       footerTitle="Formularios"
       description="Formularios de solicitud, inventario y recursos logísticos."
@@ -1035,10 +998,10 @@ export const OperacionesView = ({ links, onBack, title, subtitle }: any) => {
   const themeColor = '#FFE017';
   const heroIcon = (
     <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <motion.div animate={{ rotate: 360 }} transition={{ duration: 8, repeat: Infinity, ease: "linear" }}>
-        <Radar size={48} color={themeColor} strokeWidth={1.5} style={{ filter: `drop-shadow(0 0 12px ${themeColor})` }} />
+      <motion.div animate={{ y: [-5, 5, -5] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>
+        <GraduationCap size={48} color={themeColor} strokeWidth={1.5} style={{ filter: `drop-shadow(0 0 12px ${themeColor})` }} />
       </motion.div>
-      <Activity size={24} color="#ffffff" style={{ position: 'absolute', filter: 'drop-shadow(0 0 5px #ffffff)' }} />
+      <Activity size={20} color="#ffffff" style={{ position: 'absolute', bottom: 5, right: 5, filter: 'drop-shadow(0 0 5px #ffffff)' }} />
     </div>
   );
 
@@ -1050,7 +1013,7 @@ export const OperacionesView = ({ links, onBack, title, subtitle }: any) => {
       onBack={onBack}
       themeColor={themeColor}
       heroIcon={heroIcon}
-      listIcon={<Radar size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
+      listIcon={<GraduationCap size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
       headerTitle="MANTENIMIENTO · PROTOCOLOS · SOPORTE"
       footerTitle="Portal Instructor"
       description="Recursos de instrucción, monitoreo y operaciones de vuelo."
