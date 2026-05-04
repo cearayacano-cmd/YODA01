@@ -1078,11 +1078,8 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                     {/* Summary Block */}
                     <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 24, padding: 40, boxShadow: '0 10px 30px rgba(0,0,0,0.04)' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24 }}>
-                            <Zap size={20} color={planetColor} />
-                            <div style={{ fontWeight: 900, fontSize: 13, letterSpacing: '1.5px', color: '#0F004F' }}>RESUMEN DE PODER</div>
-                        </div>
-                        <div style={{ fontSize: 15, color: '#4D4D4D', lineHeight: 1.8, marginBottom: 30, fontWeight: 500 }}>
-                            Esta misión contempla el análisis y ejecución de protocolos específicos del sector. Cada nodo representa una etapa crítica en la capacitación del Guardián JETS.
+                            <Target size={20} color={planetColor} />
+                            <div style={{ fontWeight: 900, fontSize: 13, letterSpacing: '1.5px', color: '#0F004F' }}>RESUMEN DE MISIÓN</div>
                         </div>
                         
                         <div style={{ height: '1.5px', background: '#F1F5F9', marginBottom: 30 }} />
