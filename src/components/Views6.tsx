@@ -785,6 +785,7 @@ const secondsToTime = (secs: number) => {
 };
 
 const FscDetailedNodeCard = ({ node, index, planetColor, parentLabel }: any) => {
+    const isResolved = localStorage.getItem(`resolved_${node.tema}_${index}`) === 'true';
     const recs = Array.isArray(node.herramientas) ? node.herramientas : 
                  Array.isArray(node.ferramentas) ? node.ferramentas : 
                  (node.herramientas ? [node.herramientas] : 
@@ -794,27 +795,35 @@ const FscDetailedNodeCard = ({ node, index, planetColor, parentLabel }: any) => 
     return (
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.1 }}
+            animate={{ 
+                opacity: 1, 
+                y: 0,
+                backgroundColor: isResolved ? '#F8FCF0' : '#FFFFFF',
+                borderColor: isResolved ? '#99CC33' : '#E2E8F0'
+            }}
             style={{ 
                 background: '#FFFFFF', 
-                border: '1px solid #E2E8F0', 
-                borderRadius: 20, 
-                padding: '32px 40px',
-                display: 'grid', 
-                gridTemplateColumns: '50px 1fr 200px', 
-                gap: 40, 
-                alignItems: 'start',
-                position: 'relative', 
-                boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
-                marginBottom: 20
+                borderRadius: 24, 
+                padding: '30px 40px', 
+                marginBottom: 20, 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center',
+                border: `2px solid ${isResolved ? '#99CC33' : '#E2E8F0'}`,
+                boxShadow: isResolved ? '0 10px 30px rgba(153,204,51,0.05)' : '0 10px 40px rgba(0,0,0,0.02)',
+                position: 'relative',
+                overflow: 'hidden',
+                transition: 'all 0.4s ease'
             }}
         >
-            {/* Index Decal */}
-            <div style={{ fontSize: 42, fontWeight: 900, color: '#E2E8F0', lineHeight: 1, fontStyle: 'italic' }}>
-                {(index + 1).toString().padStart(2, '0')}
-            </div>
+            {isResolved && (
+                <div style={{ position: 'absolute', top: 0, left: 0, width: 6, height: '100%', background: '#99CC33' }} />
+            )}
+            
+            <div style={{ display: 'flex', gap: 30, alignItems: 'center', flex: 1 }}>
+                <div style={{ fontSize: 32, fontWeight: 900, color: isResolved ? '#99CC33' : 'rgba(27,0,136,0.05)', fontStyle: 'italic', minWidth: 60 }}>
+                    {String(index + 1).padStart(2, '0')}
+                </div>
 
             {/* Main Content */}
             <div>
@@ -1096,7 +1105,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                 })()}
                             </span>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 40 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
                             <span style={{ fontSize: 13, color: '#858585', fontWeight: 600 }}>Nodos Resueltos</span>
                             <span style={{ fontSize: 14, fontWeight: 900, color: '#99CC33' }}>
                                 {(() => {
@@ -1105,6 +1114,22 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                     return `${resolvedCount} / ${totalRows}`;
                                 })()}
                             </span>
+                        </div>
+
+                        {/* Visual Progress Bar */}
+                        <div style={{ height: 8, background: '#F1F5F9', borderRadius: 4, marginBottom: 40, overflow: 'hidden' }}>
+                            <motion.div 
+                                initial={{ width: 0 }}
+                                animate={{ 
+                                    width: `${(() => {
+                                        const totalRows = allSecciones.reduce((acc, s) => acc + (s.rows || []).length, 0);
+                                        const resolvedCount = allSecciones.reduce((acc, s) => acc + (s.rows || []).filter((r: any, i: number) => localStorage.getItem(`resolved_${r.tema}_${i}`) === 'true').length, 0);
+                                        return totalRows > 0 ? (resolvedCount / totalRows) * 100 : 0;
+                                    })()}%` 
+                                }}
+                                transition={{ type: 'spring', stiffness: 50, damping: 20 }}
+                                style={{ height: '100%', background: 'linear-gradient(90deg, #99CC33, #00D6CC)', borderRadius: 4 }}
+                            />
                         </div>
 
                         <button 
