@@ -825,8 +825,8 @@ const FscDetailedNodeCard = ({ node, index, planetColor, parentLabel }: any) => 
                     {String(index + 1).padStart(2, '0')}
                 </div>
 
-            {/* Main Content */}
-            <div>
+                {/* Main Content */}
+                <div style={{ flex: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 12 }}>
                     <div style={{ width: 8, height: 8, borderRadius: '50%', background: planetColor }} />
                     <div style={{ fontSize: 20, fontWeight: 900, color: '#1B0088', letterSpacing: '-0.01em' }}>{node.tema}</div>
@@ -868,6 +868,7 @@ const FscDetailedNodeCard = ({ node, index, planetColor, parentLabel }: any) => 
                         </div>
                     </div>
                 )}
+            </div>
             </div>
 
             {/* Actions */}
