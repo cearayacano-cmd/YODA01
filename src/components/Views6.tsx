@@ -784,7 +784,7 @@ const secondsToTime = (secs: number) => {
     return `${m}m ${s}s`;
 };
 
-const FscDetailedNodeCard = ({ node, index, planetColor }: any) => {
+const FscDetailedNodeCard = ({ node, index, planetColor, parentLabel }: any) => {
     const recs = Array.isArray(node.herramientas) ? node.herramientas : 
                  Array.isArray(node.ferramentas) ? node.ferramentas : 
                  (node.herramientas ? [node.herramientas] : 
@@ -845,8 +845,8 @@ const FscDetailedNodeCard = ({ node, index, planetColor }: any) => {
                     </div>
                 </div>
 
-                {/* Tactical Tip (If present) */}
-                {node.macroTema && (
+                {/* Tactical Tip (If present and not redundant) */}
+                {node.macroTema && node.macroTema.toLowerCase() !== (parentLabel || '').toLowerCase() && (
                     <div style={{ 
                         marginTop: 20, padding: '12px 16px', background: '#FFFFFF', 
                         border: '1px solid #E2E8F0',
@@ -1059,9 +1059,15 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                     <div style={{ fontSize: 14, color: '#1B0088', opacity: 0.7 }}>Sin nodos en esta sección.</div>
                                 </div>
                             ) : (
-                                (sec.rows || []).map((row: any, i: number) => (
-                                    <FscDetailedNodeCard key={`${sidx}-${i}`} node={row} index={i} planetColor={planetColor} />
-                                ))
+                                    (sec.rows || []).map((row: any, i: number) => (
+                                        <FscDetailedNodeCard 
+                                            key={`${sidx}-${i}`} 
+                                            node={row} 
+                                            index={i} 
+                                            planetColor={planetColor} 
+                                            parentLabel={sec.label}
+                                        />
+                                    ))
                             )}
                         </div>
                     ))}
