@@ -1085,11 +1085,14 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                         <div style={{ height: '1.5px', background: '#F1F5F9', marginBottom: 30 }} />
                         
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-                            <span style={{ fontSize: 13, color: '#858585', fontWeight: 600 }}>Carga Horaria</span>
+                            <span style={{ fontSize: 13, color: '#858585', fontWeight: 600 }}>Tiempo Restante</span>
                             <span style={{ fontSize: 14, fontWeight: 900, color: '#1B0088' }}>
                                 {(() => {
-                                    const total = allSecciones.reduce((acc, s) => acc + (s.rows || []).reduce((a: number, r: any) => a + timeToSeconds(r.tiempo || r.ch || ''), 0), 0);
-                                    return secondsToTime(total);
+                                    const remaining = allSecciones.reduce((acc, s) => acc + (s.rows || []).reduce((a: number, r: any, i: number) => {
+                                        const isResolved = localStorage.getItem(`resolved_${r.tema}_${i}`) === 'true';
+                                        return isResolved ? a : a + timeToSeconds(r.tiempo || r.ch || '');
+                                    }, 0), 0);
+                                    return secondsToTime(remaining);
                                 })()}
                             </span>
                         </div>
