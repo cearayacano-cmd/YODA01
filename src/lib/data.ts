@@ -109,7 +109,7 @@ export const ONBOARDING_DATA_DEFAULT = {
     },
     {
       tipo: 'imersao',
-      label: 'IMERSÃO',
+      label: 'Imersão Operacional Estratégica 1',
       rows: [
         {
           macroTema: "Imersão Operacional Estratégica 1",
