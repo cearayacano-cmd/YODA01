@@ -14,12 +14,11 @@ const TIPO_INFO: any = {
 
 const timeToSeconds = (timeStr: string) => {
   if (!timeStr) return 0;
-  // Handle HH:MM:SS or MM:SS or HHh MMm
   const clean = timeStr.replace(/[hm\s]/g, ':').replace(/:+/g, ':').replace(/:$/, '');
   const parts = clean.split(':').map(Number).filter(n => !isNaN(n));
   if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
   if (parts.length === 2) return parts[0] * 60 + parts[1];
-  if (parts.length === 1) return parts[0] * 60; // assume minutes if only one number
+  if (parts.length === 1) return parts[0] * 60;
   return 0;
 };
 
@@ -36,17 +35,10 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
   const [saved, setSaved] = useState(false);
 
   const data = Array.isArray(dataArray) ? dataArray : [];
-  
-  // Normalize current planet data
   const rawPlanetData = data[activePlanet];
   const planetObj = (rawPlanetData && !Array.isArray(rawPlanetData)) 
     ? rawPlanetData 
-    : { 
-        secciones: Array.isArray(rawPlanetData) ? rawPlanetData : [], 
-        materiais: [], 
-        evalKon: [], 
-        evalAec: []
-      };
+    : { secciones: Array.isArray(rawPlanetData) ? rawPlanetData : [], materiais: [], evalKon: [], evalAec: [] };
 
   const currentSections = planetObj.secciones || [];
 
@@ -64,9 +56,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
   const addSection = (tipo: string) => {
     const info = TIPO_INFO[tipo];
     const newSec = {
-      tipo,
-      label: info.label,
-      rows: [],
+      tipo, label: info.label, rows: [],
       dbOjtLabel: tipo === 'ojt' ? 'Diário de Bordo OJT · Grupo 01' : '',
       dbOjtUrl: tipo === 'ojt' ? '' : '',
       totalCh: tipo === 'ojt' ? '5:40:00' : '',
@@ -86,9 +76,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
     updateSections(next);
   };
 
-  const deleteSec = (idx: number) => {
-    updateSections(currentSections.filter((_, i) => i !== idx));
-  };
+  const deleteSec = (idx: number) => { updateSections(currentSections.filter((_, i) => i !== idx)); };
 
   const updateSecField = (idx: number, field: string, val: any) => {
     const next = [...currentSections];
@@ -96,9 +84,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
     updateSections(next);
   };
 
-  const updateGlobalField = (field: string, val: any) => {
-    updatePlanetData({ ...planetObj, [field]: val });
-  };
+  const updateGlobalField = (field: string, val: any) => { updatePlanetData({ ...planetObj, [field]: val }); };
 
   const addGlobalLink = (field: string) => {
     const prev = Array.isArray(planetObj[field]) ? planetObj[field] : [];
@@ -126,7 +112,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
 
   const addRow = (secIdx: number) => {
     const next = [...currentSections];
-    const rows = [...next[secIdx].rows, { macroTema: '', dia: '', tema: '', detalhe: '', consejo: '', herramientas: { tipo: 'PPT', url: '' }, iaPic: '', tiempo: '' }];
+    const rows = [...next[secIdx].rows, { macroTema: '', tema: '', detalhe: '', consejo: '', herramientas: [{ tipo: '🖼️ Slide', url: '' }], iaPic: '', tiempo: '' }];
     next[secIdx] = { ...next[secIdx], rows };
     updateSections(next);
   };
@@ -150,58 +136,21 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
   const saveFlash = () => { setSaved(true); setTimeout(() => setSaved(false), 2000); };
 
   const inp = (extra={}) => ({
-    background:'#ffffff', 
-    border:'1px solid #E2E8F0', 
-    padding:'10px 14px', 
-    fontFamily:'inherit', 
-    fontSize:13, 
-    color:'#1B0088', 
-    outline:'none', 
-    borderRadius:10, 
-    transition: 'all 0.2s ease',
-    ...extra
+    background:'#ffffff', border:'1px solid #E2E8F0', padding:'10px 14px', fontFamily:'inherit', fontSize:13, color:'#1B0088', outline:'none', borderRadius:10, transition: 'all 0.2s ease', ...extra
   });
 
   return (
     <div style={{ display: 'flex', height: '100vh', background: '#F8F7FF', fontFamily: '"Inter", sans-serif' }}>
-      {/* SIDEBAR CORPORATIVA */}
-      <div style={{ 
-        width: '280px', 
-        background: '#1B0088', 
-        borderRight: '1px solid rgba(255,255,255,0.05)', 
-        display: 'flex', 
-        flexDirection: 'column',
-        boxShadow: '10px 0 30px rgba(0,0,0,0.05)',
-        zIndex: 50
-      }}>
+      <div style={{ width: '280px', background: '#1B0088', borderRight: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', boxShadow: '10px 0 30px rgba(0,0,0,0.05)', zIndex: 50 }}>
         <div style={{ padding: '32px 24px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-          <button onClick={onBack} style={{ 
-            background: 'rgba(255,255,255,0.1)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.2)', padding: '12px 24px', 
-            borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, textTransform: 'uppercase',
-            display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s', width: '100%', justifyContent: 'center'
-          }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}>
-            <ArrowLeft size={16} /> VOLVER
-          </button>
+          <button onClick={onBack} style={{ background: 'rgba(255,255,255,0.1)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.2)', padding: '12px 24px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s', width: '100%', justifyContent: 'center' }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}><ArrowLeft size={16} /> VOLVER</button>
           <div style={{ marginTop: '32px', fontSize: '10px', fontWeight: 900, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.25em', paddingLeft: 8 }}>EXPEDICIÓN LUNAR</div>
         </div>
         <div style={{ flex: 1, overflowY: 'auto', padding: '20px 16px' }}>
           {planets.map((p: any, i: number) => {
             const isAct = activePlanet === i;
             return (
-                <motion.div 
-                    key={i} 
-                    whileHover={{ x: 6, background: 'rgba(255,255,255,0.05)' }}
-                    onClick={() => { setActivePlanet(i); setEditingSecIdx(null); }}
-                    style={{ 
-                        padding: '16px 20px', 
-                        marginBottom: '8px', 
-                        borderRadius: '12px', 
-                        cursor: 'pointer', 
-                        background: isAct ? 'rgba(153,204,51,0.15)' : 'transparent', 
-                        borderLeft: `4px solid ${isAct ? '#99CC33' : 'transparent'}`,
-                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
-                        color: isAct ? '#99CC33' : 'rgba(255,255,255,0.6)' 
-                    }}>
+                <motion.div key={i} whileHover={{ x: 6, background: 'rgba(255,255,255,0.05)' }} onClick={() => { setActivePlanet(i); setEditingSecIdx(null); }} style={{ padding: '16px 20px', marginBottom: '8px', borderRadius: '12px', cursor: 'pointer', background: isAct ? 'rgba(153,204,51,0.15)' : 'transparent', borderLeft: `4px solid ${isAct ? '#99CC33' : 'transparent'}`, transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', color: isAct ? '#99CC33' : 'rgba(255,255,255,0.6)' }}>
                     <div style={{ fontSize: '9px', fontWeight: 900, marginBottom: 4, color: isAct ? '#99CC33' : 'rgba(255,255,255,0.3)' }}>PLANETA {String(i+1).padStart(2,'0')}</div>
                     <div style={{ fontSize: '14px', fontWeight: 800, letterSpacing: '0.02em' }}>{p.label || `Sector ${i + 1}`}</div>
                 </motion.div>
@@ -210,78 +159,39 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
         </div>
       </div>
 
-      {/* MAIN AREA */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-        <div style={{ 
-          padding: '20px 48px', 
-          background: '#1B0088', 
-          borderBottom: '4px solid #99CC33', 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center',
-          boxShadow: '0 8px 32px rgba(27,0,136,0.15)',
-          zIndex: 40
-        }}>
+        <div style={{ padding: '20px 48px', background: '#1B0088', borderBottom: '4px solid #99CC33', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 8px 32px rgba(27,0,136,0.15)', zIndex: 40 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-            <div style={{ width: 44, height: 44, background: 'rgba(153,204,51,0.2)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#99CC33' }}>
-                <Satellite size={24} />
-            </div>
+            <div style={{ width: 44, height: 44, background: 'rgba(153,204,51,0.2)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#99CC33' }}><Satellite size={24} /></div>
             <div>
                 <div style={{ fontSize: 10, fontWeight: 900, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 2 }}>{title}</div>
                 <div style={{ fontSize: 20, fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em' }}>{planets[activePlanet]?.label}</div>
             </div>
           </div>
           <div style={{ display: 'flex', gap: '12px' }}>
-            {(isOnboarding ? ['mision1'] : ['mision1', 'landing', 'ojt', 'imersao']).map(t => {
+            {(isOnboarding ? ['mision1', 'imersao'] : ['mision1', 'landing', 'ojt', 'imersao']).map(t => {
                 const totalTypeTime = currentSections.filter((s:any) => s.tipo === t).reduce((acc:any, s:any) => acc + (s.rows||[]).reduce((a:any, r:any) => a + timeToSeconds(r.tiempo || r.ch || ''), 0), 0);
                 return (
-                <button key={t} onClick={() => addSection(t)} style={{ 
-                    background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', padding: '10px 20px', 
-                    borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, color: '#ffffff',
-                    display: 'flex', alignItems: 'center', gap: 8, transition: 'all 0.2s'
-                }} onMouseEnter={e => e.currentTarget.style.background = TIPO_INFO[t].accent} onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}>
-                    {TIPO_INFO[t].emoji} {TIPO_INFO[t].label} 
-                    {totalTypeTime > 0 && <span style={{ background: 'rgba(0,0,0,0.2)', padding: '2px 6px', borderRadius: 6, fontSize: 10 }}>{secondsToTime(totalTypeTime)}</span>}
-                </button>
+                <button key={t} onClick={() => addSection(t)} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', padding: '10px 20px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, color: '#ffffff', display: 'flex', alignItems: 'center', gap: 8, transition: 'all 0.2s' }} onMouseEnter={e => e.currentTarget.style.background = TIPO_INFO[t].accent} onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}>{TIPO_INFO[t].emoji} {TIPO_INFO[t].label} {totalTypeTime > 0 && <span style={{ background: 'rgba(0,0,0,0.2)', padding: '2px 6px', borderRadius: 6, fontSize: 10 }}>{secondsToTime(totalTypeTime)}</span>}</button>
             )})}
-            <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={saveFlash} 
-                style={{ background: saved ? '#00D6CC' : '#99CC33', border: 'none', padding: '10px 28px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, color: '#ffffff', marginLeft: 16, display: 'flex', alignItems: 'center', gap: 8, boxShadow: `0 8px 20px ${saved ? '#00D6CC' : '#99CC33'}40` }}>
-                {saved ? <CheckCircle2 size={18}/> : <Save size={18}/>} {saved ? 'GUARDADO' : 'GUARDAR'}
-            </motion.button>
+            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={saveFlash} style={{ background: saved ? '#00D6CC' : '#99CC33', border: 'none', padding: '10px 28px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, color: '#ffffff', marginLeft: 16, display: 'flex', alignItems: 'center', gap: 8, boxShadow: `0 8px 20px ${saved ? '#00D6CC' : '#99CC33'}40` }}>{saved ? <CheckCircle2 size={18}/> : <Save size={18}/>} {saved ? 'GUARDADO' : 'GUARDAR'}</motion.button>
           </div>
         </div>
 
         <div style={{ flex: 1, overflowY: 'auto', padding: '48px 64px' }}>
-          {/* SECCIÓN DE RECURSOS GLOBALES (NUEVO) */}
           {!isOnboarding && (
-            <div style={{ 
-                background: '#ffffff', 
-              borderRadius: '24px', 
-              padding: '32px', 
-              marginBottom: '48px', 
-              border: '1px solid rgba(27,0,136,0.1)',
-              boxShadow: '0 10px 40px rgba(0,0,0,0.02)'
-          }}>
+            <div style={{ background: '#ffffff', borderRadius: '24px', padding: '32px', marginBottom: '48px', border: '1px solid rgba(27,0,136,0.1)', boxShadow: '0 10px 40px rgba(0,0,0,0.02)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32, borderBottom: '1px solid #f1f5f9', paddingBottom: 20 }}>
-                  <div style={{ background: 'rgba(27,0,136,0.05)', padding: 12, borderRadius: 12 }}>
-                      <Globe size={24} color="#1B0088" />
-                  </div>
+                  <div style={{ background: 'rgba(27,0,136,0.05)', padding: 12, borderRadius: 12 }}><Globe size={24} color="#1B0088" /></div>
                   <div>
                       <div style={{ fontSize: 10, fontWeight: 900, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.15em' }}>CONFIGURACIÓN SECTORIAL</div>
                       <div style={{ fontSize: 18, fontWeight: 900, color: '#1B0088' }}>Recursos Globales del Planeta</div>
                   </div>
               </div>
-
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
-                  {/* COLUMNA 1: MATERIAIS */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                          <div style={{ fontSize: 11, fontWeight: 900, color: '#1B0088', display: 'flex', alignItems: 'center', gap: 8 }}>
-                              <FileText size={16} /> 📚 MATERIAIS
-                          </div>
+                          <div style={{ fontSize: 11, fontWeight: 900, color: '#1B0088', display: 'flex', alignItems: 'center', gap: 8 }}><FileText size={16} /> 📚 MATERIAIS</div>
                           <button onClick={() => addGlobalLink('materiais')} style={{ background: '#1B0088', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: 6, fontSize: 10, fontWeight: 800, cursor: 'pointer' }}>+ AÑADIR</button>
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -292,18 +202,12 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                   <button onClick={() => removeGlobalLink('materiais', i)} style={{ background: '#fee2e2', border: 'none', padding: '0 10px', borderRadius: 8, color: '#ef4444', cursor: 'pointer' }}><Trash2 size={14}/></button>
                               </div>
                           ))}
-                          {(planetObj.materiais || []).length === 0 && <div style={{ fontSize: 11, color: '#94a3b8', fontStyle: 'italic', padding: '10px', background: '#f8fafc', borderRadius: 10, textAlign: 'center' }}>No hay materiales configurados</div>}
                       </div>
                   </div>
-
-                  {/* COLUMNA 2: AVALIAÇÕES (KON / AEC) */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-                      {/* KON BR */}
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                              <div style={{ fontSize: 11, fontWeight: 900, color: '#99CC33', display: 'flex', alignItems: 'center', gap: 8 }}>
-                                  <Shield size={16} /> 🛡️ AVALIAÇÕES: KON BR
-                              </div>
+                              <div style={{ fontSize: 11, fontWeight: 900, color: '#99CC33', display: 'flex', alignItems: 'center', gap: 8 }}><Shield size={16} /> 🛡️ AVALIAÇÕES: KON BR</div>
                               <button onClick={() => addGlobalLink('evalKon')} style={{ background: '#99CC33', color: '#fff', border: 'none', padding: '4px 10px', borderRadius: 6, fontSize: 9, fontWeight: 800, cursor: 'pointer' }}>+ LINK</button>
                           </div>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -316,13 +220,9 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                               ))}
                           </div>
                       </div>
-
-                      {/* AeC */}
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                              <div style={{ fontSize: 11, fontWeight: 900, color: '#00D6CC', display: 'flex', alignItems: 'center', gap: 8 }}>
-                                  <Zap size={16} /> 💎 AVALIAÇÕES: AeC
-                              </div>
+                              <div style={{ fontSize: 11, fontWeight: 900, color: '#00D6CC', display: 'flex', alignItems: 'center', gap: 8 }}><Zap size={16} /> 💎 AVALIAÇÕES: AeC</div>
                               <button onClick={() => addGlobalLink('evalAec')} style={{ background: '#00D6CC', color: '#fff', border: 'none', padding: '4px 10px', borderRadius: 6, fontSize: 9, fontWeight: 800, cursor: 'pointer' }}>+ LINK</button>
                           </div>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -337,7 +237,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                       </div>
                   </div>
               </div>
-          </div>
+            </div>
           )}
 
           {currentSections.length === 0 ? (
@@ -351,32 +251,16 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
           ) : currentSections.map((sec: any, si: number) => {
             const secInfo = TIPO_INFO[sec.tipo] || TIPO_INFO['mision1'];
             return (
-              <motion.div 
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: si * 0.1 }}
-                  key={si} 
-                  style={{ background: '#ffffff', borderRadius: '24px', padding: '32px', marginBottom: '32px', boxShadow: '0 10px 40px rgba(0,0,0,0.02)', border: '1px solid rgba(27,0,136,0.1)' }}
-              >
+              <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: si * 0.1 }} key={si} style={{ background: '#ffffff', borderRadius: '24px', padding: '32px', marginBottom: '32px', boxShadow: '0 10px 40px rgba(0,0,0,0.02)', border: '1px solid rgba(27,0,136,0.1)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '24px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 12, background: secInfo.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>
-                    {secInfo.emoji}
-                  </div>
+                  <div style={{ width: 44, height: 44, borderRadius: 12, background: secInfo.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>{secInfo.emoji}</div>
                   <div>
-                    <input 
-                        value={sec.label} 
-                        onChange={e => updateSecField(si, 'label', e.target.value)} 
-                        style={{ background: 'transparent', border: 'none', fontSize: '20px', fontWeight: 900, color: '#1B0088', outline: 'none', padding: '4px 8px', letterSpacing: '-0.02em', borderBottom: '2px solid transparent' }} 
-                        onFocus={e => e.target.style.borderBottom = `2px solid ${secInfo.accent}`}
-                        onBlur={e => e.target.style.borderBottom = 'none'}
-                    />
+                    <input value={sec.label} onChange={e => updateSecField(si, 'label', e.target.value)} style={{ background: 'transparent', border: 'none', fontSize: '20px', fontWeight: 900, color: '#1B0088', outline: 'none', padding: '4px 8px', letterSpacing: '-0.02em', borderBottom: '2px solid transparent' }} onFocus={e => e.target.style.borderBottom = `2px solid ${secInfo.accent}`} onBlur={e => e.target.style.borderBottom = 'none'} />
                     <div style={{ fontSize: '11px', color: '#64748b', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', paddingLeft: 8, display: 'flex', alignItems: 'center' }}>
                         <span>{(sec.rows||[]).length} NODOS CONFIGURADOS</span>
                         <span style={{ margin: '0 8px', color: '#cbd5e1' }}>•</span>
-                        <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#1B0088' }}>
-                            ⏱ TIEMPO TOTAL: {secondsToTime((sec.rows||[]).reduce((a:any, r:any) => a + timeToSeconds(r.tiempo || r.ch || ''), 0))}
-                        </span>
+                        <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#1B0088' }}>⏱ TIEMPO TOTAL: {secondsToTime((sec.rows||[]).reduce((a:any, r:any) => a + timeToSeconds(r.tiempo || r.ch || ''), 0))}</span>
                     </div>
                   </div>
                 </div>
@@ -391,14 +275,8 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                 </div>
               </div>
 
-          <div style={{ padding: '40px' }}>
-              <div style={{ 
-                background: '#ffffff', 
-                borderRadius: '16px', 
-                padding: '40px',
-                border: '1px solid #E2E8F0',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.05)'
-              }}>
+              <div style={{ padding: '40px' }}>
+                  <div style={{ background: '#ffffff', borderRadius: '16px', padding: '40px', border: '1px solid #E2E8F0', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
                         {(() => {
                           const groupedRows: { [key: string]: any[] } = {};
                           sec.rows.forEach((row: any, idx: number) => {
@@ -409,45 +287,20 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
 
                           return Object.entries(groupedRows).map(([mt, rows], gi) => {
                             const totalSecs = rows.reduce((acc, r) => acc + timeToSeconds(r.tiempo || r.ch || ''), 0);
-                            let runningAcc = 0;
-                            // Need to find the global running acc up to the start of this group
                             let previousSecs = 0;
                             for (let i = 0; i < sec.rows.indexOf(rows[0]); i++) {
                                 previousSecs += timeToSeconds(sec.rows[i].tiempo || sec.rows[i].ch || '');
                             }
-                            runningAcc = previousSecs;
 
                             return (
                               <div key={mt} style={{ marginBottom: '48px' }}>
-                                {/* MACROTEMA HEADER (CLASSIC STYLE) */}
-                                <div style={{ 
-                                  display: 'flex', 
-                                  alignItems: 'center', 
-                                  justifyContent: 'space-between',
-                                  background: '#f8fafc',
-                                  border: '2px solid #1B0088',
-                                  padding: '12px 24px',
-                                  borderRadius: '8px',
-                                  marginBottom: '16px'
-                                }}>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f8fafc', border: '2px solid #1B0088', padding: '12px 24px', borderRadius: '8px', marginBottom: '16px' }}>
                                   <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                                     <span style={{ fontSize: '11px', fontWeight: 900, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '0.1em' }}>MACROTEMA:</span>
-                                    <input 
-                                      value={mt === 'SIN MACROTEMA' ? '' : mt}
-                                      onChange={e => {
-                                        const newVal = e.target.value;
-                                        rows.forEach(r => updateRow(si, r.originalIndex, 'macroTema', newVal));
-                                      }}
-                                      style={{ background: 'transparent', border: 'none', color: '#1B0088', fontSize: '16px', fontWeight: 900, outline: 'none', width: '400px' }}
-                                      placeholder="DEFINA MACRO TEMA..."
-                                    />
+                                    <input value={mt === 'SIN MACROTEMA' ? '' : mt} onChange={e => { const newVal = e.target.value; rows.forEach(r => updateRow(si, r.originalIndex, 'macroTema', newVal)); }} style={{ background: 'transparent', border: 'none', color: '#1B0088', fontSize: '16px', fontWeight: 900, outline: 'none', width: '400px' }} placeholder="DEFINA MACRO TEMA..." />
                                   </div>
-                                  <div style={{ background: '#1B0088', color: '#fff', padding: '6px 14px', borderRadius: '20px', fontSize: '11px', fontWeight: 900 }}>
-                                    ⏱ TOTAL BLOQUE: {secondsToTime(totalSecs)}
-                                  </div>
+                                  <div style={{ background: '#1B0088', color: '#fff', padding: '6px 14px', borderRadius: '20px', fontSize: '11px', fontWeight: 900 }}>⏱ TOTAL BLOQUE: {secondsToTime(totalSecs)}</div>
                                 </div>
-
-                                {/* DATA TABLE */}
                                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                   <thead>
                                     <tr style={{ background: '#f1f5f9' }}>
@@ -462,56 +315,25 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                   </thead>
                                   <tbody>
                                     {rows.map((row: any, ri: number) => {
-                                      runningAcc += timeToSeconds(row.tiempo || row.ch || '');
                                       const oi = row.originalIndex;
                                       return (
                                         <tr key={oi} style={{ background: ri % 2 === 0 ? '#fff' : '#fafafa' }}>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
-                                            <input value={row.tema} onChange={e => updateRow(si, oi, 'tema', e.target.value)} placeholder="Título..." style={{ background: 'transparent', border: 'none', color: '#111', fontSize: '13px', fontWeight: 700, width: '100%', outline: 'none' }} />
-                                          </td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
-                                            <textarea value={row.detalhe} onChange={e => updateRow(si, oi, 'detalhe', e.target.value)} placeholder="Detalle..." style={{ background: 'transparent', border: 'none', color: '#64748b', fontSize: '11px', width: '100%', outline: 'none', resize: 'none', height: '60px' }} />
-                                          </td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><input value={row.tema} onChange={e => updateRow(si, oi, 'tema', e.target.value)} placeholder="Título..." style={{ background: 'transparent', border: 'none', color: '#111', fontSize: '13px', fontWeight: 700, width: '100%', outline: 'none' }} /></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.detalhe} onChange={e => updateRow(si, oi, 'detalhe', e.target.value)} placeholder="Detalle..." style={{ background: 'transparent', border: 'none', color: '#64748b', fontSize: '11px', width: '100%', outline: 'none', resize: 'none', height: '60px' }} /></td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
                                             {(Array.isArray(row.herramientas) ? row.herramientas : row.herramientas ? [row.herramientas] : []).map((h: any, hi: number) => (
                                               <div key={hi} style={{ marginBottom: 8, paddingBottom: 8, borderBottom: '1px dashed #e2e8f0', position: 'relative' }}>
-                                                <select value={h.tipo || 'PPT'} onChange={e => {
-                                                  const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : [row.herramientas || {}];
-                                                  newH[hi] = { ...newH[hi], tipo: e.target.value };
-                                                  updateRow(si, oi, 'herramientas', newH);
-                                                }} style={{ background: '#fff', border: '1px solid #ccc', fontSize: '10px', padding: '2px', width: '100%', marginBottom: 4 }}>
-                                                  {['🖼️ Slide','📄 Docs','📊 Sheets','📕 PDF','🎬 Video','📝 Form','📋 Form AeC','📋 Form Kon BR','➖ NA','🌟 Genially','🎮 Educaplay','✈️ Latam.com','▶️ Youtube','🔗 Link','🎯 Actividad','🖥️ Painel','🔄 Fluxo','🌐 Plataforma','🗂️ PIC','📂 CDA','⏱️ WTD'].map(t => <option key={t} value={t}>{t}</option>)}
-                                                </select>
-                                                <input value={h.url || ''} onChange={e => {
-                                                  const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : [row.herramientas || {}];
-                                                  newH[hi] = { ...newH[hi], url: e.target.value };
-                                                  updateRow(si, oi, 'herramientas', newH);
-                                                }} placeholder="URL" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid #eee', color: '#1a56db', fontSize: '9px', width: '100%' }} />
-                                                <button onClick={() => {
-                                                  const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : [row.herramientas || {}];
-                                                  newH.splice(hi, 1);
-                                                  updateRow(si, oi, 'herramientas', newH);
-                                                }} style={{ position: 'absolute', top: 2, right: -4, background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '10px' }}>x</button>
+                                                <select value={h.tipo || 'PPT'} onChange={e => { const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : [row.herramientas || {}]; newH[hi] = { ...newH[hi], tipo: e.target.value }; updateRow(si, oi, 'herramientas', newH); }} style={{ background: '#fff', border: '1px solid #ccc', fontSize: '10px', padding: '2px', width: '100%', marginBottom: 4 }}>{['🖼️ Slide','📄 Docs','📊 Sheets','📕 PDF','🎬 Video','📝 Form','📋 Form AeC','📋 Form Kon BR','➖ NA','🌟 Genially','🎮 Educaplay','✈️ Latam.com','▶️ Youtube','🔗 Link','🎯 Actividad','🖥️ Painel','🔄 Fluxo','🌐 Plataforma','🗂️ PIC','📂 CDA','⏱️ WTD'].map(t => <option key={t} value={t}>{t}</option>)}</select>
+                                                <input value={h.url || ''} onChange={e => { const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : [row.herramientas || {}]; newH[hi] = { ...newH[hi], url: e.target.value }; updateRow(si, oi, 'herramientas', newH); }} placeholder="URL" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid #eee', color: '#1a56db', fontSize: '9px', width: '100%' }} />
+                                                <button onClick={() => { const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : [row.herramientas || {}]; newH.splice(hi, 1); updateRow(si, oi, 'herramientas', newH); }} style={{ position: 'absolute', top: 2, right: -4, background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '10px' }}>x</button>
                                               </div>
                                             ))}
-                                            <button onClick={() => {
-                                              const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : (row.herramientas ? [row.herramientas] : []);
-                                              newH.push({ tipo: 'PPT', url: '' });
-                                              updateRow(si, oi, 'herramientas', newH);
-                                            }} style={{ background: '#f1f5f9', border: '1px dashed #cbd5e1', width: '100%', padding: '4px', fontSize: '9px', cursor: 'pointer', borderRadius: 4, color: '#64748b' }}>+ AÑADIR RECURSO</button>
+                                            <button onClick={() => { const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : (row.herramientas ? [row.herramientas] : []); newH.push({ tipo: 'PPT', url: '' }); updateRow(si, oi, 'herramientas', newH); }} style={{ background: '#f1f5f9', border: '1px dashed #cbd5e1', width: '100%', padding: '4px', fontSize: '9px', cursor: 'pointer', borderRadius: 4, color: '#64748b' }}>+ AÑADIR RECURSO</button>
                                           </td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
-                                            <textarea value={row.consejo} onChange={e => updateRow(si, oi, 'consejo', e.target.value)} placeholder="Consejo..." style={{ background: 'transparent', border: 'none', fontSize: '10px', color: '#333', width: '100%', resize: 'none', height: '60px' }} />
-                                          </td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}>
-                                            {/* IA Placeholder */}
-                                          </td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}>
-                                            <input value={row.tiempo || row.ch} onChange={e => updateRow(si, oi, 'tiempo', e.target.value)} style={{ background: 'transparent', border: 'none', color: '#111', fontSize: '12px', fontWeight: 800, textAlign: 'center', width: '100%' }} />
-                                          </td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}>
-                                            <button onClick={() => deleteRow(si, oi)} style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', opacity: 0.5 }} onMouseEnter={e=>e.currentTarget.style.opacity='1'} onMouseLeave={e=>e.currentTarget.style.opacity='0.5'}><Trash2 size={14}/></button>
-                                          </td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.consejo} onChange={e => updateRow(si, oi, 'consejo', e.target.value)} placeholder="Consejo..." style={{ background: 'transparent', border: 'none', fontSize: '10px', color: '#333', width: '100%', resize: 'none', height: '60px' }} /></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}><input value={row.tiempo || row.ch} onChange={e => updateRow(si, oi, 'tiempo', e.target.value)} style={{ background: 'transparent', border: 'none', color: '#111', fontSize: '12px', fontWeight: 800, textAlign: 'center', width: '100%' }} /></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}><button onClick={() => deleteRow(si, oi)} style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', opacity: 0.5 }} onMouseEnter={e=>e.currentTarget.style.opacity='1'} onMouseLeave={e=>e.currentTarget.style.opacity='0.5'}><Trash2 size={14}/></button></td>
                                         </tr>
                                       );
                                     })}
@@ -521,20 +343,12 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                             );
                           });
                         })()}
+                  </div>
               </div>
-          </div>
-
 
               {sec.tipo === 'ojt' && editingSecIdx === si && (
-                <motion.div 
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    style={{ marginTop: '32px', padding: '32px', background: '#fff', borderRadius: '24px', border: '1px solid rgba(0,214,204,0.15)', boxShadow: '0 20px 60px rgba(0,0,0,0.05)' }}
-                >
-                  <div style={{ fontSize: '14px', fontWeight: 900, marginBottom: '32px', display: 'flex', alignItems: 'center', gap: 12, color: '#00D6CC', letterSpacing: '0.1em' }}>
-                    <AlertTriangle size={24}/> PARÁMETROS OPERATIVOS OJT <span style={{ fontWeight: 700, fontSize: '11px', color: '#64748b', letterSpacing: 0, textTransform: 'uppercase' }}>· Configuración Avanzada</span>
-                  </div>
-                  
+                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} style={{ marginTop: '32px', padding: '32px', background: '#fff', borderRadius: '24px', border: '1px solid rgba(0,214,204,0.15)', boxShadow: '0 20px 60px rgba(0,0,0,0.05)' }}>
+                  <div style={{ fontSize: '14px', fontWeight: 900, marginBottom: '32px', display: 'flex', alignItems: 'center', gap: 12, color: '#00D6CC', letterSpacing: '0.1em' }}><AlertTriangle size={24}/> PARÁMETROS OPERATIVOS OJT <span style={{ fontWeight: 700, fontSize: '11px', color: '#64748b', letterSpacing: 0, textTransform: 'uppercase' }}>· Configuración Avanzada</span></div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', marginBottom: '32px', borderBottom: '1px solid #E2E8F0', paddingBottom: '32px' }}>
                     <div style={{ background: '#F8FAFC', padding: 24, borderRadius: 20, border: '1px solid #E2E8F0' }}>
                       <div style={{ fontSize: '11px', fontWeight: 900, marginBottom: 20, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 8 }}><Monitor size={16}/> DIARIO DE BORDO OJT</div>
@@ -544,10 +358,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                       </div>
                       <div>
                         <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Enlace de Destino (URL)</label>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: '#fff', border: '1px solid #E2E8F0', borderRadius: 10, padding: '0 16px' }}>
-                            <LinkIcon size={16} color="#1B0088" />
-                            <input value={sec.dbOjtUrl} onChange={e => updateSecField(si, 'dbOjtUrl', e.target.value)} placeholder="https://docs.google.com/..." style={{ border: 'none', background: 'transparent', padding: '14px 0', outline: 'none', color: '#1a56db', fontWeight: 700, width: '100%', fontSize: 13 }} />
-                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: '#fff', border: '1px solid #E2E8F0', borderRadius: 10, padding: '0 16px' }}><LinkIcon size={16} color="#1B0088" /><input value={sec.dbOjtUrl} onChange={e => updateSecField(si, 'dbOjtUrl', e.target.value)} placeholder="https://docs.google.com/..." style={{ border: 'none', background: 'transparent', padding: '14px 0', outline: 'none', color: '#1a56db', fontWeight: 700, width: '100%', fontSize: 13 }} /></div>
                       </div>
                     </div>
                     <div style={{ background: '#F8FAFC', padding: 24, borderRadius: 20, border: '1px solid #E2E8F0', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -556,7 +367,6 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                       <div style={{ fontSize: 13, color: '#94a3b8', marginTop: 16 }}>Formato: <span style={{ fontWeight: 800 }}>HH:MM:SS</span></div>
                     </div>
                   </div>
-
                   <div>
                     <div style={{ fontSize: '11px', fontWeight: 900, marginBottom: '24px', color: '#00D6CC', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 10 }}><Briefcase size={18}/> AJUSTE DE RUTA PARA REPROVADOS</div>
                     <div style={{ marginBottom: '24px' }}>
@@ -564,22 +374,9 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                       <textarea value={sec.ajusteRota} onChange={e => updateSecField(si, 'ajusteRota', e.target.value)} placeholder="Protocolo de refuerzo para estudiantes..." style={{ ...inp({ minHeight: 80, lineHeight: 1.6 }), width: '100%', resize: 'vertical' }} />
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '24px' }}>
-                      <div>
-                        <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Forms KON (URL)</label>
-                        <input value={sec.ajusteRotaUrlKon} onChange={e => updateSecField(si, 'ajusteRotaUrlKon', e.target.value)} placeholder="https://..." style={{ ...inp({ fontSize: 12, color: '#1a56db' }), width: '100%' }} />
-                      </div>
-                      <div>
-                        <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Forms AeC (URL)</label>
-                        <input value={sec.ajusteRotaUrlAec} onChange={e => updateSecField(si, 'ajusteRotaUrlAec', e.target.value)} placeholder="https://..." style={{ ...inp({ fontSize: 12, color: '#1a56db' }), width: '100%' }} />
-                      </div>
-                      <div>
-                        <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Carga Horaria de Ajuste</label>
-                        <input value={sec.ajusteRotaCh} onChange={e => updateSecField(si, 'ajusteRotaCh', e.target.value)} placeholder="0:30:00" style={{ ...inp({ fontWeight: 900, textAlign: 'center' }), width: '100%' }} />
-                      </div>
-                    </div>
-                    <div style={{ marginTop: '24px', padding: '16px 20px', borderRadius: 16, background: 'rgba(0,214,204,0.05)', display: 'flex', alignItems: 'center', gap: 12, border: '1px solid rgba(0,214,204,0.1)' }}>
-                      <AlertTriangle size={18} color="#00D6CC" />
-                      <div style={{ fontSize: '12px', color: '#64748b', fontWeight: 600 }}>💡 El nodo "AJUSTE" aparecerá en la aplicación si se completa al menos uno de los enlaces o la descripción.</div>
+                      <div><label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Forms KON (URL)</label><input value={sec.ajusteRotaUrlKon} onChange={e => updateSecField(si, 'ajusteRotaUrlKon', e.target.value)} placeholder="https://..." style={{ ...inp({ fontSize: 12, color: '#1a56db' }), width: '100%' }} /></div>
+                      <div><label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Forms AeC (URL)</label><input value={sec.ajusteRotaUrlAec} onChange={e => updateSecField(si, 'ajusteRotaUrlAec', e.target.value)} placeholder="https://..." style={{ ...inp({ fontSize: 12, color: '#1a56db' }), width: '100%' }} /></div>
+                      <div><label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Carga Horaria de Ajuste</label><input value={sec.ajusteRotaCh} onChange={e => updateSecField(si, 'ajusteRotaCh', e.target.value)} placeholder="0:30:00" style={{ ...inp({ fontWeight: 900, textAlign: 'center' }), width: '100%' }} /></div>
                     </div>
                   </div>
                 </motion.div>

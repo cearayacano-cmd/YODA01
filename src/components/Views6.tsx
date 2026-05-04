@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronRight, ArrowLeft, ExternalLink, Clock, Target, Rocket, 
   Anchor, Activity, Cpu, Shield, Globe, Zap, Radio, Terminal, Map as MapIcon,
-  Navigation, Hexagon, Crosshair, Lightbulb, BadgeCheck, FileText, Satellite, Gem, CheckCircle2
+  Navigation, Hexagon, Crosshair, Lightbulb, BadgeCheck, FileText, Satellite, Gem, CheckCircle2, Check
 } from 'lucide-react';
 import { TacticalSatelliteIcon } from './Shared';
 
@@ -330,7 +330,8 @@ const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', d
 };
 
 const FscFerrCell = ({ f, planetColor }: any) => {
-  const ferr = (f && typeof f==='object') ? f : {tipo:f||'',url:''};
+  const recs = Array.isArray(f) ? f : (f ? [f] : []);
+  const ferr = recs[0] || {tipo:'', url:''};
   const icon = FERR_ICONS[ferr.tipo] || <Activity size={14} />;
   
   if(!ferr.tipo && !ferr.url) return null;
@@ -422,7 +423,7 @@ const ContentNode = ({ row, type, planetColor, index }: any) => (
 
         {/* Action Column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            <FscFerrCell f={row.ferramentas} planetColor={planetColor} />
+            <FscFerrCell f={row.herramientas || row.ferramentas} planetColor={planetColor} />
             
             {row.iaPic && (
                 <motion.a 
@@ -765,7 +766,31 @@ export const ClassicMissionBlock = ({ seccion, planetColor, onBackToMap, titleOv
 };
 
 
+const timeToSeconds = (timeStr: string) => {
+    if (!timeStr) return 0;
+    const clean = timeStr.replace(/[hm\s]/g, ':').replace(/:+/g, ':').replace(/:$/, '');
+    const parts = clean.split(':').map(Number).filter(n => !isNaN(n));
+    if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    if (parts.length === 2) return parts[0] * 60 + parts[1];
+    if (parts.length === 1) return parts[0] * 60;
+    return 0;
+};
+
+const secondsToTime = (secs: number) => {
+    const h = Math.floor(secs / 3600);
+    const m = Math.floor((secs % 3600) / 60);
+    const s = secs % 60;
+    if (h > 0) return `${h}h ${m}m ${s}s`;
+    return `${m}m ${s}s`;
+};
+
 const FscDetailedNodeCard = ({ node, index, planetColor }: any) => {
+    const recs = Array.isArray(node.herramientas) ? node.herramientas : 
+                 Array.isArray(node.ferramentas) ? node.ferramentas : 
+                 (node.herramientas ? [node.herramientas] : 
+                 (node.ferramentas ? [node.ferramentas] : []));
+    const firstRec = recs[0] || null;
+
     return (
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -803,23 +828,33 @@ const FscDetailedNodeCard = ({ node, index, planetColor }: any) => {
                 
                 {/* Context Stats */}
                 <div style={{ display: 'flex', gap: 15, marginTop: 20 }}>
-                    <div style={{ padding: '6px 12px', background: '#F1F5F9', borderRadius: 6, fontSize: 9, fontWeight: 900, color: '#64748B', display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <Clock size={12} /> DÍA {node.dia || '-'}
-                    </div>
-                    <div style={{ padding: '6px 12px', background: `${planetColor}15`, borderRadius: 6, fontSize: 9, fontWeight: 900, color: planetColor, display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <Activity size={12} /> {node.ch || node.tiempo || '-'}
+                    <div style={{ 
+                        padding: '10px 18px', 
+                        background: '#FFFFFF', 
+                        borderRadius: 12, 
+                        fontSize: 11, 
+                        fontWeight: 900, 
+                        color: '#1B0088', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: 10,
+                        border: `1px solid #E2E8F0`,
+                        boxShadow: `0 4px 15px rgba(0,0,0,0.05)`
+                    }}>
+                        <Clock size={16} /> <span style={{ letterSpacing: '1px' }}>DURACIÓN:</span> {node.ch || node.tiempo || '-'}
                     </div>
                 </div>
 
                 {/* Tactical Tip (If present) */}
                 {node.macroTema && (
                     <div style={{ 
-                        marginTop: 20, padding: '12px 16px', background: '#FFFBEB', border: '1px solid #FDE68A', 
+                        marginTop: 20, padding: '12px 16px', background: '#FFFFFF', 
+                        border: '1px solid #E2E8F0',
                         borderRadius: 10, display: 'flex', gap: 12, alignItems: 'center'
                     }}>
-                        <Lightbulb size={14} color="#B45309" />
-                        <div style={{ fontSize: 12, color: '#78350F', fontWeight: 600 }}>
-                            <span style={{ fontWeight: 800, textTransform: 'uppercase', fontSize: 9, color: '#B45309', marginRight: 8 }}>Categoría:</span>
+                        <Lightbulb size={14} color="#1B0088" />
+                        <div style={{ fontSize: 12, color: '#1B0088', fontWeight: 600 }}>
+                            <span style={{ fontWeight: 800, textTransform: 'uppercase', fontSize: 9, color: 'rgba(27,0,136,0.5)', marginRight: 8 }}>Macro TEMA:</span>
                             {node.macroTema}
                         </div>
                     </div>
@@ -828,33 +863,95 @@ const FscDetailedNodeCard = ({ node, index, planetColor }: any) => {
 
             {/* Actions */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {node.ferramentas && node.ferramentas.url ? (
+                {/* Square Checkbox Resolution Button */}
+                <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => {
+                        const key = `resolved_${node.tema}_${index}`;
+                        const isDone = localStorage.getItem(key) === 'true';
+                        localStorage.setItem(key, isDone ? 'false' : 'true');
+                        if (typeof window !== 'undefined' && (window as any).refreshOnboarding) {
+                            (window as any).refreshOnboarding();
+                        } else {
+                            window.location.reload();
+                        }
+                    }}
+                    style={{
+                        width: 36,
+                        height: 36,
+                        background: localStorage.getItem(`resolved_${node.tema}_${index}`) === 'true' ? '#99CC33' : '#FFFFFF',
+                        color: localStorage.getItem(`resolved_${node.tema}_${index}`) === 'true' ? '#fff' : '#1B0088',
+                        border: `2px solid ${localStorage.getItem(`resolved_${node.tema}_${index}`) === 'true' ? '#99CC33' : '#E2E8F0'}`,
+                        borderRadius: 6,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        alignSelf: 'flex-end',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                        transition: 'all 0.2s ease'
+                    }}
+                >
+                    <Check size={22} strokeWidth={3} />
+                </motion.div>
+
+                {firstRec && firstRec.url && firstRec.url !== '#' ? (
                     <motion.a 
-                        whileHover={{ scale: 1.02 }}
-                        href={node.ferramentas.url !== '#' ? node.ferramentas.url : undefined} 
+                        whileHover={{ scale: 1.05, background: planetColor }}
+                        whileTap={{ scale: 0.98 }}
+                        href={firstRec.url} 
                         target="_blank" rel="noopener noreferrer"
                         style={{
-                            background: '#1B0088', color: '#fff', padding: '14px', borderRadius: 10, 
-                            fontWeight: 900, fontSize: 11, textAlign: 'center', textDecoration: 'none',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                            boxShadow: '0 4px 12px rgba(27,0,136,0.2)'
+                            background: '#1B0088', 
+                            color: '#fff', 
+                            padding: '16px 24px', 
+                            borderRadius: 12, 
+                            fontWeight: 900, 
+                            fontSize: 12, 
+                            textAlign: 'center', 
+                            textDecoration: 'none',
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center', 
+                            gap: 12,
+                            boxShadow: `0 4px 12px rgba(27,0,136,0.2)`,
+                            transition: 'all 0.2s ease',
+                            letterSpacing: '1px',
+                            textTransform: 'uppercase'
                         }}
                     >
-                        ABRIR RECURSO <ExternalLink size={14} />
+                        ABRIR {(firstRec.tipo || 'RECURSO').replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]+/g, '').toUpperCase()}
                     </motion.a>
                 ) : (
-                    <div style={{ background: '#F8FAFC', color: '#94A3B8', padding: '14px', borderRadius: 10, fontSize: 10, fontWeight: 800, textAlign: 'center', border: '1px dashed #CBD5E1' }}>
-                        RECURSO_NO_VINCULADO
+                    <div style={{ background: 'rgba(15,0,79,0.02)', color: '#94A3B8', padding: '18px', borderRadius: 16, fontSize: 11, fontWeight: 800, textAlign: 'center', border: '2px dashed #E2E8F0', letterSpacing: '1px' }}>
+                        RECURSO_NO_DETECTADO
                     </div>
                 )}
                 
                 {node.iaPic && (
                     <motion.a 
-                        whileHover={{ scale: 1.02, background: planetColor, color: '#fff' }}
+                        whileHover={{ scale: 1.05, background: `${planetColor}10` }}
                         href={node.iaPic} target="_blank" rel="noopener noreferrer"
-                        style={{ border: `1.5px solid ${planetColor}`, color: planetColor, padding: '12px', borderRadius: 10, fontSize: 10, fontWeight: 900, textAlign: 'center', textDecoration: 'none', textTransform: 'uppercase', letterSpacing: '1px' }}
+                        style={{ 
+                            border: `2px solid ${planetColor}`, 
+                            color: planetColor, 
+                            padding: '14px', 
+                            borderRadius: 16, 
+                            fontSize: 11, 
+                            fontWeight: 900, 
+                            textAlign: 'center', 
+                            textDecoration: 'none', 
+                            textTransform: 'uppercase', 
+                            letterSpacing: '2px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: 10,
+                            background: 'transparent'
+                        }}
                     >
-                        IA_LINK
+                        <Cpu size={18} /> IA_ENLACE
                     </motion.a>
                 )}
             </div>
@@ -862,9 +959,11 @@ const FscDetailedNodeCard = ({ node, index, planetColor }: any) => {
     );
 };
 
-const FscDetailedTerminal = ({ seccion, planetColor, onBack, titleOverride, subtitleOverride }: any) => {
-    const rows = seccion.rows || [];
-    const tipo = seccion.tipo || 'mision1';
+const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOverride, subtitleOverride }: any) => {
+    const allSecciones = secciones || [seccion];
+    // For the header/sidebar, we use the first section's type or the default
+    const firstSec = allSecciones[0] || { rows: [], tipo: 'mision1' };
+    const tipo = firstSec.tipo || 'mision1';
 
     const typeIcons: any = {
         mision1: <Rocket size={24} />,
@@ -935,7 +1034,9 @@ const FscDetailedTerminal = ({ seccion, planetColor, onBack, titleOverride, subt
                     <div style={{ height: 40, width: 2, background: 'rgba(255,255,255,0.1)' }} />
                     <div style={{ textAlign: 'right' }}>
                         <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>NODOS DETECTADOS</div>
-                        <div style={{ fontSize: 22, color: '#FFF', fontWeight: 900 }}>{rows.length}</div>
+                        <div style={{ fontSize: 22, color: '#FFF', fontWeight: 900 }}>
+                            {allSecciones.reduce((acc, s) => acc + (s.rows || []).length, 0)}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -945,17 +1046,25 @@ const FscDetailedTerminal = ({ seccion, planetColor, onBack, titleOverride, subt
                 
                 {/* Left: Scrollable List of Cards */}
                 <div style={{ paddingBottom: 60 }}>
-                    {rows.length === 0 ? (
-                        <div style={{ padding: '60px', textAlign: 'center', background: 'rgba(27,0,136,0.02)', borderRadius: 16, border: '1px dashed rgba(27,0,136,0.1)' }}>
-                            <div style={{ fontSize: 48, marginBottom: 20 }}>🛸</div>
-                            <div style={{ fontSize: 18, fontWeight: 900, color: '#1B0088', marginBottom: 8 }}>SIN INFORMACIÓN CONFIGURADA</div>
-                            <div style={{ fontSize: 14, color: '#1B0088', opacity: 0.7 }}>Aún no se han agregado módulos. Ingresa al panel de administrador para configurar esta sección.</div>
+                    {allSecciones.map((sec, sidx) => (
+                        <div key={sidx} style={{ marginBottom: 40 }}>
+                            {allSecciones.length > 1 && (
+                                <div style={{ marginBottom: 20, borderBottom: `2px solid ${typeColors[sec.tipo] || planetColor}`, paddingBottom: 8, display: 'flex', alignItems: 'center', gap: 12 }}>
+                                    <div style={{ color: typeColors[sec.tipo] || planetColor }}>{typeIcons[sec.tipo] || typeIcons.mision1}</div>
+                                    <div style={{ fontSize: 14, fontWeight: 900, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '1px' }}>{sec.label || 'MÓDULO'}</div>
+                                </div>
+                            )}
+                            {(sec.rows || []).length === 0 ? (
+                                <div style={{ padding: '40px', textAlign: 'center', background: 'rgba(27,0,136,0.02)', borderRadius: 16, border: '1px dashed rgba(27,0,136,0.1)' }}>
+                                    <div style={{ fontSize: 14, color: '#1B0088', opacity: 0.7 }}>Sin nodos en esta sección.</div>
+                                </div>
+                            ) : (
+                                (sec.rows || []).map((row: any, i: number) => (
+                                    <FscDetailedNodeCard key={`${sidx}-${i}`} node={row} index={i} planetColor={planetColor} />
+                                ))
+                            )}
                         </div>
-                    ) : (
-                        rows.map((row: any, i: number) => (
-                            <FscDetailedNodeCard key={i} node={row} index={i} planetColor={planetColor} />
-                        ))
-                    )}
+                    ))}
                 </div>
 
                 {/* Right: Specialist Sidebar */}
@@ -974,11 +1083,22 @@ const FscDetailedTerminal = ({ seccion, planetColor, onBack, titleOverride, subt
                         
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
                             <span style={{ fontSize: 13, color: '#858585', fontWeight: 600 }}>Carga Horaria</span>
-                            <span style={{ fontSize: 14, fontWeight: 900, color: '#1B0088' }}>{seccion.totalCh || 'N/A'}</span>
+                            <span style={{ fontSize: 14, fontWeight: 900, color: '#1B0088' }}>
+                                {(() => {
+                                    const total = allSecciones.reduce((acc, s) => acc + (s.rows || []).reduce((a: number, r: any) => a + timeToSeconds(r.tiempo || r.ch || ''), 0), 0);
+                                    return secondsToTime(total);
+                                })()}
+                            </span>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 40 }}>
-                            <span style={{ fontSize: 13, color: '#858585', fontWeight: 600 }}>Protocolo</span>
-                            <span style={{ fontSize: 14, fontWeight: 900, color: '#1B0088' }}>{tipo.toUpperCase()}</span>
+                            <span style={{ fontSize: 13, color: '#858585', fontWeight: 600 }}>Nodos Resueltos</span>
+                            <span style={{ fontSize: 14, fontWeight: 900, color: '#99CC33' }}>
+                                {(() => {
+                                    const totalRows = allSecciones.reduce((acc, s) => acc + (s.rows || []).length, 0);
+                                    const resolvedCount = allSecciones.reduce((acc, s) => acc + (s.rows || []).filter((r: any, i: number) => localStorage.getItem(`resolved_${r.tema}_${i}`) === 'true').length, 0);
+                                    return `${resolvedCount} / ${totalRows}`;
+                                })()}
+                            </span>
                         </div>
 
                         <button 
@@ -995,14 +1115,7 @@ const FscDetailedTerminal = ({ seccion, planetColor, onBack, titleOverride, subt
                         </button>
                     </div>
 
-                    {/* Support Block */}
-                    <div style={{ background: '#0F004F', borderRadius: 24, padding: 36, position: 'relative', overflow: 'hidden' }}>
-                        <div style={{ position: 'absolute', top: -40, right: -40, fontSize: 160, opacity: 0.05, filter: 'blur(2px)' }}>{typeIcons[tipo]}</div>
-                        <div style={{ fontWeight: 900, fontSize: 11, color: planetColor, letterSpacing: '2px', marginBottom: 16 }}>SOPORTE INTELIGENTE</div>
-                        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 1.7, fontStyle: 'italic', position: 'relative', zIndex: 1 }}>
-                            "La excelencia operativa en LATAM se construye con la atención al detalle. Mantén el enfoque en los estándares de calidad definidos para este sector."
-                        </div>
-                    </div>
+                    {/* Support Block Removed */}
                 </div>
             </div>
         </motion.div>
@@ -1012,6 +1125,12 @@ const FscDetailedTerminal = ({ seccion, planetColor, onBack, titleOverride, subt
 export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sectorLabel="SECTOR", onboardingData }: any) => {
     const [viewMode, setViewMode] = React.useState<'map' | 'detail' | 'onboarding'>('map');
     const [selectedIdx, setSelectedIdx] = React.useState(0);
+    const [, setTick] = React.useState(0);
+
+    React.useEffect(() => {
+        (window as any).refreshOnboarding = () => setTick(t => t + 1);
+        return () => { delete (window as any).refreshOnboarding; };
+    }, []);
     
     // Safety check for data
     if (!data) return null;
@@ -1103,7 +1222,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                 />
             ) : (
                 <FscDetailedTerminal 
-                    seccion={onboardingData[0] || {rows:[]}} 
+                    secciones={(onboardingData?.[0]?.secciones) || [onboardingData?.[0]] || []} 
                     planetColor="#FFB800" 
                     subtitleOverride="PROTOCOLO DE PREPARACIÓN"
                     titleOverride="NAVE DE ONBOARDING"
