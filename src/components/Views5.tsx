@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Wrench, BookOpen, Settings, Hexagon, Network, Microscope, Package, Box, Radar, Activity, Cpu, ArrowLeft, Zap, Target, Info, ExternalLink, X, CheckCircle2, Lightbulb, Rocket, Shield, Award, Star, GraduationCap } from 'lucide-react';
+import { Wrench, BookOpen, Settings, Hexagon, Network, Microscope, Package, Box, Radar, Activity, Cpu, ArrowLeft, Zap, Target, Info, ExternalLink, X, CheckCircle2, Lightbulb, Rocket, Shield, Award, Star, GraduationCap, LayoutGrid, FileText } from 'lucide-react';
 
 const Stars = () => (
   <div className="stars-container" style={{ position: 'fixed', inset: 0, pointerEvents: 'none' }}>
@@ -525,7 +525,8 @@ export const TechBaseView = ({
   sideDecalLeft = "Guardiões",
   sideDecalRight = "Capacitación",
   footerLogo = null,
-  description = "Accedé a manuales técnicos, guías de procedimientos y recursos de soporte para operaciones."
+  description = "Accedé a manuales técnicos, guías de procedimientos y recursos de soporte para operaciones.",
+  onNavigate = () => {}
 }: any) => {
   return (
     <div style={{ 
@@ -571,64 +572,164 @@ export const TechBaseView = ({
         <div style={{ width: 40, height: 2, background: themeColor, boxShadow: `0 0 10px ${themeColor}40` }} />
       </div>
 
-      {/* Right Vertical Decal */}
-      <div style={{ position: 'absolute', top: '40%', right: -80, display: 'flex', alignItems: 'center', gap: 15, transform: 'rotate(90deg)', transformOrigin: 'center', zIndex: 1 }}>
+      {/* Right Vertical Decal (Bi-lingual) */}
+      <div style={{ position: 'absolute', top: '45%', right: -120, display: 'flex', alignItems: 'center', gap: 15, transform: 'rotate(90deg)', transformOrigin: 'center', zIndex: 1 }}>
         <div style={{ width: 40, height: 2, background: themeColor, boxShadow: `0 0 10px ${themeColor}40` }} />
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ fontSize: 12, fontWeight: 900, color: '#64748B', letterSpacing: '0.2em' }}>Guardianes</div>
-          <img src="/guardianes_logo.png" alt="Logo Guardianes" style={{ height: 32, filter: 'brightness(1.1) drop-shadow(0 0 8px rgba(153,204,51,0.2))' }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{ fontSize: 11, fontWeight: 900, color: '#64748B', letterSpacing: '0.2em' }}>Guardianes</div>
+          <img src="/guardianes_logo.png" alt="Logo" style={{ height: 24, filter: 'brightness(1.1) drop-shadow(0 0 8px rgba(153,204,51,0.2))' }} />
+          <div style={{ fontSize: 11, fontWeight: 900, color: '#64748B', letterSpacing: '0.2em' }}>Guardiões</div>
         </div>
         <div style={{ width: 40, height: 2, background: themeColor, boxShadow: `0 0 10px ${themeColor}40` }} />
       </div>
 
-      {/* Header */}
+      {/* SIDEBAR TACTICAL HUD */}
       <div style={{ 
-        background: '#E8E7F2', 
-        padding: '16px 32px', 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'space-between', 
-        position: 'relative', 
-        zIndex: 10,
-        borderBottom: `1px solid rgba(0,0,0,0.1)`,
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)'
+        position: 'fixed', 
+        left: 0, 
+        top: 0, 
+        bottom: 0, 
+        width: 280, 
+        height: '100vh',
+        background: 'rgba(15, 0, 79, 0.9)', 
+        backdropFilter: 'blur(20px)',
+        borderRight: '1px solid rgba(0, 243, 255, 0.2)',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '20px',
+        zIndex: 200,
+        boxShadow: '20px 0 50px rgba(0,0,0,0.5)',
+        overflow: 'hidden'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 30 }}>
+        {/* HUD Grid Overlay */}
+        <div style={{
+          position: 'absolute', inset: 0, opacity: 0.1, pointerEvents: 'none',
+          backgroundImage: `linear-gradient(rgba(0, 243, 255, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 243, 255, 0.2) 1px, transparent 1px)`,
+          backgroundSize: '30px 30px',
+          zIndex: 1
+        }} />
+
+        {/* Back Button with Pill Style */}
+        <div style={{ marginBottom: 25, zIndex: 5, display: 'flex', justifyContent: 'center' }}>
           <button onClick={onBack} style={{ 
-            background: '#1B0088', 
-            border: 'none', 
-            color: '#fff', 
-            padding: '8px 20px', 
-            borderRadius: 4, 
+            background: '#1B2533', 
+            border: '2px solid #00F3FF', 
+            color: '#00F3FF', 
+            padding: '8px 24px', 
+            borderRadius: 30, 
             cursor: 'pointer', 
-            fontSize: 14, 
+            fontSize: 10, 
             fontWeight: 900, 
             textTransform: 'uppercase',
-            display: 'flex', alignItems: 'center', gap: 8,
-            boxShadow: '0 4px 10px rgba(27,0,136,0.2)'
+            display: 'flex', alignItems: 'center', gap: 10,
+            letterSpacing: '0.1em',
+            transition: 'all 0.3s',
+            boxShadow: '0 0 15px rgba(0, 243, 255, 0.2)'
           }}>
-            ← VOLVER
+            <span style={{ fontSize: 14 }}>‹</span>
+            RETURN TO STATION
           </button>
-          <div style={{ 
-            position: 'absolute',
-            left: '50%',
-            top: '50%',
-            transform: 'translate(-50%, -50%)',
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: 16 
-          }}>
-            <img src="/guardioes_pt_shield.png" alt="Logo" style={{ height: 54 }} />
-            <div style={{ fontSize: 13, color: '#0F004F', fontWeight: 900, letterSpacing: '0.12em', lineHeight: 1.2, textTransform: 'uppercase' }}>
-              <div>UNIVERSO TRAINING</div>
-              <div style={{ opacity: 0.7, fontSize: 11 }}>CUSTOMER CARE & SALES</div>
-            </div>
-          </div>
         </div>
-        <div />
+
+        {/* Main Logo with Scanning Glow - REPOSITIONED BACK UP */}
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 25, position: 'relative', zIndex: 5 }}>
+          <motion.div
+            animate={{ filter: ['drop-shadow(0 0 2px #00F3FF)', 'drop-shadow(0 0 10px #00F3FF)', 'drop-shadow(0 0 2px #00F3FF)'] }}
+            transition={{ duration: 4, repeat: Infinity }}
+          >
+            <img 
+              src="/guardioes_capacitacion_pt.png" 
+              alt="Main Logo" 
+              style={{ width: '100%', height: 'auto', maxWidth: 110, filter: 'brightness(1.2)' }} 
+            />
+          </motion.div>
+          {/* Decorative lines */}
+          <div style={{ position: 'absolute', top: '50%', left: -20, width: 15, height: 1, background: 'rgba(0, 243, 255, 0.5)' }} />
+          <div style={{ position: 'absolute', top: '50%', right: -20, width: 15, height: 1, background: 'rgba(0, 243, 255, 0.5)' }} />
+        </div>
+
+        {/* System Metadata */}
+        <div style={{ fontSize: 8, color: 'rgba(0, 243, 255, 0.4)', fontFamily: 'monospace', marginBottom: 15, letterSpacing: '0.1em' }}>
+          CORE_STATUS: ONLINE // DB_LINK: ACTIVE
+        </div>
+
+        {/* Menu Items with Tactical Slots */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, position: 'relative', zIndex: 5 }}>
+          {[
+            { label: 'PORTAL INSTRUCTOR', sec: 'SEC-A1', target: 'operaciones', color: '#FFD700' },
+            { label: 'FORMULARIOS', sec: 'SEC-A2', target: 'suministros', color: '#00F3FF' },
+            { label: 'PORTAL DE LÍDERES', sec: 'SEC-B1', target: 'laboratorio', color: '#39FF14' },
+            { label: 'TALLERES', sec: 'SEC-B2', target: 'ingenieria', color: '#BF00FF' }
+          ].map((item, idx) => {
+            const isActive = title?.toUpperCase() === item.label;
+            const itemColor = item.color;
+            
+            return (
+              <motion.div
+                key={idx}
+                whileHover={{ x: 5, background: `${itemColor}15` }}
+                onClick={() => onNavigate(item.target)}
+                style={{ 
+                  padding: '10px 15px', 
+                  borderRadius: 0, 
+                  color: isActive ? itemColor : 'rgba(255,255,255,0.5)',
+                  fontSize: 10,
+                  fontWeight: 900,
+                  cursor: 'pointer',
+                  background: isActive ? `${itemColor}20` : 'rgba(255,255,255,0.02)',
+                  borderLeft: isActive ? `3px solid ${itemColor}` : '3px solid transparent',
+                  borderBottom: '1px solid rgba(255,255,255,0.03)',
+                  letterSpacing: '0.1em',
+                  transition: 'all 0.2s',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}
+              >
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <span style={{ fontSize: 7, opacity: 0.5, marginBottom: 2 }}>{item.sec}</span>
+                  <span>{item.label}</span>
+                </div>
+                {isActive && (
+                  <motion.div 
+                    animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }} 
+                    transition={{ duration: 2, repeat: Infinity }}
+                    style={{ width: 6, height: 6, borderRadius: '50%', background: itemColor, boxShadow: `0 0 8px ${itemColor}` }} 
+                  />
+                )}
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Grid of Shields at the very bottom (2 rows of 3) */}
+        <div style={{ 
+          marginTop: 'auto', 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(3, 1fr)', 
+          gap: 15,
+          paddingTop: '20px',
+          borderTop: '1px solid rgba(0, 243, 255, 0.1)',
+          zIndex: 5
+        }}>
+          {[
+            '/escudos/YODA - AMC.png',
+            '/escudos/YODA - AeC.png',
+            '/escudos/YODA - Interna BR.png',
+            '/escudos/YODA - Interna.png',
+            '/escudos/YODA - Konecta BR.png',
+            '/escudos/YODA - Konecta PE.png'
+          ].map((src, i) => (
+            <img key={i} src={src} alt="Shield" style={{ width: '100%', height: 'auto', filter: 'brightness(1.1)' }} />
+          ))}
+        </div>
       </div>
 
-      <div style={{ padding: '20px 40px', maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 5, flex: 1, width: '100%' }}>
+      <div style={{ display: 'flex', flex: 1, position: 'relative', zIndex: 5 }}>
+        {/* Spacer for Sidebar */}
+        <div style={{ width: 280, flexShrink: 0 }} />
+
+        <div style={{ padding: '60px 40px', maxWidth: 1100, margin: '0 auto', position: 'relative', flex: 1, width: '100%', overflowY: 'auto' }}>
         
         {/* Hero Section */}
         <div style={{ position: 'relative', marginBottom: 40, width: '100%', maxWidth: 1050, margin: '0 auto 40px auto' }}>
@@ -788,8 +889,9 @@ export const TechBaseView = ({
           ))}
         </div>
       </div>
+    </div>
 
-      {/* Footer */}
+    {/* Footer */}
       <div style={{ 
         background: '#ffffff', 
         padding: '12px 32px', 
@@ -801,7 +903,8 @@ export const TechBaseView = ({
         zIndex: 100,
         color: '#1B0088',
         borderTop: `2px solid ${themeColor}`,
-        boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.05)'
+        boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.05)',
+        marginLeft: 280
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           {footerLogo ? (
@@ -829,7 +932,7 @@ export const TechBaseView = ({
   );
 };
 
-export const IngenieriaView = ({ links, onBack, title, subtitle }: any) => {
+export const IngenieriaView = ({ links, onBack, onNavigate, title, subtitle }: any) => {
   const themeColor = '#B200FF';
   const heroIcon = (
     <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -842,10 +945,11 @@ export const IngenieriaView = ({ links, onBack, title, subtitle }: any) => {
   
   return (
     <TechBaseView
-      title={title || 'Taller'}
+      title={title || 'TALLERES'}
       subtitle={subtitle}
       links={links}
       onBack={onBack}
+      onNavigate={onNavigate}
       themeColor={themeColor}
       heroIcon={heroIcon}
       listIcon={<Cpu size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
@@ -855,7 +959,7 @@ export const IngenieriaView = ({ links, onBack, title, subtitle }: any) => {
   );
 };
 
-export const LaboratorioView = ({ links, rutaData, onBack, onNavigateRuta, title, subtitle }: any) => {
+export const LaboratorioView = ({ links, rutaData, onBack, onNavigate, onNavigateRuta, title, subtitle }: any) => {
   const themeColor = '#99CC33';
   const heroIcon = (
     <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -874,6 +978,7 @@ export const LaboratorioView = ({ links, rutaData, onBack, onNavigateRuta, title
       subtitle={subtitle || 'Lab. de Estrategia: expediciones de formación y análisis de datos en tiempo real.'}
       links={links}
       onBack={onBack}
+      onNavigate={onNavigate}
       themeColor={themeColor}
       heroIcon={heroIcon}
       listIcon={<Microscope size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
@@ -967,7 +1072,7 @@ export const LaboratorioView = ({ links, rutaData, onBack, onNavigateRuta, title
   );
 };
 
-export const SuministrosView = ({ links, onBack, title, subtitle }: any) => {
+export const SuministrosView = ({ links, onBack, onNavigate, title, subtitle }: any) => {
   const themeColor = '#00D6CC';
   const heroIcon = (
     <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -980,10 +1085,11 @@ export const SuministrosView = ({ links, onBack, title, subtitle }: any) => {
 
   return (
     <TechBaseView
-      title={title || 'Formularios'}
+      title={title || 'FORMULARIOS'}
       subtitle={subtitle || 'Gestión de recursos, formularios operativos y control de inventario.'}
       links={links}
       onBack={onBack}
+      onNavigate={onNavigate}
       themeColor={themeColor}
       heroIcon={heroIcon}
       listIcon={<Box size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
@@ -994,7 +1100,7 @@ export const SuministrosView = ({ links, onBack, title, subtitle }: any) => {
   );
 };
 
-export const OperacionesView = ({ links, onBack, title, subtitle }: any) => {
+export const OperacionesView = ({ links, onBack, onNavigate, title, subtitle }: any) => {
   const themeColor = '#FFE017';
   const heroIcon = (
     <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -1007,10 +1113,11 @@ export const OperacionesView = ({ links, onBack, title, subtitle }: any) => {
 
   return (
     <TechBaseView
-      title={title || 'Portal Instructor'}
+      title={title || 'PORTAL INSTRUCTOR'}
       subtitle={subtitle || 'Monitoreo en tiempo real, portal de instructores y control de misiones.'}
       links={links}
       onBack={onBack}
+      onNavigate={onNavigate}
       themeColor={themeColor}
       heroIcon={heroIcon}
       listIcon={<GraduationCap size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}

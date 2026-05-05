@@ -222,13 +222,13 @@ export default function App() {
       case 'ruta-lider':
         return <RutaLiderView links={activeConfig.laboratorio} rutaData={activeConfig.rutaLider} onBack={()=>go('laboratorio')}/>;
       case 'laboratorio':
-        return <LaboratorioView links={activeConfig.laboratorio} rutaData={activeConfig.rutaLider} onBack={()=>go('br')} onNavigateRuta={()=>go('ruta-lider')} title={activeConfig.moduleMeta?.lab?.title} subtitle={activeConfig.moduleMeta?.lab?.subtitle}/>;
+        return <LaboratorioView links={activeConfig.laboratorio} rutaData={activeConfig.rutaLider} onBack={()=>go('br')} onNavigate={go} onNavigateRuta={()=>go('ruta-lider')} title={activeConfig.moduleMeta?.lab?.title} subtitle={activeConfig.moduleMeta?.lab?.subtitle}/>;
       case 'ingenieria':
-        return <IngenieriaView title={activeConfig.moduleMeta?.eng?.title||'Taller'} subtitle={activeConfig.moduleMeta?.eng?.subtitle} links={activeConfig.ingenieria} onBack={()=>go('br')}/>;
+        return <IngenieriaView title={activeConfig.moduleMeta?.eng?.title||'TALLERES'} subtitle={activeConfig.moduleMeta?.eng?.subtitle} links={activeConfig.ingenieria} onBack={()=>go('br')} onNavigate={go}/>;
       case 'suministros':
-        return <SuministrosView title={activeConfig.moduleMeta?.sup?.title||'Formularios'} subtitle={activeConfig.moduleMeta?.sup?.subtitle} links={activeConfig.suministros} onBack={()=>go('br')}/>;
+        return <SuministrosView title={activeConfig.moduleMeta?.sup?.title||'FORMULARIOS'} subtitle={activeConfig.moduleMeta?.sup?.subtitle} links={activeConfig.suministros} onBack={()=>go('br')} onNavigate={go}/>;
       case 'operaciones':
-        return <OperacionesView title={activeConfig.moduleMeta?.ops?.title||'Portal Instructor'} subtitle={activeConfig.moduleMeta?.ops?.subtitle} links={activeConfig.operaciones} onBack={()=>go('br')}/>;
+        return <OperacionesView title={activeConfig.moduleMeta?.ops?.title||'PORTAL INSTRUCTOR'} subtitle={activeConfig.moduleMeta?.ops?.subtitle} links={activeConfig.operaciones} onBack={()=>go('br')} onNavigate={go}/>;
       case 'admin':
         return (
           <AdminCenter 

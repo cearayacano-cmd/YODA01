@@ -1255,16 +1255,16 @@ const TacticalKey = ({ label, color, active = false, onClick, large = false }: a
   </motion.div>
 );
 
-const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive, onPreparacao, states }: any) => {
+const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive, onPreparacao, states, isIntegrated = false }: any) => {
   const { alertMode, hudHidden, dimLights } = states;
   const color = alertMode ? "#B20F3B" : "#99CC33";
 
   return (
     <div style={{ 
-      position: 'absolute', 
-      bottom: '85px', 
-      left: '50%', 
-      transform: 'translateX(-50%) perspective(1500px) rotateX(8deg)',
+      position: isIntegrated ? 'relative' : 'absolute', 
+      bottom: isIntegrated ? 'auto' : '85px', 
+      left: isIntegrated ? 'auto' : '50%', 
+      transform: isIntegrated ? 'none' : 'translateX(-50%) perspective(1500px) rotateX(8deg)',
       width: '620px',
       height: '100px',
       zIndex: 100,
@@ -1694,16 +1694,7 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
       <SpaceBackground showEarth={true} showShip={true} />
       <IaraHologram isVisible={showIara} onClose={() => setShowIara(false)} iaraLink={config.iaraLink} />
       {!hudHidden && <CommandCenterInterior isAlert={alertMode} isDim={dimLights} isHudHidden={hudHidden} />}
-      <SpaceKeyboard 
-        onAlert={() => setAlertMode(!alertMode)}
-        onHud={() => setHudHidden(!hudHidden)}
-        onDim={() => setDimLights(!dimLights)}
-        onMonitoring={() => config.monitoringUrl && window.open(config.monitoringUrl, '_blank')}
-        onIara={() => setShowIara(prev => !prev)}
-        iaraActive={showIara}
-        onPreparacao={() => config.preparacaoLink && window.open(config.preparacaoLink, '_blank')}
-        states={{ alertMode, hudHidden, dimLights }}
-      />
+      {!hudHidden && <CommandCenterInterior isAlert={alertMode} isDim={dimLights} isHudHidden={hudHidden} />}
 
       <div style={{ height: '84px', background: alertMode ? '#4A0618' : '#E8E7F2', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 32px', transition: 'all 0.5s ease' }}>
         <BackBtn onClick={onBack} label="SALIR" />
@@ -1739,10 +1730,36 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
           />
         </ConsoleSideFrame>
         
-        <div style={{ transform: 'translateY(102px)' }}>
-          <ConsoleCentralFrame>
-            <CentralMonitorCard onNavigate={onNavigate} />
-          </ConsoleCentralFrame>
+        {/* UNIFIED WORKSTATION UNIT (Monitor + Keyboard) */}
+        <div style={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          alignItems: 'center', 
+          transform: 'translateY(145px)', // Raised slightly to compensate
+          zIndex: 30,
+          position: 'relative'
+        }}>
+          {/* MONITOR PART */}
+          <div style={{ transform: 'perspective(1500px) rotateX(2deg)', zIndex: 2, marginBottom: 15 }}>
+            <ConsoleCentralFrame>
+              <CentralMonitorCard onNavigate={onNavigate} />
+            </ConsoleCentralFrame>
+          </div>
+
+          {/* KEYBOARD PART (Now part of the same flow, overlapping slightly in front) */}
+          <div style={{ transform: 'perspective(1500px) rotateX(10deg)', marginTop: -15, zIndex: 5 }}>
+            <SpaceKeyboard 
+              onAlert={() => setAlertMode(!alertMode)}
+              onHud={() => setHudHidden(!hudHidden)}
+              onDim={() => setDimLights(!dimLights)}
+              onMonitoring={() => config.monitoringUrl && window.open(config.monitoringUrl, '_blank')}
+              onIara={() => setShowIara(prev => !prev)}
+              iaraActive={showIara}
+              onPreparacao={() => config.preparacaoLink && window.open(config.preparacaoLink, '_blank')}
+              states={{ alertMode, hudHidden, dimLights }}
+              isIntegrated={true} // New prop to handle internal styling
+            />
+          </div>
         </div>
 
         <ConsoleSideFrame side="right">
