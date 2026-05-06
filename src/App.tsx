@@ -130,7 +130,15 @@ export default function App() {
       '#ED1650', '#00D6CC', '#D400FF', '#FFE017', '#99CC33', 
       '#00A9E0', '#FF8C00', '#FF00FF', '#00FF00', '#FFFFFF'
     ];
-    return labels.map((l, i) => ({ label: l, color: COLORS[i % COLORS.length] }));
+    return labels.map((l, i) => ({ 
+      label: l, 
+      color: COLORS[i % COLORS.length],
+      secciones: [],
+      materiais: [],
+      evalKon: [],
+      evalAec: [],
+      evalMsg: ''
+    }));
   };
 
   const [appConfig, setAppConfig] = useState({
@@ -154,10 +162,10 @@ export default function App() {
       lastUpdate: "30/04/2026",
       rutaLider: RUTA_DATA_DEFAULT,
       onboarding: [ONBOARDING_DATA_DEFAULT],
-      frontLineContent: [BASE_PLANET_DATA, ...Array.from({length: 7}, ()=>[])],
-      soporteContent: [ SOPORTE_PLANET_1, [] ],
+      frontLineContent: [BASE_PLANET_DATA, ...initGalaxy(["Pos Venta 1","Pos Venta 2","HVC","DT Bagagens","DT Devoluciones","RRSS","LAE"])],
+      soporteContent: initGalaxy(["Soporte 1","Soporte 2"]),
+      fsc: initGalaxy(["FSC 1","FSC 2"]),
       satelites: { conhecendo: CONHECENDO_DATA, imersao: IMERSAO_DATA },
-      fsc: [ FSC_DATA_DEFAULT ],
       exploracion:{
         frontLine:initGalaxy(["Base","Pos Venta 1","Pos Venta 2","HVC","DT Bagagens","DT Devoluciones","RRSS","LAE"]),
         soporte:initGalaxy(["Soporte BO (Pendiente)","Soporte FFP (Pendiente)"]),

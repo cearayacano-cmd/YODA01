@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
     ArrowLeft, Save, CheckCircle2, Plus, Trash2, Database, Layers, Satellite, Globe, Shield, Zap,
-    Edit3, Briefcase, Rocket, Target, Anchor, ChevronUp, ChevronDown, Monitor, FileText, Link as LinkIcon, AlertTriangle, Clock, Cpu
+    Edit3, Briefcase, Rocket, Target, Anchor, ChevronUp, ChevronDown, Monitor, FileText, Link as LinkIcon, AlertTriangle, Clock, Cpu,
+    Maximize2, Minimize2, GripVertical
 } from 'lucide-react';
 
 const TIPO_INFO: any = {
-  mision1: { label: 'MISSÃO 1', emoji: <Rocket size={20} />, accent: '#1B0088' },
-  landing: { label: 'LANDING', emoji: <Anchor size={20} />, accent: '#99CC33' },
-  ojt:     { label: 'DESAFIO OJT', emoji: <Target size={20} />, accent: '#00D6CC' },
+  mision1: { label: 'EXPEDIÇÃO', emoji: <Rocket size={20} />, accent: '#1B0088' },
+  landing: { label: 'LANDING', emoji: <Anchor size={20} />, accent: '#FFC800' },
+  ojt:     { label: 'DESAFIO OJT', emoji: <Target size={20} />, accent: '#ED1650' },
   imersao: { label: 'IMERSÃO',     emoji: <Cpu size={20} />,    accent: '#D400FF' }
 };
 
@@ -33,12 +34,22 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
   const [activePlanet, setActivePlanet] = useState(initialPlanet || 0);
   const [editingSecIdx, setEditingSecIdx] = useState<number | null>(null);
   const [saved, setSaved] = useState(false);
+  const [collapsedThemes, setCollapsedThemes] = useState<string[]>([]);
+  const [collapsedSections, setCollapsedSections] = useState<number[]>([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  
+  const toggleTheme = (theme: string) => {
+    setCollapsedThemes(prev => prev.includes(theme) ? prev.filter(t => t !== theme) : [...prev, theme]);
+  };
+
+  const toggleSection = (idx: number) => {
+    setCollapsedSections(prev => prev.includes(idx) ? prev.filter(i => i !== idx) : [...prev, idx]);
+  };
 
   const data = Array.isArray(dataArray) ? dataArray : [];
   const rawPlanetData = data[activePlanet];
   const planetObj = (rawPlanetData && !Array.isArray(rawPlanetData)) 
     ? rawPlanetData 
-    : { secciones: Array.isArray(rawPlanetData) ? rawPlanetData : [], materiais: [], evalKon: [], evalAec: [] };
+    : { secciones: Array.isArray(rawPlanetData) ? rawPlanetData : [], materiais: [], evalKon: [], evalAec: [], evalMsg: '' };
 
   const currentSections = planetObj.secciones || [];
 
@@ -74,6 +85,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
     if (target < 0 || target >= next.length) return;
     [next[idx], next[target]] = [next[target], next[idx]];
     updateSections(next);
+    saveFlash();
   };
 
   const deleteSec = (idx: number) => { updateSections(currentSections.filter((_, i) => i !== idx)); };
@@ -112,7 +124,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
 
   const addRow = (secIdx: number) => {
     const next = [...currentSections];
-    const rows = [...next[secIdx].rows, { macroTema: '', tema: '', detalhe: '', consejo: '', herramientas: [{ tipo: '🖼️ Slide', url: '' }], iaPic: '', tiempo: '' }];
+    const rows = [...next[secIdx].rows, { macroTema: '', tema: '', detalhe: '', consejo: '', herramientas: [{ tipo: '🖼️ Slide', url: '' }], iaPic: [], tiempo: '' }];
     next[secIdx] = { ...next[secIdx], rows };
     updateSections(next);
   };
@@ -206,6 +218,15 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                          <div style={{ marginBottom: 12 }}>
+                              <label style={{ fontSize: '9px', color: '#64748b', fontWeight: 900, textTransform: 'uppercase', marginBottom: 4, display: 'block' }}>Mensagem Protocolo Geral (Ajuste de Rota)</label>
+                              <textarea 
+                                value={planetObj.evalMsg || ''} 
+                                onChange={e => updateGlobalField('evalMsg', e.target.value)} 
+                                placeholder="Descreva o protocolo de recuperação..."
+                                style={{ ...inp({ minHeight: 80, width: '100%', fontSize: 11, background: '#f8fafc', lineHeight: 1.4, border: '1px solid #e2e8f0' }) }}
+                              />
+                          </div>
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                               <div style={{ fontSize: 11, fontWeight: 900, color: '#99CC33', display: 'flex', alignItems: 'center', gap: 8 }}><Shield size={16} /> 🛡️ AVALIAÇÕES: KON BR</div>
                               <button onClick={() => addGlobalLink('evalKon')} style={{ background: '#99CC33', color: '#fff', border: 'none', padding: '4px 10px', borderRadius: 6, fontSize: 9, fontWeight: 800, cursor: 'pointer' }}>+ LINK</button>
@@ -251,7 +272,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
           ) : currentSections.map((sec: any, si: number) => {
             const secInfo = TIPO_INFO[sec.tipo] || TIPO_INFO['mision1'];
             return (
-              <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: si * 0.1 }} key={si} style={{ background: '#ffffff', borderRadius: '24px', padding: '32px', marginBottom: '32px', boxShadow: '0 10px 40px rgba(0,0,0,0.02)', border: '1px solid rgba(27,0,136,0.1)' }}>
+              <motion.div layout initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: si * 0.1 }} key={si} style={{ background: '#ffffff', borderRadius: '24px', padding: '32px', marginBottom: '32px', boxShadow: '0 10px 40px rgba(0,0,0,0.02)', border: '1px solid rgba(27,0,136,0.1)', position: 'relative' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '24px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
                   <div style={{ width: 44, height: 44, borderRadius: 12, background: secInfo.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>{secInfo.emoji}</div>
@@ -267,13 +288,34 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                 <div style={{ display: 'flex', gap: '12px' }}>
                   <button onClick={() => addRow(si)} style={{ background: '#1B0088', color: '#fff', border: 'none', padding: '12px 24px', borderRadius: '12px', cursor: 'pointer', fontSize: '11px', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 8, boxShadow: '0 8px 25px rgba(27,0,136,0.2)' }}><Plus size={16}/> AGREGAR NODO</button>
                   <button onClick={() => setEditingSecIdx(editingSecIdx === si ? null : si)} style={{ background: '#ffffff', border: '1px solid #E2E8F0', padding: '12px 20px', borderRadius: '12px', cursor: 'pointer', fontSize: '11px', fontWeight: 900, color: '#1B0088', display: 'flex', alignItems: 'center', gap: 8 }}>{editingSecIdx === si ? <CheckCircle2 size={16}/> : <Edit3 size={16}/>} {editingSecIdx === si ? 'FINALIZAR' : 'RECONFIGURAR'}</button>
-                  <div style={{ display: 'flex', background: '#fff', border: '1px solid #E2E8F0', borderRadius: 12, overflow: 'hidden' }}>
-                    <button onClick={() => moveSec(si, -1)} style={{ padding: '12px', border: 'none', background: 'transparent', borderRight: '1px solid #E2E8F0', color: '#64748b', cursor: 'pointer' }}><ChevronUp size={18}/></button>
-                    <button onClick={() => moveSec(si, 1)} style={{ padding: '12px', border: 'none', background: 'transparent', color: '#64748b', cursor: 'pointer' }}><ChevronDown size={18}/></button>
-                  </div>
+                  
+                  <button 
+                    onClick={() => toggleSection(si)} 
+                    title={collapsedSections.includes(si) ? "Expandir Misión" : "Colapsar Misión"}
+                    style={{ 
+                      width: 44, height: 44, border: '1px solid #E2E8F0', borderRadius: '12px',
+                      background: collapsedSections.includes(si) ? secInfo.accent : '#fff', 
+                      color: collapsedSections.includes(si) ? '#fff' : secInfo.accent, 
+                      cursor: 'pointer',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      transition: '0.2s all ease'
+                    }}
+                  >
+                    {collapsedSections.includes(si) ? <Maximize2 size={18}/> : <Minimize2 size={18}/>}
+                  </button>
+                  
                   <button onClick={() => deleteSec(si)} style={{ background: '#fee2e2', color: '#ef4444', border: 'none', width: 44, height: 44, borderRadius: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Trash2 size={20}/></button>
                 </div>
               </div>
+
+              <AnimatePresence>
+                {!collapsedSections.includes(si) && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    style={{ overflow: 'hidden' }}
+                  >
 
               <div style={{ padding: '40px' }}>
                   <div style={{ background: '#ffffff', borderRadius: '16px', padding: '40px', border: '1px solid #E2E8F0', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
@@ -286,21 +328,36 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                           });
 
                           return Object.entries(groupedRows).map(([mt, rows], gi) => {
+                            const isCollapsed = collapsedThemes.includes(mt);
                             const totalSecs = rows.reduce((acc, r) => acc + timeToSeconds(r.tiempo || r.ch || ''), 0);
-                            let previousSecs = 0;
-                            for (let i = 0; i < sec.rows.indexOf(rows[0]); i++) {
-                                previousSecs += timeToSeconds(sec.rows[i].tiempo || sec.rows[i].ch || '');
-                            }
 
                             return (
-                              <div key={mt} style={{ marginBottom: '48px' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f8fafc', border: '2px solid #1B0088', padding: '12px 24px', borderRadius: '8px', marginBottom: '16px' }}>
+                              <div key={mt} style={{ marginBottom: isCollapsed ? '16px' : '48px' }}>
+                                <div 
+                                  onClick={() => toggleTheme(mt)}
+                                  style={{ 
+                                    display: 'flex', alignItems: 'center', justifyContent: 'space-between', 
+                                    background: isCollapsed ? '#f8fafc' : '#ffffff', border: '2px solid #1B0088', 
+                                    padding: '12px 24px', borderRadius: '8px', marginBottom: isCollapsed ? 0 : '16px',
+                                    cursor: 'pointer', transition: '0.3s'
+                                  }}
+                                >
                                   <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                                    <div style={{ width: 24, height: 24, borderRadius: 6, background: '#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
+                                        {isCollapsed ? <ChevronDown size={14}/> : <ChevronUp size={14}/>}
+                                    </div>
                                     <span style={{ fontSize: '11px', fontWeight: 900, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '0.1em' }}>MACROTEMA:</span>
-                                    <input value={mt === 'SIN MACROTEMA' ? '' : mt} onChange={e => { const newVal = e.target.value; rows.forEach(r => updateRow(si, r.originalIndex, 'macroTema', newVal)); }} style={{ background: 'transparent', border: 'none', color: '#1B0088', fontSize: '16px', fontWeight: 900, outline: 'none', width: '400px' }} placeholder="DEFINA MACRO TEMA..." />
+                                    <input 
+                                        value={mt === 'SIN MACROTEMA' ? '' : mt} 
+                                        onClick={e => e.stopPropagation()}
+                                        onChange={e => { const newVal = e.target.value; rows.forEach(r => updateRow(si, r.originalIndex, 'macroTema', newVal)); }} 
+                                        style={{ background: 'transparent', border: 'none', color: '#1B0088', fontSize: '16px', fontWeight: 900, outline: 'none', width: '400px' }} 
+                                        placeholder="DEFINA MACRO TEMA..." 
+                                    />
                                   </div>
                                   <div style={{ background: '#1B0088', color: '#fff', padding: '6px 14px', borderRadius: '20px', fontSize: '11px', fontWeight: 900 }}>⏱ TOTAL BLOQUE: {secondsToTime(totalSecs)}</div>
                                 </div>
+                                {!isCollapsed && (
                                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                   <thead>
                                     <tr style={{ background: '#f1f5f9' }}>
@@ -308,7 +365,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                       <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0' }}>DETALLE</th>
                                       <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0', width: '200px' }}>RECURSOS (TIPO / URL)</th>
                                       <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0', width: '200px' }}>CONSEJO TÁCTICO</th>
-                                      <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'center', border: '1px solid #e2e8f0', width: '60px' }}>IA</th>
+                                      <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'center', border: '1px solid #e2e8f0', width: '180px' }}>LINK PIC</th>
                                       <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'center', border: '1px solid #e2e8f0', width: '90px' }}>DURACIÓN</th>
                                       <th style={{ padding: '10px', border: '1px solid #e2e8f0', width: '40px' }}></th>
                                     </tr>
@@ -331,7 +388,16 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                             <button onClick={() => { const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : (row.herramientas ? [row.herramientas] : []); newH.push({ tipo: 'PPT', url: '' }); updateRow(si, oi, 'herramientas', newH); }} style={{ background: '#f1f5f9', border: '1px dashed #cbd5e1', width: '100%', padding: '4px', fontSize: '9px', cursor: 'pointer', borderRadius: 4, color: '#64748b' }}>+ AÑADIR RECURSO</button>
                                           </td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.consejo} onChange={e => updateRow(si, oi, 'consejo', e.target.value)} placeholder="Consejo..." style={{ background: 'transparent', border: 'none', fontSize: '10px', color: '#333', width: '100%', resize: 'none', height: '60px' }} /></td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
+                                            {(Array.isArray(row.iaPic) ? row.iaPic : row.iaPic ? [{ label: 'PIC LINK', url: row.iaPic }] : []).map((link: any, li: number) => (
+                                              <div key={li} style={{ marginBottom: 6, paddingBottom: 6, borderBottom: '1px dashed #e2e8f0', position: 'relative' }}>
+                                                <input value={link.label || ''} onChange={e => { const nextIA = [...(Array.isArray(row.iaPic) ? row.iaPic : [{ label: 'PIC LINK', url: row.iaPic }])]; nextIA[li] = { ...nextIA[li], label: e.target.value }; updateRow(si, oi, 'iaPic', nextIA); }} placeholder="Nombre PIC" style={{ background: '#f8fafc', border: '1px solid #e2e8f0', fontSize: '9px', padding: '4px', width: '100%', marginBottom: 4, fontWeight: 700 }} />
+                                                <input value={link.url || ''} onChange={e => { const nextIA = [...(Array.isArray(row.iaPic) ? row.iaPic : [{ label: 'PIC LINK', url: row.iaPic }])]; nextIA[li] = { ...nextIA[li], url: e.target.value }; updateRow(si, oi, 'iaPic', nextIA); }} placeholder="URL" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid #eee', color: '#1a56db', fontSize: '9px', width: '100%' }} />
+                                                <button onClick={() => { const nextIA = [...(Array.isArray(row.iaPic) ? row.iaPic : [])]; nextIA.splice(li, 1); updateRow(si, oi, 'iaPic', nextIA); }} style={{ position: 'absolute', top: 2, right: -4, background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '10px' }}>x</button>
+                                              </div>
+                                            ))}
+                                            <button onClick={() => { const nextIA = Array.isArray(row.iaPic) ? [...row.iaPic] : (row.iaPic ? [{ label: 'PIC LINK', url: row.iaPic }] : []); nextIA.push({ label: 'PIC LINK', url: '' }); updateRow(si, oi, 'iaPic', nextIA); }} style={{ background: '#f0f9ff', border: '1px dashed #bae6fd', width: '100%', padding: '4px', fontSize: '9px', cursor: 'pointer', borderRadius: 4, color: '#0369a1', fontWeight: 700 }}>+ ADD PIC</button>
+                                          </td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}><input value={row.tiempo || row.ch} onChange={e => updateRow(si, oi, 'tiempo', e.target.value)} style={{ background: 'transparent', border: 'none', color: '#111', fontSize: '12px', fontWeight: 800, textAlign: 'center', width: '100%' }} /></td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}><button onClick={() => deleteRow(si, oi)} style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', opacity: 0.5 }} onMouseEnter={e=>e.currentTarget.style.opacity='1'} onMouseLeave={e=>e.currentTarget.style.opacity='0.5'}><Trash2 size={14}/></button></td>
                                         </tr>
@@ -339,6 +405,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                     })}
                                   </tbody>
                                 </table>
+                                )}
                               </div>
                             );
                           });
@@ -381,7 +448,10 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                   </div>
                 </motion.div>
               )}
-            </motion.div>
+              </motion.div>
+            )}
+            </AnimatePresence>
+          </motion.div>
             );
           })}
           <div style={{ height: 100 }} />

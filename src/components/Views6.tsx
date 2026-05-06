@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronRight, ArrowLeft, ExternalLink, Clock, Target, Rocket, 
   Anchor, Activity, Cpu, Shield, Globe, Zap, Radio, Terminal, Map as MapIcon,
-  Navigation, Hexagon, Crosshair, Lightbulb, BadgeCheck, FileText, Satellite, Gem, CheckCircle2, Check
+  Navigation, Hexagon, Crosshair, Lightbulb, BadgeCheck, FileText, Satellite, Gem, CheckCircle2, Check,
+  ChevronUp, ChevronDown
 } from 'lucide-react';
 import { TacticalSatelliteIcon } from './Shared';
 
@@ -197,7 +198,7 @@ const MissionHeaderHUD = ({ sectorLabel, planetLabel, planetColor, onBack }: any
   </div>
 );
 
-const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', directUrl = '', label = '', subGroups = [] }: any) => {
+const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', directUrl = '', label = '', subGroups = [], evalMsg = '' }: any) => {
     const [isOpen, setIsOpen] = React.useState(false);
     const [activeGroup, setActiveGroup] = React.useState<string | null>(null);
 
@@ -214,51 +215,48 @@ const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', d
     return (
         <div style={{ position: 'relative', zIndex: 110 }}>
             <motion.div 
-                initial={{ y: 0 }}
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 style={{ position: 'relative' }}
             >
                 <motion.div 
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{ scale: 1.02, boxShadow: `0 0 30px ${color}44` }}
                     onClick={() => {
                         if (mode === 'DIRECT') window.open(directUrl, '_blank');
                         else setIsOpen(!isOpen);
                     }}
                     style={{ 
-                        cursor: 'pointer', padding: '16px 24px', borderRadius: 16,
-                        background: 'rgba(15,0,79,0.7)', backdropFilter: 'blur(16px)',
-                        border: `2px solid ${color}66`, display: 'flex', alignItems: 'center', gap: 18,
-                        boxShadow: `0 12px 40px rgba(0,0,0,0.5), inset 0 0 20px ${color}22`,
-                        minWidth: 200
+                        cursor: 'pointer', padding: '12px 20px', borderRadius: '4px 20px 4px 20px',
+                        background: 'rgba(15,0,79,0.8)', backdropFilter: 'blur(12px)',
+                        border: `1px solid ${color}88`, borderLeft: `4px solid ${color}`,
+                        display: 'flex', alignItems: 'center', gap: 15,
+                        boxShadow: `0 10px 30px rgba(0,0,0,0.5), inset 0 0 15px ${color}22`,
+                        minWidth: 220,
+                        position: 'relative',
+                        overflow: 'hidden'
                     }}
                 >
-                    <div style={{ position: 'relative' }}>
-                        <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} style={{ position: 'absolute', inset: -8, borderRadius: '50%', border: `1px dashed ${color}44` }} />
-                        <div style={{ 
-                            width: 52, height: 52, borderRadius: 14, 
-                            background: `linear-gradient(135deg, ${color}33, ${color}11)`, 
-                            display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                            color: color, border: `1px solid ${color}44`,
-                            boxShadow: `0 0 20px ${color}33`
-                        }}>
-                            {mode === 'DIRECT' ? <Rocket size={24} /> : (icon || <TacticalSatelliteIcon size={62} color={color} />)}
-                        </div>
+                    {/* Background Pattern */}
+                    <div style={{ position: 'absolute', inset: 0, opacity: 0.1, backgroundImage: 'radial-gradient(circle at 2px 2px, #fff 1px, transparent 0)', backgroundSize: '10px 10px', pointerEvents: 'none' }} />
+                    
+                    <div style={{ 
+                        width: 40, height: 40, borderRadius: '50%', 
+                        background: `${color}22`, display: 'flex', alignItems: 'center', 
+                        justifyContent: 'center', color: color, border: `1px solid ${color}44`,
+                        boxShadow: `0 0 15px ${color}33`
+                    }}>
+                        {mode === 'DIRECT' ? <Rocket size={20} /> : (icon || <Radio size={20} />)}
                     </div>
-
+                    
                     <div style={{ flex: 1 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
-                             <div style={{ width: 6, height: 6, borderRadius: '50%', background: color, boxShadow: `0 0 10px ${color}` }} />
-                             <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase' }}>
-                                {mode === 'DIRECT' ? 'ACCIÓN DIRECTA' : subGroups.length > 0 ? 'GRUPO TÁCTICO' : 'PORTAL DATOS'}
-                             </div>
+                        <div style={{ fontSize: 8, color: color, fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: 2 }}>
+                            {mode === 'DIRECT' ? 'AUTO_EXEC' : 'DATA_LINK'}
                         </div>
-                        <div style={{ fontSize: 16, fontWeight: 900, color: '#fff', letterSpacing: '1px', textTransform: 'uppercase' }}>{mainLabel}</div>
+                        <div style={{ fontSize: 15, fontWeight: 900, color: '#fff', letterSpacing: '1.5px', textTransform: 'uppercase' }}>{mainLabel}</div>
                     </div>
 
-                    {mode === 'PORTAL' && <ChevronRight size={18} color={color} style={{ transform: isOpen ? 'rotate(90deg)' : 'none', transition: '0.3s', opacity: 0.5 }} />}
+                    <div style={{ opacity: 0.5, color: color }}>
+                        {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                    </div>
                 </motion.div>
-                <div style={{ position: 'absolute', top: '100%', left: '20%', width: 2, height: 20, background: `linear-gradient(to bottom, ${color}66, transparent)` }} />
             </motion.div>
 
             <AnimatePresence>
@@ -268,38 +266,75 @@ const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', d
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
                         style={{ 
-                            position: 'absolute', top: 'calc(100% + 20px)', right: 0, width: 320,
-                            background: 'rgba(4,1,20,0.98)', backdropFilter: 'blur(20px)',
-                            border: `1px solid ${color}44`, borderRadius: 24, padding: 20,
-                            boxShadow: '0 30px 60px rgba(0,0,0,0.7)', zIndex: 120
+                            position: 'absolute', top: 'calc(100% + 20px)', right: 0, width: 340,
+                            background: '#0f004f',
+                            backgroundImage: `
+                                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
+                            `,
+                            backgroundSize: '20px 20px',
+                            backdropFilter: 'blur(20px)',
+                            border: `1px solid ${color}44`, borderRadius: 24, padding: 24,
+                            boxShadow: '0 40px 80px rgba(0,0,0,0.8), inset 0 0 40px rgba(0,0,0,0.5)', zIndex: 120,
+                            overflow: 'hidden'
                         }}
                     >
+                        {/* Decorative Corner */}
+                        <div style={{ position: 'absolute', top: 0, left: 0, width: 40, height: 40, borderTop: `2px solid ${color}`, borderLeft: `2px solid ${color}`, opacity: 0.5, borderRadius: '24px 0 0 0' }} />
                         {/* SELECTOR DE GRUPO (Si hay subGroups) */}
                         {subGroups.length > 1 && (
-                            <div style={{ display: 'flex', gap: 8, marginBottom: 20, background: 'rgba(255,255,255,0.05)', padding: 4, borderRadius: 12 }}>
+                            <div style={{ display: 'flex', gap: 10, marginBottom: 20, background: 'rgba(0,0,0,0.3)', padding: 6, borderRadius: 14, border: '1px solid rgba(255,255,255,0.05)' }}>
                                 {subGroups.map((g: any) => (
                                     <button 
                                         key={g.id}
                                         onClick={() => setActiveGroup(g.id)}
                                         style={{ 
-                                            flex: 1, padding: '10px 12px', borderRadius: 10, border: 'none', cursor: 'pointer',
+                                            flex: 1, padding: '12px 14px', borderRadius: 10, border: 'none', cursor: 'pointer',
                                             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                                            background: activeGroup === g.id ? g.color : 'transparent',
-                                            color: activeGroup === g.id ? '#fff' : 'rgba(255,255,255,0.4)',
-                                            transition: '0.3s'
+                                            background: activeGroup === g.id ? `linear-gradient(135deg, ${g.color}, ${g.color}dd)` : 'transparent',
+                                            color: activeGroup === g.id ? '#000' : 'rgba(255,255,255,0.4)',
+                                            fontWeight: 900, fontSize: 11, textTransform: 'uppercase', letterSpacing: '1px',
+                                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                            boxShadow: activeGroup === g.id ? `0 4px 15px ${g.color}66` : 'none',
+                                            position: 'relative', overflow: 'hidden'
                                         }}
                                     >
-                                        {React.isValidElement(g.icon) ? React.cloneElement(g.icon as React.ReactElement, { size: 14 }) : null}
-                                        <span style={{ fontSize: 10, fontWeight: 900 }}>{g.label.split(' ')[0]}</span>
+                                        {activeGroup === g.id && (
+                                            <>
+                                                <motion.div 
+                                                    layoutId="activeTab"
+                                                    style={{ position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.1)' }}
+                                                />
+                                                <motion.div 
+                                                    layoutId="indicator"
+                                                    style={{ position: 'absolute', bottom: 0, left: '20%', right: '20%', height: 3, background: '#fff', borderRadius: '3px 3px 0 0' }}
+                                                />
+                                            </>
+                                        )}
+                                        <span style={{ position: 'relative', zIndex: 2 }}>{g.label}</span>
                                     </button>
                                 ))}
                             </div>
                         )}
 
-                        <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', fontWeight: 900, marginBottom: 12, letterSpacing: '2px', display: 'flex', alignItems: 'center', gap: 8 }}>
-                             <div style={{ width: 4, height: 4, borderRadius: '50%', background: color }} />
-                             VÍNCULOS_DETECTADOS:
-                        </div>
+
+                        {evalMsg && (
+                            <div style={{ 
+                                background: '#0f004f', 
+                                borderLeft: `3px solid ${color}`,
+                                padding: '16px 20px',
+                                borderRadius: 12,
+                                marginBottom: 16,
+                                fontSize: 12,
+                                color: 'rgba(255,255,255,0.9)',
+                                lineHeight: 1.6,
+                                whiteSpace: 'pre-line',
+                                border: '1px solid rgba(255,255,255,0.05)',
+                                boxShadow: 'inset 0 0 20px rgba(0,0,0,0.3)'
+                            }}>
+                                {evalMsg}
+                            </div>
+                        )}
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             {((activeGroup ? subGroups.find((g: any) => g.id === activeGroup)?.links : (links || [])) || []).map((link: any, i: number) => (
@@ -425,20 +460,25 @@ const ContentNode = ({ row, type, planetColor, index }: any) => (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             <FscFerrCell f={row.herramientas || row.ferramentas} planetColor={planetColor} />
             
-            {row.iaPic && (
-                <motion.a 
-                    whileHover={{ scale: 1.02, background: planetColor, color: '#fff' }}
-                    href={row.iaPic} target="_blank" rel="noopener noreferrer" 
-                    style={{ 
-                        fontSize: '11px', color: planetColor, fontWeight: 900, textDecoration: 'none', 
-                        border: `1.8px solid ${planetColor}`, padding: '14px', borderRadius: 10,
-                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-                        transition: '0.2s', textTransform: 'uppercase', letterSpacing: '1px'
-                    }}
-                >
-                    <Cpu size={16} /> IA_PRO_LINK
-                </motion.a>
-            )}
+            {/* PIC Links Column */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {(Array.isArray(row.iaPic) ? row.iaPic : row.iaPic ? [{ label: 'PIC LINK', url: row.iaPic }] : []).map((link: any, li: number) => (
+                    <motion.a 
+                        key={li}
+                        whileHover={{ scale: 1.02, background: planetColor, color: '#fff' }}
+                        href={link.url} target="_blank" rel="noopener noreferrer" 
+                        style={{ 
+                            fontSize: '10px', color: planetColor, fontWeight: 900, textDecoration: 'none', 
+                            border: `1.5px solid ${planetColor}`, padding: '12px 16px', borderRadius: 10,
+                            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+                            transition: '0.2s', textTransform: 'uppercase', letterSpacing: '1px',
+                            minWidth: 140, background: `${planetColor}05`
+                        }}
+                    >
+                        <ExternalLink size={14} /> {link.label || 'LINK PIC'}
+                    </motion.a>
+                ))}
+            </div>
         </div>
     </motion.div>
 );
@@ -457,8 +497,8 @@ const MissionMapNode = ({ section, index, planetColor, onClick }: any) => {
 
   const typeColors: any = {
       mision1: '#00D6CC', // Teal/Cyan
-      landing: '#99CC33', // Lime
-      ojt:     '#FFB800', // Amber/Yellow
+      landing: '#FFC800', // Yellow
+      ojt:     '#ED1650', // LATAM Coral
       imersao: '#D400FF'  // Purple
   };
 
@@ -820,8 +860,11 @@ const FscDetailedNodeCard = ({ node, index, planetColor, parentLabel }: any) => 
                 <div style={{ position: 'absolute', top: 0, left: 0, width: 6, height: '100%', background: '#99CC33' }} />
             )}
             
-            <div style={{ display: 'flex', gap: 30, alignItems: 'center', flex: 1 }}>
-                <div style={{ fontSize: 32, fontWeight: 900, color: isResolved ? '#99CC33' : 'rgba(27,0,136,0.05)', fontStyle: 'italic', minWidth: 60 }}>
+            <div style={{ display: 'flex', gap: 20, alignItems: 'center', flex: 1 }}>
+                <div style={{ 
+                    fontSize: 32, fontWeight: 900, color: isResolved ? '#99CC33' : 'rgba(27,0,136,0.1)', 
+                    fontStyle: 'italic', minWidth: 60, display: 'flex', alignItems: 'center'
+                }}>
                     {String(index + 1).padStart(2, '0')}
                 </div>
 
@@ -831,7 +874,13 @@ const FscDetailedNodeCard = ({ node, index, planetColor, parentLabel }: any) => 
                     <div style={{ width: 8, height: 8, borderRadius: '50%', background: planetColor }} />
                     <div style={{ fontSize: 20, fontWeight: 900, color: '#1B0088', letterSpacing: '-0.01em' }}>{node.tema}</div>
                 </div>
-                <div style={{ fontSize: 15, color: '#4D4D4D', lineHeight: 1.7, fontWeight: 500 }}>
+                <div style={{ 
+                    fontSize: '15px', color: '#334155', lineHeight: 1.8, fontWeight: 500,
+                    background: 'rgba(27,0,136,0.02)', padding: '20px 25px', borderRadius: 14,
+                    borderLeft: `4px solid ${planetColor}44`, marginTop: 12,
+                    boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.02)',
+                    whiteSpace: 'pre-line'
+                }}>
                     {node.detalhe || node.desc}
                 </div>
                 
@@ -854,29 +903,79 @@ const FscDetailedNodeCard = ({ node, index, planetColor, parentLabel }: any) => 
                     </div>
                 </div>
 
-                {/* Tactical Tip (If present and not redundant) */}
-                {node.macroTema && node.macroTema.toLowerCase() !== (parentLabel || '').toLowerCase() && (
-                    <div style={{ 
-                        marginTop: 20, padding: '12px 16px', background: '#FFFFFF', 
-                        border: '1px solid #E2E8F0',
-                        borderRadius: 10, display: 'flex', gap: 12, alignItems: 'center'
-                    }}>
-                        <Lightbulb size={14} color="#1B0088" />
-                        <div style={{ fontSize: 12, color: '#1B0088', fontWeight: 600 }}>
-                            <span style={{ fontWeight: 800, textTransform: 'uppercase', fontSize: 9, color: 'rgba(27,0,136,0.5)', marginRight: 8 }}>Macro TEMA:</span>
-                            {node.macroTema}
-                        </div>
-                    </div>
-                )}
             </div>
             </div>
+            
+            {/* Tactical Divider between Text and Resources */}
+            <div style={{ width: '2px', alignSelf: 'stretch', background: 'rgba(27,0,136,0.08)', margin: '0 40px', borderRadius: 1 }} />
 
-            {/* Actions */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {/* Square Checkbox Resolution Button */}
+            {/* Actions & Links Column */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16, minWidth: '220px', justifyContent: 'center' }}>
+                {/* PIC LINKS GROUP */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {(Array.isArray(node.iaPic) ? node.iaPic : node.iaPic ? [{ label: 'PIC LINK', url: node.iaPic }] : []).map((link: any, li: number) => (
+                        <motion.a 
+                            key={li}
+                            whileHover={{ scale: 1.02, background: `${planetColor}10` }}
+                            href={link.url} target="_blank" rel="noopener noreferrer"
+                            style={{ 
+                                border: `1.5px solid ${planetColor}`, 
+                                color: planetColor, 
+                                padding: '10px 14px', 
+                                borderRadius: 10, 
+                                fontSize: 9, 
+                                fontWeight: 900, 
+                                textAlign: 'center', 
+                                textDecoration: 'none', 
+                                textTransform: 'uppercase', 
+                                letterSpacing: '0.5px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: 8,
+                                background: 'transparent'
+                            }}
+                        >
+                            <ExternalLink size={12} /> {link.label || 'LINK PIC'}
+                        </motion.a>
+                    ))}
+                </div>
+
+                {/* MAIN ACTION BUTTONS */}
+                {recs.length > 0 && recs.map((rec: any, ri: number) => (
+                    <motion.a 
+                        key={ri}
+                        whileHover={{ scale: 1.05, background: planetColor }}
+                        whileTap={{ scale: 0.98 }}
+                        href={rec.url} 
+                        target="_blank" rel="noopener noreferrer"
+                        style={{
+                            background: '#1B0088', 
+                            color: '#fff', 
+                            padding: '14px 20px', 
+                            borderRadius: 12, 
+                            fontWeight: 900, 
+                            fontSize: 10, 
+                            textAlign: 'center', 
+                            textDecoration: 'none',
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center', 
+                            gap: 10,
+                            boxShadow: `0 4px 12px rgba(27,0,136,0.2)`,
+                            transition: 'all 0.2s ease',
+                            letterSpacing: '1px',
+                            textTransform: 'uppercase'
+                        }}
+                    >
+                        <ExternalLink size={14} /> ABRIR {(rec.tipo || 'RECURSO').replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]+/g, '').trim().toUpperCase()}
+                    </motion.a>
+                ))}
+
+                {/* Completion Check */}
                 <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                     onClick={() => {
                         const key = `resolved_${node.tema}_${index}`;
                         const isDone = localStorage.getItem(key) === 'true';
@@ -888,82 +987,25 @@ const FscDetailedNodeCard = ({ node, index, planetColor, parentLabel }: any) => 
                         }
                     }}
                     style={{
-                        width: 36,
-                        height: 36,
-                        background: localStorage.getItem(`resolved_${node.tema}_${index}`) === 'true' ? '#99CC33' : '#FFFFFF',
-                        color: localStorage.getItem(`resolved_${node.tema}_${index}`) === 'true' ? '#fff' : '#1B0088',
-                        border: `2px solid ${localStorage.getItem(`resolved_${node.tema}_${index}`) === 'true' ? '#99CC33' : '#E2E8F0'}`,
-                        borderRadius: 6,
+                        height: 32,
+                        background: isResolved ? '#99CC33' : 'transparent',
+                        color: isResolved ? '#fff' : '#CBD5E1',
+                        border: `2px solid ${isResolved ? '#99CC33' : '#E2E8F0'}`,
+                        borderRadius: 8,
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        alignSelf: 'flex-end',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                        alignSelf: 'center',
+                        padding: '0 20px',
+                        fontSize: 9,
+                        fontWeight: 900,
+                        gap: 8,
                         transition: 'all 0.2s ease'
                     }}
                 >
-                    <Check size={22} strokeWidth={3} />
+                    <Check size={16} strokeWidth={4} /> {isResolved ? 'COMPLETADO' : 'MARCAR COMO VISTO'}
                 </motion.div>
-
-                {firstRec && firstRec.url && firstRec.url !== '#' ? (
-                    <motion.a 
-                        whileHover={{ scale: 1.05, background: planetColor }}
-                        whileTap={{ scale: 0.98 }}
-                        href={firstRec.url} 
-                        target="_blank" rel="noopener noreferrer"
-                        style={{
-                            background: '#1B0088', 
-                            color: '#fff', 
-                            padding: '16px 24px', 
-                            borderRadius: 12, 
-                            fontWeight: 900, 
-                            fontSize: 12, 
-                            textAlign: 'center', 
-                            textDecoration: 'none',
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            justifyContent: 'center', 
-                            gap: 12,
-                            boxShadow: `0 4px 12px rgba(27,0,136,0.2)`,
-                            transition: 'all 0.2s ease',
-                            letterSpacing: '1px',
-                            textTransform: 'uppercase'
-                        }}
-                    >
-                        ABRIR {(firstRec.tipo || 'RECURSO').replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]+/g, '').toUpperCase()}
-                    </motion.a>
-                ) : (
-                    <div style={{ background: 'rgba(15,0,79,0.02)', color: '#94A3B8', padding: '18px', borderRadius: 16, fontSize: 11, fontWeight: 800, textAlign: 'center', border: '2px dashed #E2E8F0', letterSpacing: '1px' }}>
-                        RECURSO_NO_DETECTADO
-                    </div>
-                )}
-                
-                {node.iaPic && (
-                    <motion.a 
-                        whileHover={{ scale: 1.05, background: `${planetColor}10` }}
-                        href={node.iaPic} target="_blank" rel="noopener noreferrer"
-                        style={{ 
-                            border: `2px solid ${planetColor}`, 
-                            color: planetColor, 
-                            padding: '14px', 
-                            borderRadius: 16, 
-                            fontSize: 11, 
-                            fontWeight: 900, 
-                            textAlign: 'center', 
-                            textDecoration: 'none', 
-                            textTransform: 'uppercase', 
-                            letterSpacing: '2px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: 10,
-                            background: 'transparent'
-                        }}
-                    >
-                        <Cpu size={18} /> IA_ENLACE
-                    </motion.a>
-                )}
             </div>
         </motion.div>
     );
@@ -971,6 +1013,20 @@ const FscDetailedNodeCard = ({ node, index, planetColor, parentLabel }: any) => 
 
 const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOverride, subtitleOverride }: any) => {
     const allSecciones = secciones || [seccion];
+    const initialThemes = useMemo(() => {
+        const themes = new Set<string>();
+        allSecciones.forEach((s: any) => (s.rows || []).forEach((r: any) => { if (r.macroTema) themes.add(r.macroTema); }));
+        return Array.from(themes);
+    }, [allSecciones]);
+
+    const [collapsedThemes, setCollapsedThemes] = useState<string[]>(initialThemes);
+    
+    const toggleTheme = (theme: string) => {
+        setCollapsedThemes(prev => 
+            prev.includes(theme) ? prev.filter(t => t !== theme) : [...prev, theme]
+        );
+    };
+
     // For the header/sidebar, we use the first section's type or the default
     const firstSec = allSecciones[0] || { rows: [], tipo: 'mision1' };
     const tipo = firstSec.tipo || 'mision1';
@@ -984,8 +1040,8 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
 
     const typeColors: any = {
         mision1: '#00D6CC',
-        landing: '#99CC33',
-        ojt:     '#FFB800',
+        landing: '#FFC800',
+        ojt:     '#ED1650',
         imersao: '#D400FF'
     };
 
@@ -1069,15 +1125,71 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                     <div style={{ fontSize: 14, color: '#1B0088', opacity: 0.7 }}>Sin nodos en esta sección.</div>
                                 </div>
                             ) : (
-                                    (sec.rows || []).map((row: any, i: number) => (
-                                        <FscDetailedNodeCard 
-                                            key={`${sidx}-${i}`} 
-                                            node={row} 
-                                            index={i} 
-                                            planetColor={planetColor} 
-                                            parentLabel={sec.label}
-                                        />
-                                    ))
+                                <>
+                                    {(() => {
+                                        const grouped: { [key: string]: any[] } = {};
+                                        (sec.rows || []).forEach((r: any, i: number) => {
+                                            const mt = r.macroTema || 'GENERAL';
+                                            if (!grouped[mt]) grouped[mt] = [];
+                                            grouped[mt].push({ ...r, originalIndex: i });
+                                        });
+
+                                        return Object.entries(grouped).map(([mt, rows], gi) => {
+                                            const isCollapsed = collapsedThemes.includes(mt);
+                                            return (
+                                                <div key={gi} style={{ marginBottom: isCollapsed ? 20 : 50 }}>
+                                                    {/* Premium Tactical Theme Header - NOW CLICKABLE TO COLLAPSE */}
+                                                    <motion.div 
+                                                        whileHover={{ background: 'rgba(27,0,136,0.06)' }}
+                                                        onClick={() => toggleTheme(mt)}
+                                                        style={{ 
+                                                            display: 'flex', alignItems: 'center', gap: 20, marginBottom: isCollapsed ? 0 : 24, 
+                                                            padding: '16px 24px', background: 'rgba(27,0,136,0.03)', 
+                                                            borderRadius: '12px', borderLeft: `4px solid ${planetColor}`,
+                                                            position: 'relative', overflow: 'hidden', cursor: 'pointer',
+                                                            transition: '0.3s ease'
+                                                        }}
+                                                    >
+                                                        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(27,0,136,0.05) 0%, transparent 100%)', pointerEvents: 'none' }} />
+                                                        
+                                                        <div style={{ 
+                                                            width: 32, height: 32, borderRadius: 8, background: isCollapsed ? '#1B0088' : planetColor, 
+                                                            display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff',
+                                                            boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
+                                                        }}>
+                                                            {isCollapsed ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
+                                                        </div>
+
+                                                        <div style={{ fontSize: 20, fontWeight: 900, color: '#1B0088', letterSpacing: '-0.02em', textTransform: 'uppercase', flex: 1 }}>{mt}</div>
+                                                        
+                                                        <div style={{ fontSize: 10, color: 'rgba(27,0,136,0.4)', fontWeight: 800 }}>{rows.length} NODOS DETECTADOS</div>
+                                                    </motion.div>
+                                                    
+                                                    <AnimatePresence>
+                                                        {!isCollapsed && (
+                                                            <motion.div
+                                                                initial={{ opacity: 0, height: 0 }}
+                                                                animate={{ opacity: 1, height: 'auto' }}
+                                                                exit={{ opacity: 0, height: 0 }}
+                                                                style={{ overflow: 'hidden' }}
+                                                            >
+                                                                {rows.map((row: any) => (
+                                                                    <FscDetailedNodeCard 
+                                                                        key={`${sidx}-${row.originalIndex}`} 
+                                                                        node={row} 
+                                                                        index={row.originalIndex} 
+                                                                        planetColor={planetColor} 
+                                                                        parentLabel={sec.label}
+                                                                    />
+                                                                ))}
+                                                            </motion.div>
+                                                        )}
+                                                    </AnimatePresence>
+                                                </div>
+                                            );
+                                        });
+                                    })()}
+                                </>
                             )}
                         </div>
                     ))}
@@ -1199,22 +1311,27 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                             planetColor={planetColor} 
                             onBack={onBack} 
                         />
-                        <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '24px 60px 0 60px', position: 'relative', zIndex: 110, gap: 20 }}>
-                             <TacticalSatelliteWidget 
-                                title="MATERIAIS" 
-                                icon={<FileText size={24} />} 
-                                links={planetObj?.materiais} 
-                                color={planetColor} 
-                             />
-                             <TacticalSatelliteWidget 
-                                title="AVALIAÇÕES" 
-                                icon={<BadgeCheck size={24} />} 
-                                color="#00D6CC"
-                                subGroups={[
-                                    { id: 'kon', label: 'KON BR', color: '#99CC33', icon: <Shield />, links: planetObj?.evalKon || [] },
-                                    { id: 'aec', label: 'AeC', color: '#00D6CC', icon: <Gem />, links: planetObj?.evalAec || [] }
-                                ].filter(g => g.links.length > 0)}
-                             />
+                        <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '24px 60px 0 60px', position: 'relative', zIndex: 110, gap: 20, pointerEvents: 'none' }}>
+                             <div style={{ pointerEvents: 'auto' }}>
+                                <TacticalSatelliteWidget 
+                                    title="MATERIAIS" 
+                                    icon={<FileText size={24} />} 
+                                    links={planetObj?.materiais} 
+                                    color={planetColor} 
+                                />
+                             </div>
+                             <div style={{ pointerEvents: 'auto' }}>
+                                <TacticalSatelliteWidget 
+                                    title="AVALIAÇÕES" 
+                                    icon={<BadgeCheck size={24} />} 
+                                    color="#00D6CC"
+                                    evalMsg={planetObj?.evalMsg}
+                                    subGroups={[
+                                        { id: 'kon', label: 'KON BR', color: '#99CC33', links: planetObj?.evalKon || [] },
+                                        { id: 'aec', label: 'AeC', color: '#00D6CC', links: planetObj?.evalAec || [] }
+                                    ].filter(g => g.links.length > 0)}
+                                />
+                             </div>
                         </div>
                         <div style={{ padding: '0 60px', maxWidth: 1200, margin: '0 auto' }}>
                             <AnimatePresence mode="wait">
