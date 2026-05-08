@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 
 const TIPO_INFO: any = {
-  mision1: { label: 'EXPEDIÇÃO', emoji: <Rocket size={20} />, accent: '#1B0088' },
+  mision1: { label: 'MISIÓN', emoji: <Rocket size={20} />, accent: '#1B0088' },
   landing: { label: 'LANDING', emoji: <Anchor size={20} />, accent: '#FFC800' },
   ojt:     { label: 'DESAFIO OJT', emoji: <Target size={20} />, accent: '#ED1650' },
   imersao: { label: 'IMERSÃO',     emoji: <Cpu size={20} />,    accent: '#D400FF' },
@@ -161,7 +161,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
       <div style={{ width: '280px', background: '#1B0088', borderRight: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', boxShadow: '10px 0 30px rgba(0,0,0,0.05)', zIndex: 50 }}>
         <div style={{ padding: '32px 24px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
           <button onClick={onBack} style={{ background: 'rgba(255,255,255,0.1)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.2)', padding: '12px 24px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s', width: '100%', justifyContent: 'center' }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}><ArrowLeft size={16} /> VOLVER</button>
-          <div style={{ marginTop: '32px', fontSize: '10px', fontWeight: 900, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.25em', paddingLeft: 8 }}>EXPEDICIÓN LUNAR</div>
+          <div style={{ marginTop: '32px', fontSize: '10px', fontWeight: 900, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.25em', paddingLeft: 8 }}>MISIÓN LUNAR</div>
         </div>
         <div style={{ flex: 1, overflowY: 'auto', padding: '20px 16px' }}>
           {planets.map((p: any, i: number) => {
