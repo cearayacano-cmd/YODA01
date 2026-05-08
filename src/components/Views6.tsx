@@ -1497,8 +1497,18 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                     <div style={{ width: 40, height: 2, background: planetColor }} /> MISSÃO CUMPRIDA
                                 </div>
                                 
-                                <div style={{ fontSize: 64, fontWeight: 900, color: '#fff', marginBottom: 24, lineHeight: 1.1, letterSpacing: '-1px' }}>
-                                    PARABÉNS,<br/>GUARDIÃO!
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 40, marginBottom: 32 }}>
+                                    <motion.img 
+                                        initial={{ scale: 0, rotate: -20 }}
+                                        animate={{ scale: 1, rotate: 0 }}
+                                        transition={{ type: 'spring', damping: 12, stiffness: 100, delay: 0.7 }}
+                                        src="/escudos/YODA_Escudo_PT1.png" 
+                                        alt="Escudo" 
+                                        style={{ width: '150px', height: 'auto', filter: 'drop-shadow(0 0 30px rgba(255,255,255,0.15))' }} 
+                                    />
+                                    <div style={{ fontSize: 64, fontWeight: 900, color: '#fff', lineHeight: 1.1, letterSpacing: '-1px' }}>
+                                        PARABÉNS,<br/>GUARDIÃO!
+                                    </div>
                                 </div>
                                 
                                 <div style={{ height: '4px', width: '100px', background: planetColor, marginBottom: 40, borderRadius: 2 }} />
