@@ -1023,8 +1023,10 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     const [collapsedThemes, setCollapsedThemes] = useState<string[]>(initialThemes);
 
     const handleMarkAllAsComplete = () => {
-        ((seccion || {}).rows || []).forEach((r: any, i: number) => {
-            localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'true');
+        allSecciones.forEach(sec => {
+            (sec.rows || []).forEach((r: any, i: number) => {
+                localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'true');
+            });
         });
         if ((window as any).refreshOnboarding) (window as any).refreshOnboarding();
         onBack();
@@ -1033,8 +1035,10 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     const handleResetProgress = () => {
         // We remove the native confirm as it might be blocked in some environments
         // or causing issues with the React event loop.
-        ((seccion || {}).rows || []).forEach((r: any, i: number) => {
-            localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'false');
+        allSecciones.forEach(sec => {
+            (sec.rows || []).forEach((r: any, i: number) => {
+                localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'false');
+            });
         });
         
         // Clear congrats flag too
@@ -1050,8 +1054,10 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     };
 
     const isAllComplete = useMemo(() => {
-        return ((seccion || {}).rows || []).every((r: any, i: number) => localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true');
-    }, [seccion, tick, planetLabel]);
+        return allSecciones.every(sec => 
+            (sec.rows || []).every((r: any, i: number) => localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true')
+        );
+    }, [allSecciones, tick, planetLabel]);
     
     const toggleTheme = (theme: string) => {
         setCollapsedThemes(prev => 
@@ -1416,7 +1422,6 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
             ) : viewMode === 'detail' ? (
                 <FscDetailedTerminal 
                     seccion={secciones[selectedIdx] || {rows:[]}} 
-                    secciones={secciones}
                     planetColor={planetColor} 
                     onBack={() => setViewMode('map')} 
                     tick={tick}

@@ -201,13 +201,13 @@ export default function App() {
   React.useEffect(() => {
     // ONE-TIME AUTO WIPE FOR VERSION UPDATE
     // This ensures that all old, corrupted, or conflicting progress markers are cleared for the user.
-    if (!localStorage.getItem('yoda_auto_wipe_v2')) {
+    if (!localStorage.getItem('yoda_auto_wipe_v3')) {
       Object.keys(localStorage).forEach(key => {
         if (key.startsWith('resolved_') || key.startsWith('congrats_shown_')) {
           localStorage.removeItem(key);
         }
       });
-      localStorage.setItem('yoda_auto_wipe_v2', 'true');
+      localStorage.setItem('yoda_auto_wipe_v3', 'true');
       console.log('Automated wipe complete.');
     }
   }, []);
