@@ -153,6 +153,41 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
               <span style={{ fontSize: 13, letterSpacing: '0.05em' }}>{st} STATION</span>
             </motion.div>
           ))}
+          
+          <div style={{ marginTop: 'auto', padding: '0 8px' }}>
+            <motion.button 
+              whileHover={{ scale: 1.02, background: 'rgba(239,68,68,0.1)' }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => {
+                if (window.confirm("¿BORRAR TODO EL PROGRESO? Esta acción limpiará todas las marcas de planetas y misiones completadas.")) {
+                  Object.keys(localStorage).forEach(key => {
+                    if (key.startsWith('resolved_') || key.startsWith('congrats_shown_')) {
+                      localStorage.removeItem(key);
+                    }
+                  });
+                  window.location.reload();
+                }
+              }}
+              style={{
+                width: '100%',
+                padding: '12px 16px',
+                background: 'transparent',
+                border: '1px solid rgba(239,68,68,0.3)',
+                borderRadius: 8,
+                color: '#ef4444',
+                fontSize: 11,
+                fontWeight: 900,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                cursor: 'pointer',
+                letterSpacing: '1px',
+                textTransform: 'uppercase'
+              }}
+            >
+              <Trash2 size={16} /> RESET MASTER PROGRESO
+            </motion.button>
+          </div>
         </div>
         
         {/* Main Content Area */}
