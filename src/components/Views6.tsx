@@ -1482,7 +1482,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                 <div style={{ position: 'relative', width: '100%', maxWidth: '420px' }}>
                                     <div style={{ position: 'absolute', inset: -60, borderRadius: '50%', background: `radial-gradient(circle, ${planetColor}11 0%, transparent 70%)`, filter: 'blur(50px)' }} />
                                     <video 
-                                        src="/IARAVIDEO.mp4" 
+                                        src="/IARA2.mp4" 
                                         autoPlay muted loop playsInline
                                         style={{ 
                                             width: '100%', height: 'auto', 
