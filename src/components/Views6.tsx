@@ -1267,25 +1267,6 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
     const [tick, setTick] = React.useState(0);
     const [showCongrats, setShowCongrats] = React.useState(false);
 
-    const isModuleComplete = React.useMemo(() => {
-        if (!secciones || secciones.length === 0) return false;
-        return secciones.every(sec => {
-            const rows = sec.rows || [];
-            if (rows.length === 0) return true;
-            return rows.every((r: any, i: number) => localStorage.getItem(`resolved_${r.tema}_${i}`) === 'true');
-        });
-    }, [secciones, tick]);
-
-    React.useEffect(() => {
-        if (isModuleComplete) {
-            const storageKey = `congrats_shown_${planetLabel}_${sectorLabel}`;
-            if (localStorage.getItem(storageKey) !== 'true') {
-                setTimeout(() => setShowCongrats(true), 1000);
-                localStorage.setItem(storageKey, 'true');
-            }
-        }
-    }, [isModuleComplete, planetLabel, sectorLabel]);
-
     React.useEffect(() => {
         (window as any).refreshOnboarding = () => setTick(t => t + 1);
         return () => { delete (window as any).refreshOnboarding; };
@@ -1307,6 +1288,25 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
             secciones = [{ tipo: planetObj.tipo || 'mision1', nombre: '', rows: planetObj.rows }];
         }
     }
+
+    const isModuleComplete = React.useMemo(() => {
+        if (!secciones || secciones.length === 0) return false;
+        return secciones.every(sec => {
+            const rows = sec.rows || [];
+            if (rows.length === 0) return true;
+            return rows.every((r: any, i: number) => localStorage.getItem(`resolved_${r.tema}_${i}`) === 'true');
+        });
+    }, [secciones, tick]);
+
+    React.useEffect(() => {
+        if (isModuleComplete) {
+            const storageKey = `congrats_shown_${planetLabel}_${sectorLabel}`;
+            if (localStorage.getItem(storageKey) !== 'true') {
+                setTimeout(() => setShowCongrats(true), 1000);
+                localStorage.setItem(storageKey, 'true');
+            }
+        }
+    }, [isModuleComplete, planetLabel, sectorLabel]);
 
     const handleSelectSection = (idx: number) => {
         setSelectedIdx(idx);
