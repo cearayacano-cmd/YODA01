@@ -1434,19 +1434,18 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                 transition={{ delay: 0.3 }}
                                 style={{ flex: 1, display: 'flex', justifyContent: 'center' }}
                             >
-                                <div style={{ position: 'relative', width: '100%', maxWidth: '500px', aspectRatio: '1/1' }}>
-                                    <div style={{ position: 'absolute', inset: -40, borderRadius: '50%', background: `radial-gradient(circle, ${planetColor}22 0%, transparent 70%)`, filter: 'blur(30px)' }} />
+                                <div style={{ position: 'relative', width: '100%', maxWidth: '700px' }}>
+                                    <div style={{ position: 'absolute', inset: -60, borderRadius: '50%', background: `radial-gradient(circle, ${planetColor}11 0%, transparent 70%)`, filter: 'blur(50px)' }} />
                                     <video 
                                         src="/IARAVIDEO.mp4" 
                                         autoPlay muted loop playsInline
                                         style={{ 
-                                            width: '100%', height: '100%', borderRadius: '40px', 
-                                            border: `1px solid ${planetColor}44`, boxShadow: `0 30px 100px rgba(0,0,0,0.8)`,
-                                            objectFit: 'contain', background: '#000'
+                                            width: '100%', height: 'auto', 
+                                            objectFit: 'contain', background: 'transparent'
                                         }} 
                                     />
                                     {/* Scanline overlay for tactical feel */}
-                                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03))', backgroundSize: '100% 4px, 3px 100%', pointerEvents: 'none', borderRadius: '40px' }} />
+                                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03))', backgroundSize: '100% 4px, 3px 100%', pointerEvents: 'none' }} />
                                 </div>
                             </motion.div>
 
