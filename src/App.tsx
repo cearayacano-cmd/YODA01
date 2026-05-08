@@ -25,7 +25,10 @@ import {
   POS_VENTA_2_DATA,
   HVC_BAG_DATA,
   LAE_DATA,
-  ONBOARDING_DATA_DEFAULT
+  VENDAS_WS_12_DATA,
+  ONBOARDING_DATA_DEFAULT,
+  ONBOARDING_VENDAS_DATA,
+  ONBOARDING_EMPTY
 } from './lib/data';
 
 import { AdminCenter } from './components/AdminViews';
@@ -165,13 +168,16 @@ export default function App() {
       ],
       lastUpdate: "30/04/2026",
       rutaLider: RUTA_DATA_DEFAULT,
-      onboarding: [ONBOARDING_DATA_DEFAULT],
-      frontLineContent: [BASE_PLANET_DATA, POS_VENTA_1_DATA, POS_VENTA_2_DATA, HVC_BAG_DATA, LAE_DATA],
+      onboarding: [
+        { label: "NAVE DE ONBOARDING BASE", data: ONBOARDING_DATA_DEFAULT },
+        { label: "NAVE DE ONBOARDING Vendas + WS 12 dias", data: ONBOARDING_VENDAS_DATA }
+      ],
+      frontLineContent: [VENDAS_WS_12_DATA, BASE_PLANET_DATA, POS_VENTA_1_DATA, POS_VENTA_2_DATA, HVC_BAG_DATA, LAE_DATA],
       soporteContent: initGalaxy(["Soporte 1","Soporte 2"]),
       fsc: initGalaxy(["FSC 1","FSC 2"]),
       satelites: { conhecendo: CONHECENDO_DATA, imersao: IMERSAO_DATA },
       exploracion:{
-        frontLine:[BASE_PLANET_DATA, POS_VENTA_1_DATA, POS_VENTA_2_DATA, HVC_BAG_DATA, LAE_DATA],
+        frontLine:[VENDAS_WS_12_DATA, BASE_PLANET_DATA, POS_VENTA_1_DATA, POS_VENTA_2_DATA, HVC_BAG_DATA, LAE_DATA],
         soporte:initGalaxy(["Soporte BO (Pendiente)","Soporte FFP (Pendiente)"]),
         fieldSupport:initGalaxy(["FSC (Pendiente)"])
       }
@@ -318,7 +324,7 @@ export default function App() {
                   }
                 }));
               }}
-              planets={adminSector === 'onboarding' ? [{label: 'ONBOARDING'}] : appConfig[sk].exploracion[adminSector]}
+              planets={adminSector === 'onboarding' ? (appConfig[sk].onboarding || []) : appConfig[sk].exploracion[adminSector]}
               onBack={() => go('admin-exploracion')}
               initialPlanet={adminCourseIdx}
               title={title}

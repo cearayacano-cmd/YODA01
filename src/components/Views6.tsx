@@ -557,7 +557,7 @@ const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATE
       }}>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 50%, rgba(255,255,255,0.02) 50%)', backgroundSize: '100% 4px', pointerEvents: 'none' }} />
         
-        <div style={{ fontSize: '9px', color: isCompleted ? '#99CC33' : nodeColor, fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '8px', position: 'relative' }}>MÓDULO_{String(index + 1).padStart(2, '0')}</div>
+        <div style={{ fontSize: '9px', color: isCompleted ? '#99CC33' : nodeColor, fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '8px', position: 'relative' }}>{String(index + 1).padStart(2, '0')}</div>
         <div style={{ fontSize: '20px', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '2px', position: 'relative' }}>{section.label || section.nombre || 'CARGA DE DATOS...'}</div>
         <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)', fontWeight: 800, marginTop: '8px', position: 'relative' }}>
           ⏱ {section.rows?.length || 0} NODOS_TÉCNICOS • TIEMPO: {
@@ -586,7 +586,7 @@ const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATE
   );
 };
 
-export const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onboardingData, onSelectOnboarding, isFirstPlanet, onBackToPlanets, texture = 'CRATERS', tick }: any) => {
+export const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onboardingData, activeOnboardingIdx, onSelectOnboarding, isFirstPlanet, onBackToPlanets, texture = 'CRATERS', tick }: any) => {
   const nodeSpacing = 360;
   const totalWidth = 1000;
   const lastNodeY = (secciones.length - 1) * nodeSpacing + 210;
@@ -1033,18 +1033,24 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     };
 
     const handleResetProgress = () => {
-        if (confirm('¿Estás seguro de que quieres reiniciar el progreso de este módulo?')) {
-            allSecciones.forEach(sec => {
-                (sec.rows || []).forEach((r: any, i: number) => {
-                    localStorage.setItem(`resolved_${r.tema}_${i}`, 'false');
-                });
+        // We remove the native confirm as it might be blocked in some environments
+        // or causing issues with the React event loop.
+        allSecciones.forEach(sec => {
+            (sec.rows || []).forEach((r: any, i: number) => {
+                localStorage.setItem(`resolved_${r.tema}_${i}`, 'false');
             });
-            // Clear congrats flag too
-            const congratsKey = `congrats_shown_${planetLabel || titleOverride || seccion?.nombre || ''}_${sectorLabel || subtitleOverride || 'SECTOR'}`;
-            localStorage.setItem(congratsKey, 'false');
-            if ((window as any).refreshOnboarding) (window as any).refreshOnboarding();
-            onBack();
+        });
+        
+        // Clear congrats flag too
+        const congratsKey = `congrats_shown_${planetLabel || titleOverride || seccion?.nombre || ''}_${sectorLabel || subtitleOverride || 'SECTOR'}`;
+        localStorage.setItem(congratsKey, 'false');
+        
+        if (typeof window !== 'undefined' && (window as any).refreshOnboarding) {
+            (window as any).refreshOnboarding();
         }
+        
+        // Return to map to see changes
+        if (onBack) onBack();
     };
 
     const isAllComplete = useMemo(() => {
@@ -1102,7 +1108,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                     </div>
                     <div>
                         <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.6)', fontWeight: 900, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: 2 }}>{subtitleOverride || 'PROTOCOLO DE SEGMENTO'}</div>
-                        <div style={{ fontSize: 26, fontWeight: 900, color: '#FFF' }}>{titleOverride || seccion.nombre?.toUpperCase() || seccion.label?.toUpperCase() || 'MÓDULO DE EXPLORACIÓN'}</div>
+                        <div style={{ fontSize: 26, fontWeight: 900, color: '#FFF' }}>{titleOverride || seccion.nombre?.toUpperCase() || seccion.label?.toUpperCase() || 'EXPLORAÇÃO TÁTICA'}</div>
                     </div>
                 </div>
 
@@ -1133,7 +1139,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                             {allSecciones.length > 1 && (
                                 <div style={{ marginBottom: 20, borderBottom: `2px solid ${typeColors[sec.tipo] || planetColor}`, paddingBottom: 8, display: 'flex', alignItems: 'center', gap: 12 }}>
                                     <div style={{ color: typeColors[sec.tipo] || planetColor }}>{typeIcons[sec.tipo] || typeIcons.mision1}</div>
-                                    <div style={{ fontSize: 14, fontWeight: 900, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '1px' }}>{sec.label || 'MÓDULO'}</div>
+                                    <div style={{ fontSize: 14, fontWeight: 900, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '1px' }}>{sec.label?.replace(/MÓDULO\s*\d*:\s*/i, '') || ''}</div>
                                 </div>
                             )}
                             {(sec.rows || []).length === 0 ? (
@@ -1389,8 +1395,8 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                     transition={{ duration: 0.6 }}
                                 >
                                     <div style={{ textAlign: 'center', marginTop: 100, marginBottom: 40 }}>
-                                        <div style={{ fontSize: 10, color: planetColor, fontWeight: 900, letterSpacing: '6px', marginBottom: 12, textTransform: 'uppercase' }}>MAPA TÁCTICO DE EXPLORACIÓN</div>
-                                        <div style={{ fontSize: 36, fontWeight: 900, color: '#fff', letterSpacing: '4px', textTransform: 'uppercase' }}>MISIÓN: {planetLabel}</div>
+                                        <div style={{ fontSize: 10, color: planetColor, fontWeight: 900, letterSpacing: '6px', marginBottom: 12, textTransform: 'uppercase' }}>MAPA TÁTICO DE EXPLORAÇÃO</div>
+                                        <div style={{ fontSize: 36, fontWeight: 900, color: '#fff', letterSpacing: '4px', textTransform: 'uppercase' }}>EXPEDIÇÃO: {planetLabel}</div>
                                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>
                                             <div style={{ width: 140, height: 2, background: `linear-gradient(90deg, transparent, ${planetColor}, transparent)` }} />
                                         </div>
@@ -1402,8 +1408,9 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                         tick={tick}
                                         onSelectSection={handleSelectSection} 
                                         onboardingData={onboardingData}
+                                        activeOnboardingIdx={planetObj?.onboardingIdx || 0}
                                         onSelectOnboarding={() => setViewMode('onboarding')}
-                                        isFirstPlanet={planetIdx === 0 && sectorLabel === 'FRONT LINE'}
+                                        isFirstPlanet={(planetIdx === 0 || planetObj?.onboardingIdx !== undefined) && sectorLabel === 'FRONT LINE'}
                                         onBackToPlanets={onBack}
                                     />
                                 </motion.div>
@@ -1422,10 +1429,10 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                 />
             ) : (
                 <FscDetailedTerminal 
-                    secciones={(onboardingData?.[0]?.secciones) || [onboardingData?.[0]] || []} 
+                    secciones={onboardingData?.[planetObj?.onboardingIdx || 0]?.data?.secciones || []} 
                     planetColor="#FFB800" 
                     subtitleOverride="PROTOCOLO DE PREPARACIÓN"
-                    titleOverride="NAVE DE ONBOARDING"
+                    titleOverride={onboardingData?.[planetObj?.onboardingIdx || 0]?.label || "NAVE DE ONBOARDING"}
                     onBack={() => setViewMode('map')} 
                     tick={tick}
                     planetLabel="NAVE DE ONBOARDING"
@@ -1493,8 +1500,12 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                 transition={{ delay: 0.5 }}
                                 style={{ flex: 1, textAlign: 'left' }}
                             >
-                                <div style={{ fontSize: 14, color: planetColor, fontWeight: 900, letterSpacing: '8px', marginBottom: 24, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 20 }}>
-                                    <div style={{ width: 40, height: 2, background: planetColor }} /> MISSÃO CUMPRIDA
+                                <div style={{ 
+                                    fontSize: 14, color: planetColor, fontWeight: 900, letterSpacing: '8px', marginBottom: 24, 
+                                    textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 20,
+                                    textShadow: `0 0 12px ${planetColor}aa`
+                                }}>
+                                    <div style={{ width: 40, height: 2, background: planetColor, boxShadow: `0 0 10px ${planetColor}` }} /> MISSÃO CUMPRIDA
                                 </div>
                                 
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 40, marginBottom: 32 }}>
@@ -1511,10 +1522,13 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                     </div>
                                 </div>
                                 
-                                <div style={{ height: '4px', width: '100px', background: planetColor, marginBottom: 40, borderRadius: 2 }} />
+                                <div style={{ 
+                                    height: '4px', width: '100px', background: planetColor, marginBottom: 40, borderRadius: 2,
+                                    boxShadow: `0 0 15px ${planetColor}, 0 0 5px ${planetColor}`
+                                }} />
 
                                 <div style={{ fontSize: 20, color: 'rgba(255,255,255,0.7)', lineHeight: 1.8, marginBottom: 60, fontWeight: 500 }}>
-                                    Você completou com sucesso todos os protocolos atribuídos ao módulo <span style={{ color: '#fff', fontWeight: 900, borderBottom: `2px solid ${planetColor}` }}>{planetLabel}</span>. 
+                                    Você completou com sucesso todos os protocolos atribuídos à <span style={{ color: '#fff', fontWeight: 900, borderBottom: `2px solid ${planetColor}` }}>{planetLabel}</span>. 
                                     Seu desempenho foi registrado no núcleo central da estação.
                                 </div>
 

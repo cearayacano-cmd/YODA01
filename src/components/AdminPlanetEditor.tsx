@@ -47,17 +47,21 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
   };
 
   const data = Array.isArray(dataArray) ? dataArray : [];
-  const rawPlanetData = data[activePlanet];
-  const planetObj = (rawPlanetData && !Array.isArray(rawPlanetData)) 
-    ? rawPlanetData 
-    : { secciones: Array.isArray(rawPlanetData) ? rawPlanetData : [], materiais: [], evalKon: [], evalAec: [], evalMsg: '' };
+  const planetObjRaw = data[activePlanet];
+  const planetObj = isOnboarding 
+    ? (planetObjRaw?.data || { secciones: [], materiais: [], evalKon: [], evalAec: [], evalMsg: '' }) 
+    : (planetObjRaw && !Array.isArray(planetObjRaw) 
+        ? planetObjRaw 
+        : { secciones: Array.isArray(planetObjRaw) ? planetObjRaw : [], materiais: [], evalKon: [], evalAec: [], evalMsg: '' });
 
   const currentSections = planetObj.secciones || [];
 
   const updatePlanetData = (nextObj: any) => {
     const nextData = [...data];
-    while (nextData.length <= activePlanet) nextData.push([]);
-    nextData[activePlanet] = nextObj;
+    while (nextData.length <= activePlanet) nextData.push(isOnboarding ? { label: '', data: {} } : []);
+    nextData[activePlanet] = isOnboarding 
+      ? { ...nextData[activePlanet], data: nextObj } 
+      : nextObj;
     setDataArray(nextData);
   };
 

@@ -134,41 +134,64 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
             }}>
               <div style={{ position: 'absolute', top: 0, left: 0, width: '6px', height: '100%', background: '#1B0088' }} />
 
-              {/* ONBOARDING BLOCK INSIDE THE SAME WHITE CONTAINER */}
+              {/* ONBOARDING BLOCK - SUPPORTS MULTIPLE NAVES */}
               <div style={{ paddingTop: 8 }}>
-                <div style={{display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20}}>
-                  <span style={{ fontSize: 20 }}>🚀</span>
-                  <div style={{fontSize:14, color:'#FF8C00', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
-                    PROTOCOLO DE PREPARACIÓN
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
+                  <div style={{display: 'flex', alignItems: 'center', gap: 14}}>
+                    <span style={{ fontSize: 20 }}>🚀</span>
+                    <div style={{fontSize:14, color:'#FF8C00', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
+                      PROTOCOLO DE PREPARACIÓN
+                    </div>
                   </div>
                 </div>
-                <div style={{
-                  background: '#F8FAFC',
-                  borderRadius: 20,
-                  padding: '24px 32px',
-                  border: '1px solid #E2E8F0',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#FFB800'; e.currentTarget.style.background = '#ffffff'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#F8FAFC'; }}
-                >
-                  <div style={{display: 'flex', alignItems: 'center', gap: 16}}>
-                    <div style={{fontSize:18, color:'#1B0088', fontWeight:900}}>NAVE DE ONBOARDING</div>
-                  </div>
-                  <button 
-                    onClick={() => onAdvancedContent('onboarding', 0)}
-                    style={{
-                      background:'#FFB800', color:'#ffffff', border:'none', 
-                      padding:'14px 24px', cursor:'pointer', fontSize:13, fontWeight:800, 
-                      borderRadius:10, display: 'flex', alignItems: 'center', gap: 10,
-                      transition: 'all 0.2s ease', boxShadow: '0 4px 12px rgba(255,184,0,0.3)'
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                  {(currentStationConfig.onboarding || []).map((onb: any, oidx: number) => (
+                    <div key={oidx} style={{
+                      background: '#F8FAFC',
+                      borderRadius: 20,
+                      padding: '20px 24px',
+                      border: '1px solid #E2E8F0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      transition: 'all 0.3s ease'
                     }}
-                  >
-                    <Edit3 size={18} /> CONFIGURAR NAVE
-                  </button>
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#FFB800'; e.currentTarget.style.background = '#ffffff'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#F8FAFC'; }}
+                    >
+                      <div style={{display: 'flex', alignItems: 'center', gap: 16, flex: 1}}>
+                        <input 
+                          value={onb.label || 'NAVE DE ONBOARDING'}
+                          onChange={(e) => {
+                            const next = [...currentStationConfig.onboarding];
+                            next[oidx] = { ...next[oidx], label: e.target.value };
+                            updateStationConfig('onboarding', next);
+                          }}
+                          style={{
+                            background: 'transparent', border: 'none', borderBottom: '1px solid transparent',
+                            fontSize: 16, color: '#1B0088', fontWeight: 900, outline: 'none', width: '100%',
+                            padding: '4px 0'
+                          }}
+                          onFocus={(e) => e.target.style.borderBottomColor = '#FFB800'}
+                          onBlur={(e) => e.target.style.borderBottomColor = 'transparent'}
+                        />
+                      </div>
+                      <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                        <button 
+                          onClick={() => onAdvancedContent('onboarding', oidx)}
+                          style={{
+                            background:'#FFB800', color:'#ffffff', border:'none', 
+                            padding: '10px 20px', cursor:'pointer', fontSize: 12, fontWeight:800, 
+                            borderRadius:10, display: 'flex', alignItems: 'center', gap: 8,
+                            transition: 'all 0.2s ease', boxShadow: '0 4px 12px rgba(255,184,0,0.2)'
+                          }}
+                        >
+                          <Edit3 size={16} /> CONFIGURAR
+                        </button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
