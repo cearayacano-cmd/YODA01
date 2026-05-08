@@ -1474,18 +1474,18 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                 <button 
                                     onClick={() => setShowCongrats(false)}
                                     style={{ 
-                                        background: 'transparent', color: '#fff', border: `2px solid ${planetColor}`, 
+                                        background: planetColor, color: '#fff', border: 'none', 
                                         padding: '20px 60px', borderRadius: '4px', fontWeight: 900, fontSize: 14, 
                                         cursor: 'pointer', letterSpacing: '4px', textTransform: 'uppercase',
-                                        transition: '0.3s', boxShadow: `0 0 20px ${planetColor}22`
+                                        transition: '0.3s', boxShadow: `0 10px 30px ${planetColor}44`
                                     }}
                                     onMouseEnter={e => {
-                                        e.currentTarget.style.background = planetColor;
-                                        e.currentTarget.style.boxShadow = `0 0 40px ${planetColor}66`;
+                                        e.currentTarget.style.transform = 'translateY(-2px)';
+                                        e.currentTarget.style.boxShadow = `0 15px 40px ${planetColor}66`;
                                     }}
                                     onMouseLeave={e => {
-                                        e.currentTarget.style.background = 'transparent';
-                                        e.currentTarget.style.boxShadow = `0 0 20px ${planetColor}22`;
+                                        e.currentTarget.style.transform = 'translateY(0)';
+                                        e.currentTarget.style.boxShadow = `0 10px 30px ${planetColor}44`;
                                     }}
                                 >
                                     REGRESAR AL SECTOR
