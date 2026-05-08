@@ -1506,7 +1506,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                     textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 20,
                                     textShadow: `0 0 12px ${planetColor}aa`
                                 }}>
-                                    <div style={{ width: 40, height: 2, background: planetColor, boxShadow: `0 0 10px ${planetColor}` }} /> MISIÓN CUMPLIDA
+                                    <div style={{ width: 40, height: 2, background: planetColor, boxShadow: `0 0 10px ${planetColor}` }} /> MISSÃO CUMPRIDA
                                 </div>
                                 
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 40, marginBottom: 32 }}>
@@ -1519,7 +1519,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                         style={{ width: '150px', height: 'auto', filter: 'drop-shadow(0 0 30px rgba(255,255,255,0.15))' }} 
                                     />
                                     <div style={{ fontSize: 64, fontWeight: 900, color: '#fff', lineHeight: 1.1, letterSpacing: '-1px' }}>
-                                        ¡FELICITACIONES,<br/>GUARDIÁN!
+                                        PARABÉNS,<br/>GUARDIÃO!
                                     </div>
                                 </div>
                                 
@@ -1529,8 +1529,8 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                 }} />
 
                                 <div style={{ fontSize: 20, color: 'rgba(255,255,255,0.7)', lineHeight: 1.8, marginBottom: 60, fontWeight: 500 }}>
-                                    Has completado con éxito todos los protocolos asignados a <span style={{ color: '#fff', fontWeight: 900, borderBottom: `2px solid ${planetColor}` }}>{planetLabel}</span>. 
-                                    Tu desempeño ha sido registrado en el núcleo central de la estación.
+                                    Você concluiu com sucesso todos os protocolos atribuídos a <span style={{ color: '#fff', fontWeight: 900, borderBottom: `2px solid ${planetColor}` }}>{planetLabel}</span>. 
+                                    Seu desempenho foi registrado no núcleo central da estação.
                                 </div>
 
                                 <button 
@@ -1550,7 +1550,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                         e.currentTarget.style.boxShadow = `0 10px 30px ${planetColor}44`;
                                     }}
                                 >
-                                    VOLVER AL SECTOR
+                                    VOLTAR AO SETOR
                                 </button>
                             </motion.div>
                         </div>
