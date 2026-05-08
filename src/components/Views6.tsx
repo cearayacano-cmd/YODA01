@@ -4,7 +4,7 @@ import {
   ChevronRight, ArrowLeft, ExternalLink, Clock, Target, Rocket, 
   Anchor, Activity, Cpu, Shield, Globe, Zap, Radio, Terminal, Map as MapIcon,
   Navigation, Hexagon, Crosshair, Lightbulb, BadgeCheck, FileText, Satellite, Gem, CheckCircle2, Check,
-  ChevronUp, ChevronDown, GraduationCap, Star
+  ChevronUp, ChevronDown, GraduationCap, Star, RotateCcw
 } from 'lucide-react';
 import { TacticalSatelliteIcon, HyperProPlanetVisual } from './Shared';
 
@@ -1031,6 +1031,26 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
         if ((window as any).refreshOnboarding) (window as any).refreshOnboarding();
         onBack();
     };
+
+    const handleResetProgress = () => {
+        if (confirm('¿Estás seguro de que quieres reiniciar el progreso de este módulo?')) {
+            allSecciones.forEach(sec => {
+                (sec.rows || []).forEach((r: any, i: number) => {
+                    localStorage.setItem(`resolved_${r.tema}_${i}`, 'false');
+                });
+            });
+            // Clear congrats flag too
+            localStorage.setItem(`congrats_shown_${titleOverride || seccion?.nombre || ''}_${subtitleOverride || 'SECTOR'}`, 'false');
+            if ((window as any).refreshOnboarding) (window as any).refreshOnboarding();
+            onBack();
+        }
+    };
+
+    const isAllComplete = useMemo(() => {
+        return allSecciones.every(sec => 
+            (sec.rows || []).every((r: any, i: number) => localStorage.getItem(`resolved_${r.tema}_${i}`) === 'true')
+        );
+    }, [allSecciones, tick]);
     
     const toggleTheme = (theme: string) => {
         setCollapsedThemes(prev => 
@@ -1241,17 +1261,27 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                         </div>
 
                         <button 
-                            onClick={handleMarkAllAsComplete}
+                            onClick={isAllComplete ? handleResetProgress : handleMarkAllAsComplete}
                             style={{ 
-                                width: '100%', background: '#99CC33', color: '#fff', border: 'none', padding: '18px', borderRadius: 12, 
-                                fontWeight: 900, fontSize: 14, cursor: 'pointer', boxShadow: '0 10px 25px rgba(153,204,51,0.3)',
+                                width: '100%', background: isAllComplete ? '#ED1650' : '#99CC33', color: '#fff', border: 'none', padding: '18px', borderRadius: 12, 
+                                fontWeight: 900, fontSize: 14, cursor: 'pointer', boxShadow: `0 10px 25px ${isAllComplete ? '#ED1650' : '#99CC33'}33`,
                                 transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10
                             }}
                             onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
                             onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
                         >
-                            <CheckCircle2 size={18} /> MARCAR COMO COMPLETADO
+                            {isAllComplete ? (
+                                <><RotateCcw size={18} /> REINICIAR MISIÓN</>
+                            ) : (
+                                <><CheckCircle2 size={18} /> MARCAR COMO COMPLETADO</>
+                            )}
                         </button>
+
+                        {isAllComplete && (
+                            <div style={{ marginTop: 15, textAlign: 'center', fontSize: 10, color: '#858585', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>
+                                Misión finalizada con éxito
+                            </div>
+                        )}
                     </div>
 
                     {/* Support Block Removed */}
