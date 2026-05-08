@@ -1012,7 +1012,7 @@ const FscDetailedNodeCard = ({ node, index, planetColor, parentLabel }: any) => 
     );
 };
 
-const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOverride, subtitleOverride }: any) => {
+const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOverride, subtitleOverride, tick }: any) => {
     const allSecciones = secciones || (seccion ? [seccion] : []);
     const initialThemes = useMemo(() => {
         const themes = new Set<string>();
@@ -1415,6 +1415,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                     seccion={secciones[selectedIdx] || {rows:[]}} 
                     planetColor={planetColor} 
                     onBack={() => setViewMode('map')} 
+                    tick={tick}
                 />
             ) : (
                 <FscDetailedTerminal 
@@ -1423,6 +1424,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                     subtitleOverride="PROTOCOLO DE PREPARACIÓN"
                     titleOverride="NAVE DE ONBOARDING"
                     onBack={() => setViewMode('map')} 
+                    tick={tick}
                 />
             )}
 
