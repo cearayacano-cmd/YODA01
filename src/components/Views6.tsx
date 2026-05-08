@@ -507,12 +507,12 @@ const ContentNode = ({ row, type, planetColor, index }: any) => (
     </motion.div>
 );
 
-const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATERS', tick }: any) => {
+const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATERS', tick, planetLabel }: any) => {
   const isCompleted = React.useMemo(() => {
     const rows = section.rows || [];
     if (rows.length === 0) return false;
-    return rows.every((r: any, i: number) => localStorage.getItem(`resolved_${r.tema}_${i}`) === 'true');
-  }, [section, tick]);
+    return rows.every((r: any, i: number) => localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true');
+  }, [section, tick, planetLabel]);
 
   const nodeColor = section.color || typeColors[section.tipo] || planetColor;
   
@@ -586,7 +586,7 @@ const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATE
   );
 };
 
-export const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onboardingData, activeOnboardingIdx, onSelectOnboarding, isFirstPlanet, onBackToPlanets, texture = 'CRATERS', tick }: any) => {
+export const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onboardingData, activeOnboardingIdx, onSelectOnboarding, isFirstPlanet, onBackToPlanets, texture = 'CRATERS', tick, planetLabel }: any) => {
   const nodeSpacing = 360;
   const totalWidth = 1000;
   const lastNodeY = (secciones.length - 1) * nodeSpacing + 210;
@@ -690,6 +690,7 @@ export const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onbo
                   <div key={i} style={{ position: 'absolute', top: yPos, left: xPos, transform: 'translate(-50%, -50%)' }}>
                      <MissionMapNode 
                         section={sec} index={i} planetColor={planetColor} texture={texture} tick={tick}
+                        planetLabel={planetLabel}
                         onClick={() => onSelectSection(i)} 
                      />
                   </div>
@@ -1413,6 +1414,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                         onSelectOnboarding={() => setViewMode('onboarding')}
                                         isFirstPlanet={(planetIdx === 0 || planetObj?.onboardingIdx !== undefined) && sectorLabel === 'FRONT LINE'}
                                         onBackToPlanets={onBack}
+                                        planetLabel={planetLabel}
                                     />
                                 </motion.div>
                             </AnimatePresence>
