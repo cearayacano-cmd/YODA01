@@ -556,8 +556,6 @@ const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATE
           position: 'relative', overflow: 'hidden'
       }}>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 50%, rgba(255,255,255,0.02) 50%)', backgroundSize: '100% 4px', pointerEvents: 'none' }} />
-        
-        <div style={{ fontSize: '9px', color: isCompleted ? '#99CC33' : nodeColor, fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '8px', position: 'relative' }}>{String(index + 1).padStart(2, '0')}</div>
         <div style={{ fontSize: '20px', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '2px', position: 'relative' }}>{section.label || section.nombre || 'CARGA DE DATOS...'}</div>
         <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)', fontWeight: 800, marginTop: '8px', position: 'relative' }}>
           ⏱ {section.rows?.length || 0} NODOS_TÉCNICOS • TIEMPO: {
