@@ -1435,9 +1435,20 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                             <motion.div 
                                 animate={{ y: [-10, 10, -10] }}
                                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                                style={{ marginBottom: 40 }}
+                                style={{ marginBottom: 40, display: 'flex', justifyContent: 'center' }}
                             >
-                                <img src="/iara.gif" alt="IARA" style={{ width: '250px', height: '250px', borderRadius: '50%', border: `4px solid ${planetColor}`, boxShadow: `0 0 40px ${planetColor}66` }} />
+                                <div style={{ position: 'relative', width: '300px', height: '300px' }}>
+                                    <div style={{ position: 'absolute', inset: -20, borderRadius: '50%', background: `radial-gradient(circle, ${planetColor}33 0%, transparent 70%)`, filter: 'blur(10px)' }} />
+                                    <video 
+                                        src="/IARAVIDEO.mp4" 
+                                        autoPlay muted loop playsInline
+                                        style={{ 
+                                            width: '300px', height: '300px', borderRadius: '50%', 
+                                            border: `2px solid ${planetColor}44`, boxShadow: `0 0 50px ${planetColor}22`,
+                                            objectFit: 'cover', background: '#000'
+                                        }} 
+                                    />
+                                </div>
                             </motion.div>
 
                             <div style={{ fontSize: 14, color: planetColor, fontWeight: 900, letterSpacing: '6px', marginBottom: 20, textTransform: 'uppercase' }}>MISIÓN CUMPLIDA · AGENTE DETECTADO</div>
