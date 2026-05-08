@@ -1417,61 +1417,82 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                         exit={{ opacity: 0 }}
                         style={{ 
                             position: 'fixed', inset: 0, zIndex: 20000, 
-                            background: 'rgba(4, 1, 20, 0.9)', backdropFilter: 'blur(20px)',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px'
+                            background: '#000',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center'
                         }}
                     >
-                        <motion.div 
-                            initial={{ scale: 0.8, y: 50 }}
-                            animate={{ scale: 1, y: 0 }}
-                            style={{ 
-                                maxWidth: '800px', width: '100%', background: '#0F004F', borderRadius: '40px',
-                                border: `2px solid ${planetColor}`, padding: '60px', textAlign: 'center',
-                                boxShadow: `0 0 100px ${planetColor}33`, position: 'relative', overflow: 'hidden'
-                            }}
-                        >
-                            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '6px', background: `linear-gradient(90deg, transparent, ${planetColor}, transparent)` }} />
-                            
+                        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 30% 50%, rgba(27,0,136,0.15) 0%, transparent 60%)', pointerEvents: 'none' }} />
+                        
+                        <div style={{ 
+                            width: '100%', maxWidth: '1400px', display: 'flex', alignItems: 'center', gap: 80, padding: '0 80px',
+                            position: 'relative', zIndex: 10
+                        }}>
+                            {/* VIDEO SIDE */}
                             <motion.div 
-                                animate={{ y: [-10, 10, -10] }}
-                                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                                style={{ marginBottom: 40, display: 'flex', justifyContent: 'center' }}
+                                initial={{ opacity: 0, x: -50 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.3 }}
+                                style={{ flex: 1, display: 'flex', justifyContent: 'center' }}
                             >
-                                <div style={{ position: 'relative', width: '300px', height: '300px' }}>
-                                    <div style={{ position: 'absolute', inset: -20, borderRadius: '50%', background: `radial-gradient(circle, ${planetColor}33 0%, transparent 70%)`, filter: 'blur(10px)' }} />
+                                <div style={{ position: 'relative', width: '100%', maxWidth: '500px', aspectRatio: '1/1' }}>
+                                    <div style={{ position: 'absolute', inset: -40, borderRadius: '50%', background: `radial-gradient(circle, ${planetColor}22 0%, transparent 70%)`, filter: 'blur(30px)' }} />
                                     <video 
                                         src="/IARAVIDEO.mp4" 
                                         autoPlay muted loop playsInline
                                         style={{ 
-                                            width: '300px', height: '300px', borderRadius: '50%', 
-                                            border: `2px solid ${planetColor}44`, boxShadow: `0 0 50px ${planetColor}22`,
-                                            objectFit: 'cover', background: '#000'
+                                            width: '100%', height: '100%', borderRadius: '40px', 
+                                            border: `1px solid ${planetColor}44`, boxShadow: `0 30px 100px rgba(0,0,0,0.8)`,
+                                            objectFit: 'contain', background: '#000'
                                         }} 
                                     />
+                                    {/* Scanline overlay for tactical feel */}
+                                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03))', backgroundSize: '100% 4px, 3px 100%', pointerEvents: 'none', borderRadius: '40px' }} />
                                 </div>
                             </motion.div>
 
-                            <div style={{ fontSize: 14, color: planetColor, fontWeight: 900, letterSpacing: '6px', marginBottom: 20, textTransform: 'uppercase' }}>MISIÓN CUMPLIDA · AGENTE DETECTADO</div>
-                            <div style={{ fontSize: 42, fontWeight: 900, color: '#fff', marginBottom: 30, letterSpacing: '2px' }}>¡EXCELENTE TRABAJO!</div>
-                            
-                            <div style={{ fontSize: 18, color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, marginBottom: 50, maxWidth: '600px', margin: '0 auto 50px' }}>
-                                Has completado todos los protocolos del módulo <span style={{ color: planetColor, fontWeight: 900 }}>{planetLabel}</span> con éxito. 
-                                La estación espacial está ahora más segura gracias a tu dedicación.
-                            </div>
-
-                            <button 
-                                onClick={() => setShowCongrats(false)}
-                                style={{ 
-                                    background: planetColor, color: '#fff', border: 'none', padding: '20px 60px', 
-                                    borderRadius: '50px', fontWeight: 900, fontSize: 16, cursor: 'pointer',
-                                    boxShadow: `0 10px 30px ${planetColor}66`, transition: '0.3s'
-                                }}
-                                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
-                                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                            {/* TEXT SIDE */}
+                            <motion.div 
+                                initial={{ opacity: 0, x: 50 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.5 }}
+                                style={{ flex: 1, textAlign: 'left' }}
                             >
-                                CONTINUAR EXPLORACIÓN
-                            </button>
-                        </motion.div>
+                                <div style={{ fontSize: 14, color: planetColor, fontWeight: 900, letterSpacing: '8px', marginBottom: 24, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 20 }}>
+                                    <div style={{ width: 40, height: 2, background: planetColor }} /> MISIÓN CUMPLIDA
+                                </div>
+                                
+                                <div style={{ fontSize: 64, fontWeight: 900, color: '#fff', marginBottom: 24, lineHeight: 1.1, letterSpacing: '-1px' }}>
+                                    ¡FELICITACIONES,<br/>AGENTE!
+                                </div>
+                                
+                                <div style={{ height: '4px', width: '100px', background: planetColor, marginBottom: 40, borderRadius: 2 }} />
+
+                                <div style={{ fontSize: 20, color: 'rgba(255,255,255,0.7)', lineHeight: 1.8, marginBottom: 60, fontWeight: 500 }}>
+                                    Has completado satisfactoriamente todos los protocolos asignados al módulo <span style={{ color: '#fff', fontWeight: 900, borderBottom: `2px solid ${planetColor}` }}>{planetLabel}</span>. 
+                                    Tu desempeño ha sido registrado en el núcleo central de la estación.
+                                </div>
+
+                                <button 
+                                    onClick={() => setShowCongrats(false)}
+                                    style={{ 
+                                        background: 'transparent', color: '#fff', border: `2px solid ${planetColor}`, 
+                                        padding: '20px 60px', borderRadius: '4px', fontWeight: 900, fontSize: 14, 
+                                        cursor: 'pointer', letterSpacing: '4px', textTransform: 'uppercase',
+                                        transition: '0.3s', boxShadow: `0 0 20px ${planetColor}22`
+                                    }}
+                                    onMouseEnter={e => {
+                                        e.currentTarget.style.background = planetColor;
+                                        e.currentTarget.style.boxShadow = `0 0 40px ${planetColor}66`;
+                                    }}
+                                    onMouseLeave={e => {
+                                        e.currentTarget.style.background = 'transparent';
+                                        e.currentTarget.style.boxShadow = `0 0 20px ${planetColor}22`;
+                                    }}
+                                >
+                                    REGRESAR AL SECTOR
+                                </button>
+                            </motion.div>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
