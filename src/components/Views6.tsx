@@ -1471,7 +1471,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                 transition={{ delay: 0.3 }}
                                 style={{ flex: 1, display: 'flex', justifyContent: 'center' }}
                             >
-                                <div style={{ position: 'relative', width: '100%', maxWidth: '480px' }}>
+                                <div style={{ position: 'relative', width: '100%', maxWidth: '420px' }}>
                                     <div style={{ position: 'absolute', inset: -60, borderRadius: '50%', background: `radial-gradient(circle, ${planetColor}11 0%, transparent 70%)`, filter: 'blur(50px)' }} />
                                     <video 
                                         src="/IARAVIDEO.mp4" 
