@@ -21,6 +21,10 @@ import {
   CONHECENDO_DATA, 
   IMERSAO_DATA,
   BASE_PLANET_DATA,
+  POS_VENTA_1_DATA,
+  POS_VENTA_2_DATA,
+  HVC_BAG_DATA,
+  LAE_DATA,
   ONBOARDING_DATA_DEFAULT
 } from './lib/data';
 
@@ -162,12 +166,12 @@ export default function App() {
       lastUpdate: "30/04/2026",
       rutaLider: RUTA_DATA_DEFAULT,
       onboarding: [ONBOARDING_DATA_DEFAULT],
-      frontLineContent: [BASE_PLANET_DATA, ...initGalaxy(["Pos Venta 1","Pos Venta 2","HVC","DT Bagagens","DT Devoluciones","RRSS","LAE"])],
+      frontLineContent: [BASE_PLANET_DATA, POS_VENTA_1_DATA, POS_VENTA_2_DATA, HVC_BAG_DATA, LAE_DATA],
       soporteContent: initGalaxy(["Soporte 1","Soporte 2"]),
       fsc: initGalaxy(["FSC 1","FSC 2"]),
       satelites: { conhecendo: CONHECENDO_DATA, imersao: IMERSAO_DATA },
       exploracion:{
-        frontLine:initGalaxy(["Base","Pos Venta 1","Pos Venta 2","HVC","DT Bagagens","DT Devoluciones","RRSS","LAE"]),
+        frontLine:[BASE_PLANET_DATA, POS_VENTA_1_DATA, POS_VENTA_2_DATA, HVC_BAG_DATA, LAE_DATA],
         soporte:initGalaxy(["Soporte BO (Pendiente)","Soporte FFP (Pendiente)"]),
         fieldSupport:initGalaxy(["FSC (Pendiente)"])
       }

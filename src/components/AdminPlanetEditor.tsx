@@ -3,14 +3,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
     ArrowLeft, Save, CheckCircle2, Plus, Trash2, Database, Layers, Satellite, Globe, Shield, Zap,
     Edit3, Briefcase, Rocket, Target, Anchor, ChevronUp, ChevronDown, Monitor, FileText, Link as LinkIcon, AlertTriangle, Clock, Cpu,
-    Maximize2, Minimize2, GripVertical
+    Maximize2, Minimize2, GripVertical, GraduationCap
 } from 'lucide-react';
 
 const TIPO_INFO: any = {
   mision1: { label: 'EXPEDIÇÃO', emoji: <Rocket size={20} />, accent: '#1B0088' },
   landing: { label: 'LANDING', emoji: <Anchor size={20} />, accent: '#FFC800' },
   ojt:     { label: 'DESAFIO OJT', emoji: <Target size={20} />, accent: '#ED1650' },
-  imersao: { label: 'IMERSÃO',     emoji: <Cpu size={20} />,    accent: '#D400FF' }
+  imersao: { label: 'IMERSÃO',     emoji: <Cpu size={20} />,    accent: '#D400FF' },
+  avaliacao: { label: 'AVALIAÇÃO', emoji: <GraduationCap size={20} />, accent: '#00D6CC' }
 };
 
 const timeToSeconds = (timeStr: string) => {
@@ -68,13 +69,13 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
     const info = TIPO_INFO[tipo];
     const newSec = {
       tipo, label: info.label, rows: [],
-      dbOjtLabel: tipo === 'ojt' ? 'Diário de Bordo OJT · Grupo 01' : '',
-      dbOjtUrl: tipo === 'ojt' ? '' : '',
-      totalCh: tipo === 'ojt' ? '5:40:00' : '',
-      ajusteRota: tipo === 'ojt' ? 'Os alumnos que não atingirem a média final de 80%...' : '',
-      ajusteRotaUrlKon: tipo === 'ojt' ? '' : '',
-      ajusteRotaUrlAec: tipo === 'ojt' ? '' : '',
-      ajusteRotaCh: tipo === 'ojt' ? '0:30:00' : ''
+      dbOjtLabel: (tipo === 'ojt' || tipo === 'avaliacao') ? 'Diário de Bordo · Grupo 01' : '',
+      dbOjtUrl: '',
+      totalCh: (tipo === 'ojt' || tipo === 'avaliacao') ? '5:40:00' : '',
+      ajusteRota: (tipo === 'ojt' || tipo === 'avaliacao') ? 'Os alumnos que não atingirem a média final de 80%...' : '',
+      ajusteRotaUrlKon: '',
+      ajusteRotaUrlAec: '',
+      ajusteRotaCh: (tipo === 'ojt' || tipo === 'avaliacao') ? '0:30:00' : ''
     };
     updateSections([...currentSections, newSec]);
   };
@@ -181,7 +182,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
             </div>
           </div>
           <div style={{ display: 'flex', gap: '12px' }}>
-            {(isOnboarding ? ['mision1', 'imersao'] : ['mision1', 'landing', 'ojt', 'imersao']).map(t => {
+            {(isOnboarding ? ['mision1', 'imersao'] : ['mision1', 'landing', 'ojt', 'imersao', 'avaliacao']).map(t => {
                 const totalTypeTime = currentSections.filter((s:any) => s.tipo === t).reduce((acc:any, s:any) => acc + (s.rows||[]).reduce((a:any, r:any) => a + timeToSeconds(r.tiempo || r.ch || ''), 0), 0);
                 return (
                 <button key={t} onClick={() => addSection(t)} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', padding: '10px 20px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, color: '#ffffff', display: 'flex', alignItems: 'center', gap: 8, transition: 'all 0.2s' }} onMouseEnter={e => e.currentTarget.style.background = TIPO_INFO[t].accent} onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}>{TIPO_INFO[t].emoji} {TIPO_INFO[t].label} {totalTypeTime > 0 && <span style={{ background: 'rgba(0,0,0,0.2)', padding: '2px 6px', borderRadius: 6, fontSize: 10 }}>{secondsToTime(totalTypeTime)}</span>}</button>
@@ -219,7 +220,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                           <div style={{ marginBottom: 12 }}>
-                              <label style={{ fontSize: '9px', color: '#64748b', fontWeight: 900, textTransform: 'uppercase', marginBottom: 4, display: 'block' }}>Mensagem Protocolo Geral (Ajuste de Rota)</label>
+                              <label style={{ fontSize: '9px', color: '#64748b', fontWeight: 900, textTransform: 'uppercase', marginBottom: 4, display: 'block' }}>Avaliação de Recuperação</label>
                               <textarea 
                                 value={planetObj.evalMsg || ''} 
                                 onChange={e => updateGlobalField('evalMsg', e.target.value)} 
@@ -413,7 +414,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                   </div>
               </div>
 
-              {sec.tipo === 'ojt' && editingSecIdx === si && (
+              {(sec.tipo === 'ojt' || sec.tipo === 'avaliacao') && editingSecIdx === si && (
                 <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} style={{ marginTop: '32px', padding: '32px', background: '#fff', borderRadius: '24px', border: '1px solid rgba(0,214,204,0.15)', boxShadow: '0 20px 60px rgba(0,0,0,0.05)' }}>
                   <div style={{ fontSize: '14px', fontWeight: 900, marginBottom: '32px', display: 'flex', alignItems: 'center', gap: 12, color: '#00D6CC', letterSpacing: '0.1em' }}><AlertTriangle size={24}/> PARÁMETROS OPERATIVOS OJT <span style={{ fontWeight: 700, fontSize: '11px', color: '#64748b', letterSpacing: 0, textTransform: 'uppercase' }}>· Configuración Avanzada</span></div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', marginBottom: '32px', borderBottom: '1px solid #E2E8F0', paddingBottom: '32px' }}>

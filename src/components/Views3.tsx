@@ -7,7 +7,8 @@ import {
   Activity, Radio, Compass, Cpu, Crosshair, Anchor, Rocket, ArrowLeft,
   LayoutGrid, Share2, Award, Terminal
 } from 'lucide-react';
-import { PlanetContentView, ClassicMissionBlock, JourneyStartShip } from './Views6';
+import { PlanetContentView, ClassicMissionBlock } from './Views6';
+import { TacticalSatelliteIcon, HyperProPlanetVisual } from './Shared';
 
 /* ── HYPER-PRO HUD & BACKGROUND ───────────────────────────────────────── */
 const HyperProBackground = () => {
@@ -88,101 +89,7 @@ const CornerHUD = () => (
   </div>
 );
 
-/* ── HYPER-PRO PLANET VISUAL ─────────────────────────────────────────── */
-const HyperProPlanetVisual = ({ color, index }: { color: string, index: number }) => {
-  return (
-    <div style={{ position: 'relative', width: 180, height: 180, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      {/* 1. ATMOSPHERIC OUTER GLOW */}
-      <motion.div 
-        animate={{ scale: [1, 1.05, 1], opacity: [0.05, 0.15, 0.05] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        style={{
-          position: 'absolute', width: '130%', height: '130%',
-          background: `radial-gradient(circle, #03001C 0%, transparent 70%)`,
-          borderRadius: '50%', filter: 'blur(40px)', zIndex: 0
-        }} 
-      />
 
-      {/* 2. ATMOSPHERIC RIM LIGHTING */}
-      <div style={{
-        position: 'absolute', width: '100%', height: '100%',
-        background: `radial-gradient(circle at 30% 30%, ${color}44 0%, transparent 60%)`,
-        borderRadius: '50%', border: `1px solid ${color}44`, filter: 'blur(2px)', zIndex: 5, pointerEvents: 'none'
-      }} />
-
-      {/* 3. MAIN PLANET BODY */}
-      <div style={{
-          position: 'relative', width: 100, height: 100, borderRadius: '50%',
-          background: color, // Use vivid color as base
-          zIndex: 2, overflow: 'hidden', 
-          boxShadow: '0 0 30px rgba(0,0,0,0.8), inset -15px -15px 30px rgba(0,0,0,0.5)'
-      }}>
-          {/* Subtle Spherical Highlight */}
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: `radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, transparent 60%)`,
-            zIndex: 4
-          }} />
-
-          {/* Night Side "City Lights" (using dots) */}
-          <div style={{ position: 'absolute', inset: 0, zIndex: 5, opacity: 0.6 }}>
-            {[...Array(12)].map((_, i) => (
-              <motion.div
-                key={i}
-                animate={{ opacity: [0.2, 0.7, 0.2] }}
-                transition={{ duration: 2 + Math.random() * 3, repeat: Infinity }}
-                style={{
-                  position: 'absolute',
-                  width: 2, height: 2, borderRadius: '50%', background: '#fff',
-                  left: (50 + Math.random() * 40) + '%',
-                  top: (20 + Math.random() * 60) + '%',
-                  boxShadow: '0 0 5px #fff'
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Surface Detail Craters */}
-          {[...Array(6)].map((_, i) => (
-             <div key={i} style={{
-                 position: 'absolute', width: 20 + Math.random() * 30, height: 10 + Math.random() * 15,
-                 background: 'rgba(0,0,0,0.3)', top: (20 + Math.random() * 60) + '%', left: (10 + Math.random() * 70) + '%',
-                 borderRadius: '50%', transform: `rotate(${Math.random() * 360}deg)`, zIndex: 1
-             }} />
-          ))}
-          
-          <span style={{ position: 'absolute', bottom: 15, right: 15, fontSize: 11, fontWeight: 900, color: 'rgba(255,255,255,0.4)', zIndex: 10, letterSpacing: '2px' }}>
-            P0{index + 1}
-          </span>
-      </div>
-
-      {/* 4. DYNAMIC RINGS */}
-      <svg viewBox="0 0 180 180" style={{ position: 'absolute', width: '160%', height: '160%', zIndex: 1, pointerEvents: 'none', transform: 'rotateX(75deg) rotateY(10deg)' }}>
-        <motion.ellipse 
-          cx="90" cy="90" rx="80" ry="30"
-          fill="none" stroke={`url(#ringGrad-${index})`} strokeWidth="4" opacity="0.6"
-          initial={{ pathLength: 0, rotate: 0 }}
-          animate={{ pathLength: 1, rotate: 360 }}
-          transition={{ pathLength: { duration: 2 }, rotate: { duration: 60, repeat: Infinity, ease: 'linear' } }}
-        />
-        <defs>
-          <linearGradient id={`ringGrad-${index}`} x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor={color} stopOpacity="0" />
-            <stop offset="50%" stopColor={color} stopOpacity="0.8" />
-            <stop offset="100%" stopColor={color} stopOpacity="0" />
-          </linearGradient>
-        </defs>
-      </svg>
-
-      {/* 5. HUD SCANNER RETICLE (on hover parent) */}
-      <motion.div 
-        className="hud-reticle"
-        style={{ position: 'absolute', inset: -10, border: '1px dashed rgba(255,255,255,0.1)', borderRadius: '50%', opacity: 0 }}
-        whileHover={{ opacity: 1, rotate: 90, scale: 1.1 }}
-      />
-    </div>
-  );
-};
 
 /* ── TACTICAL PLANET CARD ────────────────────────────────────────────── */
 const TacticalPlanetCard = ({ course, index, color, type, onClick }: any) => {
@@ -196,7 +103,7 @@ const TacticalPlanetCard = ({ course, index, color, type, onClick }: any) => {
       style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', perspective: '1000px' }}
     >
       <div style={{ marginBottom: 20 }}>
-          <HyperProPlanetVisual color={color} index={index} />
+          <HyperProPlanetVisual color={color} index={index} texture={course.texture} />
       </div>
 
       <motion.div 
@@ -288,8 +195,13 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                     </button>
                </div>
 
-               <div style={{ flex: 1, textAlign: 'center' }}>
-                    <div style={{ fontSize: 10, color: '#00D6CC', fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 15 }}>
+               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <div style={{ 
+                        fontSize: 10, color: '#00D6CC', fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: 12, 
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 15,
+                        background: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(8px)', padding: '6px 20px', borderRadius: '20px',
+                        border: '1px solid rgba(0,214,204,0.1)'
+                    }}>
                         <Compass size={12} /> MAPA ESTELAR · SECTOR ACTIVO <Compass size={12} />
                     </div>
                     <div style={{ fontSize: 48, fontWeight: 900, letterSpacing: '8px', textTransform: 'uppercase', color: '#fff' }}>{sectorLabel}</div>
@@ -300,8 +212,12 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                     </div>
                </div>
 
-               <div style={{ width: 250, textAlign: 'right' }}>
-                   <div style={{ fontSize: 10, color: '#ED1650', fontWeight: 900, letterSpacing: '2px', display: 'flex', alignItems: 'center', gap: 10, justifyContent: 'flex-end', marginTop: 10 }}>
+               <div style={{ width: 250, display: 'flex', justifyContent: 'flex-end' }}>
+                   <div style={{ 
+                        fontSize: 10, color: '#ED1650', fontWeight: 900, letterSpacing: '2px', display: 'flex', alignItems: 'center', gap: 10, 
+                        marginTop: 10, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(10px)', padding: '6px 20px', borderRadius: '30px',
+                        border: '1px solid rgba(237,22,80,0.1)'
+                    }}>
                         <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#ED1650', boxShadow: '0 0 10px #ED1650' }} /> PLANETAS: {sectorData.length} DETECTADOS
                    </div>
                </div>
@@ -363,7 +279,11 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                 {/* PLANETS SEPARATOR */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 20, marginBottom: 80 }}>
                     <div style={{ height: 1.5, flex: 1, background: 'linear-gradient(90deg, transparent, rgba(237,22,80,0.5))' }} />
-                    <div style={{ fontSize: 11, color: '#ED1650', fontWeight: 900, letterSpacing: '6px', textTransform: 'uppercase' }}>
+                    <div style={{ 
+                        fontSize: 11, color: '#ED1650', fontWeight: 900, letterSpacing: '6px', textTransform: 'uppercase',
+                        background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(10px)', padding: '8px 30px', borderRadius: '30px',
+                        border: '1px solid rgba(237,22,80,0.1)'
+                    }}>
                         SELECCIONA UN PLANETA
                     </div>
                     <div style={{ height: 1.5, flex: 1, background: 'linear-gradient(-90deg, transparent, rgba(237,22,80,0.5))' }} />
@@ -373,8 +293,8 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '80px 40px' }}>
                     {sectorData.map((course: any, i: number) => {
                         const DEFAULT_COLORS = [
-                          '#ED1650', '#00D6CC', '#D400FF', '#FFE017', '#99CC33', 
-                          '#00A9E0', '#FF8C00', '#FF00FF', '#00FF00', '#FFFFFF'
+                          '#1b0088', '#7000ab', '#7da81a', '#2ec9ed', 
+                          '#ffe017', '#ed1650', '#00d6cc', '#858585'
                         ];
                         const color = course.color || DEFAULT_COLORS[i % DEFAULT_COLORS.length];
                         const type = TYPES[i % TYPES.length];

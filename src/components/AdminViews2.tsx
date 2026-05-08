@@ -17,7 +17,7 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
   
   const addCourse = () => {
     const next = {...exploracion};
-    next[activeSector] = [...(next[activeSector]||[]), {label:'NUEVO PLANETA', color: '#ED1650'}];
+    next[activeSector] = [...(next[activeSector]||[]), {label:'NUEVO PLANETA', color: '#1b0088', texture: 'CRATERS'}];
     updateStationConfig('exploracion', next);
     const advDataKey = activeSector === 'soporte' ? 'soporteContent' : activeSector === 'frontLine' ? 'frontLineContent' : 'fsc';
     const advData = Array.isArray(currentStationConfig[advDataKey]) ? [...currentStationConfig[advDataKey]] : [];
@@ -232,8 +232,8 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
                     <div style={{fontSize:10, color:'#64748b', textTransform:'uppercase', marginBottom:12, fontWeight: 800, letterSpacing: '0.1em'}}>COLOR DEL PLANETA</div>
                     <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                       {[
-                        '#ED1650', '#00D6CC', '#D400FF', '#FFE017', '#99CC33', 
-                        '#00A9E0', '#FF8C00', '#FF00FF', '#00FF00', '#FFFFFF'
+                        '#1b0088', '#7000ab', '#7da81a', '#2ec9ed', 
+                        '#ffe017', '#ed1650', '#00d6cc', '#858585'
                       ].map(c => (
                         <motion.div
                           key={c}
@@ -247,12 +247,36 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
                       ))}
                       <input 
                         type="color" 
-                        value={course.color || '#ED1650'} 
+                        value={course.color || '#1b0088'} 
                         onChange={e => updateCourseField(i, 'color', e.target.value)}
                         style={{ width: 28, height: 28, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
                       />
                     </div>
                   </div>
+                  <div style={{ marginTop: 8 }}>
+                    <div style={{fontSize:10, color:'#64748b', textTransform:'uppercase', marginBottom:10, fontWeight: 800, letterSpacing: '0.1em'}}>ESTILO DE SUPERFICIE</div>
+                    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                      {['CRATERS', 'GAS', 'OCEAN', 'RINGS'].map(t => (
+                        <motion.button
+                          key={t}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => updateCourseField(i, 'texture', t)}
+                          style={{
+                            padding: '8px 12px', fontSize: 10, fontWeight: 900, borderRadius: 8, cursor: 'pointer',
+                            background: (course.texture || 'CRATERS') === t ? '#1B0088' : '#F1F5F9',
+                            color: (course.texture || 'CRATERS') === t ? '#ffffff' : '#64748B',
+                            border: 'none',
+                            transition: '0.2s',
+                            boxShadow: (course.texture || 'CRATERS') === t ? '0 4px 12px rgba(27,0,136,0.2)' : 'none'
+                          }}
+                        >
+                          {t}
+                        </motion.button>
+                      ))}
+                    </div>
+                  </div>
+
                   <div style={{display:'flex', gap:14}}>
                     <button 
                       onClick={()=>onAdvancedContent(activeSector, i)} 

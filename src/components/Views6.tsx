@@ -4,11 +4,35 @@ import {
   ChevronRight, ArrowLeft, ExternalLink, Clock, Target, Rocket, 
   Anchor, Activity, Cpu, Shield, Globe, Zap, Radio, Terminal, Map as MapIcon,
   Navigation, Hexagon, Crosshair, Lightbulb, BadgeCheck, FileText, Satellite, Gem, CheckCircle2, Check,
-  ChevronUp, ChevronDown
+  ChevronUp, ChevronDown, GraduationCap, Star
 } from 'lucide-react';
-import { TacticalSatelliteIcon } from './Shared';
+import { TacticalSatelliteIcon, HyperProPlanetVisual } from './Shared';
 
-/* ── HELPER COMPONENTS ──────────────────────────────────────────────── */
+/* ── CONFIGURATIONS & CONSTANTS ─────────────────────────────────────── */
+const typeIcons: any = {
+    mision1: <Rocket size={40} />,
+    mision2: <Rocket size={40} />,
+    mision3: <Rocket size={40} />,
+    mision4: <Rocket size={40} />,
+    mision5: <Rocket size={40} />,
+    mision6: <Rocket size={40} />,
+    mision7: <Rocket size={40} />,
+    mision8: <Rocket size={40} />,
+    mision9: <Rocket size={40} />,
+    mision10: <Rocket size={40} />,
+    landing: <Anchor size={40} />,
+    ojt:     <Target size={40} />,
+    imersao: <Cpu size={40} />,
+    avaliacao: <GraduationCap size={40} />
+};
+
+const typeColors: any = {
+    mision1: '#3B82F6', // Blue
+    landing: '#FFC800', // Yellow
+    ojt:     '#ED1650', // LATAM Coral
+    imersao: '#D400FF', // Purple
+    avaliacao: '#00D6CC' // Teal/Cyan
+};
 export const JourneyStartShip = ({ onboardingData, onClick }: any) => {
     return (
     <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '350px', marginBottom: '40px' }}>
@@ -207,7 +231,7 @@ const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', d
         if (subGroups.length === 1) setActiveGroup(subGroups[0].id);
     }, [subGroups]);
     
-    if (mode === 'PORTAL' && (!links || links.length === 0) && subGroups.length === 0) return null;
+    if (mode === 'PORTAL' && (!links || links.length === 0) && subGroups.length === 0 && !evalMsg) return null;
     if (mode === 'DIRECT' && !directUrl) return null;
 
     const mainLabel = mode === 'DIRECT' ? label : title;
@@ -483,27 +507,20 @@ const ContentNode = ({ row, type, planetColor, index }: any) => (
     </motion.div>
 );
 
-const MissionMapNode = ({ section, index, planetColor, onClick }: any) => {
-  const isLeft = index % 2 === 0;
-  const xPos = isLeft ? '20%' : '80%';
-  const yPos = index * 360 + 410;
+const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATERS', tick }: any) => {
+  const isCompleted = React.useMemo(() => {
+    const rows = section.rows || [];
+    if (rows.length === 0) return false;
+    return rows.every((r: any, i: number) => localStorage.getItem(`resolved_${r.tema}_${i}`) === 'true');
+  }, [section, tick]);
+
+  const nodeColor = section.color || typeColors[section.tipo] || planetColor;
   
-  const typeIcons: any = {
-      mision1: <Rocket size={40} />,
-      landing: <Anchor size={40} />,
-      ojt: <Target size={40} />,
-      imersao: <Cpu size={40} />
+  const iconMap: any = {
+    BadgeCheck, GraduationCap, FileText, CheckCircle2, Target, Rocket, Anchor, Activity, Cpu, Shield, Globe, Zap, Radio, Terminal, Navigation, Hexagon, Crosshair, Lightbulb, Satellite, Gem
   };
 
-  const typeColors: any = {
-      mision1: '#00D6CC', // Teal/Cyan
-      landing: '#FFC800', // Yellow
-      ojt:     '#ED1650', // LATAM Coral
-      imersao: '#D400FF'  // Purple
-  };
-
-  const nodeColor = typeColors[section.tipo] || planetColor;
-
+  const CustomIcon = typeof section.icon === 'string' ? iconMap[section.icon] : section.icon;
 
   return (
     <motion.div 
@@ -521,42 +538,26 @@ const MissionMapNode = ({ section, index, planetColor, onClick }: any) => {
       onClick={onClick}
     >
       <div style={{ position: 'relative', width: '200px', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          {/* Holographic Orbital Rings */}
-          <motion.div animate={{ rotate: 360 }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ position: 'absolute', inset: -10, border: `1px dashed ${nodeColor}66`, borderRadius: '50%' }} />
-          <motion.div animate={{ rotate: -360 }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} style={{ position: 'absolute', width: '80%', height: '80%', border: `2px solid ${nodeColor}22`, borderRadius: '50%' }} />
+          <HyperProPlanetVisual color={isCompleted ? '#99CC33' : nodeColor} index={index} texture={texture} size={120}>
+            {isCompleted ? <Star size={40} /> : (CustomIcon ? <CustomIcon size={40} /> : (typeIcons[section.tipo] || typeIcons['mision1']))}
+          </HyperProPlanetVisual>
           
-          {/* Planet Body (Cinematic Style) */}
-          <motion.div
-            whileHover={{ scale: 1.15, boxShadow: `0 0 40px ${nodeColor}80` }}
-            style={{ 
-              width: '120px', height: '120px', borderRadius: '50%', 
-              background: `radial-gradient(circle at 35% 35%, ${nodeColor}, #040114)`, 
-              boxShadow: `0 0 30px ${nodeColor}44, inset -10px -10px 20px rgba(0,0,0,0.6)`, 
-              display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff',
-              zIndex: 10, position: 'relative', border: `3px solid ${nodeColor}`
-            }}
-          >
-            {typeIcons[section.tipo || 'mision1']}
-            
-            <div style={{ position: 'absolute', top: -5, right: -5, width: 32, height: 32, borderRadius: '50%', background: '#fff', color: '#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 900, boxShadow: '0 4px 10px rgba(0,0,0,0.3)', border: `2px solid ${nodeColor}` }}>
-                {index + 1}
-            </div>
-          </motion.div>
+          <div style={{ position: 'absolute', top: 20, right: 20, width: 32, height: 32, borderRadius: '50%', background: '#fff', color: '#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 900, boxShadow: '0 4px 10px rgba(0,0,0,0.3)', border: `2px solid ${isCompleted ? '#99CC33' : nodeColor}`, zIndex: 30 }}>
+              {index + 1}
+          </div>
       </div>
 
-      {/* Cinematic Label Box - CYBER HOLOGRAM */}
       <div style={{ 
           marginTop: '20px', textAlign: 'center', 
           background: 'rgba(15, 0, 79, 0.5)', backdropFilter: 'blur(15px)', 
           padding: '16px 24px', borderRadius: '16px', 
-          border: `2px solid ${nodeColor}`, 
-          minWidth: '320px', boxShadow: `0 0 30px ${nodeColor}44`,
+          border: `2px solid ${isCompleted ? '#99CC33' : nodeColor}`, 
+          minWidth: '320px', boxShadow: `0 0 30px ${isCompleted ? '#99CC33' : nodeColor}44`,
           position: 'relative', overflow: 'hidden'
       }}>
-        {/* Subtle scanline effect */}
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 50%, rgba(255,255,255,0.02) 50%)', backgroundSize: '100% 4px', pointerEvents: 'none' }} />
         
-        <div style={{ fontSize: '9px', color: nodeColor, fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '8px', position: 'relative' }}>MÓDULO_{String(index + 1).padStart(2, '0')}</div>
+        <div style={{ fontSize: '9px', color: isCompleted ? '#99CC33' : nodeColor, fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '8px', position: 'relative' }}>MÓDULO_{String(index + 1).padStart(2, '0')}</div>
         <div style={{ fontSize: '20px', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '2px', position: 'relative' }}>{section.label || section.nombre || 'CARGA DE DATOS...'}</div>
         <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)', fontWeight: 800, marginTop: '8px', position: 'relative' }}>
           ⏱ {section.rows?.length || 0} NODOS_TÉCNICOS • TIEMPO: {
@@ -585,7 +586,7 @@ const MissionMapNode = ({ section, index, planetColor, onClick }: any) => {
   );
 };
 
-const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onboardingData, onSelectOnboarding, isFirstPlanet, onBackToPlanets }: any) => {
+export const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onboardingData, onSelectOnboarding, isFirstPlanet, onBackToPlanets, texture = 'CRATERS', tick }: any) => {
   const nodeSpacing = 360;
   const totalWidth = 1000;
   const lastNodeY = (secciones.length - 1) * nodeSpacing + 210;
@@ -688,7 +689,7 @@ const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onboardingD
                 return (
                   <div key={i} style={{ position: 'absolute', top: yPos, left: xPos, transform: 'translate(-50%, -50%)' }}>
                      <MissionMapNode 
-                        section={sec} index={i} planetColor={planetColor} 
+                        section={sec} index={i} planetColor={planetColor} texture={texture} tick={tick}
                         onClick={() => onSelectSection(i)} 
                      />
                   </div>
@@ -1012,7 +1013,7 @@ const FscDetailedNodeCard = ({ node, index, planetColor, parentLabel }: any) => 
 };
 
 const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOverride, subtitleOverride }: any) => {
-    const allSecciones = secciones || [seccion];
+    const allSecciones = secciones || (seccion ? [seccion] : []);
     const initialThemes = useMemo(() => {
         const themes = new Set<string>();
         allSecciones.forEach((s: any) => (s.rows || []).forEach((r: any) => { if (r.macroTema) themes.add(r.macroTema); }));
@@ -1020,6 +1021,16 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     }, [allSecciones]);
 
     const [collapsedThemes, setCollapsedThemes] = useState<string[]>(initialThemes);
+
+    const handleMarkAllAsComplete = () => {
+        allSecciones.forEach(sec => {
+            (sec.rows || []).forEach((r: any, i: number) => {
+                localStorage.setItem(`resolved_${r.tema}_${i}`, 'true');
+            });
+        });
+        if ((window as any).refreshOnboarding) (window as any).refreshOnboarding();
+        onBack();
+    };
     
     const toggleTheme = (theme: string) => {
         setCollapsedThemes(prev => 
@@ -1027,24 +1038,8 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
         );
     };
 
-    // For the header/sidebar, we use the first section's type or the default
     const firstSec = allSecciones[0] || { rows: [], tipo: 'mision1' };
     const tipo = firstSec.tipo || 'mision1';
-
-    const typeIcons: any = {
-        mision1: <Rocket size={24} />,
-        landing: <Anchor size={24} />,
-        ojt: <Target size={24} />,
-        imersao: <Cpu size={24} />
-    };
-
-    const typeColors: any = {
-        mision1: '#00D6CC',
-        landing: '#FFC800',
-        ojt:     '#ED1650',
-        imersao: '#D400FF'
-    };
-
     const nodeColor = typeColors[tipo] || planetColor;
 
 
@@ -1246,7 +1241,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                         </div>
 
                         <button 
-                            onClick={onBack}
+                            onClick={handleMarkAllAsComplete}
                             style={{ 
                                 width: '100%', background: '#99CC33', color: '#fff', border: 'none', padding: '18px', borderRadius: 12, 
                                 fontWeight: 900, fontSize: 14, cursor: 'pointer', boxShadow: '0 10px 25px rgba(153,204,51,0.3)',
@@ -1269,7 +1264,27 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
 export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sectorLabel="SECTOR", onboardingData }: any) => {
     const [viewMode, setViewMode] = React.useState<'map' | 'detail' | 'onboarding'>('map');
     const [selectedIdx, setSelectedIdx] = React.useState(0);
-    const [, setTick] = React.useState(0);
+    const [tick, setTick] = React.useState(0);
+    const [showCongrats, setShowCongrats] = React.useState(false);
+
+    const isModuleComplete = React.useMemo(() => {
+        if (!secciones || secciones.length === 0) return false;
+        return secciones.every(sec => {
+            const rows = sec.rows || [];
+            if (rows.length === 0) return true;
+            return rows.every((r: any, i: number) => localStorage.getItem(`resolved_${r.tema}_${i}`) === 'true');
+        });
+    }, [secciones, tick]);
+
+    React.useEffect(() => {
+        if (isModuleComplete) {
+            const storageKey = `congrats_shown_${planetLabel}_${sectorLabel}`;
+            if (localStorage.getItem(storageKey) !== 'true') {
+                setTimeout(() => setShowCongrats(true), 1000);
+                localStorage.setItem(storageKey, 'true');
+            }
+        }
+    }, [isModuleComplete, planetLabel, sectorLabel]);
 
     React.useEffect(() => {
         (window as any).refreshOnboarding = () => setTick(t => t + 1);
@@ -1352,6 +1367,8 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                     <MissionSectorMap 
                                         secciones={secciones} 
                                         planetColor={planetColor} 
+                                        texture={planetObj?.texture}
+                                        tick={tick}
                                         onSelectSection={handleSelectSection} 
                                         onboardingData={onboardingData}
                                         onSelectOnboarding={() => setViewMode('onboarding')}
@@ -1390,6 +1407,63 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                     </div>
                 </>
             )}
+
+            {/* IARA CONGRATS OVERLAY */}
+            <AnimatePresence>
+                {showCongrats && (
+                    <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={{ 
+                            position: 'fixed', inset: 0, zIndex: 20000, 
+                            background: 'rgba(4, 1, 20, 0.9)', backdropFilter: 'blur(20px)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px'
+                        }}
+                    >
+                        <motion.div 
+                            initial={{ scale: 0.8, y: 50 }}
+                            animate={{ scale: 1, y: 0 }}
+                            style={{ 
+                                maxWidth: '800px', width: '100%', background: '#0F004F', borderRadius: '40px',
+                                border: `2px solid ${planetColor}`, padding: '60px', textAlign: 'center',
+                                boxShadow: `0 0 100px ${planetColor}33`, position: 'relative', overflow: 'hidden'
+                            }}
+                        >
+                            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '6px', background: `linear-gradient(90deg, transparent, ${planetColor}, transparent)` }} />
+                            
+                            <motion.div 
+                                animate={{ y: [-10, 10, -10] }}
+                                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                                style={{ marginBottom: 40 }}
+                            >
+                                <img src="/iara.gif" alt="IARA" style={{ width: '250px', height: '250px', borderRadius: '50%', border: `4px solid ${planetColor}`, boxShadow: `0 0 40px ${planetColor}66` }} />
+                            </motion.div>
+
+                            <div style={{ fontSize: 14, color: planetColor, fontWeight: 900, letterSpacing: '6px', marginBottom: 20, textTransform: 'uppercase' }}>MISIÓN CUMPLIDA · AGENTE DETECTADO</div>
+                            <div style={{ fontSize: 42, fontWeight: 900, color: '#fff', marginBottom: 30, letterSpacing: '2px' }}>¡EXCELENTE TRABAJO!</div>
+                            
+                            <div style={{ fontSize: 18, color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, marginBottom: 50, maxWidth: '600px', margin: '0 auto 50px' }}>
+                                Has completado todos los protocolos del módulo <span style={{ color: planetColor, fontWeight: 900 }}>{planetLabel}</span> con éxito. 
+                                La estación espacial está ahora más segura gracias a tu dedicación.
+                            </div>
+
+                            <button 
+                                onClick={() => setShowCongrats(false)}
+                                style={{ 
+                                    background: planetColor, color: '#fff', border: 'none', padding: '20px 60px', 
+                                    borderRadius: '50px', fontWeight: 900, fontSize: 16, cursor: 'pointer',
+                                    boxShadow: `0 10px 30px ${planetColor}66`, transition: '0.3s'
+                                }}
+                                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                            >
+                                CONTINUAR EXPLORACIÓN
+                            </button>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

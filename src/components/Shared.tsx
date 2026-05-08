@@ -109,3 +109,96 @@ export const TacticalSatelliteIcon = ({ size = 24, color = 'currentColor', bgCol
         </motion.div>
     );
 };
+
+/* ── HYPER-PRO PLANET VISUAL ─────────────────────────────────────────── */
+export const HyperProPlanetVisual = ({ color, index, texture = 'CRATERS', size = 100, children }: { color: string, index: number, texture?: string, size?: number, children?: any }) => {
+  const scale = size / 100;
+  return (
+    <div style={{ position: 'relative', width: size * 1.8, height: size * 1.8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {/* 1. ATMOSPHERIC OUTER GLOW */}
+      <motion.div 
+        animate={{ scale: [1, 1.05, 1], opacity: [0.05, 0.15, 0.05] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          position: 'absolute', width: '130%', height: '130%',
+          background: `radial-gradient(circle, #03001C 0%, transparent 70%)`,
+          borderRadius: '50%', filter: 'blur(40px)', zIndex: 0
+        }} 
+      />
+
+      {/* 2. ATMOSPHERIC RIM LIGHTING */}
+      <div style={{
+        position: 'absolute', width: '100%', height: '100%',
+        background: `radial-gradient(circle at 30% 30%, ${color}44 0%, transparent 60%)`,
+        borderRadius: '50%', border: `1px solid ${color}44`, filter: 'blur(2px)', zIndex: 5, pointerEvents: 'none'
+      }} />
+
+      {/* 3. MAIN PLANET BODY */}
+      <div style={{
+          position: 'relative', width: size, height: size, borderRadius: '50%',
+          background: color,
+          zIndex: 2, overflow: 'hidden', 
+          boxShadow: '0 0 30px rgba(0,0,0,0.8), inset -15px -15px 30px rgba(0,0,0,0.5)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center'
+      }}>
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: `radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, transparent 60%)`,
+            zIndex: 4
+          }} />
+
+          {/* Surface Detail Craters */}
+          {(texture === 'CRATERS' || texture === 'RINGS') && [...Array(6)].map((_, i) => (
+             <div key={i} style={{
+                 position: 'absolute', width: (20 + Math.random() * 30) * scale, height: (10 + Math.random() * 15) * scale,
+                 background: 'rgba(0,0,0,0.3)', top: (20 + Math.random() * 60) + '%', left: (10 + Math.random() * 70) + '%',
+                 borderRadius: '50%', transform: `rotate(${Math.random() * 360}deg)`, zIndex: 1
+             }} />
+          ))}
+
+          {/* Surface Detail Gas Bands */}
+          {texture === 'GAS' && [...Array(5)].map((_, i) => (
+             <div key={i} style={{
+                 position: 'absolute', width: '200%', height: (8 + Math.random() * 12) * scale,
+                 background: 'rgba(255,255,255,0.15)', top: (15 + i * 18) + '%', left: '-50%',
+                 borderRadius: '50%', zIndex: 1, filter: 'blur(4px)'
+             }} />
+          ))}
+
+          {/* Surface Detail Ocean/Continents */}
+          {texture === 'OCEAN' && [...Array(3)].map((_, i) => (
+             <div key={i} style={{
+                 position: 'absolute', width: (40 + Math.random() * 40) * scale, height: (30 + Math.random() * 30) * scale,
+                 background: 'rgba(0,0,0,0.2)', top: (Math.random() * 50) + '%', left: (Math.random() * 50) + '%',
+                 borderRadius: '40% 60% 70% 30% / 40% 50% 60% 50%', zIndex: 1, transform: `rotate(${Math.random() * 360}deg)`,
+                 filter: 'blur(2px)'
+             }} />
+          ))}
+          
+          <div style={{ position: 'relative', zIndex: 10 }}>{children}</div>
+          
+          <span style={{ position: 'absolute', bottom: 15 * scale, right: 15 * scale, fontSize: 11 * scale, fontWeight: 900, color: 'rgba(255,255,255,0.4)', zIndex: 10, letterSpacing: '2px' }}>
+            P0{index + 1}
+          </span>
+      </div>
+
+      {/* 4. DYNAMIC RINGS */}
+      <svg viewBox="0 0 180 180" style={{ position: 'absolute', width: '160%', height: '160%', zIndex: 1, pointerEvents: 'none', transform: 'rotateX(75deg) rotateY(10deg)' }}>
+        <motion.ellipse 
+          cx="90" cy="90" rx="80" ry="30"
+          fill="none" stroke={`url(#ringGrad-${index})`} strokeWidth={texture === 'RINGS' ? 8 : 4} opacity={texture === 'RINGS' ? 1 : 0.6}
+          initial={{ pathLength: 0, rotate: 0 }}
+          animate={{ pathLength: 1, rotate: 360 }}
+          transition={{ pathLength: { duration: 2 }, rotate: { duration: 60, repeat: Infinity, ease: 'linear' } }}
+        />
+        <defs>
+          <linearGradient id={`ringGrad-${index}`} x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor={color} stopOpacity="0" />
+            <stop offset="50%" stopColor={color} stopOpacity="0.8" />
+            <stop offset="100%" stopColor={color} stopOpacity="0" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  );
+};

@@ -1,0 +1,793 @@
+export const HVC_DATA = {
+  secciones: [
+  {
+    "tipo": "mision1",
+    "label": "Introdução",
+    "rows": [
+      {
+        "macroTema": "Introdução",
+        "tema": "PPT",
+        "detalhe": "",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Introdução",
+        "tema": "PPT",
+        "detalhe": "",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Introdução",
+        "tema": "-Instrutor explica a definição das categorias do programa LATAM Pass e suas metas para qualificação",
+        "detalhe": "",
+        "consejo": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053169173-Produto-Categorias-e-Benef%C3%ADcios-LATAM-Pass",
+        "herramientas": [
+          {
+            "tipo": "PIC",
+            "url": ""
+          }
+        ],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      }
+    ]
+  },
+  {
+    "tipo": "mision1",
+    "label": "Missão 1: Latam PASS",
+    "rows": [
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Número e categoria do sócio",
+        "detalhe": "-Instrutor explica as atribuições do número de sócios de acordo com a tabela disponível no PIC",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [
+          {
+            "label": "PIC",
+            "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053169173-Produto-Categorias-e-Benef%C3%ADcios-LATAM-Pass"
+          }
+        ],
+        "tiempo": "00:12:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Qualificação para as categorias Elite",
+        "detalhe": "- Instrutor deixar claro como o cliente se qualifica para categorias Elite, ensina como calcular e onde consultar los puntos qualificáveis",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [
+          {
+            "label": "PIC",
+            "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053169173-Produto-Categorias-e-Benef%C3%ADcios-LATAM-Pass"
+          }
+        ],
+        "tiempo": "00:12:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Processo de qualificacação Anual",
+        "detalhe": "-Instrutor explica como funciona o YEP, protocolos e mostra o painel de pontos qualificáveis",
+        "consejo": "https://lookerstudio.google.com/u/0/reporting/30aae1d4-db9c-4d00-9599-8ea24a7627ae/page/tEnnC",
+        "herramientas": [],
+        "iaPic": [
+          {
+            "label": "PIC",
+            "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053169173-Produto-Categorias-e-Benef%C3%ADcios-LATAM-Pass"
+          }
+        ],
+        "tiempo": "00:12:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Conhecendo os beneficios da categoria Elite",
+        "detalhe": "-Instrutor explica os beneficios da categoria Elite através do site",
+        "consejo": "",
+        "herramientas": [
+          {
+            "tipo": "Site",
+            "url": "https://latampass.latam.com/pt_br/categorias-elite/pontos-qualificaveis"
+          }
+        ],
+        "iaPic": [],
+        "tiempo": "00:12:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Atividade 1:  Jornada Estelar: Explorando Competências - Mapa de Benefícios por Categoria",
+        "detalhe": "Formato: times de 3–5 pessoas.",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:15:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "PPT",
+        "detalhe": "",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Benefícios para titulares de cartões bancários e do Clube Latam Pass",
+        "detalhe": "- Instrutor apresenta os benefícios dos titulares de cartão de crédito e clube Latam Pass. Em segui apresenta a planilha de benefícios dos cartões",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [
+          {
+            "label": "PIC",
+            "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053169173-Produto-Categorias-e-Benef%C3%ADcios-LATAM-Pass"
+          }
+        ],
+        "tiempo": "0:15:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Benefícios para titulares de cartões bancários e do Clube Latam Pass",
+        "detalhe": "- Instrutor apresenta os benefícios dos titulares de cartão de crédito e clube Latam Pass. Em segui apresenta a planilha de benefícios dos cartões",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [
+          {
+            "label": "PIC",
+            "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053169173-Produto-Categorias-e-Benef%C3%ADcios-LATAM-Pass"
+          }
+        ],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "-Instrutor descrever o procedimiento aplicável a passageiros Black/Black Signature para a alocação de assentos a acompanhantes con tarifas Light/Plus/Standard.”",
+        "detalhe": "https://lucid.app/documents/embedded/48e0b506-f24f-40e4-90e7-e2f7fb204a7d?invitationId=inv_64f660de-8fa6-4005-9bbe-d419733336d3#",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "Fluxo"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "-O instrutor explica o flujo de devolução para casos em que passageiros preferenciais pagaram, por engano, por assentos o bagagens.",
+        "detalhe": "https://lucid.app/documents/embedded/1eb1a282-a511-484d-abd1-fcef0b0c8eee/0_0?invitationId=inv_0835815c-af27-4c66-8c9c-47b5fff98d17",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "Fluxo"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "-O instrutor explica o procedimiento para casos em que clientes preferenciais desejam fazer uma pausa por motivos de maternidade, nascimento de un filho ou adoção, resultando na redução da frequência de voos.",
+        "detalhe": "https://lucid.app/documents/embedded/b435b3ca-3910-48d8-a2b6-2fe51c9f517e/Pdrr1UshZCgz?invitationId=inv_b25139bb-3caf-455e-b2d6-ea8842af802c",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "Fluxo"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Segmento UPG Priority com cartões bancários",
+        "detalhe": "- Instrutor  explica que é possível atender os sócios que nos contatarem informando que não consegue visualizar o beneficio del seu cartão bancário na prioridade da lista de postulação com trechos cortesia. através deste fluxo.",
+        "consejo": "",
+        "herramientas": [
+          {
+            "tipo": "Fluxo",
+            "url": "https://lucid.app/documents/embedded/64e06907-1b33-4734-94a7-8aa5c7a5c759?invitationId=inv_d3701676-324d-4bf8-a016-6bb0b686343a#"
+          }
+        ],
+        "iaPic": [],
+        "tiempo": "0:15:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Painel Promoções FFP 2025",
+        "detalhe": "- Instrutor apresenta o Painel de Promoções e explica que é possível consultar os detalhes das campanhas promocionais direcionadas aos sócios LATAM Pass durante o ano de 2025.",
+        "consejo": "",
+        "herramientas": [
+          {
+            "tipo": "Painel",
+            "url": "https://lookerstudio.google.com/u/0/reporting/a4a2e2e7-f2d8-46f2-8809-e52beea50d8f/page/p_saq0x9vvrd"
+          }
+        ],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Painel Promoções FFP 2026",
+        "detalhe": "- Instrutor apresenta o Painel de Promoções e explica que é possível consultar os detalhes das campanhas promocionais direcionadas aos sócios LATAM Pass durante o ano de 2025.",
+        "consejo": "",
+        "herramientas": [
+          {
+            "tipo": "Descrição",
+            "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/42461678256403-25-06-25-FFP-LATAM-PASS-Painel-Promo%C3%A7%C3%B5es-FFP-2025"
+          }
+        ],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Bônus Latam Pass",
+        "detalhe": "-Instrutor explica o artigo Bônus Latam Pass",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [
+          {
+            "label": "PIC",
+            "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/37307768474899-B%C3%B4nus-LATAM-Pass"
+          }
+        ],
+        "tiempo": "0:55:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Sem Tema",
+        "detalhe": "PIC",
+        "consejo": "",
+        "herramientas": [
+          {
+            "tipo": "https://pic-latam.zendesk.com/hc/pt-br/articles/11712520071443-Remarca%C3%A7%C3%B5es-volunt%C3%A1rias",
+            "url": ""
+          }
+        ],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Upload de Respaldo no Genesys Cloud",
+        "detalhe": "- Instrutor apresenta sistema para consulta de status de conta FFP",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:20:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Atualização de email",
+        "detalhe": "Instrutor explica o paso a paso para realizar o upload de documento através do Genesys",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Conta ativa com problemas de transação",
+        "detalhe": "-O instrutor contextualiza os procedimiento e apresenta o flujo HVC +  DP FFP ( se aplicável para BR)",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Erro de criação do perfil Site Clientes",
+        "detalhe": "-O instrutor contextualiza os procedimiento e apresenta o flujo HVC +  DP FFP ( se aplicável para BR)",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:30:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Mudança País De Residência Sócio",
+        "detalhe": "-O instrutor contextualiza os procedimiento e apresenta o flujo HVC +  DP FFP ( se aplicável para BR)",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:20:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Encerramento De Conta LATAM Pass",
+        "detalhe": "-O instrutor contextualiza os procedimiento e apresenta o flujo HVC +  DP FFP ( se aplicável para BR)",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:25:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Correção de nome / sobrenome /data de nascimento na conta LATAM Pass",
+        "detalhe": "-O instrutor contextualiza os procedimiento e apresenta o flujo HVC +  DP FFP ( se aplicável para BR)",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:30:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Tratamento de casos com informações sensíveis",
+        "detalhe": "-O instrutor contextualiza os procedimiento e apresenta o flujo HVC +  DP FFP ( se aplicável para BR)",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:20:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Bloqueio por comercio de pontos ou resgates para terceiros",
+        "detalhe": "- Instrutor faz uma breve apresentação sobre a tratativa de casos contendo dados sensíveis",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:05:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Conta com saldos irregulares",
+        "detalhe": "- Instrutor faz uma breve apresentação sobre a tratativa de casos contendo dados sensíveis",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Desconhecimento de resgate",
+        "detalhe": "- Instrutor faz uma breve apresentação sobre a tratativa de casos contendo dados sensíveis",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "LOGIN status da Conta FFP auditado, fraude ou conta ativa com erro",
+        "detalhe": "- Instrutor faz uma breve apresentação sobre a tratativa de casos contendo dados sensíveis",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:25:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Vencimento de milhas/pontos por conta falso positiva",
+        "detalhe": "- Instrutor faz uma breve apresentação sobre a tratativa de casos contendo dados sensíveis",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Soluções para Latam Wallet Suspensa ou Movimentos não Reconhecidos",
+        "detalhe": "- Instrutor faz uma breve presentación sobre a tratativa de casos contendo dados sensíveis",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:05:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Sem Tema",
+        "detalhe": "- Instrutor faz uma breve apresentação sobre a tratativa de casos contendo dados sensíveis",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:05:00"
+      },
+      {
+        "macroTema": "Missão 1: Latam PASS",
+        "tema": "Resgate de milhas com tarifas comerciales",
+        "detalhe": "- Instrutor faz una breve presentación sobre a tratativa de casos contendo dados sensíveis",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:05:00"
+      }
+    ]
+  },
+  {
+    "tipo": "mision1",
+    "label": "Missão 2: Vendas",
+    "rows": [
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Processo alternativo de resgate",
+        "detalhe": "- Instrutor apresenta o proceso de emissão con milhas através del site e pelo agente 360",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:40:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Processo alternativo de resgate",
+        "detalhe": "- Instrutor apresenta Resgate alternativo resgate alternativo fora do E- Business e Honrar tarifas",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:30:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Sem Tema",
+        "detalhe": "PIC",
+        "consejo": "",
+        "herramientas": [
+          {
+            "tipo": "Sin enlace",
+            "url": ""
+          }
+        ],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Processo alternativo de resgate",
+        "detalhe": "- Instrutor apresenta resgate de Múltiplos passageiros na mesma ordem",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:30:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Processo alternativo de resgate",
+        "detalhe": "- Instrutor apresenta Resgate alternativo fora do E- Business - Moeda distinta",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:30:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Resgate 100% OLA",
+        "detalhe": "- Instrutor explica as  incidências no proceso de resgate no site para clientes",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:30:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Resgate 100% OLA",
+        "detalhe": "- Instrutor apresenta forma de resgate con otras CIAs",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "1:00:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Resgate 100% OLA",
+        "detalhe": "",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "1:00:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Sem Tema",
+        "detalhe": "Painel",
+        "consejo": "",
+        "herramientas": [
+          {
+            "tipo": "Sin enlace",
+            "url": ""
+          }
+        ],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Retomar reservas de compras pendentes através do site",
+        "detalhe": "-O Instrutor orienta os alunos a emitirem de acordo con o simulador de reservas",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:40:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Honrar Tarifa (tentativas de compra no site)",
+        "detalhe": "- O instrutor explica como retoma a reserva automaticamente se a compra online não for finalizada.",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:15:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Compras com dinero retido na LATAM Wallet",
+        "detalhe": "-O instrutor explica como garantir  a mesma tarifa quando o cliente não consegue concluir a compra o resgate online, sem qualquer débito de dinero o milhas.",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:15:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Compras com dinero retido na LATAM Wallet",
+        "detalhe": "- Instrutor explica os caos de compra online quando não foi emitida, o valor foi debitado e ficou retido na LATAM Wallet",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:15:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Pedido de Lei Anac - Brasil",
+        "detalhe": "- Instrutor explica os caos de compra online quando não foi emitida, o valor foi debitado e ficou retido na LATAM Wallet",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:15:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Lei Geral de Proteção de dados Brasil",
+        "detalhe": "- Instrutor faz uma revisão con os agentes sobre o pedido de Lei Anac Brasil e explica as exceções aplicadas para esse caso",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:15:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "- Instrutor faz uma revisão con os agentes sobre lei de proteção de dados Brasil",
+        "detalhe": "",
+        "consejo": "Sin enlace",
+        "herramientas": [
+          {
+            "tipo": "PIC",
+            "url": ""
+          }
+        ],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "-O instrutor contextualiza o procedimiento e apresenta o flujo de validar a documentação e realizar a gestão de tarifa",
+        "detalhe": "",
+        "consejo": "Sin enlace",
+        "herramientas": [
+          {
+            "tipo": "Fluxo",
+            "url": ""
+          }
+        ],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Passe livre judicial",
+        "detalhe": "",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:30:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Sem Tema",
+        "detalhe": "Fluxo",
+        "consejo": "",
+        "herramientas": [
+          {
+            "tipo": "Sin enlace",
+            "url": ""
+          }
+        ],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Passe livre judicial",
+        "detalhe": "- Instrutor contextualiza sobre os passageiros vigentes \"Passe livre judicial\" e explica através del flujo como tratar estes casos",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:15:00"
+      },
+      {
+        "macroTema": "Missão 2: Vendas",
+        "tema": "Upgrade de Cabine (com trechos de cortesia)",
+        "detalhe": "- Instrutor explica as considerações para solicitação de UPG por trechos e apresenta o paso a paso através del A360 e Sabre con base no flujo",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:15:00"
+      }
+    ]
+  },
+  {
+    "tipo": "mision1",
+    "label": "Missão 3: Alterações",
+    "rows": [
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Upgrade de Cabine (com trechos de cortesia)",
+        "detalhe": "- Instrutor explica as considerações para solicitação de UPG por trechos e apresenta o paso a paso através del A360 e Sabre con base no flujo",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "00:10;00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Upgrade de Cabine (com trechos de cortesia)",
+        "detalhe": "- Instrutor explica as considerações para solicitação de UPG por trechos e presenta o paso a paso através del A360 e Sabre con base no flujo",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "00:10;00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Processo postulação manual UPG Interact Airport",
+        "detalhe": "- Instrutor explica as considerações para solicitação de UPG por trechos e presenta o paso a paso através del A360 e Sabre con base no flujo",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "00:10;00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Cancelamento Manual de Postulação de UPG de Cortesia",
+        "detalhe": "- O Instrutor apresenta o flujo e explica o proceso de inscrição manual del UPG Interact Airport e o flujo que se aplica ao serviço HVC.",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Opções de UPG",
+        "detalhe": "- O Instrutor apresenta o flujo e explica o proceso de cancelamento manual del UPG através del Interact Airport",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:05:00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Opções de UPG",
+        "detalhe": "- Instrutor apresenta os otros tipos de upgrade que un passageiro pode solicitar. Reforçando as considerações.",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:05:00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Opções de UPG",
+        "detalhe": "Reembolso involuntário del EMD Seatboost",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:05:00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Opções de UPG",
+        "detalhe": "Devolução de EMD (Leilão/Instantâneo)  por Downgrade de cabine",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:05:00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Postulacão UPG",
+        "detalhe": "Anulação de uma Aposta (Plusgrade)",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:05:00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Postulacão UPG",
+        "detalhe": "-Instrutor mostra a partir del PIC a plataforma para visualizar as seções de cortesia que un membro possui.",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:05:00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "-Instrutor mostra a partir del PIC a plataforma para visualizar as seções de cortesia que un membro possui.",
+        "detalhe": "",
+        "consejo": "Sin enlace",
+        "herramientas": [
+          {
+            "tipo": "Plataforma",
+            "url": ""
+          }
+        ],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Opções de Upgrade (reembolso involuntário - Seatboost e Downgrade de cabine)",
+        "detalhe": "Resolva o seguinte caso em pares:",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:15:00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Sem Tema",
+        "detalhe": "PPT",
+        "consejo": "",
+        "herramientas": [
+          {
+            "tipo": "Sin enlace",
+            "url": ""
+          }
+        ],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Opções de Upgrade (reembolso involuntário - Seatboost e Downgrade de cabine)",
+        "detalhe": "Instrutor faz un breve resumo sobre opções de upgrade (Leilão/Instantâneo). E reforça sobre os passageiros con Upg confirmado através del Seatboost que não utilizam por cancelamento o remarcação de voo.",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:05:00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Correção de nome em reservas com UPG confirmado",
+        "detalhe": "Instrutor faz un breve resumo sobre opções de upgrade (Leilão/Instantâneo). E reforça sobre os passageiros con Upg confirmado através del Seatboost que não utilizam por cancelamento o remarcação de voo.",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Antecipação e postergação Alteração de voo por Antecipação/Postergação a sócios Elite isentos de cobrança",
+        "detalhe": "- Instutor explica o procedimiento para alteração de nome nos casos em que o UPG está confirmado",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:10:00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Emissão/ Reemissão EXST/CBBG",
+        "detalhe": "- Instrutor apresenta  Antecipação/Postergação de Voo Confirmado (Sabre / E-Business) para a sócios Elite isentos de cobrança",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "0:15:00"
+      },
+      {
+        "macroTema": "Missão 3: Alterações",
+        "tema": "Latam Wallet -Países e contas bancárias para retirada de dinheiro",
+        "detalhe": "- Instutor explica o procedimiento ao assento adicional e o flujo que se aplica ao atendimento HVC",
+        "consejo": "",
+        "herramientas": [],
+        "iaPic": [],
+        "tiempo": "00:20:00"
+      }
+    ]
+  }
+],
+  materiais: [],
+  evalKon: [],
+  evalAec: [],
+  evalMsg: ''
+};

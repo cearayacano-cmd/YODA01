@@ -158,6 +158,51 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
         {/* Main Content Area */}
         <div style={{flex:1, padding: '40px 60px', overflowY:'auto', background: '#F8F7FF'}}>
           
+          <div style={{display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24}}>
+            <Database size={22} color="#1B0088" />
+            <div style={{fontSize:15, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
+              DATABASE: ENTRENAMIENTO
+            </div>
+          </div>
+          
+          <div style={{
+            background:'#ffffff', 
+            border:'1px solid rgba(27,0,136,0.08)', 
+            padding:32, 
+            borderRadius:24, 
+            display:'flex', 
+            justifyContent:'space-between', 
+            alignItems:'center',
+            boxShadow: '0 10px 40px rgba(27,0,136,0.05)',
+            position: 'relative',
+            overflow: 'hidden',
+            marginBottom: 48
+          }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '4px', background: '#99CC33' }} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+              <div style={{ background: 'rgba(27,0,136,0.05)', padding: 16, borderRadius: 16 }}>
+                <Globe size={32} color="#1B0088" />
+              </div>
+              <div>
+                <div style={{fontSize:18, fontWeight:900, color: '#1B0088', marginBottom:6, letterSpacing: '-0.01em'}}>Rutas, Planetas y Desafíos</div>
+                <div style={{fontSize:14, color: '#64748b', maxWidth: 400}}>Módulo avanzado para gestionar la topología de la red, misiones por niveles y contenido multimedia.</div>
+              </div>
+            </div>
+            <button 
+              onClick={()=>onExploracion(activeStation)} 
+              style={{
+                background:'#1B0088', color:'#ffffff', border:'none', 
+                padding:'16px 36px', cursor:'pointer', fontSize:13, fontWeight:900, 
+                borderRadius:12, display: 'flex', alignItems: 'center', gap: 12,
+                boxShadow: '0 8px 25px rgba(27,0,136,0.25)', transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-3px)'}
+              onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+            >
+              <Edit3 size={20} /> INICIAR EDITOR DE BASE DE DATOS
+            </button>
+          </div>
+          
           {/* Telemetry Card */}
           <div style={{
             background: '#ffffff',
@@ -375,49 +420,6 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
             })}
           </div>
           
-          <div style={{display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24}}>
-            <Database size={22} color="#1B0088" />
-            <div style={{fontSize:15, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
-              DATABASE: ENTRENAMIENTO
-            </div>
-          </div>
-          
-          <div style={{
-            background:'#ffffff', 
-            border:'1px solid rgba(27,0,136,0.08)', 
-            padding:32, 
-            borderRadius:24, 
-            display:'flex', 
-            justifyContent:'space-between', 
-            alignItems:'center',
-            boxShadow: '0 10px 40px rgba(27,0,136,0.05)',
-            position: 'relative',
-            overflow: 'hidden'
-          }}>
-            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '4px', background: '#99CC33' }} />
-            <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
-              <div style={{ background: 'rgba(27,0,136,0.05)', padding: 16, borderRadius: 16 }}>
-                <Globe size={32} color="#1B0088" />
-              </div>
-              <div>
-                <div style={{fontSize:18, fontWeight:900, color: '#1B0088', marginBottom:6, letterSpacing: '-0.01em'}}>Rutas, Planetas y Desafíos</div>
-                <div style={{fontSize:14, color: '#64748b', maxWidth: 400}}>Módulo avanzado para gestionar la topología de la red, misiones por niveles y contenido multimedia.</div>
-              </div>
-            </div>
-            <button 
-              onClick={()=>onExploracion(activeStation)} 
-              style={{
-                background:'#1B0088', color:'#ffffff', border:'none', 
-                padding:'16px 36px', cursor:'pointer', fontSize:13, fontWeight:900, 
-                borderRadius:12, display: 'flex', alignItems: 'center', gap: 12,
-                boxShadow: '0 8px 25px rgba(27,0,136,0.25)', transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-3px)'}
-              onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
-            >
-              <Edit3 size={20} /> INICIAR EDITOR DE BASE DE DATOS
-            </button>
-          </div>
           
           <div style={{ height: 60 }} />
         </div>
