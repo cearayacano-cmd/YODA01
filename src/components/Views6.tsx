@@ -825,8 +825,9 @@ const secondsToTime = (secs: number) => {
     return `${m}m ${s}s`;
 };
 
-const FscDetailedNodeCard = ({ node, index, planetColor, parentLabel }: any) => {
-    const isResolved = localStorage.getItem(`resolved_${node.tema}_${index}`) === 'true';
+const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel }: any) => {
+    const storageKey = `resolved_${planetLabel}_${node.tema}_${index}`;
+    const isResolved = localStorage.getItem(storageKey) === 'true';
     const recs = Array.isArray(node.herramientas) ? node.herramientas : 
                  Array.isArray(node.ferramentas) ? node.ferramentas : 
                  (node.herramientas ? [node.herramientas] : 
@@ -978,9 +979,9 @@ const FscDetailedNodeCard = ({ node, index, planetColor, parentLabel }: any) => 
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => {
-                        const key = `resolved_${node.tema}_${index}`;
-                        const isDone = localStorage.getItem(key) === 'true';
-                        localStorage.setItem(key, isDone ? 'false' : 'true');
+                        const storageKey = `resolved_${planetLabel}_${node.tema}_${index}`;
+                        const isDone = localStorage.getItem(storageKey) === 'true';
+                        localStorage.setItem(storageKey, isDone ? 'false' : 'true');
                         if (typeof window !== 'undefined' && (window as any).refreshOnboarding) {
                             (window as any).refreshOnboarding();
                         } else {
@@ -1025,7 +1026,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     const handleMarkAllAsComplete = () => {
         allSecciones.forEach(sec => {
             (sec.rows || []).forEach((r: any, i: number) => {
-                localStorage.setItem(`resolved_${r.tema}_${i}`, 'true');
+                localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'true');
             });
         });
         if ((window as any).refreshOnboarding) (window as any).refreshOnboarding();
@@ -1037,7 +1038,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
         // or causing issues with the React event loop.
         allSecciones.forEach(sec => {
             (sec.rows || []).forEach((r: any, i: number) => {
-                localStorage.setItem(`resolved_${r.tema}_${i}`, 'false');
+                localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'false');
             });
         });
         
@@ -1055,9 +1056,9 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
 
     const isAllComplete = useMemo(() => {
         return allSecciones.every(sec => 
-            (sec.rows || []).every((r: any, i: number) => localStorage.getItem(`resolved_${r.tema}_${i}`) === 'true')
+            (sec.rows || []).every((r: any, i: number) => localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true')
         );
-    }, [allSecciones, tick]);
+    }, [allSecciones, tick, planetLabel]);
     
     const toggleTheme = (theme: string) => {
         setCollapsedThemes(prev => 
@@ -1201,7 +1202,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                                                         node={row} 
                                                                         index={row.originalIndex} 
                                                                         planetColor={planetColor} 
-                                                                        parentLabel={sec.label}
+                                                                        planetLabel={planetLabel}
                                                                     />
                                                                 ))}
                                                             </motion.div>
@@ -1233,7 +1234,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                             <span style={{ fontSize: 14, fontWeight: 900, color: '#1B0088' }}>
                                 {(() => {
                                     const remaining = allSecciones.reduce((acc, s) => acc + (s.rows || []).reduce((a: number, r: any, i: number) => {
-                                        const isResolved = localStorage.getItem(`resolved_${r.tema}_${i}`) === 'true';
+                                        const isResolved = localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true';
                                         return isResolved ? a : a + timeToSeconds(r.tiempo || r.ch || '');
                                     }, 0), 0);
                                     return secondsToTime(remaining);
@@ -1245,7 +1246,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                             <span style={{ fontSize: 14, fontWeight: 900, color: '#99CC33' }}>
                                 {(() => {
                                     const totalRows = allSecciones.reduce((acc, s) => acc + (s.rows || []).length, 0);
-                                    const resolvedCount = allSecciones.reduce((acc, s) => acc + (s.rows || []).filter((r: any, i: number) => localStorage.getItem(`resolved_${r.tema}_${i}`) === 'true').length, 0);
+                                    const resolvedCount = allSecciones.reduce((acc, s) => acc + (s.rows || []).filter((r: any, i: number) => localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true').length, 0);
                                     return `${resolvedCount} / ${totalRows}`;
                                 })()}
                             </span>
@@ -1258,7 +1259,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                 animate={{ 
                                     width: `${(() => {
                                         const totalRows = allSecciones.reduce((acc, s) => acc + (s.rows || []).length, 0);
-                                        const resolvedCount = allSecciones.reduce((acc, s) => acc + (s.rows || []).filter((r: any, i: number) => localStorage.getItem(`resolved_${r.tema}_${i}`) === 'true').length, 0);
+                                        const resolvedCount = allSecciones.reduce((acc, s) => acc + (s.rows || []).filter((r: any, i: number) => localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true').length, 0);
                                         return totalRows > 0 ? (resolvedCount / totalRows) * 100 : 0;
                                     })()}%` 
                                 }}
@@ -1331,9 +1332,9 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
         return secciones.every(sec => {
             const rows = sec.rows || [];
             if (rows.length === 0) return true;
-            return rows.every((r: any, i: number) => localStorage.getItem(`resolved_${r.tema}_${i}`) === 'true');
+            return rows.every((r: any, i: number) => localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true');
         });
-    }, [secciones, tick]);
+    }, [secciones, tick, planetLabel]);
 
     React.useEffect(() => {
         if (isModuleComplete) {
@@ -1421,6 +1422,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
             ) : viewMode === 'detail' ? (
                 <FscDetailedTerminal 
                     seccion={secciones[selectedIdx] || {rows:[]}} 
+                    secciones={secciones}
                     planetColor={planetColor} 
                     onBack={() => setViewMode('map')} 
                     tick={tick}
