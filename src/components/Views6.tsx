@@ -1012,7 +1012,7 @@ const FscDetailedNodeCard = ({ node, index, planetColor, parentLabel }: any) => 
     );
 };
 
-const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOverride, subtitleOverride, tick }: any) => {
+const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOverride, subtitleOverride, tick, planetLabel, sectorLabel }: any) => {
     const allSecciones = secciones || (seccion ? [seccion] : []);
     const initialThemes = useMemo(() => {
         const themes = new Set<string>();
@@ -1040,7 +1040,8 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                 });
             });
             // Clear congrats flag too
-            localStorage.setItem(`congrats_shown_${titleOverride || seccion?.nombre || ''}_${subtitleOverride || 'SECTOR'}`, 'false');
+            const congratsKey = `congrats_shown_${planetLabel || titleOverride || seccion?.nombre || ''}_${sectorLabel || subtitleOverride || 'SECTOR'}`;
+            localStorage.setItem(congratsKey, 'false');
             if ((window as any).refreshOnboarding) (window as any).refreshOnboarding();
             onBack();
         }
@@ -1416,6 +1417,8 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                     planetColor={planetColor} 
                     onBack={() => setViewMode('map')} 
                     tick={tick}
+                    planetLabel={planetLabel}
+                    sectorLabel={sectorLabel}
                 />
             ) : (
                 <FscDetailedTerminal 
@@ -1425,6 +1428,8 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                     titleOverride="NAVE DE ONBOARDING"
                     onBack={() => setViewMode('map')} 
                     tick={tick}
+                    planetLabel="NAVE DE ONBOARDING"
+                    sectorLabel="PROTOCOLO DE PREPARACIÓN"
                 />
             )}
 
@@ -1489,18 +1494,18 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                 style={{ flex: 1, textAlign: 'left' }}
                             >
                                 <div style={{ fontSize: 14, color: planetColor, fontWeight: 900, letterSpacing: '8px', marginBottom: 24, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 20 }}>
-                                    <div style={{ width: 40, height: 2, background: planetColor }} /> MISIÓN CUMPLIDA
+                                    <div style={{ width: 40, height: 2, background: planetColor }} /> MISSÃO CUMPRIDA
                                 </div>
                                 
                                 <div style={{ fontSize: 64, fontWeight: 900, color: '#fff', marginBottom: 24, lineHeight: 1.1, letterSpacing: '-1px' }}>
-                                    ¡FELICITACIONES,<br/>AGENTE!
+                                    PARABÉNS,<br/>GUARDIÃO!
                                 </div>
                                 
                                 <div style={{ height: '4px', width: '100px', background: planetColor, marginBottom: 40, borderRadius: 2 }} />
 
                                 <div style={{ fontSize: 20, color: 'rgba(255,255,255,0.7)', lineHeight: 1.8, marginBottom: 60, fontWeight: 500 }}>
-                                    Has completado satisfactoriamente todos los protocolos asignados al módulo <span style={{ color: '#fff', fontWeight: 900, borderBottom: `2px solid ${planetColor}` }}>{planetLabel}</span>. 
-                                    Tu desempeño ha sido registrado en el núcleo central de la estación.
+                                    Você completou com sucesso todos os protocolos atribuídos ao módulo <span style={{ color: '#fff', fontWeight: 900, borderBottom: `2px solid ${planetColor}` }}>{planetLabel}</span>. 
+                                    Seu desempenho foi registrado no núcleo central da estação.
                                 </div>
 
                                 <button 
@@ -1520,7 +1525,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                         e.currentTarget.style.boxShadow = `0 10px 30px ${planetColor}44`;
                                     }}
                                 >
-                                    REGRESAR AL SECTOR
+                                    VOLTAR AO SETOR
                                 </button>
                             </motion.div>
                         </div>
