@@ -1023,10 +1023,8 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     const [collapsedThemes, setCollapsedThemes] = useState<string[]>(initialThemes);
 
     const handleMarkAllAsComplete = () => {
-        allSecciones.forEach(sec => {
-            (sec.rows || []).forEach((r: any, i: number) => {
-                localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'true');
-            });
+        (seccion.rows || []).forEach((r: any, i: number) => {
+            localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'true');
         });
         if ((window as any).refreshOnboarding) (window as any).refreshOnboarding();
         onBack();
@@ -1035,10 +1033,8 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     const handleResetProgress = () => {
         // We remove the native confirm as it might be blocked in some environments
         // or causing issues with the React event loop.
-        allSecciones.forEach(sec => {
-            (sec.rows || []).forEach((r: any, i: number) => {
-                localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'false');
-            });
+        (seccion.rows || []).forEach((r: any, i: number) => {
+            localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'false');
         });
         
         // Clear congrats flag too
@@ -1054,10 +1050,8 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     };
 
     const isAllComplete = useMemo(() => {
-        return allSecciones.every(sec => 
-            (sec.rows || []).every((r: any, i: number) => localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true')
-        );
-    }, [allSecciones, tick, planetLabel]);
+        return (seccion.rows || []).every((r: any, i: number) => localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true');
+    }, [seccion, tick, planetLabel]);
     
     const toggleTheme = (theme: string) => {
         setCollapsedThemes(prev => 
