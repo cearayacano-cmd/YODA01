@@ -169,7 +169,7 @@ export const Landing = ({ onNavigate, onAdmin }: any) => {
           {/* 4 Thruster Ping-Ripple Effect — Aligned with numbered ship image */}
           {[
             { bottom: 115, left: '35.0%', size: 24 }, // 1 (Outer Left, Higher)
-            { bottom: 115, left: '64.0%', size: 24 }, // 4 (Outer Right, Higher)
+            { bottom: 115, left: '59.2%', size: 24 }, // 4 (Outer Right, Higher)
             { bottom: 82,  left: '41.8%', size: 32 }, // 2 (Inner Left, Lower)
             { bottom: 82,  left: '51.0%', size: 32 }  // 3 (Inner Right, Lower)
           ].map((pos: any, i) => (
