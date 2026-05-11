@@ -883,7 +883,7 @@ export const TechBaseView = ({
                 letterSpacing: '1px',
                 transition: 'all 0.2s ease'
               }}>
-                {link.url && link.url !== '#' ? 'ACCEDER AL MÓDULO' : 'SIN ENLACE'}
+                {link.url && link.url !== '#' ? 'ACESSAR O MÓDULO' : 'SEM LINK'}
               </div>
             </motion.div>
           ))}
@@ -1114,7 +1114,7 @@ export const OperacionesView = ({ links, onBack, onNavigate, title, subtitle }: 
   return (
     <TechBaseView
       title={title || 'PORTAL INSTRUCTOR'}
-      subtitle={subtitle || 'Monitoreo en tiempo real, portal de instructores y control de misiones.'}
+      subtitle={subtitle || 'Monitoramento em tempo real, portal de instrutores e controle de missões.'}
       links={links}
       onBack={onBack}
       onNavigate={onNavigate}
@@ -1123,7 +1123,7 @@ export const OperacionesView = ({ links, onBack, onNavigate, title, subtitle }: 
       listIcon={<GraduationCap size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
       headerTitle="MANTENIMIENTO · PROTOCOLOS · SOPORTE"
       footerTitle="Portal Instructor"
-      description="Recursos de instrucción, monitoreo y operaciones de vuelo."
+      description="Recursos de instrução, monitoramento e operações de voo."
     />
   );
 };

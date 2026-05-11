@@ -93,6 +93,22 @@ const CornerHUD = () => (
 
 /* ── TACTICAL PLANET CARD ────────────────────────────────────────────── */
 const TacticalPlanetCard = ({ course, index, color, type, onClick }: any) => {
+  const planetLabel = course.label;
+  const allSecciones = course.secciones || [];
+  let totalRows = 0;
+  let resolvedCount = 0;
+  
+  allSecciones.forEach((s: any) => {
+    (s.rows || []).forEach((r: any, i: number) => {
+      totalRows++;
+      if (localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true') {
+        resolvedCount++;
+      }
+    });
+  });
+  
+  const isCompleted = totalRows > 0 && resolvedCount === totalRows;
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 30 }}
@@ -120,8 +136,8 @@ const TacticalPlanetCard = ({ course, index, color, type, onClick }: any) => {
 
 
           <div style={{ position: 'relative', zIndex: 2 }}>
-              <div style={{ fontSize: 9, color: color, fontWeight: 900, letterSpacing: '3px', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 10, justifyContent: 'center' }}>
-                  <div style={{ width: 4, height: 4, background: color }} />
+              <div style={{ fontSize: 9, color: '#fff', fontWeight: 900, letterSpacing: '3px', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 10, justifyContent: 'center', textShadow: `0 0 10px ${color}, 0 0 20px ${color}88` }}>
+                  <div style={{ width: 4, height: 4, background: color, boxShadow: `0 0 8px ${color}` }} />
                   PLN-{String(index + 1).padStart(3, '0')}
               </div>
               <div style={{ fontSize: 24, fontWeight: 900, color: '#fff', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: 15, textShadow: '0 0 10px rgba(255,255,255,0.2)', textAlign: 'center' }}>
@@ -131,16 +147,16 @@ const TacticalPlanetCard = ({ course, index, color, type, onClick }: any) => {
               <div style={{ height: '1.5px', background: `linear-gradient(90deg, transparent, ${color}44, transparent)`, marginBottom: 15 }} />
 
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-                  <div style={{ border: `1px solid ${color}44`, padding: '4px 10px', borderRadius: 4, fontSize: 8, fontWeight: 900, color: color, background: `${color}11` }}>
+                  <div style={{ border: `1px solid ${color}44`, padding: '4px 10px', borderRadius: 4, fontSize: 8, fontWeight: 900, color: '#fff', background: `${color}11`, boxShadow: `0 0 10px ${color}33`, textShadow: `0 0 5px ${color}` }}>
                     STATUS: ACTIVE
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                       <motion.div 
                         animate={{ opacity: [1, 0.3, 1] }} 
                         transition={{ duration: 1.5, repeat: Infinity }}
-                        style={{ width: 6, height: 6, borderRadius: '50%', background: color, boxShadow: `0 0 10px ${color}` }} 
+                        style={{ width: 6, height: 6, borderRadius: '50%', background: isCompleted ? '#99CC33' : color, boxShadow: `0 0 10px ${isCompleted ? '#99CC33' : color}` }} 
                       />
-                      <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '1px' }}>EN ÓRBITA</span>
+                      <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '1px' }}>{isCompleted ? 'COMPLETADO' : 'EN ÓRBITA'}</span>
                   </div>
               </div>
           </div>
@@ -191,7 +207,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                             boxShadow: '0 0 20px rgba(27,0,136,0.6)'
                         }}
                     >
-                        <ChevronRight style={{ transform: 'rotate(180deg)' }} size={16} /> VOLVER
+                        <ChevronRight style={{ transform: 'rotate(180deg)' }} size={16} /> VOLTAR
                     </button>
                </div>
 
@@ -200,9 +216,9 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                         fontSize: 10, color: '#00D6CC', fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: 12, 
                         display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 15,
                         background: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(8px)', padding: '6px 20px', borderRadius: '20px',
-                        border: '1px solid rgba(0,214,204,0.1)'
+                        border: '1px solid rgba(0,214,204,0.1)', textShadow: '0 0 8px #00D6CC, 0 0 15px rgba(0,214,204,0.5)'
                     }}>
-                        <Compass size={12} /> MAPA ESTELAR · SECTOR ACTIVO <Compass size={12} />
+                        <Compass size={12} /> MAPA ESTELAR · SETOR ATIVO <Compass size={12} />
                     </div>
                     <div style={{ fontSize: 48, fontWeight: 900, letterSpacing: '8px', textTransform: 'uppercase', color: '#fff' }}>{sectorLabel}</div>
                     <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10 }}>
@@ -216,7 +232,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                    <div style={{ 
                         fontSize: 10, color: '#ED1650', fontWeight: 900, letterSpacing: '2px', display: 'flex', alignItems: 'center', gap: 10, 
                         marginTop: 10, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(10px)', padding: '6px 20px', borderRadius: '30px',
-                        border: '1px solid rgba(237,22,80,0.1)'
+                        border: '1px solid rgba(237,22,80,0.1)', textShadow: '0 0 8px #ED1650, 0 0 15px rgba(237,22,80,0.5)'
                     }}>
                         <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#ED1650', boxShadow: '0 0 10px #ED1650' }} /> PLANETAS: {sectorData.length} DETECTADOS
                    </div>
@@ -282,9 +298,9 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                     <div style={{ 
                         fontSize: 11, color: '#ED1650', fontWeight: 900, letterSpacing: '6px', textTransform: 'uppercase',
                         background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(10px)', padding: '8px 30px', borderRadius: '30px',
-                        border: '1px solid rgba(237,22,80,0.1)'
+                        border: '1px solid rgba(237,22,80,0.1)', textShadow: '0 0 8px #ED1650, 0 0 15px rgba(237,22,80,0.5)'
                     }}>
-                        SELECCIONA UN PLANETA
+                        SELECIONE UM PLANETA
                     </div>
                     <div style={{ height: 1.5, flex: 1, background: 'linear-gradient(-90deg, transparent, rgba(237,22,80,0.5))' }} />
                 </div>

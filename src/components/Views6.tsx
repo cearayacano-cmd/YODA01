@@ -128,8 +128,9 @@ const JourneyEndStation = ({ planetColor, onClick }: any) => (
 
         {/* Completion Text */}
         <div style={{ marginTop: '20px', textAlign: 'center' }}>
-          <div style={{ fontSize: '10px', color: planetColor, fontWeight: 900, letterSpacing: '5px', textTransform: 'uppercase' }}>MISIÓN CUMPLIDA</div>
+          <div style={{ fontSize: '10px', color: planetColor, fontWeight: 900, letterSpacing: '5px', textTransform: 'uppercase' }}>MISSÃO CUMPRIDA</div>
           <div style={{ fontSize: '24px', fontWeight: 900, color: '#fff', letterSpacing: '2px' }}>DESTINO FINAL</div>
+          <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)', fontWeight: 700, marginTop: '8px', letterSpacing: '2px' }}>VOLTAR AO MAPA ESTELAR</div>
         </div>
       </motion.div>
     </div>
@@ -210,7 +211,7 @@ const MissionHeaderHUD = ({ sectorLabel, planetLabel, planetColor, onBack }: any
       onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = `0 0 30px ${planetColor}` }}
       onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = `0 0 20px ${planetColor}44` }}
     >
-      ← REGRESAR AL ESPACIO
+      ← VOLTAR AO MAPA ESTELAR
     </button>
 
     <div style={{ width: 220 }}>

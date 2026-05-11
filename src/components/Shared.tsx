@@ -30,9 +30,9 @@ export const Btn = ({ onClick, children, style={} }) => (
   </motion.button>
 );
 
-export const BackBtn = ({ onClick, label='VOLVER' }) => (
-  <Btn onClick={onClick} style={{ padding: '6px 14px' }}>
-    <ChevronLeft size={16} strokeWidth={3} />
+export const BackBtn = ({ onClick, label='VOLTAR' }: any) => (
+  <Btn onClick={onClick} style={{ padding: '8px 18px', fontSize: 13 }}>
+    <ChevronLeft size={18} strokeWidth={3} />
     {label}
   </Btn>
 );

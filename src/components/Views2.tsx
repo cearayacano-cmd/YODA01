@@ -190,7 +190,7 @@ const TacticalSectorCard = ({ color, id, label, desc, onClick, tag }: any) => {
         borderTop: `1px solid rgba(255,255,255,0.08)`,
         textAlign: 'center'
       }}>
-          MISIÓN
+          MISSÃO
         <div style={{ 
           fontSize: 36, 
           fontWeight: 900, 
@@ -229,7 +229,7 @@ const TacticalSectorCard = ({ color, id, label, desc, onClick, tag }: any) => {
             transition: 'all 0.3s'
           }}
         >
-          INGRESAR
+          ACESSAR
         </motion.div>
       </div>
     </motion.div>
@@ -308,7 +308,7 @@ export const GalaxySelection = ({ onNavigate, onBack }: any) => {
         position: 'relative'
       }}>
         <div style={{ position: 'absolute', left: 60 }}>
-          <BackBtn onClick={onBack} label="VOLVER" />
+          <BackBtn onClick={onBack} label="VOLTAR" />
         </div>
         
         <span style={{ 
@@ -319,7 +319,7 @@ export const GalaxySelection = ({ onNavigate, onBack }: any) => {
           textAlign: 'center',
           textShadow: '0 0 20px rgba(0,0,0,0.5)' 
         }}>
-          Seleccione la misión
+          Selecione a missão
         </span>
       </div>
 

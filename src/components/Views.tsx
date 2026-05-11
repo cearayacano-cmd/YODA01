@@ -169,7 +169,7 @@ export const Landing = ({ onNavigate, onAdmin }: any) => {
           {/* 4 Thruster Ping-Ripple Effect — Aligned with numbered ship image */}
           {[
             { bottom: 115, left: '35.0%', size: 24 }, // 1 (Outer Left, Higher)
-            { bottom: 115, left: '59.2%', size: 24 }, // 4 (Outer Right, Higher)
+            { bottom: 115, left: '64.0%', size: 24 }, // 4 (Outer Right, Higher)
             { bottom: 82,  left: '41.8%', size: 32 }, // 2 (Inner Left, Lower)
             { bottom: 82,  left: '51.0%', size: 32 }  // 3 (Inner Right, Lower)
           ].map((pos: any, i) => (
@@ -1710,7 +1710,7 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
         }}>
           <StationIcon />
           <div>
-            <div style={{ fontSize: 11, letterSpacing: '0.4em', color: alertMode ? '#ff5555' : '#64748b', textTransform: 'uppercase', marginBottom: 2, fontWeight: 700 }}>Estación Espacial</div>
+            <div style={{ fontSize: 11, letterSpacing: '0.4em', color: alertMode ? '#ff5555' : '#64748b', textTransform: 'uppercase', marginBottom: 2, fontWeight: 700 }}>ESTAÇÃO ESPACIAL</div>
             <div style={{ fontSize: 24, fontWeight: 900, color: alertMode ? '#fff' : '#0F004F', letterSpacing: '0.1em' }}>{stationName} STATION</div>
           </div>
         </div>
