@@ -23,7 +23,7 @@ Este proyecto es una migración técnica de una aplicación HTML/React a una arq
    - macOS/Linux: `source venv/bin/activate`
 4. Instala las dependencias: `pip install -r requirements.txt`.
 5. Ejecuta el servidor: `python src/main.py`.
-   - El backend correrá en `http://localhost:8000`.
+   - El backend correrá en `http://localhost:8010`.
 
 ### Frontend
 
@@ -31,7 +31,7 @@ Este proyecto es una migración técnica de una aplicación HTML/React a una arq
 2. Instala las dependencias: `npm install`.
 3. Crea un archivo `.env.local` basado en `.env.example`.
 4. Ejecuta el servidor de desarrollo: `npm run dev`.
-   - El frontend correrá en `http://localhost:3000`.
+   - El frontend correrá en `http://localhost:3010`.
 
 ## Notas de Migración
 

@@ -22,3 +22,12 @@ dist/
 node_modules/
 .env*
 
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+backend/venv/
+backend/src/**/__pycache__/

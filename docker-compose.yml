@@ -2,26 +2,30 @@ version: '3.8'
 
 services:
   backend:
+    container_name: yoda_backend_v2
+    restart: unless-stopped
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "8010:8010"
     volumes:
       - ./backend:/app
     environment:
       - ENV=development
 
   frontend:
+    container_name: yoda_frontend_v2
+    restart: unless-stopped
     build:
-      context: ./frontend
+      context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3010:3010"
     volumes:
-      - ./frontend:/app
+      - .:/app
       - /app/node_modules
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:8000/api
+      - NEXT_PUBLIC_API_URL=http://localhost:8010/api
     depends_on:
       - backend
