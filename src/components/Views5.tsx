@@ -702,25 +702,22 @@ export const TechBaseView = ({
           })}
         </div>
 
-        {/* Grid of Shields at the very bottom (2 rows of 3) */}
+        {/* Grid of Shields at the very bottom (1 row of 2) */}
         <div style={{ 
           marginTop: 'auto', 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(3, 1fr)', 
-          gap: 15,
+          display: 'flex', 
+          justifyContent: 'center',
+          gap: 30,
           paddingTop: '20px',
+          paddingBottom: '10px',
           borderTop: '1px solid rgba(0, 243, 255, 0.1)',
           zIndex: 5
         }}>
           {[
-            '/escudos/YODA - AMC.png',
-            '/escudos/YODA - AeC.png',
-            '/escudos/YODA - Interna BR.png',
-            '/escudos/YODA - Interna.png',
             '/escudos/YODA - Konecta BR.png',
-            '/escudos/YODA - Konecta PE.png'
+            '/escudos/YODA - AeC.png'
           ].map((src, i) => (
-            <img key={i} src={src} alt="Shield" style={{ width: '100%', height: 'auto', filter: 'brightness(1.1)' }} />
+            <img key={i} src={src} alt="Shield" style={{ width: '110px', height: 'auto', filter: 'brightness(1.1)', objectFit: 'contain' }} />
           ))}
         </div>
       </div>

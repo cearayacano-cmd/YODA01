@@ -20,7 +20,7 @@ const MissionIcon = ({ color, alertMode }: any) => (
   </motion.div>
 );
 
-const LandingMissionCard = ({ title, subtitle, id, color, onClick, onMouseEnter, onMouseLeave }: any) => (
+const LandingMissionCard = ({ title, subtitle, id, color, buttonText = "INICIAR SECUENCIA", onClick, onMouseEnter, onMouseLeave }: any) => (
   <motion.div 
     onClick={onClick}
     onMouseEnter={onMouseEnter}
@@ -63,7 +63,7 @@ const LandingMissionCard = ({ title, subtitle, id, color, onClick, onMouseEnter,
       letterSpacing: '0.2em',
       pointerEvents: 'none'
     }}>
-      INICIAR SECUENCIA
+      {buttonText}
     </div>
   </motion.div>
 );
@@ -244,6 +244,7 @@ export const Landing = ({ onNavigate, onAdmin }: any) => {
           id="br" 
           subtitle="" 
           color="#99CC33" 
+          buttonText="INICIAR SEQUÊNCIA"
           onClick={() => onNavigate('br')} 
           onMouseEnter={() => handleEnter('br')}
           onMouseLeave={handleLeave}
@@ -1111,8 +1112,8 @@ const CentralMonitorCard = ({ onNavigate }: any) => {
       <div style={{ position: 'absolute', bottom: 4, right: 4, width: 5, height: 5, background: color, borderRadius: '50%', boxShadow: `0 0 8px ${color}`, zIndex: 14 }} />
 
       <div style={{ zIndex: 2, position: 'relative', width: '100%', textAlign: 'center' }}>
-        <div style={{ fontSize: 9, color: '#FF7D9B', letterSpacing: '0.3em', fontWeight: 900, marginBottom: 4, textTransform: 'uppercase' }}>NAVE EXPLORACION</div>
-        <div style={{ fontSize: 24, fontWeight: 900, color: '#ffffff', marginBottom: 12, letterSpacing: '0.05em' }}>ENTRENAMIENTO</div>
+        <div style={{ fontSize: 9, color: '#FF7D9B', letterSpacing: '0.3em', fontWeight: 900, marginBottom: 4, textTransform: 'uppercase' }}>NAVE EXPLORAÇÃO</div>
+        <div style={{ fontSize: 24, fontWeight: 900, color: '#ffffff', marginBottom: 12, letterSpacing: '0.05em' }}>Treinamentos</div>
 
         {/* SECTOR SCAN AREA (Widescreen tactical display) */}
         <div style={{ 
@@ -1330,7 +1331,7 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <motion.div animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
             style={{ width: 4, height: 4, borderRadius: '50%', background: '#fff', boxShadow: '0 0 5px #fff', flexShrink: 0 }} />
-          <span>ELEVAR EL CONOCIMIENTO SIEMPRE.</span>
+          <span>ELEVAR O CONHECIMENTO, SEMPRE</span>
         </div>
 
         <div style={{ display: 'flex', gap: '6px' }}>
@@ -1721,12 +1722,12 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
       <div style={{ flex: 1, position: 'relative', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
         <ConsoleSideFrame side="left">
           <ModuleCard 
-            sec="SEC-A1" title="PORTAL INSTRUCTOR" subtitle="CENTRO DE OPERACIONES" color="#FFE017" side="left"
-            icon={<GraduationCap />} stats={[{label: 'MÓDULOS', val: config.operaciones?.length || 0}, {label: 'ACTUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('operaciones')} 
+            sec="SEC-A1" title="Portal Instrutor" subtitle="" color="#FFE017" side="left"
+            icon={<GraduationCap />} stats={[{label: 'MÓDULOS', val: config.operaciones?.length || 0}, {label: 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('operaciones')} 
           />
           <ModuleCard 
-            sec="SEC-A2" title="FORMULARIOS" subtitle="MÓDULO DE SUMINISTROS" color="#00FFF2" side="left"
-            icon={<Package />} stats={[{label: 'MÓDULOS', val: config.suministros?.length || 0}, {label: 'ACTUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('suministros')} 
+            sec="SEC-A2" title="Formulários" subtitle="" color="#00FFF2" side="left"
+            icon={<Package />} stats={[{label: 'MÓDULOS', val: config.suministros?.length || 0}, {label: 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('suministros')} 
           />
         </ConsoleSideFrame>
         
@@ -1764,12 +1765,12 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
 
         <ConsoleSideFrame side="right">
           <ModuleCard 
-            sec="SEC-B1" title="PORTAL DE LÍDERES" subtitle="LAB. DE ESTRATEGIA" color="#A4FF00" side="right"
-            icon={<Microscope />} stats={[{label: 'MÓDULOS', val: config.laboratorio?.length || 0}, {label: 'ACTUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('laboratorio')} 
+            sec="SEC-B1" title="PORTAL DE LÍDERES" subtitle="" color="#A4FF00" side="right"
+            icon={<Microscope />} stats={[{label: 'MÓDULOS', val: config.laboratorio?.length || 0}, {label: 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('laboratorio')} 
           />
           <ModuleCard 
-            sec="SEC-B2" title="TALLERES" subtitle="TALLER DE INGENIERÍA" color="#D400FF" side="right"
-            icon={<Cpu />} stats={[{label: 'MÓDULOS', val: config.ingenieria?.length || 0}, {label: 'ACTUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('ingenieria')} 
+            sec="SEC-B2" title="TALLERES" subtitle="" color="#D400FF" side="right"
+            icon={<Cpu />} stats={[{label: 'MÓDULOS', val: config.ingenieria?.length || 0}, {label: 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('ingenieria')} 
           />
         </ConsoleSideFrame>
       </div>
