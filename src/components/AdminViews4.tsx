@@ -161,7 +161,7 @@ export const AdminAdvancedContent = ({ sectorId, courseIdx, config, updateConfig
 
   if(sectorId==='fieldSupport') {
     // FSC Editor
-    const addSection = () => updateF([...data, {label:'Nueva Misión', rows:[]}]);
+    const addSection = () => updateF([...data, {label:`MISSÃO ${data.length + 1}:`, rows:[]}]);
     const removeSection = (si) => updateF(data.filter((_,i)=>i!==si));
     const addRow = (si) => {
       const next = [...data];
@@ -206,7 +206,7 @@ export const AdminAdvancedContent = ({ sectorId, courseIdx, config, updateConfig
           onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
           onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
           >
-            <Plus size={18} /> AGREGAR NUEVA MISIÓN
+            <Plus size={18} /> AGREGAR NUEVA MISSÃO
           </button>
         </div>
 
@@ -236,7 +236,7 @@ export const AdminAdvancedContent = ({ sectorId, courseIdx, config, updateConfig
                     value={sec.label} 
                     onChange={e=>{const n=[...data];n[si].label=e.target.value;updateF(n);}} 
                     style={{background:'transparent', border:'none', color:'#ffffff', fontSize:18, fontWeight:900, outline:'none', width:'60%', letterSpacing: '0.02em'}}
-                    placeholder="Nombre de la Misión"
+                    placeholder="Nombre de la Missão"
                   />
                 </div>
                 <button onClick={()=>removeSection(si)} style={{
@@ -247,7 +247,7 @@ export const AdminAdvancedContent = ({ sectorId, courseIdx, config, updateConfig
                 onMouseEnter={e => { e.currentTarget.style.background = '#EF4444E0'; e.currentTarget.style.color = '#fff'; }}
                 onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#FCA5A5'; }}
                 >
-                  <Trash2 size={14} /> ELIMINAR MISIÓN
+                  <Trash2 size={14} /> ELIMINAR MISSÃO
                 </button>
               </div>
               <div style={{padding:32}}>

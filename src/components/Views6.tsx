@@ -1396,8 +1396,10 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                     transition={{ duration: 0.6 }}
                                 >
                                     <div style={{ textAlign: 'center', marginTop: 100, marginBottom: 40 }}>
-                                        <div style={{ fontSize: 10, color: planetColor, fontWeight: 900, letterSpacing: '6px', marginBottom: 12, textTransform: 'uppercase' }}>MAPA TÁTICO DE EXPLORAÇÃO</div>
-                                        <div style={{ fontSize: 36, fontWeight: 900, color: '#fff', letterSpacing: '4px', textTransform: 'uppercase' }}>MISSÃO: {planetLabel}</div>
+                                        <div style={{ display: 'inline-block', background: 'rgba(27, 0, 136, 0.4)', backdropFilter: 'blur(10px)', border: `1px solid ${planetColor === '#1b0088' ? '#99CC33' : planetColor}`, borderRadius: 30, padding: '8px 20px', marginBottom: 16, boxShadow: `0 0 15px ${planetColor === '#1b0088' ? 'rgba(153, 204, 51, 0.3)' : planetColor + '44'}` }}>
+                                            <span style={{ fontSize: 10, color: planetColor === '#1b0088' ? '#99CC33' : '#ffffff', fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase' }}>MAPA TÁTICO DE EXPLORAÇÃO</span>
+                                        </div>
+                                        <div style={{ fontSize: 36, fontWeight: 900, color: '#fff', letterSpacing: '4px', textTransform: 'uppercase' }}>EXPEDIÇÃO: {planetLabel}</div>
                                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>
                                             <div style={{ width: 140, height: 2, background: `linear-gradient(90deg, transparent, ${planetColor}, transparent)` }} />
                                         </div>
@@ -1473,7 +1475,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                             width: '100%', maxWidth: '1400px', display: 'flex', alignItems: 'center', gap: 80, padding: '0 80px',
                             position: 'relative', zIndex: 10
                         }}>
-                            {/* MISIÓN SIDE */}
+                            {/* MISSÃO SIDE */}
                             <motion.div 
                                 initial={{ opacity: 0, x: -50 }}
                                 animate={{ opacity: 1, x: 0 }}

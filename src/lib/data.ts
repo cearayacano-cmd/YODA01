@@ -42,7 +42,7 @@ export const BASE_PLANET_DATA = {  "texture": "CRATERS",
   secciones: [
     {
       tipo: 'mision1',
-      label: 'EXPEDIÇÃO VENDAS',
+      label: 'MISSÃO VENDAS',
       rows: [
         {
           macroTema: "Introdução",
@@ -461,7 +461,7 @@ export const BASE_PLANET_DATA = {  "texture": "CRATERS",
           detalhe: "- Instrutor explica o que é, mostrando as telas do PIC.",
           tiempo: "0:05:00",
           herramientas: [],
-          iaPic: [{ label: "PIC SEMÃFORO", url: "https://pic-latam.zendesk.com/hc/pt-br/articles/43013540923667-Sem%C3%A1foro-de-afeta%C3%A7%C3%A3o-Criticality-Score" }]
+          iaPic: [{ label: "PIC SEMÁFORO", url: "https://pic-latam.zendesk.com/hc/pt-br/articles/43013540923667-Sem%C3%A1foro-de-afeta%C3%A7%C3%A3o-Criticality-Score" }]
         },
         {
           macroTema: "Perfil Cliente",
@@ -494,7 +494,7 @@ herramientas: [],
     },
     {
       tipo: "mision1",
-      label: "EXPEDIÇÃO CASOS & ZENDESK",
+      label: "MISSÃO CASOS & ZENDESK",
       rows: [
         {
           macroTema: "Casos",
@@ -578,7 +578,7 @@ herramientas: [],
     },
     {
       tipo: "mision1",
-      label: "EXPEDIÇÃO LATAM PASS",
+      label: "MISSÃO LATAM PASS",
       rows: [
         {
           macroTema: "LATAM PASS",
@@ -726,7 +726,7 @@ herramientas: [],
     },
     {
       tipo: "mision1",
-      label: "EXPEDIÇÃO NÃO VOZ & ENCERRAMENTO",
+      label: "MISSÃO NOVOZ",
       rows: [
         {
           macroTema: "NÃO VOZ",
@@ -855,7 +855,7 @@ herramientas: [],
     },
     {
       tipo: "landing",
-      label: "FASE DE LANDING: CONFIGURAÇÃO & ACESSOS",
+      label: "LANDING",
       rows: [
         {
           macroTema: "LANDING",
@@ -927,7 +927,7 @@ export const VENDAS_WS_12_DATA = {
   secciones: [
     {
       tipo: 'mision1',
-      label: 'MISIÓN 1: Vendas',
+      label: 'MISSÃO 1: Vendas',
       rows: [
   {
     "macroTema": "Introdução",
@@ -1694,7 +1694,7 @@ export const VENDAS_WS_12_DATA = {
     },
     {
       tipo: 'mision1',
-      label: 'MISIÓN 2: Casos',
+      label: 'MISSÃO 2: Casos',
       rows: [
   {
     "macroTema": "Casos",
@@ -1821,7 +1821,7 @@ export const VENDAS_WS_12_DATA = {
     },
     {
       tipo: 'mision1',
-      label: 'MISIÓN 3: - LATAM PASS',
+      label: 'MISSÃO 3: LATAM PASS',
       rows: [
   {
     "macroTema": "LATAM PASS",
@@ -2060,7 +2060,7 @@ export const VENDAS_WS_12_DATA = {
     },
     {
       tipo: 'mision1',
-      label: 'MISIÓN 4 - NÃO VOZ',
+      label: 'MISSÃO 4: NÃO VOZ',
       rows: [
   {
     "macroTema": "NÃO VOZ",
@@ -2394,7 +2394,7 @@ export const VENDAS_WS_12_DATA = {
     },
     {
       tipo: 'mision1',
-      label: 'MISIÓN: WS Vendas',
+      label: 'MISSÃO 5: WS Vendas',
       rows: [
   {
     "macroTema": "Abertura",
@@ -2817,9 +2817,9 @@ export const ONBOARDING_DATA_DEFAULT = {
   ]
 };
 
-export const POS_VENTA_1_DATA = {  "texture": "GAS",
+export const POS_VENDA_1_DATA = {  "texture": "GAS",
 
-  "label": "POS VENTA 1",
+  "label": "POS VENDA 1",
   "color": "#7000ab",
   "evalKon": [
     {
@@ -2837,7 +2837,7 @@ export const POS_VENTA_1_DATA = {  "texture": "GAS",
   "secciones": [
     {
       "tipo": "mision1",
-      "label": "1: ALTERAÇÕES VOLUNTÃRIAS A360",
+      "label": "MISSÃO 1: ALTERAÇÕES VOLUNTÁRIAS A360",
       "rows": [
         {
           "macroTema": "Introdução ",
@@ -3018,7 +3018,7 @@ export const POS_VENTA_1_DATA = {  "texture": "GAS",
     },
     {
       "tipo": "mision2",
-      "label": "2: ALTERAÇÕES INVOLUNTÃRIAS A360",
+      "label": "MISSÃO 2: ALTERAÇÕES INVOLUNTÁRIAS A360",
       "rows": [
         {
           "macroTema": " Alterações Involuntárias",
@@ -3130,7 +3130,7 @@ export const POS_VENTA_1_DATA = {  "texture": "GAS",
     },
     {
       "tipo": "mision3",
-      "label": "3: EXCEÇÃ•ES A360",
+      "label": "MISSÃO 3: EXCEÇÕES A360",
       "rows": [
         {
           "macroTema": "Exceções",
@@ -3228,7 +3228,7 @@ export const POS_VENTA_1_DATA = {  "texture": "GAS",
     },
     {
       "tipo": "mision4",
-      "label": "4: DEVOLUÇÃ•ES",
+      "label": "MISSÃO 4: DEVOLUÇÕES",
       "rows": [
         {
           "macroTema": "Introdução Devoluções A360",
@@ -3356,7 +3356,7 @@ export const POS_VENTA_1_DATA = {  "texture": "GAS",
         },
         {
           "macroTema": "Devoluções A360",
-          "tema": "COMPENSAÇÃ•ES - Fluxos de criação de Travel Vouchers",
+          "tema": "COMPENSAÇÕES - Fluxos de criação de Travel Vouchers",
           "detalhe": "- Instrutor explica o que é una compensación e que em algunos casos é necesario criar Travel Voucher e mostra no PIC onde encontrar os links para revisar os fluxos de cada una das situações.",
           "tiempo": "0:10:00",
           "herramientas": [],
@@ -3443,7 +3443,7 @@ export const POS_VENTA_1_DATA = {  "texture": "GAS",
         {
           "macroTema": "Web  Devoluções",
           "tema": "\"Atividade \"\"Briefing de Missão\"\" Devoluções no Web Devoluções \"",
-          "detalhe": "- Instrutor mostra capítulo de reembolso e pede para que os alunos façam resumo dos temas: 1.QUANDO INGRESSAR UMA DEVOLUÇÃO ATRAVÉS DA WEB DEVOLUÇÃ•ES (TRACK ID) 2. DEVOLUÇÃO ATRAVÉS DA WEB DEVOLUÇÃ•ES 3. PRAZOS E FORMAS DE PAGAMENTO DO REEMBOLSO 4. CASOS ESPECIAIS DE DEVOLUÇÃO 5. CONSULTA DE STATUS DE UM REEMBOLSO 6.CASO ESPECIAL: DEVOLUÇÃO PROATIVA DE PASSAGEIROS NO SHOW NO CHILE Após 5 minutos pede para que 1 aluno comente suas considerações do item 1 (complementa se necesario) e pede para o aluno escolher um colega para expor o resumo do item 2 (complementa se necesario). - Instrutor explica o flujo de devolução disponible neste capítulo.",
+          "detalhe": "- Instrutor mostra capítulo de reembolso e pede para que os alunos façam resumo dos temas: 1.QUANDO INGRESSAR UMA DEVOLUÇÃO ATRAVÉS DA WEB DEVOLUÇÕES (TRACK ID) 2. DEVOLUÇÃO ATRAVÉS DA WEB DEVOLUÇÕES 3. PRAZOS E FORMAS DE PAGAMENTO DO REEMBOLSO 4. CASOS ESPECIAIS DE DEVOLUÇÃO 5. CONSULTA DE STATUS DE UM REEMBOLSO 6.CASO ESPECIAL: DEVOLUÇÃO PROATIVA DE PASSAGEIROS NO SHOW NO CHILE Após 5 minutos pede para que 1 aluno comente suas considerações do item 1 (complementa se necesario) e pede para o aluno escolher um colega para expor o resumo do item 2 (complementa se necesario). - Instrutor explica o flujo de devolução disponible neste capítulo.",
           "tiempo": "0:45:00",
           "herramientas": [],
           "iaPic": [],
@@ -3567,7 +3567,7 @@ export const POS_VENTA_1_DATA = {  "texture": "GAS",
     },
     {
       "tipo": "mision5",
-      "label": "5: RECLAMAÇÃ•ES A360",
+      "label": "MISSÃO 5: RECLAMAÇÕES A360",
       "rows": [
         {
           "macroTema": "Reclamações",
@@ -3818,14 +3818,14 @@ export const POS_VENTA_1_DATA = {  "texture": "GAS",
   ]
 };
 
-export const POS_VENTA_2_DATA = {  "texture": "CRATERS",
+export const POS_VENDA_2_DATA = {  "texture": "CRATERS",
 
-  "label": "POS VENTA 2",
+  "label": "POS VENDA 2",
   "color": "#7da81a",
   "secciones": [
     {
       "tipo": "mision1",
-      "label": "1: VENDAS",
+      "label": "MISSÃO 1: VENDAS",
       "rows": [
         {
           "macroTema": "Ferramentas BU",
@@ -4196,7 +4196,7 @@ export const POS_VENTA_2_DATA = {  "texture": "CRATERS",
     },
     {
       "tipo": "mision2",
-      "label": "2: ALTERAÇÕES VOLUNTÃRIAS",
+      "label": "MISSÃO 2: ALTERAÇÕES VOLUNTÁRIAS",
       "rows": [
         {
           "macroTema": "Alterações",
@@ -4341,7 +4341,7 @@ export const POS_VENTA_2_DATA = {  "texture": "CRATERS",
     },
     {
       "tipo": "mision3",
-      "label": "3: ALTERAÇÕES INVOLUNTÃRIAS",
+      "label": "MISSÃO 3: ALTERAÇÕES INVOLUNTÁRIAS",
       "rows": [
         {
           "macroTema": "Alterações",
@@ -4449,7 +4449,7 @@ export const POS_VENTA_2_DATA = {  "texture": "CRATERS",
     },
     {
       "tipo": "mision4",
-      "label": "4: EXCEÇÃ•ES",
+      "label": "MISSÃO 4: EXCEÇÕES",
       "rows": [
         {
           "macroTema": "Exceções",
@@ -4534,7 +4534,7 @@ export const POS_VENTA_2_DATA = {  "texture": "CRATERS",
     },
     {
       "tipo": "mision5",
-      "label": "5: DEVOLUÇÃ•ES",
+      "label": "MISSÃO 5: DEVOLUÇÕES",
       "rows": [
         {
           "macroTema": "Devoluções",
@@ -4642,7 +4642,7 @@ export const POS_VENTA_2_DATA = {  "texture": "CRATERS",
     },
     {
       "tipo": "mision6",
-      "label": "6: RECLAMAÇÃ•ES",
+      "label": "MISSÃO 6: RECLAMAÇÕES",
       "rows": [
         {
           "macroTema": "Reclamações",
@@ -4904,7 +4904,7 @@ export const HVC_BAG_DATA = {  "texture": "OCEAN",
   },
   {
     "tipo": "mision1",
-    "label": "1: Latam PASS",
+    "label": "MISSÃO 1: Latam PASS",
     "rows": [
       {
         "macroTema": "Conhecendo o produto LATAM PASS",
@@ -5344,7 +5344,7 @@ export const HVC_BAG_DATA = {  "texture": "OCEAN",
   },
   {
     "tipo": "mision1",
-    "label": "2: Vendas",
+    "label": "MISSÃO 2: Vendas",
     "rows": [
       {
         "macroTema": "Processo alternativo de resgate",
@@ -5574,7 +5574,7 @@ export const HVC_BAG_DATA = {  "texture": "OCEAN",
   },
   {
     "tipo": "mision1",
-    "label": "3: Alterações",
+    "label": "MISSÃO 3: Alterações",
     "rows": [
       {
         "macroTema": "Upgrade de Cabine (com trechos de cortesia)",
@@ -5818,7 +5818,7 @@ export const HVC_BAG_DATA = {  "texture": "OCEAN",
   },
   {
     "tipo": "mision1",
-    "label": "4: Compensações",
+    "label": "MISSÃO 4: Compensações",
     "rows": [
       {
         "macroTema": "Latam Wallet -Países e contas bancárias",
@@ -6006,7 +6006,7 @@ export const HVC_BAG_DATA = {  "texture": "OCEAN",
   },
   {
     "tipo": "mision1",
-    "label": "5: Staff Travel",
+    "label": "MISSÃO 5: Staff Travel",
     "rows": [
       {
         "macroTema": "Benefícios FFP para líderes",
@@ -6082,7 +6082,7 @@ export const HVC_BAG_DATA = {  "texture": "OCEAN",
   },
   {
     "tipo": "mision1",
-    "label": "6: Devoluções",
+    "label": "MISSÃO 6: Devoluções",
     "rows": [
       {
         "macroTema": "Devolução EMD cobrado por erro",
@@ -6340,7 +6340,7 @@ export const HVC_BAG_DATA = {  "texture": "OCEAN",
   },
   {
     "tipo": "mision1",
-    "label": "7: Reclamações",
+    "label": "MISSÃO 7: Reclamações",
     "rows": [
       {
         "macroTema": "Reclamações por cobranças",
@@ -6458,7 +6458,7 @@ export const HVC_BAG_DATA = {  "texture": "OCEAN",
   },
   {
     "tipo": "mision1",
-    "label": "8: Bagagem",
+    "label": "MISSÃO 8: Bagagem",
     "rows": [
       {
         "macroTema": "Gestão de reclamações de bagagem no aeroporto",
@@ -6576,7 +6576,7 @@ export const HVC_BAG_DATA = {  "texture": "OCEAN",
   },
   {
     "tipo": "mision1",
-    "label": "9: Ferramentas",
+    "label": "MISSÃO 9: Ferramentas",
     "rows": [
       {
         "macroTema": "Único Sign - Assinatura Digital",
@@ -6610,7 +6610,7 @@ export const HVC_BAG_DATA = {  "texture": "OCEAN",
   },
   {
     "tipo": "mision1",
-    "label": "10: Bagagem",
+    "label": "MISSÃO 10: Bagagem",
     "rows": [
       {
         "macroTema": "Procurar PIR através da World Tracer (WTD)",
@@ -6700,7 +6700,7 @@ export const HVC_BAG_DATA = {  "texture": "OCEAN",
   },
   {
     "tipo": "mision1",
-    "label": "11: Ferramentas",
+    "label": "MISSÃO 11: Ferramentas",
     "rows": [
       {
         "macroTema": "Bagagem Danificada e/ou Violada",
@@ -7169,7 +7169,7 @@ export const LAE_DATA = {  "texture": "RINGS",
   "secciones": [
     {
       "tipo": "mision1",
-      "label": "1: INTRODUÇÃO PI",
+      "label": "MISSÃO 1: INTRODUÇÃO PI",
       "rows": [
         {
           "macroTema": "Introdução",
@@ -7361,7 +7361,7 @@ export const LAE_DATA = {  "texture": "RINGS",
     },
     {
       "tipo": "mision1",
-      "label": "2: PEDIDO DE INFORMAÇÃO",
+      "label": "MISSÃO 2: PEDIDO DE INFORMAÇÃO",
       "rows": [
         {
           "macroTema": "Resumo",
@@ -7493,7 +7493,7 @@ export const LAE_DATA = {  "texture": "RINGS",
     },
     {
       "tipo": "mision1",
-      "label": "3: SISTEMAS",
+      "label": "MISSÃO 3: SISTEMAS",
       "rows": [
         {
           "macroTema": "Resumo",
@@ -7555,7 +7555,7 @@ export const LAE_DATA = {  "texture": "RINGS",
     },
     {
       "tipo": "mision1",
-      "label": "4: EVIDÊNCIAS",
+      "label": "MISSÃO 4: EVIDÊNCIAS",
       "rows": [
         {
           "macroTema": "Evidências",
@@ -7603,7 +7603,7 @@ export const LAE_DATA = {  "texture": "RINGS",
     },
     {
       "tipo": "mision1",
-      "label": "5: BAGAGEM",
+      "label": "MISSÃO 5: BAGAGEM",
       "rows": [
         {
           "macroTema": "Resumo",
@@ -7721,7 +7721,7 @@ export const LAE_DATA = {  "texture": "RINGS",
     },
     {
       "tipo": "mision1",
-      "label": "6: ADV / EVALUACIÓN",
+      "label": "MISSÃO 6: ADV / EVALUACIÓN",
       "rows": [
         {
           "macroTema": "Resumo",

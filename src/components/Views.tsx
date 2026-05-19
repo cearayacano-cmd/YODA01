@@ -1471,7 +1471,7 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
         >
           <motion.div animate={{ x: ['-100%', '200%'] }} transition={{ duration: 2.8, repeat: Infinity, ease: 'linear', repeatDelay: 2 }}
             style={{ position: 'absolute', top: 0, left: 0, width: '35%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(0,214,204,0.12), transparent)', pointerEvents: 'none' }} />
-          <span style={{ fontSize: 10, fontWeight: 900, color: '#fff', letterSpacing: '0.12em', textShadow: '0 0 8px rgba(0,214,204,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>📋 PREPARAÇÃO</span>
+          <span style={{ fontSize: 10, fontWeight: 900, color: '#fff', letterSpacing: '0.12em', textShadow: '0 0 8px rgba(0,214,204,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>📋 MATRIZ MIGRAÇÕES</span>
         </motion.div>
       </div>
     </div>

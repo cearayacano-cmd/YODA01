@@ -190,7 +190,7 @@ const TacticalSectorCard = ({ color, id, label, desc, onClick, tag }: any) => {
         borderTop: `1px solid rgba(255,255,255,0.08)`,
         textAlign: 'center'
       }}>
-          MISSÃO
+          EXPEDIÇÃO
         <div style={{ 
           fontSize: 36, 
           fontWeight: 900, 
@@ -319,7 +319,7 @@ export const GalaxySelection = ({ onNavigate, onBack }: any) => {
           textAlign: 'center',
           textShadow: '0 0 20px rgba(0,0,0,0.5)' 
         }}>
-          Selecione a missão
+          SELECIONE A EXPEDIÇÃO
         </span>
       </div>
 

@@ -986,7 +986,7 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
     <TechBaseView
       config={config}
       title={title || 'Portal de Lideres'}
-      subtitle={subtitle || 'Lab. de estratégia, expedições de formação e análise de dados em tempo real.'}
+      subtitle={subtitle || 'Lab. de estratégia, missões de formação e análise de dados em tempo real.'}
       links={links}
       onBack={onBack}
       onNavigate={onNavigate}

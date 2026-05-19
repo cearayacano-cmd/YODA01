@@ -202,7 +202,7 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
               <Globe size={22} color="#1B0088" />
               <div style={{fontSize:18, fontWeight:900, textTransform:'uppercase', color: '#1B0088', letterSpacing: '-0.02em'}}>
                 PLANETAS DEL SECTOR 
-                <span style={{ color: '#94a3b8', marginLeft: 12, fontWeight: 500 }}>— {galaxyConfig.length} misiones</span>
+                <span style={{ color: '#94a3b8', marginLeft: 12, fontWeight: 500 }}>— {galaxyConfig.length} expedições</span>
               </div>
             </div>
             <button 
@@ -312,7 +312,7 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
                       onMouseEnter={(e) => { e.currentTarget.style.background = '#1B0088'; e.currentTarget.style.color = '#ffffff'; }}
                       onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(27,0,136,0.05)'; e.currentTarget.style.color = '#1B0088'; }}
                     >
-                      <Edit3 size={16} /> MISIONES ({getAdvCount(advData?.[i])})
+                      <Edit3 size={16} /> MISSÕES ({getAdvCount(advData?.[i])})
                     </button>
                     <button 
                       onClick={()=>removeCourse(i)} 

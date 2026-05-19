@@ -159,7 +159,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
               whileHover={{ scale: 1.02, background: 'rgba(239,68,68,0.1)' }}
               whileTap={{ scale: 0.98 }}
               onClick={() => {
-                if (window.confirm("¿BORRAR TODO EL PROGRESO? Esta acción limpiará todas las marcas de planetas y misiones completadas.")) {
+                if (window.confirm("¿BORRAR TODO EL PROGRESO? Esta acción limpiará todas las marcas de planetas y missões completadas.")) {
                   Object.keys(localStorage).forEach(key => {
                     if (key.startsWith('resolved_') || key.startsWith('congrats_shown_')) {
                       localStorage.removeItem(key);
@@ -220,7 +220,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
               </div>
               <div>
                 <div style={{fontSize:18, fontWeight:900, color: '#1B0088', marginBottom:6, letterSpacing: '-0.01em'}}>Rutas, Planetas y Desafíos</div>
-                <div style={{fontSize:14, color: '#64748b', maxWidth: 400}}>Módulo avanzado para gestionar la topología de la red, misiones por niveles y contenido multimedia.</div>
+                 <div style={{fontSize:14, color: '#64748b', maxWidth: 400}}>Módulo avanzado para gestionar la topología de la red, missões por niveles y contenido multimedia.</div>
               </div>
             </div>
             <button 
@@ -293,7 +293,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                 <div style={{fontSize:14, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
                   MIGRAÇÃO · REQUISITOS
                 </div>
-                <span style={{ fontSize:11, color:'#00D6CC', fontWeight:700, background:'rgba(0,214,204,0.08)', border:'1px solid rgba(0,214,204,0.3)', borderRadius:6, padding:'2px 10px' }}>Preparação</span>
+                <span style={{ fontSize:11, color:'#00D6CC', fontWeight:700, background:'rgba(0,214,204,0.08)', border:'1px solid rgba(0,214,204,0.3)', borderRadius:6, padding:'2px 10px' }}>Matriz Migrações</span>
               </div>
               <input 
                 value={tempConfig[sk].preparacaoLink || ''} 

@@ -21,8 +21,8 @@ import {
   CONHECENDO_DATA, 
   IMERSAO_DATA,
   BASE_PLANET_DATA,
-  POS_VENTA_1_DATA,
-  POS_VENTA_2_DATA,
+  POS_VENDA_1_DATA,
+  POS_VENDA_2_DATA,
   HVC_BAG_DATA,
   LAE_DATA,
   VENDAS_WS_12_DATA,
@@ -152,7 +152,7 @@ export default function App() {
     br: {
       monitoringUrl:"https://lookerstudio.google.com/u/0/reporting/9d1f44d6-e585-4a9c-af76-c0883ed691e2/page/p_wtg2od23vd",
       iaraLink: "https://amelia.appslatam.com/#/assistants/chat/aa857c06-5a06-4450-8518-8568cdd28dfd",
-      preparacaoLink: "https://docs.google.com/spreadsheets/d/1KU429FHAX7vfvelvC1qJV8yNVr2IVtjvG_uxnX4AO_E/edit?gid=1618918374#gid=1618918374",
+      preparacaoLink: "https://sites.google.com/latam.com/elevar-el-conocimiento-siempre/untitled-page",
       suministros:[
         {label: "Solicitação Validação Novos Instrutores", url: "https://docs.google.com/forms/d/e/1FAIpQLSd-8RqlYtBRf52-BD3DguIBI5avHCTL_W1Iubo61zKiNHJTnw/viewform"},
         {label: "BD KON BR", url: "https://docs.google.com/spreadsheets/d/13DSQiW2usoVceoS8dzIcRpE7zwS4DrRq0xWLOWe4ikc/edit?gid=415048431#gid=415048431"},
@@ -172,12 +172,12 @@ export default function App() {
         { label: "NAVE DE ONBOARDING BASE", data: ONBOARDING_DATA_DEFAULT },
         { label: "NAVE DE ONBOARDING Vendas + WS 12 dias", data: ONBOARDING_VENDAS_DATA }
       ],
-      frontLineContent: [VENDAS_WS_12_DATA, BASE_PLANET_DATA, POS_VENTA_1_DATA, POS_VENTA_2_DATA, HVC_BAG_DATA, LAE_DATA],
+      frontLineContent: [VENDAS_WS_12_DATA, BASE_PLANET_DATA, POS_VENDA_1_DATA, POS_VENDA_2_DATA, HVC_BAG_DATA, LAE_DATA],
       soporteContent: initGalaxy(["Soporte 1","Soporte 2"]),
       fsc: initGalaxy(["FSC 1","FSC 2"]),
       satelites: { conhecendo: CONHECENDO_DATA, imersao: IMERSAO_DATA },
       exploracion:{
-        frontLine:[VENDAS_WS_12_DATA, BASE_PLANET_DATA, POS_VENTA_1_DATA, POS_VENTA_2_DATA, HVC_BAG_DATA, LAE_DATA],
+        frontLine:[VENDAS_WS_12_DATA, BASE_PLANET_DATA, POS_VENDA_1_DATA, POS_VENDA_2_DATA, HVC_BAG_DATA, LAE_DATA],
         soporte:initGalaxy(["Soporte BO (Pendiente)","Soporte FFP (Pendiente)"]),
         fieldSupport:initGalaxy(["FSC (Pendiente)"])
       }

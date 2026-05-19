@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 
 const TIPO_INFO: any = {
-  mision1: { label: 'MISIÓN', emoji: <Rocket size={20} />, accent: '#1B0088' },
+  mision1: { label: 'MISSÃO', emoji: <Rocket size={20} />, accent: '#1B0088' },
   landing: { label: 'LANDING', emoji: <Anchor size={20} />, accent: '#FFC800' },
   ojt:     { label: 'DESAFIO OJT', emoji: <Target size={20} />, accent: '#ED1650' },
   imersao: { label: 'IMERSÃO',     emoji: <Cpu size={20} />,    accent: '#D400FF' },
@@ -71,8 +71,14 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
 
   const addSection = (tipo: string) => {
     const info = TIPO_INFO[tipo];
+    // Auto-number MISSÃO sections
+    let autoLabel = info.label;
+    if (tipo === 'mision1') {
+      const misionCount = currentSections.filter((s: any) => s.tipo === 'mision1').length;
+      autoLabel = `MISSÃO ${misionCount + 1}:`;
+    }
     const newSec = {
-      tipo, label: info.label, rows: [],
+      tipo, label: autoLabel, rows: [],
       dbOjtLabel: (tipo === 'ojt' || tipo === 'avaliacao') ? 'Diário de Bordo · Grupo 01' : '',
       dbOjtUrl: '',
       totalCh: (tipo === 'ojt' || tipo === 'avaliacao') ? '5:40:00' : '',
@@ -161,7 +167,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
       <div style={{ width: '280px', background: '#1B0088', borderRight: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', boxShadow: '10px 0 30px rgba(0,0,0,0.05)', zIndex: 50 }}>
         <div style={{ padding: '32px 24px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
           <button onClick={onBack} style={{ background: 'rgba(255,255,255,0.1)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.2)', padding: '12px 24px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s', width: '100%', justifyContent: 'center' }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}><ArrowLeft size={16} /> VOLVER</button>
-          <div style={{ marginTop: '32px', fontSize: '10px', fontWeight: 900, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.25em', paddingLeft: 8 }}>MISIÓN LUNAR</div>
+          <div style={{ marginTop: '32px', fontSize: '10px', fontWeight: 900, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.25em', paddingLeft: 8 }}>EXPEDIÇÃO LUNAR</div>
         </div>
         <div style={{ flex: 1, overflowY: 'auto', padding: '20px 16px' }}>
           {planets.map((p: any, i: number) => {
@@ -271,7 +277,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                 <div style={{ textAlign: 'center', padding: '80px', color: '#1B0088', background: '#fff', borderRadius: '32px', border: '2px dashed rgba(27,0,136,0.1)', boxShadow: '0 20px 60px rgba(0,0,0,0.03)' }}>
                     <Layers size={64} style={{ opacity: 0.05, marginBottom: 24 }} />
                     <div style={{ fontSize: 18, fontWeight: 900 }}>Sin secciones operativas</div>
-                    <div style={{ fontSize: 14, color: '#64748b', marginTop: 8 }}>Inicia la construcción agregando una misión desde el panel superior.</div>
+                    <div style={{ fontSize: 14, color: '#64748b', marginTop: 8 }}>Inicia la construcción agregando una missão desde el panel superior.</div>
                 </div>
             </div>
           ) : currentSections.map((sec: any, si: number) => {
@@ -296,7 +302,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                   
                   <button 
                     onClick={() => toggleSection(si)} 
-                    title={collapsedSections.includes(si) ? "Expandir Misión" : "Colapsar Misión"}
+                    title={collapsedSections.includes(si) ? "Expandir Missão" : "Colapsar Missão"}
                     style={{ 
                       width: 44, height: 44, border: '1px solid #E2E8F0', borderRadius: '12px',
                       background: collapsedSections.includes(si) ? secInfo.accent : '#fff', 
