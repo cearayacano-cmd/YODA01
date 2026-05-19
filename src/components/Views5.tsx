@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Wrench, BookOpen, Settings, Hexagon, Network, Microscope, Package, Box, Radar, Activity, Cpu, ArrowLeft, Zap, Target, Info, ExternalLink, X, CheckCircle2, Lightbulb, Rocket, Shield, Award, Star, GraduationCap, LayoutGrid, FileText } from 'lucide-react';
+import { Wrench, BookOpen, Settings, Hexagon, Network, Microscope, Package, Box, Radar, Activity, Cpu, ArrowLeft, Zap, Target, Info, ExternalLink, X, CheckCircle2, Lightbulb, Rocket, Shield, Award, Star, GraduationCap, LayoutGrid, FileText, Lock } from 'lucide-react';
 
 const Stars = () => (
   <div className="stars-container" style={{ position: 'fixed', inset: 0, pointerEvents: 'none' }}>
@@ -63,20 +63,19 @@ const MapBackground = () => (
 const HUD = ({ level, xp, totalXp, activePowers, onBack }: any) => (
   <div style={{ position: 'sticky', top: 0, background: 'rgba(15, 0, 79, 0.95)', backdropFilter: 'blur(20px)', borderBottom: '2px solid #99CC33', padding: '14px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 100, boxShadow: '0 4px 30px rgba(0,0,0,0.3)' }}>
     <button onClick={onBack} style={{ background: 'transparent', border: '1.5px solid rgba(153, 204, 51, 0.4)', color: '#99CC33', padding: '8px 18px', borderRadius: '4px', cursor: 'pointer', fontSize: '10px', fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase', transition: '0.3s' }} onMouseEnter={e => { e.currentTarget.style.background = '#99CC33'; e.currentTarget.style.color = '#0F004F'; }}>
-      ← SALIR AL ESPACIO
+      ← Sair ao espaço
     </button>
     
     <div style={{ textAlign: 'center' }}>
-      <div style={{ fontSize: '8px', color: '#ED1650', letterSpacing: '4px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '2px' }}>TERMINAL DE EXPLORACIÓN ESTRATÉGICA</div>
+      <div style={{ fontSize: '8px', color: '#ED1650', letterSpacing: '4px', fontWeight: 900, textTransform: 'none', marginBottom: '2px' }}>Terminal de Exploração Estratégica</div>
       <div style={{ 
         fontSize: '28px', 
         fontWeight: 900, 
         letterSpacing: '2px', 
         color: '#FFFFFF',
-        filter: 'drop-shadow(0 0 15px rgba(255,255,255,0.2))',
-        textTransform: 'uppercase'
+        filter: 'drop-shadow(0 0 15px rgba(255,255,255,0.2))'
       }}>
-        RUTA DEL LÍDER GUARDIÁN
+        Rota do Lider Guardião
       </div>
     </div>
 
@@ -87,7 +86,7 @@ const HUD = ({ level, xp, totalXp, activePowers, onBack }: any) => (
       </div>
       <div>
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', color: 'rgba(255,255,255,0.6)', fontWeight: 800, marginBottom: '6px' }}>
-          <span>PROGRESO DE COMPRENSIÓN</span>
+          <span>PROGRESSO DE COMPREENSÃO</span>
           <span style={{ color: '#99CC33' }}>{xp} / {totalXp} XP</span>
         </div>
         <div style={{ width: '160px', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '10px', overflow: 'hidden' }}>
@@ -137,8 +136,8 @@ const PowerNode = ({ p, index, isCompleted, onOpen }: any) => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <div style={{ width: 6, height: 6, borderRadius: '50%', background: isCompleted ? '#99CC33' : color }} />
-              <span style={{ fontSize: '10px', fontWeight: 900, color: isCompleted ? '#99CC33' : 'rgba(255,255,255,0.4)', letterSpacing: '1.5px', textTransform: 'uppercase' }}>
-                {isCompleted ? 'ADQUIRIDO' : 'ACCESO DISPONIBLE'}
+              <span style={{ fontSize: '10px', fontWeight: 900, color: isCompleted ? '#99CC33' : 'rgba(255,255,255,0.4)', letterSpacing: '1.5px', textTransform: 'none' }}>
+                {isCompleted ? 'Adquirido' : 'Acesso disponível'}
               </span>
             </div>
           </div>
@@ -152,7 +151,7 @@ const PowerNode = ({ p, index, isCompleted, onOpen }: any) => {
             </div>
             <div style={{ flex: 1, padding: '12px', background: 'rgba(15, 0, 79, 0.4)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.05)' }}>
               <div style={{ fontSize: '22px', fontWeight: 900, color: '#fff' }}>{p.time.toUpperCase()}</div>
-              <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', fontWeight: 800, letterSpacing: '1px' }}>DURACIÓN</div>
+              <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', fontWeight: 800, letterSpacing: '1px' }}>DURAÇÃO</div>
             </div>
           </div>
 
@@ -168,7 +167,7 @@ const PowerNode = ({ p, index, isCompleted, onOpen }: any) => {
             onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = isCompleted ? '0 15px 25px rgba(153,204,51,0.3)' : '0 15px 25px rgba(27,0,136,0.5)' }}
             onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = isCompleted ? '0 10px 20px rgba(153,204,51,0.2)' : '0 10px 20px rgba(27,0,136,0.3)' }}
           >
-            {isCompleted ? 'REVISAR CONTENIDO' : 'INICIAR EXPLORACIÓN'}
+            {isCompleted ? 'Revisar conteúdo' : 'Iniciar Exploração'}
           </button>
         </div>
       </div>
@@ -221,22 +220,22 @@ const PowerDiscoveryTerminal = ({ p, nodes, onBack, onComplete }: any) => {
             {p.icon}
           </div>
           <div>
-            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.6)', fontWeight: 900, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: 2 }}>MÓDULO DE APRENDIZAJE</div>
-            <div style={{ fontSize: 26, fontWeight: 900, letterSpacing: '-0.01em', color: '#FFF' }}>{p.name.toUpperCase()}</div>
+            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.6)', fontWeight: 900, letterSpacing: '3px', textTransform: 'none', marginBottom: 2 }}>Módulo de Aprendizagem</div>
+            <div style={{ fontSize: 26, fontWeight: 900, letterSpacing: '-0.01em', color: '#FFF' }}>{p.name}</div>
           </div>
         </div>
 
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 48, alignItems: 'center' }}>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>ESTADO</div>
+            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800, textTransform: 'none' }}>Status</div>
             <div style={{ fontSize: 13, color: '#99CC33', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'flex-end' }}>
-              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#99CC33' }} /> EXPLORACIÓN ACTIVA
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#99CC33' }} /> Exploração Ativa
             </div>
           </div>
           <div style={{ height: 40, width: 1, background: 'rgba(255,255,255,0.2)' }} />
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>DURACIÓN</div>
-            <div style={{ fontSize: 13, color: '#FFF', fontWeight: 900 }}>{p.time}</div>
+            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800, textTransform: 'none' }}>Duração</div>
+            <div style={{ fontSize: 13, color: '#FFF', fontWeight: 900 }}>{p.time.toUpperCase()}</div>
           </div>
         </div>
       </div>
@@ -298,7 +297,7 @@ const PowerDiscoveryTerminal = ({ p, nodes, onBack, onComplete }: any) => {
                       <Lightbulb size={14} color="#0F004F" />
                     </div>
                     <div style={{ fontSize: 13, color: '#78350F', fontWeight: 600, fontStyle: 'italic' }}>
-                      <span style={{ fontWeight: 800, textTransform: 'uppercase', fontSize: 10, color: '#B45309', display: 'block', marginBottom: 2 }}>Consejo Estratégico</span>
+                      <span style={{ fontWeight: 800, textTransform: 'none', fontSize: 10, color: '#B45309', display: 'block', marginBottom: 2 }}>Conselho Estratégico</span>
                       {node.consejo}
                     </div>
                   </div>
@@ -318,9 +317,9 @@ const PowerDiscoveryTerminal = ({ p, nodes, onBack, onComplete }: any) => {
                 ) : (
                   <div style={{ 
                     background: '#F1F5F9', color: '#94A3B8', padding: '12px 20px', borderRadius: 8, fontWeight: 800, fontSize: 10,
-                    textAlign: 'center', border: '1px dashed #CBD5E1', textTransform: 'uppercase'
+                    textAlign: 'center', border: '1px dashed #CBD5E1', textTransform: 'none'
                   }}>
-                    No disponible
+                    Não disponível
                   </div>
                 )}
                 <div style={{ fontSize: 9, color: '#B8B8B8', fontWeight: 800, letterSpacing: '1px', textAlign: 'center', textTransform: 'uppercase' }}>
@@ -336,7 +335,7 @@ const PowerDiscoveryTerminal = ({ p, nodes, onBack, onComplete }: any) => {
           <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 24, padding: 40, boxShadow: '0 10px 30px rgba(0,0,0,0.04)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24 }}>
               <Zap size={20} color="#ED1650" />
-              <div style={{ fontWeight: 900, fontSize: 13, letterSpacing: '1.5px', color: '#0F004F' }}>RESUMEN DE PODER</div>
+              <div style={{ fontWeight: 900, fontSize: 13, letterSpacing: '1.5px', color: '#0F004F', textTransform: 'none' }}>Resumo do poder</div>
             </div>
             <div style={{ fontSize: 15, color: '#4D4D4D', lineHeight: 1.8, marginBottom: 30, fontWeight: 500 }}>
               {p.desc}
@@ -344,31 +343,32 @@ const PowerDiscoveryTerminal = ({ p, nodes, onBack, onComplete }: any) => {
             <div style={{ height: '1.5px', background: '#F1F5F9', marginBottom: 30 }} />
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
               <span style={{ fontSize: 12, color: '#858585', fontWeight: 600 }}>Total de Módulos</span>
-              <span style={{ fontSize: 13, fontWeight: 900, color: '#1B0088' }}>{nodes.length} Nódulos</span>
+              <span style={{ fontSize: 13, fontWeight: 900, color: '#1B0088' }}>{nodes.length} Módulos</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 40 }}>
-              <span style={{ fontSize: 12, color: '#858585', fontWeight: 600 }}>Certificación</span>
+              <span style={{ fontSize: 12, color: '#858585', fontWeight: 600 }}>Certificação</span>
               <span style={{ fontSize: 13, fontWeight: 900, color: '#1B0088' }}>{p.time.toUpperCase()}</span>
             </div>
             <button 
               onClick={() => { onComplete(); onBack(); }}
               style={{ 
                 width: '100%', background: '#99CC33', color: '#fff', border: 'none', padding: '18px', borderRadius: 12, fontWeight: 900, fontSize: 14,
-                cursor: 'pointer', boxShadow: '0 10px 25px rgba(153,204,51,0.3)', transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                cursor: 'pointer', boxShadow: '0 10px 25px rgba(153,204,51,0.3)', transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                textTransform: 'none'
               }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 15px 30px rgba(153,204,51,0.4)' }}
               onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 25px rgba(153,204,51,0.3)' }}
             >
-              MARCAR COMO COMPLETADO
+              Marcar como finalizado
             </button>
           </div>
 
           <div style={{ background: '#0F004F', borderRadius: 24, padding: 36, position: 'relative', overflow: 'hidden' }}>
              <div style={{ position: 'absolute', top: -30, right: -30, fontSize: 140, opacity: 0.05, transform: 'rotate(-20deg)' }}>{p.icon}</div>
-             <div style={{ fontWeight: 900, fontSize: 11, color: '#99CC33', letterSpacing: '2px', marginBottom: 16 }}>SOPORTE INTELIGENTE</div>
-             <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', lineHeight: 1.7, fontStyle: 'italic', position: 'relative', zIndex: 1 }}>
-               "Los conceptos JETS vinculan la cultura LATAM con la excelencia operativa. Mantenga el enfoque en la mirada del líder."
-             </div>
+              <div style={{ fontWeight: 900, fontSize: 11, color: '#99CC33', letterSpacing: '2px', marginBottom: 16, textTransform: 'none' }}>Suporte inteligente</div>
+              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', lineHeight: 1.7, fontStyle: 'italic', position: 'relative', zIndex: 1 }}>
+                "Os conceitos JETS vinculam a cultura LATAM com a excelência operacional. Mantenha o foco na visão do lider"
+              </div>
           </div>
         </div>
 
@@ -435,7 +435,7 @@ export const RutaLiderView = ({ links, rutaData, onBack }: any) => {
             background: 'rgba(3, 5, 15, 0.6)', backdropFilter: 'blur(10px)', border: '1px solid #99CC33', borderRadius: '30px', padding: '10px 32px',
             fontSize: '11px', fontWeight: 900, color: '#99CC33', letterSpacing: '2px', boxShadow: '0 0 20px rgba(153, 204, 51, 0.2)'
           }}>
-            🗺️ ELIGE TU CAMINO · TODOS LOS PODERES DISPONIBLES ✨
+            🗺️ Escolha a sua rota - Todos as missões disponíveis ✨
           </div>
         </div>
 
@@ -510,6 +510,7 @@ export const RutaLiderView = ({ links, rutaData, onBack }: any) => {
 };
 
 export const TechBaseView = ({ 
+  config,
   title, 
   subtitle, 
   links, 
@@ -656,26 +657,28 @@ export const TechBaseView = ({
         {/* Menu Items with Tactical Slots */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, position: 'relative', zIndex: 5 }}>
           {[
-            { label: 'PORTAL INSTRUCTOR', sec: 'SEC-A1', target: 'operaciones', color: '#FFD700' },
-            { label: 'FORMULARIOS', sec: 'SEC-A2', target: 'suministros', color: '#00F3FF' },
-            { label: 'PORTAL DE LÍDERES', sec: 'SEC-B1', target: 'laboratorio', color: '#39FF14' },
-            { label: 'TALLERES', sec: 'SEC-B2', target: 'ingenieria', color: '#BF00FF' }
+            { label: 'Portal Instrutor', sec: 'SEC-A1', target: 'operaciones', color: '#FFD700' },
+            { label: 'Formulários', sec: 'SEC-A2', target: 'suministros', color: '#00F3FF' },
+            { label: 'Portal de Lideres', sec: 'SEC-B1', target: 'laboratorio', color: '#39FF14' },
+            { label: 'Workshops', sec: 'SEC-B2', target: 'ingenieria', color: '#BF00FF' }
           ].map((item, idx) => {
-            const isActive = title?.toUpperCase() === item.label;
-            const itemColor = item.color;
+            const isActive = title?.toLowerCase() === item.label.toLowerCase() || (item.label === 'Portal de Lideres' && title?.toLowerCase() === 'portal de líderes');
+            const targetList = config?.[item.target] || [];
+            const isTargetReady = targetList.length > 0;
+            const itemColor = isTargetReady ? item.color : '#707E94';
             
             return (
               <motion.div
                 key={idx}
-                whileHover={{ x: 5, background: `${itemColor}15` }}
-                onClick={() => onNavigate(item.target)}
+                whileHover={isTargetReady ? { x: 5, background: `${itemColor}15` } : {}}
+                onClick={isTargetReady ? () => onNavigate(item.target) : undefined}
                 style={{ 
                   padding: '10px 15px', 
                   borderRadius: 0, 
-                  color: isActive ? itemColor : 'rgba(255,255,255,0.5)',
+                  color: isActive ? itemColor : (isTargetReady ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.2)'),
                   fontSize: 10,
                   fontWeight: 900,
-                  cursor: 'pointer',
+                  cursor: isTargetReady ? 'pointer' : 'not-allowed',
                   background: isActive ? `${itemColor}20` : 'rgba(255,255,255,0.02)',
                   borderLeft: isActive ? `3px solid ${itemColor}` : '3px solid transparent',
                   borderBottom: '1px solid rgba(255,255,255,0.03)',
@@ -683,12 +686,17 @@ export const TechBaseView = ({
                   transition: 'all 0.2s',
                   display: 'flex',
                   justifyContent: 'space-between',
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  opacity: isTargetReady ? 1 : 0.5,
+                  textDecoration: isTargetReady ? 'none' : 'line-through'
                 }}
               >
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <span style={{ fontSize: 7, opacity: 0.5, marginBottom: 2 }}>{item.sec}</span>
-                  <span>{item.label}</span>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    {item.label}
+                    {!isTargetReady && <Lock size={10} style={{ opacity: 0.7 }} />}
+                  </span>
                 </div>
                 {isActive && (
                   <motion.div 
@@ -798,7 +806,7 @@ export const TechBaseView = ({
 
             {/* Text Content */}
             <div style={{ flex: 1, position: 'relative', zIndex: 5 }}>
-              <div style={{ fontSize: 48, fontWeight: 900, marginBottom: 8, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.05em', textShadow: '0 0 20px rgba(255,255,255,0.2)' }}>
+              <div style={{ fontSize: 48, fontWeight: 900, marginBottom: 8, color: '#ffffff', textTransform: 'none', letterSpacing: '0.05em', textShadow: '0 0 20px rgba(255,255,255,0.2)' }}>
                 {title}
               </div>
               
@@ -822,7 +830,10 @@ export const TechBaseView = ({
         <div style={{ marginBottom: 24, display: 'flex', alignItems: 'center', gap: 20 }}>
           <div>
             <div style={{ fontSize: 11, color: '#ED1650', letterSpacing: '0.2em', marginBottom: 4, fontWeight: 900, textTransform: 'uppercase' }}>REGISTROS TÉCNICOS</div>
-            <div style={{ fontSize: 22, fontWeight: 900, letterSpacing: '0.05em', color: '#0B0033', textTransform: 'uppercase' }}>RECURSOS DISPONIBLES</div>
+            <div style={{ fontSize: 22, fontWeight: 900, letterSpacing: '0.05em', color: '#0B0033' }}>Recursos Disponíveis</div>
+            <div style={{ fontSize: 13, color: 'rgba(11,0,51,0.6)', marginTop: 4, fontWeight: 500, fontFamily: 'sans-serif' }}>
+              Acesse manuais técnicos, guias de procedimentos e recursos de suporte para operações.
+            </div>
           </div>
           <div style={{ flex: 1 }} />
         </div>
@@ -857,12 +868,12 @@ export const TechBaseView = ({
               onClick={() => link.url !== '#' && window.open(link.url, '_blank')}
             >
               <div style={{ zIndex: 2 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-                  <div style={{ fontSize: 16, fontWeight: 900, color: themeColor }}>{(i + 1).toString().padStart(2, '0')}</div>
-                  <div style={{ fontSize: 15, fontWeight: 900, letterSpacing: '0.02em', color: '#ffffff', textTransform: 'uppercase', flex: 1 }}>{link.label}</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 0 }}>
+                  <div style={{ fontSize: 16, fontWeight: 900, color: themeColor }}>{(i + 1).toString().padStart(2, '0')}.</div>
+                  <div style={{ fontSize: 15, fontWeight: 900, letterSpacing: '0.02em', color: '#ffffff', textTransform: 'none', flex: 1 }}>{link.label}</div>
                 </div>
-                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', fontWeight: 500, lineHeight: 1.5, height: '50px', overflow: 'hidden', marginBottom: 16 }}>
-                  {link.concepto || description}
+                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', lineHeight: 1.4, fontWeight: 500, fontFamily: 'sans-serif', marginTop: 8 }}>
+                  {link.desc || description}
                 </div>
               </div>
 
@@ -929,7 +940,7 @@ export const TechBaseView = ({
   );
 };
 
-export const IngenieriaView = ({ links, onBack, onNavigate, title, subtitle }: any) => {
+export const IngenieriaView = ({ config, links, onBack, onNavigate, title, subtitle }: any) => {
   const themeColor = '#B200FF';
   const heroIcon = (
     <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -942,8 +953,10 @@ export const IngenieriaView = ({ links, onBack, onNavigate, title, subtitle }: a
   
   return (
     <TechBaseView
-      title={title || 'TALLERES'}
+      config={config}
+      title={title || 'Workshops'}
       subtitle={subtitle}
+      description="Acesse conteúdos que irão elevar seu conhecimento e levar nossa operação cada vez mais alto!"
       links={links}
       onBack={onBack}
       onNavigate={onNavigate}
@@ -951,12 +964,12 @@ export const IngenieriaView = ({ links, onBack, onNavigate, title, subtitle }: a
       heroIcon={heroIcon}
       listIcon={<Cpu size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
       headerTitle="MANTENIMIENTO · PROTOCOLOS · SOPORTE"
-      footerTitle="Taller"
+      footerTitle="Workshops"
     />
   );
 };
 
-export const LaboratorioView = ({ links, rutaData, onBack, onNavigate, onNavigateRuta, title, subtitle }: any) => {
+export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, onNavigateRuta, title, subtitle }: any) => {
   const themeColor = '#99CC33';
   const heroIcon = (
     <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -971,8 +984,9 @@ export const LaboratorioView = ({ links, rutaData, onBack, onNavigate, onNavigat
 
   return (
     <TechBaseView
-      title={title || 'PORTAL DE LÍDERES'}
-      subtitle={subtitle || 'Lab. de Estrategia: expediciones de formación y análisis de datos en tiempo real.'}
+      config={config}
+      title={title || 'Portal de Lideres'}
+      subtitle={subtitle || 'Lab. de estratégia, expedições de formação e análise de dados em tempo real.'}
       links={links}
       onBack={onBack}
       onNavigate={onNavigate}
@@ -1043,10 +1057,7 @@ export const LaboratorioView = ({ links, rutaData, onBack, onNavigate, onNavigat
 
           <div style={{ flex: 1, zIndex: 2 }}>
             <div style={{ fontSize: 10, color: themeColor, letterSpacing: '0.2em', fontWeight: 900, marginBottom: 6 }}>PROGRAMA FORMATIVO · CAPA LIDERAZGO</div>
-            <div style={{ fontSize: 24, fontWeight: 900, letterSpacing: '0.02em', color: '#ffffff', textTransform: 'uppercase', marginBottom: 6 }}>RUTA DEL LÍDER GUARDIÁN</div>
-            <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', fontWeight: 500 }}>
-              {rutaData.length} Nodos · Mapa Visual Interactivo
-            </div>
+            <div style={{ fontSize: 24, fontWeight: 900, letterSpacing: '0.02em', color: '#ffffff', marginBottom: 6 }}>Programa de Formação - Capa Liderança</div>
           </div>
 
           <div style={{
@@ -1069,7 +1080,7 @@ export const LaboratorioView = ({ links, rutaData, onBack, onNavigate, onNavigat
   );
 };
 
-export const SuministrosView = ({ links, onBack, onNavigate, title, subtitle }: any) => {
+export const SuministrosView = ({ config, links, onBack, onNavigate, title, subtitle }: any) => {
   const themeColor = '#00D6CC';
   const heroIcon = (
     <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -1082,8 +1093,9 @@ export const SuministrosView = ({ links, onBack, onNavigate, title, subtitle }: 
 
   return (
     <TechBaseView
-      title={title || 'FORMULARIOS'}
-      subtitle={subtitle || 'Gestión de recursos, formularios operativos y control de inventario.'}
+      config={config}
+      title={title || 'Formulários'}
+      subtitle={subtitle || 'Gestão e controle de turmas e equipe de instrutores'}
       links={links}
       onBack={onBack}
       onNavigate={onNavigate}
@@ -1091,13 +1103,13 @@ export const SuministrosView = ({ links, onBack, onNavigate, title, subtitle }: 
       heroIcon={heroIcon}
       listIcon={<Box size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
       headerTitle="MANTENIMIENTO · PROTOCOLOS · SOPORTE"
-      footerTitle="Formularios"
+      footerTitle="Formulários"
       description="Formularios de solicitud, inventario y recursos logísticos."
     />
   );
 };
 
-export const OperacionesView = ({ links, onBack, onNavigate, title, subtitle }: any) => {
+export const OperacionesView = ({ config, links, onBack, onNavigate, title, subtitle }: any) => {
   const themeColor = '#FFE017';
   const heroIcon = (
     <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -1110,7 +1122,8 @@ export const OperacionesView = ({ links, onBack, onNavigate, title, subtitle }: 
 
   return (
     <TechBaseView
-      title={title || 'PORTAL INSTRUCTOR'}
+      config={config}
+      title={title || 'Portal Instrutor'}
       subtitle={subtitle || 'Monitoramento em tempo real, portal de instrutores e controle de missões.'}
       links={links}
       onBack={onBack}
@@ -1119,7 +1132,7 @@ export const OperacionesView = ({ links, onBack, onNavigate, title, subtitle }: 
       heroIcon={heroIcon}
       listIcon={<GraduationCap size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
       headerTitle="MANTENIMIENTO · PROTOCOLOS · SOPORTE"
-      footerTitle="Portal Instructor"
+      footerTitle="Portal Instrutor"
       description="Recursos de instrução, monitoramento e operações de voo."
     />
   );

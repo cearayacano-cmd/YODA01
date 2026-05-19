@@ -1,7 +1,7 @@
 export const RUTA_DATA_DEFAULT = [
-  { poder: "Gesti\u00f3n de Equipo", tema: "Feedback Efectivo", tiempo: "2h", desc: "T\u00e9cnicas de retroalimentaci\u00f3n para el desarrollo del equipo.", consejo: "Mant\u00e9n un enfoque positivo y constructivo.", adjunto: "#" },
-  { poder: "Gesti\u00f3n de Equipo", tema: "Resoluci\u00f3n de Conflictos", tiempo: "1.5h", desc: "Manejo de situaciones dif\u00edciles entre colaboradores.", consejo: "Escucha activa es la clave.", adjunto: "#" },
-  { poder: "Estrategia de Ventas", tema: "Cierre de Ventas", tiempo: "3h", desc: "Metodolog\u00edas para concretar negociaciones exitosas.", consejo: "Identifica las objeciones temprano.", adjunto: "#" }
+  { poder: "Gestão de Equipe", tema: "Feedback Efetivo", tiempo: "2H", desc: "Técnicas de retroalimentação para o desenvolvimento da equipe.", consejo: "Mantenha um foco positivo e construtivo", adjunto: "#" },
+  { poder: "Gestão de Equipe", tema: "Resolução de Conflitos", tiempo: "2H", desc: "Controle de situações difíceis entre colaboradores", consejo: "Escuta ativa é a chave", adjunto: "#" },
+  { poder: "Estratégia de Vendas", tema: "Cierre de Ventas", tiempo: "3H", desc: "Metodologias para fechar negociações exitosas.", consejo: "Identifica las objeciones temprano.", adjunto: "#" }
 ];
 
 export const SOPORTE_PLANET_1 = [

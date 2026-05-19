@@ -44,13 +44,13 @@ export const RutaLiderView = ({ links, rutaData, onBack }) => {
   return (
     <div style={{minHeight:'100vh', background:'#ffffff'}}>
       <div style={{background:'#111111', padding:'10px 24px', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-        <BackBtn onClick={onBack} label="VOLVER"/>
-        <span style={{color:'#ffffff', fontSize:15, fontWeight:900}}>RUTA DEL LÍDER GUARDIÁN</span>
+        <BackBtn onClick={onBack} label="VOLTAR"/>
+        <span style={{color:'#ffffff', fontSize:15, fontWeight:900}}>Rota do Lider Guardião</span>
         <span style={{color:'#ffffff', fontSize:12}}>XP: {completed.size * 200} / {poderes.length*200}</span>
       </div>
       <div style={{padding:32, maxWidth:900, margin:'0 auto'}}>
         <div style={{fontSize:11, color:'#555555', letterSpacing:'0.3em', textTransform:'uppercase', marginBottom:20}}>
-          {completed.size}/{poderes.length} PODERES COMPLETADOS
+          {completed.size}/{poderes.length} PODERES CONCLUÍDOS
         </div>
         {poderes.map((poder, pi) => {
           const isDone = completed.has(poder);
@@ -63,7 +63,7 @@ export const RutaLiderView = ({ links, rutaData, onBack }) => {
                 onMouseEnter={e=>e.currentTarget.style.background='#f0f0f0'}
                 onMouseLeave={e=>e.currentTarget.style.background='#ffffff'}>
                 <div>
-                  <div style={{fontSize:10, color:'#777777', letterSpacing:'0.2em', marginBottom:4}}>{isDone?'✓ COMPLETADO':'• DISPONIBLE'} · {items.length} NODOS</div>
+                  <div style={{fontSize:10, color:'#777777', letterSpacing:'0.2em', marginBottom:4}}>{isDone?'✓ CONCLUÍDO':'• DISPONÍVEL'} · {items.length} MÓDULOS</div>
                   <div style={{fontSize:16, fontWeight:900, color:'#111111', textTransform:'uppercase'}}>{poder}</div>
                 </div>
                 <div style={{fontSize:18}}>{isOpen?'▲':'▼'}</div>
@@ -84,7 +84,7 @@ export const RutaLiderView = ({ links, rutaData, onBack }) => {
                   ))}
                   {!isDone && (
                     <button onClick={()=>handleComplete(poder)} style={{background:'#111111', color:'#ffffff', border:'none', padding:'10px 24px', cursor:'pointer', fontSize:12, fontWeight:700, borderRadius:3, marginTop:8}}>
-                      ✓ MARCAR COMO COMPLETADO
+                      ✓ MARCAR COMO CONCLUÍDO
                     </button>
                   )}
                 </div>

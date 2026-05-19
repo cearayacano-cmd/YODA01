@@ -846,15 +846,18 @@ const ConsoleSideFrame = ({ children, side }: any) => {
 };
 
 const ModuleCard = ({ sec, title, subtitle, color, icon, stats, onClick }: any) => {
+  const isReady = stats && stats[0] && stats[0].val > 0;
+  const displayColor = isReady ? color : '#707E94';
+
   return (
     <motion.div
-      onClick={onClick}
+      onClick={isReady ? onClick : undefined}
       animate={{
-        boxShadow: [
+        boxShadow: isReady ? [
           '0 0 8px rgba(255,255,255,0.15), 0 0 20px rgba(255,255,255,0.06), inset 0 0 15px rgba(255,255,255,0.02)',
           '0 0 18px rgba(255,255,255,0.35), 0 0 40px rgba(255,255,255,0.12), inset 0 0 25px rgba(255,255,255,0.05)',
           '0 0 8px rgba(255,255,255,0.15), 0 0 20px rgba(255,255,255,0.06), inset 0 0 15px rgba(255,255,255,0.02)',
-        ]
+        ] : 'none'
       }}
       transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
       style={{
@@ -865,52 +868,64 @@ const ModuleCard = ({ sec, title, subtitle, color, icon, stats, onClick }: any) 
         flexDirection: 'column',
         justifyContent: 'space-between',
         position: 'relative',
-        cursor: 'pointer',
+        cursor: isReady ? 'pointer' : 'not-allowed',
         overflow: 'hidden',
         transition: 'all 0.4s ease',
-        background: 'linear-gradient(180deg, #1E0A6E 0%, #160850 100%)',
-        border: '1.5px solid rgba(220,235,255,0.65)',
+        background: isReady ? 'linear-gradient(180deg, #1E0A6E 0%, #160850 100%)' : 'linear-gradient(180deg, #252438 0%, #1a1a26 100%)',
+        border: isReady ? '1.5px solid rgba(220,235,255,0.65)' : '1.5px solid rgba(120,135,155,0.3)',
         transformStyle: 'preserve-3d',
+        opacity: isReady ? 1 : 0.6
       }}
-      whileHover={{ 
+      whileHover={isReady ? { 
         filter: 'brightness(1.2)',
         boxShadow: `0 0 25px rgba(255,255,255,0.5), 0 0 60px rgba(255,255,255,0.18), 0 0 80px ${color}30, inset 0 0 20px rgba(255,255,255,0.06)`,
+      } : {
+        filter: 'brightness(1.05)',
+        boxShadow: '0 0 10px rgba(255,255,255,0.05)'
       }}
     >
       {/* Pearl outer bezel */}
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(220,235,255,0.12) 0%, rgba(140,180,220,0.04) 40%, transparent 100%)', pointerEvents: 'none', zIndex: 10 }} />
+      <div style={{ position: 'absolute', inset: 0, background: isReady ? 'linear-gradient(180deg, rgba(220,235,255,0.12) 0%, rgba(140,180,220,0.04) 40%, transparent 100%)' : 'none', pointerEvents: 'none', zIndex: 10 }} />
       {/* Top edge highlight — like keyboard teal strip */}
-      <div style={{ position: 'absolute', top: 0, left: '10%', right: '10%', height: '1.5px', background: `linear-gradient(90deg, transparent, ${color}90, rgba(200,230,255,0.7), ${color}90, transparent)`, pointerEvents: 'none', zIndex: 12 }} />
+      <div style={{ position: 'absolute', top: 0, left: '10%', right: '10%', height: '1.5px', background: `linear-gradient(90deg, transparent, ${displayColor}90, rgba(200,230,255,0.4), ${displayColor}90, transparent)`, pointerEvents: 'none', zIndex: 12 }} />
       {/* Pearl bevel inner */}
-      <div style={{ position: 'absolute', top: 1, left: 1, right: 1, height: '6px', background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)', pointerEvents: 'none', zIndex: 10, borderRadius: '1px 1px 0 0' }} />
+      <div style={{ position: 'absolute', top: 1, left: 1, right: 1, height: '6px', background: isReady ? 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' : 'none', pointerEvents: 'none', zIndex: 10, borderRadius: '1px 1px 0 0' }} />
 
       {/* Tactical Corners — pearl style */}
-      <div style={{ position: 'absolute', top: 0, left: 0, width: 18, height: 18, borderTop: `3px solid rgba(210,230,255,0.8)`, borderLeft: `3px solid rgba(210,230,255,0.8)`, zIndex: 13 }} />
-      <div style={{ position: 'absolute', top: 0, right: 0, width: 18, height: 18, borderTop: `3px solid rgba(210,230,255,0.8)`, borderRight: `3px solid rgba(210,230,255,0.8)`, zIndex: 13 }} />
-      <div style={{ position: 'absolute', bottom: 0, left: 0, width: 18, height: 18, borderBottom: `3px solid rgba(210,230,255,0.8)`, borderLeft: `3px solid rgba(210,230,255,0.8)`, zIndex: 13 }} />
-      <div style={{ position: 'absolute', bottom: 0, right: 0, width: 18, height: 18, borderBottom: `3px solid rgba(210,230,255,0.8)`, borderRight: `3px solid rgba(210,230,255,0.8)`, zIndex: 13 }} />
+      <div style={{ position: 'absolute', top: 0, left: 0, width: 18, height: 18, borderTop: isReady ? `3px solid rgba(210,230,255,0.8)` : `3px solid rgba(120,135,155,0.4)`, borderLeft: isReady ? `3px solid rgba(210,230,255,0.8)` : `3px solid rgba(120,135,155,0.4)`, zIndex: 13 }} />
+      <div style={{ position: 'absolute', top: 0, right: 0, width: 18, height: 18, borderTop: isReady ? `3px solid rgba(210,230,255,0.8)` : `3px solid rgba(120,135,155,0.4)`, borderRight: isReady ? `3px solid rgba(210,230,255,0.8)` : `3px solid rgba(120,135,155,0.4)`, zIndex: 13 }} />
+      <div style={{ position: 'absolute', bottom: 0, left: 0, width: 18, height: 18, borderBottom: isReady ? `3px solid rgba(210,230,255,0.8)` : `3px solid rgba(120,135,155,0.4)`, borderLeft: isReady ? `3px solid rgba(210,230,255,0.8)` : `3px solid rgba(120,135,155,0.4)`, zIndex: 13 }} />
+      <div style={{ position: 'absolute', bottom: 0, right: 0, width: 18, height: 18, borderBottom: isReady ? `3px solid rgba(210,230,255,0.8)` : `3px solid rgba(120,135,155,0.4)`, borderRight: isReady ? `3px solid rgba(210,230,255,0.8)` : `3px solid rgba(120,135,155,0.4)`, zIndex: 13 }} />
       {/* Accent corner dots */}
-      <div style={{ position: 'absolute', top: 3, left: 3, width: 4, height: 4, background: color, borderRadius: '50%', boxShadow: `0 0 6px ${color}`, zIndex: 14 }} />
-      <div style={{ position: 'absolute', top: 3, right: 3, width: 4, height: 4, background: color, borderRadius: '50%', boxShadow: `0 0 6px ${color}`, zIndex: 14 }} />
-      <div style={{ position: 'absolute', bottom: 3, left: 3, width: 4, height: 4, background: color, borderRadius: '50%', boxShadow: `0 0 6px ${color}`, zIndex: 14 }} />
-      <div style={{ position: 'absolute', bottom: 3, right: 3, width: 4, height: 4, background: color, borderRadius: '50%', boxShadow: `0 0 6px ${color}`, zIndex: 14 }} />
+      <div style={{ position: 'absolute', top: 3, left: 3, width: 4, height: 4, background: displayColor, borderRadius: '50%', boxShadow: isReady ? `0 0 6px ${displayColor}` : 'none', zIndex: 14 }} />
+      <div style={{ position: 'absolute', top: 3, right: 3, width: 4, height: 4, background: displayColor, borderRadius: '50%', boxShadow: isReady ? `0 0 6px ${displayColor}` : 'none', zIndex: 14 }} />
+      <div style={{ position: 'absolute', bottom: 3, left: 3, width: 4, height: 4, background: displayColor, borderRadius: '50%', boxShadow: isReady ? `0 0 6px ${displayColor}` : 'none', zIndex: 14 }} />
+      <div style={{ position: 'absolute', bottom: 3, right: 3, width: 4, height: 4, background: displayColor, borderRadius: '50%', boxShadow: isReady ? `0 0 6px ${displayColor}` : 'none', zIndex: 14 }} />
 
       <div style={{ zIndex: 2, position: 'relative' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-          <div style={{ fontSize: 13, color: color, letterSpacing: '0.15em', fontWeight: 900 }}>{sec}</div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#ffffff', letterSpacing: '0.1em', fontWeight: 900 }}>
-            <motion.div 
-              animate={{ opacity: [1, 0.5, 1] }} 
-              transition={{ duration: 1.5, repeat: Infinity }}
-              style={{ width: 8, height: 8, background: '#22c55e', borderRadius: '50%', boxShadow: '0 0 10px #22c55e' }} 
-            />
-            ONLINE
+          <div style={{ fontSize: 13, color: displayColor, letterSpacing: '0.15em', fontWeight: 900 }}>{sec}</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: isReady ? '#ffffff' : 'rgba(255,255,255,0.4)', letterSpacing: '0.1em', fontWeight: 900 }}>
+            {isReady ? (
+              <motion.div 
+                animate={{ opacity: [1, 0.5, 1] }} 
+                transition={{ duration: 1.5, repeat: Infinity }}
+                style={{ width: 8, height: 8, background: '#22c55e', borderRadius: '50%', boxShadow: '0 0 10px #22c55e' }} 
+              />
+            ) : (
+              <div style={{ width: 8, height: 8, background: '#707E94', borderRadius: '50%', boxShadow: 'none' }} />
+            )}
+            {isReady ? 'ONLINE' : (
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                <Lock size={11} style={{ opacity: 0.8 }} /> OFFLINE
+              </span>
+            )}
           </div>
         </div>
 
         <div style={{ marginBottom: 16 }}>
-          <div style={{ fontSize: 22, fontWeight: 900, color: '#ffffff', marginBottom: 2, lineHeight: 1.1, letterSpacing: '0.02em' }}>{title}</div>
-          <div style={{ fontSize: 10, color: color, letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 900, opacity: 0.9 }}>{subtitle}</div>
+          <div style={{ fontSize: 22, fontWeight: 900, color: isReady ? '#ffffff' : 'rgba(255,255,255,0.4)', marginBottom: 2, lineHeight: 1.1, letterSpacing: '0.02em' }}>{title}</div>
+          <div style={{ fontSize: 10, color: displayColor, letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 900, opacity: isReady ? 0.9 : 0.5 }}>{subtitle}</div>
         </div>
 
         {/* ICON SCAN AREA */}
@@ -922,35 +937,57 @@ const ModuleCard = ({ sec, title, subtitle, color, icon, stats, onClick }: any) 
           background: 'rgba(0,0,0,0.5)',
           borderRadius: '4px',
           position: 'relative',
-          border: `1px solid ${color}40`,
+          border: `1px solid ${displayColor}40`,
           overflow: 'hidden',
           marginBottom: 16,
-          backgroundImage: `linear-gradient(${color}10 1px, transparent 1px), linear-gradient(90deg, ${color}10 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(${displayColor}10 1px, transparent 1px), linear-gradient(90deg, ${displayColor}10 1px, transparent 1px)`,
           backgroundSize: '12px 12px'
         }}>
           {/* SCANNER LINE */}
-          <motion.div 
-            animate={{ top: ['0%', '100%'] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-            style={{
+          {isReady && (
+            <motion.div 
+              animate={{ top: ['0%', '100%'] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              style={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                height: '3px',
+                background: `linear-gradient(90deg, transparent, ${displayColor}, transparent)`,
+                boxShadow: `0 0 20px ${displayColor}`,
+                zIndex: 10,
+                pointerEvents: 'none',
+                opacity: 0.8
+              }}
+            />
+          )}
+
+          {!isReady && (
+            <div style={{
               position: 'absolute',
-              left: 0,
-              right: 0,
-              height: '3px',
-              background: `linear-gradient(90deg, transparent, ${color}, transparent)`,
-              boxShadow: `0 0 20px ${color}`,
-              zIndex: 10,
-              pointerEvents: 'none',
-              opacity: 0.8
-            }}
-          />
+              top: 6,
+              right: 6,
+              background: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: '4px',
+              padding: '3px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 15,
+              color: 'rgba(255, 255, 255, 0.4)',
+            }}>
+              <Lock size={10} />
+            </div>
+          )}
 
           <div 
             style={{ 
-              color: color,
-              filter: `drop-shadow(0 0 15px ${color})`,
+              color: displayColor,
+              filter: isReady ? `drop-shadow(0 0 15px ${displayColor})` : 'none',
               transform: 'scale(1.2)',
-              zIndex: 5
+              zIndex: 5,
+              opacity: isReady ? 1 : 0.3
             }}
           >
             {React.cloneElement(icon, { color: 'currentColor', strokeWidth: 1.5, size: 28 })}
@@ -969,7 +1006,7 @@ const ModuleCard = ({ sec, title, subtitle, color, icon, stats, onClick }: any) 
           flexDirection: 'column'
         }}>
           <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em', fontWeight: 900, marginBottom: 2, textTransform: 'uppercase' }}>{stats[0].label}</div>
-          <div style={{ fontSize: 16, fontWeight: 900, color: '#ffffff' }}>{stats[0].val}</div>
+          <div style={{ fontSize: 16, fontWeight: 900, color: isReady ? '#ffffff' : 'rgba(255,255,255,0.4)' }}>{stats[0].val}</div>
         </div>
         {stats[1] && (
           <div style={{ 
@@ -981,7 +1018,7 @@ const ModuleCard = ({ sec, title, subtitle, color, icon, stats, onClick }: any) 
             flexDirection: 'column'
           }}>
             <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em', fontWeight: 900, marginBottom: 2, textTransform: 'uppercase' }}>{stats[1].label}</div>
-            <div style={{ fontSize: 13, fontWeight: 900, color: color }}>{stats[1].val}</div>
+            <div style={{ fontSize: 13, fontWeight: 900, color: displayColor }}>{stats[1].val}</div>
           </div>
         )}
       </div>
@@ -1148,10 +1185,10 @@ const CentralMonitorCard = ({ onNavigate }: any) => {
             border: 'none',
             letterSpacing: '0.2em',
             boxShadow: `0 0 20px ${color}40`,
-            textTransform: 'uppercase'
+            textTransform: 'none'
           }}
         >
-          READY
+          Acessar
         </motion.button>
       </div>
     </motion.div>
@@ -1518,7 +1555,7 @@ const IaraHologram = ({ isVisible, onClose, iaraLink }: any) => {
           border: '1px solid rgba(0, 243, 255, 0.2)'
         }}
       >
-        ◉ TRANSMISIÓN ACTIVA
+        ◉ TRANSMISSÃO ATIVA
       </motion.div>
 
       {/* IARA FIGURE — transparent background, floating */}
@@ -1634,21 +1671,21 @@ const IaraHologram = ({ isVisible, onClose, iaraLink }: any) => {
         I · A · R · A
       </motion.div>
 
-      {!iaraConnected ? (
-        <Btn
-          onClick={() => {
-            setIaraConnected(true);
-            if (iaraLink) window.open(iaraLink, '_blank');
-          }}
-          style={{
-            background: 'rgba(0,15,50,0.75)',
-            boxShadow: '0 0 12px rgba(0,243,255,0.4)',
-            border: '1px solid #00F3FF'
-          }}
-        >
-          ▶ CONECTAR
-        </Btn>
-      ) : (
+      <Btn
+        onClick={() => {
+          setIaraConnected(true);
+          if (iaraLink) window.open(iaraLink, '_blank');
+        }}
+        style={{
+          background: 'rgba(0,15,50,0.75)',
+          boxShadow: '0 0 12px rgba(0,243,255,0.4)',
+          border: '1px solid #00F3FF',
+          marginBottom: iaraConnected ? 8 : 0
+        }}
+      >
+        ▶ CONECTAR
+      </Btn>
+      {iaraConnected && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -1662,10 +1699,11 @@ const IaraHologram = ({ isVisible, onClose, iaraLink }: any) => {
             padding: '3px 12px',
             borderRadius: '12px',
             backdropFilter: 'blur(4px)',
-            border: '1px solid rgba(0, 243, 255, 0.1)'
+            border: '1px solid rgba(0, 243, 255, 0.1)',
+            textAlign: 'center'
           }}
         >
-          ENLACE ESTABLECIDO
+          LINK ESTABELECIDO
         </motion.div>
       )}
     </motion.div>
@@ -1698,7 +1736,7 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
       {!hudHidden && <CommandCenterInterior isAlert={alertMode} isDim={dimLights} isHudHidden={hudHidden} />}
 
       <div style={{ height: '84px', background: alertMode ? '#4A0618' : '#E8E7F2', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 32px', transition: 'all 0.5s ease' }}>
-        <BackBtn onClick={onBack} label="SALIR" />
+        <BackBtn onClick={onBack} label="SAIR" />
         <div style={{ 
           position: 'absolute', 
           left: '50%', 
@@ -1765,11 +1803,11 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
 
         <ConsoleSideFrame side="right">
           <ModuleCard 
-            sec="SEC-B1" title="PORTAL DE LÍDERES" subtitle="" color="#A4FF00" side="right"
+            sec="SEC-B1" title="Portal de Líderes" subtitle="" color="#A4FF00" side="right"
             icon={<Microscope />} stats={[{label: 'MÓDULOS', val: config.laboratorio?.length || 0}, {label: 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('laboratorio')} 
           />
           <ModuleCard 
-            sec="SEC-B2" title="TALLERES" subtitle="" color="#D400FF" side="right"
+            sec="SEC-B2" title="Workshops" subtitle="" color="#D400FF" side="right"
             icon={<Cpu />} stats={[{label: 'MÓDULOS', val: config.ingenieria?.length || 0}, {label: 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('ingenieria')} 
           />
         </ConsoleSideFrame>

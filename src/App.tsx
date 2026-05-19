@@ -158,8 +158,8 @@ export default function App() {
         {label: "BD KON BR", url: "https://docs.google.com/spreadsheets/d/13DSQiW2usoVceoS8dzIcRpE7zwS4DrRq0xWLOWe4ikc/edit?gid=415048431#gid=415048431"},
         {label: "BD AEC", url: "https://docs.google.com/spreadsheets/d/19Po56LC5YYTLnQLpVwsFaQIRwAroJos7hd6OqTubxRI/edit?gid=2137519498#gid=2137519498"}
       ],
-      ingenieria:[{label:"Manuales Técnicos",url:"#"}],
-      laboratorio:[{label:"KPIs Estratégicos",url:"#"}],
+      ingenieria:[{label:"REVA 2026",url:"#",desc:"Acesse conteúdos que irão elevar seu conhecimento e levar nossa operação cada vez mais alto!"}],
+      laboratorio:[],
       operaciones:[
         {label: "Usuários Treinamento", url: "https://docs.google.com/spreadsheets/d/1m3MQb4O517HkmrvECuAeyTTlAo9XGHPpLrhk294eXvI/edit?gid=683623643#gid=683623643"},
         {label: "Indução Instrutor Guardião", url: "https://docs.google.com/presentation/d/1pagklV4v8J09sciVVeFR5ZA3fRIHDJ5hoyXKWYSWXtc/edit?slide=id.g366a722ea15_0_5562#slide=id.g366a722ea15_0_5562"},
@@ -253,13 +253,13 @@ export default function App() {
       case 'ruta-lider':
         return <RutaLiderView links={activeConfig.laboratorio} rutaData={activeConfig.rutaLider} onBack={()=>go('laboratorio')}/>;
       case 'laboratorio':
-        return <LaboratorioView links={activeConfig.laboratorio} rutaData={activeConfig.rutaLider} onBack={()=>go('br')} onNavigate={go} onNavigateRuta={()=>go('ruta-lider')} title={activeConfig.moduleMeta?.lab?.title} subtitle={activeConfig.moduleMeta?.lab?.subtitle}/>;
+        return <LaboratorioView config={activeConfig} links={activeConfig.laboratorio} rutaData={activeConfig.rutaLider} onBack={()=>go('br')} onNavigate={go} onNavigateRuta={()=>go('ruta-lider')} title={activeConfig.moduleMeta?.lab?.title} subtitle={activeConfig.moduleMeta?.lab?.subtitle}/>;
       case 'ingenieria':
-        return <IngenieriaView title={activeConfig.moduleMeta?.eng?.title||'TALLERES'} subtitle={activeConfig.moduleMeta?.eng?.subtitle} links={activeConfig.ingenieria} onBack={()=>go('br')} onNavigate={go}/>;
+        return <IngenieriaView config={activeConfig} title={activeConfig.moduleMeta?.eng?.title||'WORKSHOPS'} subtitle={activeConfig.moduleMeta?.eng?.subtitle} links={activeConfig.ingenieria} onBack={()=>go('br')} onNavigate={go}/>;
       case 'suministros':
-        return <SuministrosView title={activeConfig.moduleMeta?.sup?.title||'FORMULARIOS'} subtitle={activeConfig.moduleMeta?.sup?.subtitle} links={activeConfig.suministros} onBack={()=>go('br')} onNavigate={go}/>;
+        return <SuministrosView config={activeConfig} title={activeConfig.moduleMeta?.sup?.title||'FORMULÁRIOS'} subtitle={activeConfig.moduleMeta?.sup?.subtitle} links={activeConfig.suministros} onBack={()=>go('br')} onNavigate={go}/>;
       case 'operaciones':
-        return <OperacionesView title={activeConfig.moduleMeta?.ops?.title||'PORTAL INSTRUCTOR'} subtitle={activeConfig.moduleMeta?.ops?.subtitle} links={activeConfig.operaciones} onBack={()=>go('br')} onNavigate={go}/>;
+        return <OperacionesView config={activeConfig} title={activeConfig.moduleMeta?.ops?.title||'PORTAL INSTRUTOR'} subtitle={activeConfig.moduleMeta?.ops?.subtitle} links={activeConfig.operaciones} onBack={()=>go('br')} onNavigate={go}/>;
       case 'admin':
         return (
           <AdminCenter 

@@ -17,16 +17,16 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
     setConfig((prev: any)=>({...prev,[sk]:{...prev[sk],[field]:val, lastUpdate: dateStr}}));
   };
   const tempConfig = config;
-  const addItem = (field: any) => updateF(field,[...tempConfig[sk][field],{label:'NUEVO_LINK',url:'https://', concepto:'Breve descripción del recurso'}]);
+  const addItem = (field: any) => updateF(field,[...tempConfig[sk][field],{label:'NUEVO_LINK',url:'https://'}]);
   const removeItem = (field: any, idx: any) => updateF(field,tempConfig[sk][field].filter((_: any,i: any)=>i!==idx));
   const updateLink = (f: any, i: any, sub: any, v: any) => {
     const next=[...tempConfig[sk][f]]; next[i]={...next[i],[sub]:v}; updateF(f,next);
   };
   const MODULE_FIELDS = [
-    { field:'laboratorio', key:'lab',  defaultTitle:'Portal de Líderes',   defaultSub:'Portal lideres', color: '#99CC33' },
-    { field:'ingenieria',  key:'eng',  defaultTitle:'Talleres',   defaultSub:'Talleres', color: '#B200FF' },
-    { field:'suministros', key:'sup',  defaultTitle:'Formularios',  defaultSub:'Formularios', color: '#00D6CC' },
-    { field:'operaciones', key:'ops',  defaultTitle:'Portal Instructor',  defaultSub:'Portal Instructor', color: '#FFE017' },
+    { field:'laboratorio', key:'lab',  defaultTitle:'Portal de Lideres',   defaultSub:'Portal de Lideres', color: '#99CC33' },
+    { field:'ingenieria',  key:'eng',  defaultTitle:'Workshops',   defaultSub:'Talleres', color: '#B200FF' },
+    { field:'suministros', key:'sup',  defaultTitle:'Formulários',  defaultSub:'Formulários', color: '#00D6CC' },
+    { field:'operaciones', key:'ops',  defaultTitle:'Portal Instrutor',  defaultSub:'Portal Instrutor', color: '#FFE017' },
   ];
   const getModuleMeta = (key: any) => tempConfig[sk]?.moduleMeta?.[key] || {};
   const updateModuleMeta = (key: any, field: any, val: any) => {
@@ -340,8 +340,8 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                       gap: 16
                     }}>
                       <div style={{ width: 10, height: 10, borderRadius: '50%', background: color, boxShadow: `0 0 12px ${color}` }} />
-                      <div style={{fontSize:14, color:'#ffffff', fontWeight:900, textTransform:'uppercase', letterSpacing: '0.1em'}}>
-                        {field === 'laboratorio' ? 'PORTAL LIDERES' : field === 'ingenieria' ? 'TALLERES' : field === 'suministros' ? 'FORMULARIOS' : 'PORTAL INSTRUCTOR'}
+                      <div style={{fontSize:14, color:'#ffffff', fontWeight:900, textTransform:'none', letterSpacing: '0.1em'}}>
+                        {field === 'laboratorio' ? 'Portal de Lideres' : field === 'ingenieria' ? 'Workshops' : field === 'suministros' ? 'Formulários' : 'Portal Instrutor'}
                       </div>
                     </div>
                   
@@ -400,12 +400,6 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                                 <Trash2 size={16} />
                               </button>
                             </div>
-                            <textarea 
-                              value={item.concepto||''} 
-                              onChange={e=>updateLink(field,i,'concepto',e.target.value)}
-                              placeholder="Breve concepto del recurso..."
-                              style={{...inp({ padding: '8px 12px', fontSize: 12, background: '#fff', height: 44, resize: 'none' }), width: '100%'}}
-                            />
                           </motion.div>
                         ))}
                       </div>
@@ -432,8 +426,8 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                             <GraduationCap size={20} color="#99CC33" />
                           </div>
                           <div>
-                            <div style={{fontSize:13, color:'#1B0088', fontWeight: 900}}>Ruta del Líder Guardián</div>
-                            <div style={{fontSize:11, color:'#64748b'}}>Gestión de aprendizaje</div>
+                            <div style={{fontSize:13, color:'#1B0088', fontWeight: 900}}>Rota do Lider Guardião</div>
+                            <div style={{fontSize:11, color:'#64748b'}}>Gestão de aprendizagem</div>
                           </div>
                         </div>
                         <button 

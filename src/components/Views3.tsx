@@ -148,7 +148,7 @@ const TacticalPlanetCard = ({ course, index, color, type, onClick }: any) => {
 
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
                   <div style={{ border: `1px solid ${color}44`, padding: '4px 10px', borderRadius: 4, fontSize: 8, fontWeight: 900, color: '#fff', background: `${color}11`, boxShadow: `0 0 10px ${color}33`, textShadow: `0 0 5px ${color}` }}>
-                    STATUS: ACTIVE
+                    Status: Ativo
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                       <motion.div 
@@ -156,7 +156,7 @@ const TacticalPlanetCard = ({ course, index, color, type, onClick }: any) => {
                         transition={{ duration: 1.5, repeat: Infinity }}
                         style={{ width: 6, height: 6, borderRadius: '50%', background: isCompleted ? '#99CC33' : color, boxShadow: `0 0 10px ${isCompleted ? '#99CC33' : color}` }} 
                       />
-                      <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '1px' }}>{isCompleted ? 'COMPLETADO' : 'EN ÓRBITA'}</span>
+                      <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '1px' }}>{isCompleted ? 'Finalizado' : 'Em órbita'}</span>
                   </div>
               </div>
           </div>

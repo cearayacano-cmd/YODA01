@@ -215,7 +215,7 @@ const MissionHeaderHUD = ({ sectorLabel, planetLabel, planetColor, onBack }: any
     </button>
 
     <div style={{ width: 220 }}>
-        <div style={{ fontSize: 9, color: '#fff', fontWeight: 900, opacity: 0.6, marginBottom: 8, letterSpacing: '1px', textAlign: 'right' }}>PROGRESO DE MISIÓN / 0 XP</div>
+        <div style={{ fontSize: 9, color: '#fff', fontWeight: 900, opacity: 0.6, marginBottom: 8, letterSpacing: '1px', textAlign: 'right' }}>PROGRESSO DE MISSÃO / 0 XP</div>
         <div style={{ height: 6, background: 'rgba(255,255,255,0.1)', borderRadius: 10, overflow: 'hidden' }}>
             <motion.div initial={{ width: 0 }} animate={{ width: '15%' }} style={{ height: '100%', background: planetColor }} />
         </div>
@@ -722,7 +722,7 @@ export const ClassicMissionBlock = ({ seccion, planetColor, onBackToMap, titleOv
       {/* HEADER CONTROLS */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 30, borderBottom: '1px solid #eee', paddingBottom: 15 }}>
         <div>
-          <div style={{ fontSize: 10, color: planetColor, fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase' }}>{titleOverride || 'MISIÓN DE APRENDIZAJE'}</div>
+          <div style={{ fontSize: 10, color: planetColor, fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase' }}>{titleOverride || 'MISSÃO DE APRENDIZAGEM'}</div>
           <div style={{ fontSize: 24, fontWeight: 900, color: '#1B0088', textTransform: 'uppercase' }}>{subtitleOverride || seccion.nombre}</div>
         </div>
         <button 
@@ -901,7 +901,7 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel }: any) => 
                         border: `1px solid #E2E8F0`,
                         boxShadow: `0 4px 15px rgba(0,0,0,0.05)`
                     }}>
-                        <Clock size={16} /> <span style={{ letterSpacing: '1px' }}>DURACIÓN:</span> {node.ch || node.tiempo || '-'}
+                        <Clock size={16} /> <span style={{ letterSpacing: '1px' }}>Duração:</span> {node.ch || node.tiempo || '-'}
                     </div>
                 </div>
 
@@ -1006,7 +1006,7 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel }: any) => 
                         transition: 'all 0.2s ease'
                     }}
                 >
-                    <Check size={16} strokeWidth={4} /> {isResolved ? 'COMPLETADO' : 'MARCAR COMO VISTO'}
+                    <Check size={16} strokeWidth={4} /> {isResolved ? 'FINALIZADO' : 'MARCAR COMO VISTO'}
                 </motion.div>
             </div>
         </motion.div>
@@ -1100,7 +1100,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                   onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }}
                   onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}
                 >
-                    <ArrowLeft size={16} /> REGRESAR AL MAPA
+                    <ArrowLeft size={16} /> Retornar ao mapa
                 </button>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
@@ -1115,9 +1115,9 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
 
                 <div style={{ marginLeft: 'auto', display: 'flex', gap: 48, alignItems: 'center' }}>
                     <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>ESTADO</div>
+                        <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>Status</div>
                         <div style={{ fontSize: 13, color: '#99CC33', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'flex-end' }}>
-                            <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 1.5, repeat: Infinity }} style={{ width: 8, height: 8, borderRadius: '50%', background: '#99CC33' }} /> EXPLORACIÓN ACTIVA
+                            <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 1.5, repeat: Infinity }} style={{ width: 8, height: 8, borderRadius: '50%', background: '#99CC33' }} /> Exploração Ativa
                         </div>
                     </div>
                     <div style={{ height: 40, width: 2, background: 'rgba(255,255,255,0.1)' }} />
@@ -1224,13 +1224,13 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                     <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 24, padding: 40, boxShadow: '0 10px 30px rgba(0,0,0,0.04)' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24 }}>
                             <Target size={20} color={planetColor} />
-                            <div style={{ fontWeight: 900, fontSize: 13, letterSpacing: '1.5px', color: '#0F004F' }}>RESUMEN DE MISIÓN</div>
+                            <div style={{ fontWeight: 900, fontSize: 13, letterSpacing: '1.5px', color: '#0F004F' }}>Resumo de missão</div>
                         </div>
                         
                         <div style={{ height: '1.5px', background: '#F1F5F9', marginBottom: 30 }} />
                         
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-                            <span style={{ fontSize: 13, color: '#858585', fontWeight: 600 }}>Tiempo Restante</span>
+                            <span style={{ fontSize: 13, color: '#858585', fontWeight: 600 }}>Tempo Restante</span>
                             <span style={{ fontSize: 14, fontWeight: 900, color: '#1B0088' }}>
                                 {(() => {
                                     const remaining = allSecciones.reduce((acc, s) => acc + (s.rows || []).reduce((a: number, r: any, i: number) => {
@@ -1242,7 +1242,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                             </span>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-                            <span style={{ fontSize: 13, color: '#858585', fontWeight: 600 }}>Nodos Resueltos</span>
+                            <span style={{ fontSize: 13, color: '#858585', fontWeight: 600 }}>Resolvidos</span>
                             <span style={{ fontSize: 14, fontWeight: 900, color: '#99CC33' }}>
                                 {(() => {
                                     const totalRows = allSecciones.reduce((acc, s) => acc + (s.rows || []).length, 0);
@@ -1279,15 +1279,15 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                             onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
                         >
                             {isAllComplete ? (
-                                <><RotateCcw size={18} /> REINICIAR MISIÓN</>
+                                <><RotateCcw size={18} /> Reiniciar Missão</>
                             ) : (
-                                <><CheckCircle2 size={18} /> MARCAR COMO COMPLETADO</>
+                                <><CheckCircle2 size={18} /> Marcar como Finalizado</>
                             )}
                         </button>
 
                         {isAllComplete && (
                             <div style={{ marginTop: 15, textAlign: 'center', fontSize: 10, color: '#858585', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>
-                                Misión finalizada con éxito
+                                Missão finalizada com sucesso
                             </div>
                         )}
                     </div>
@@ -1397,7 +1397,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                 >
                                     <div style={{ textAlign: 'center', marginTop: 100, marginBottom: 40 }}>
                                         <div style={{ fontSize: 10, color: planetColor, fontWeight: 900, letterSpacing: '6px', marginBottom: 12, textTransform: 'uppercase' }}>MAPA TÁTICO DE EXPLORAÇÃO</div>
-                                        <div style={{ fontSize: 36, fontWeight: 900, color: '#fff', letterSpacing: '4px', textTransform: 'uppercase' }}>MISIÓN: {planetLabel}</div>
+                                        <div style={{ fontSize: 36, fontWeight: 900, color: '#fff', letterSpacing: '4px', textTransform: 'uppercase' }}>MISSÃO: {planetLabel}</div>
                                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>
                                             <div style={{ width: 140, height: 2, background: `linear-gradient(90deg, transparent, ${planetColor}, transparent)` }} />
                                         </div>
