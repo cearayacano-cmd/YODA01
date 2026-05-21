@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
     ArrowLeft, Save, CheckCircle2, Plus, Trash2, Database, Layers, Satellite, Globe, Shield, Zap,
     Edit3, Briefcase, Rocket, Target, Anchor, ChevronUp, ChevronDown, Monitor, FileText, Link as LinkIcon, AlertTriangle, Clock, Cpu,
-    Maximize2, Minimize2, GripVertical, GraduationCap
+    Maximize2, Minimize2, GripVertical, GraduationCap, Calendar
 } from 'lucide-react';
 
 const TIPO_INFO: any = {
@@ -135,7 +135,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
 
   const addRow = (secIdx: number) => {
     const next = [...currentSections];
-    const rows = [...next[secIdx].rows, { macroTema: '', tema: '', detalhe: '', consejo: '', herramientas: [{ tipo: '🖼️ Slide', url: '' }], iaPic: [], tiempo: '' }];
+    const rows = [...next[secIdx].rows, { macroTema: '', dia: '', tema: '', detalhe: '', consejo: '', herramientas: [{ tipo: '🖼️ Slide', url: '' }], iaPic: [], tiempo: '' }];
     next[secIdx] = { ...next[secIdx], rows };
     updateSections(next);
   };
@@ -289,10 +289,22 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                   <div style={{ width: 44, height: 44, borderRadius: 12, background: secInfo.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>{secInfo.emoji}</div>
                   <div>
                     <input value={sec.label} onChange={e => updateSecField(si, 'label', e.target.value)} style={{ background: 'transparent', border: 'none', fontSize: '20px', fontWeight: 900, color: '#1B0088', outline: 'none', padding: '4px 8px', letterSpacing: '-0.02em', borderBottom: '2px solid transparent' }} onFocus={e => e.target.style.borderBottom = `2px solid ${secInfo.accent}`} onBlur={e => e.target.style.borderBottom = 'none'} />
-                    <div style={{ fontSize: '11px', color: '#64748b', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', paddingLeft: 8, display: 'flex', alignItems: 'center' }}>
+                    <div style={{ fontSize: '11px', color: '#64748b', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', paddingLeft: 8, display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '4px 0' }}>
                         <span>{(sec.rows||[]).length} NODOS CONFIGURADOS</span>
                         <span style={{ margin: '0 8px', color: '#cbd5e1' }}>•</span>
                         <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#1B0088' }}>⏱ TIEMPO TOTAL: {secondsToTime((sec.rows||[]).reduce((a:any, r:any) => a + timeToSeconds(r.tiempo || r.ch || ''), 0))}</span>
+                        {(() => {
+                          const allDays = (sec.rows || []).map((r: any) => r.dia).filter(Boolean);
+                          const lastDay = allDays.length > 0 ? allDays[allDays.length - 1] : '';
+                          return lastDay ? (
+                            <>
+                              <span style={{ margin: '0 8px', color: '#cbd5e1' }}>•</span>
+                              <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#1B0088', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                                <Calendar size={12} /> ACUMULADO: {lastDay}
+                              </span>
+                            </>
+                          ) : null;
+                        })()}
                     </div>
                   </div>
                 </div>
@@ -341,6 +353,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                           return Object.entries(groupedRows).map(([mt, rows], gi) => {
                             const isCollapsed = collapsedThemes.includes(mt);
                             const totalSecs = rows.reduce((acc, r) => acc + timeToSeconds(r.tiempo || r.ch || ''), 0);
+                            const uniqueDays = Array.from(new Set(rows.map((r: any) => r.dia).filter(Boolean)));
 
                             return (
                               <div key={mt} style={{ marginBottom: isCollapsed ? '16px' : '48px' }}>
@@ -366,7 +379,18 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                         placeholder="DEFINA MACRO TEMA..." 
                                     />
                                   </div>
-                                  <div style={{ background: '#1B0088', color: '#fff', padding: '6px 14px', borderRadius: '20px', fontSize: '11px', fontWeight: 900 }}>⏱ TOTAL BLOQUE: {secondsToTime(totalSecs)}</div>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }} onClick={e => e.stopPropagation()}>
+                                      <span style={{ fontSize: '11px', fontWeight: 900, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '0.1em' }}>DÍA:</span>
+                                      <input 
+                                        value={rows[0]?.dia || ''} 
+                                        onChange={e => { const newVal = e.target.value; rows.forEach(r => updateRow(si, r.originalIndex, 'dia', newVal)); }} 
+                                        style={{ background: '#f1f5f9', border: '1px solid #1B0088', borderRadius: '6px', padding: '6px 12px', color: '#1B0088', fontSize: '12px', fontWeight: 900, outline: 'none', width: '90px', textAlign: 'center' }} 
+                                        placeholder="Ex: Dia 1" 
+                                      />
+                                    </div>
+                                    <div style={{ background: '#1B0088', color: '#fff', padding: '6px 14px', borderRadius: '20px', fontSize: '11px', fontWeight: 900 }}>⏱ TOTAL BLOQUE: {secondsToTime(totalSecs)}</div>
+                                  </div>
                                 </div>
                                 {!isCollapsed && (
                                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>

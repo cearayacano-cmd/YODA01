@@ -4,7 +4,7 @@ import {
   ChevronRight, ArrowLeft, ExternalLink, Clock, Target, Rocket, 
   Anchor, Activity, Cpu, Shield, Globe, Zap, Radio, Terminal, Map as MapIcon,
   Navigation, Hexagon, Crosshair, Lightbulb, BadgeCheck, FileText, Satellite, Gem, CheckCircle2, Check,
-  ChevronUp, ChevronDown, GraduationCap, Star, RotateCcw
+  ChevronUp, ChevronDown, GraduationCap, Star, RotateCcw, Calendar
 } from 'lucide-react';
 import { TacticalSatelliteIcon, HyperProPlanetVisual } from './Shared';
 
@@ -472,9 +472,11 @@ const ContentNode = ({ row, type, planetColor, index }: any) => (
 
             {/* Tactical Badges Row */}
             <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
-                <div style={{ padding: '8px 16px', background: '#F1F5F9', borderRadius: '8px', fontSize: '10px', fontWeight: 900, color: '#64748B', display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <Clock size={14} /> DÍA: {row.dia}
-                </div>
+                {row.dia && (
+                    <div style={{ padding: '8px 16px', background: '#F1F5F9', borderRadius: '8px', fontSize: '10px', fontWeight: 900, color: '#64748B', display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <Clock size={14} /> DÍA: {row.dia}
+                    </div>
+                )}
                 <div style={{ padding: '8px 16px', background: `${planetColor}15`, borderRadius: '8px', fontSize: '10px', fontWeight: 900, color: planetColor, display: 'flex', alignItems: 'center', gap: 8 }}>
                     <Activity size={14} /> {type === 'ojt' ? 'CH:' : 'TIEMPO:'} {type === 'landing' || type === 'ojt' ? row.ch : row.tiempo}
                 </div>
@@ -558,8 +560,10 @@ const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATE
       }}>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 50%, rgba(255,255,255,0.02) 50%)', backgroundSize: '100% 4px', pointerEvents: 'none' }} />
         <div style={{ fontSize: '20px', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '2px', position: 'relative' }}>{section.label || section.nombre || 'CARGA DE DATOS...'}</div>
-        <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)', fontWeight: 800, marginTop: '8px', position: 'relative' }}>
-          ⏱ {section.rows?.length || 0} NODOS_TÉCNICOS • TIEMPO: {
+        <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)', fontWeight: 800, marginTop: '8px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, flexWrap: 'wrap' }}>
+          <span>⏱ {section.rows?.length || 0} NODOS_TÉCNICOS</span>
+          <span>•</span>
+          <span>TIEMPO: {
             (function(){
               let secs = 0;
               (section.rows || []).forEach((r:any) => {
@@ -578,7 +582,19 @@ const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATE
               const s = secs % 60;
               return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
             })()
-          }
+          }</span>
+          {(() => {
+            const allDays = (section.rows || []).map((r: any) => r.dia).filter(Boolean);
+            const lastDay = allDays.length > 0 ? allDays[allDays.length - 1] : '';
+            return lastDay ? (
+              <>
+                <span>•</span>
+                <span style={{ color: '#00D6CC', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                  <Calendar size={12} /> {lastDay}
+                </span>
+              </>
+            ) : null;
+          })()}
         </div>
       </div>
     </motion.div>
@@ -723,7 +739,18 @@ export const ClassicMissionBlock = ({ seccion, planetColor, onBackToMap, titleOv
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 30, borderBottom: '1px solid #eee', paddingBottom: 15 }}>
         <div>
           <div style={{ fontSize: 10, color: planetColor, fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase' }}>{titleOverride || 'MISSÃO DE APRENDIZAGEM'}</div>
-          <div style={{ fontSize: 24, fontWeight: 900, color: '#1B0088', textTransform: 'uppercase' }}>{subtitleOverride || seccion.nombre}</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+            <div style={{ fontSize: 24, fontWeight: 900, color: '#1B0088', textTransform: 'uppercase' }}>{subtitleOverride || seccion.nombre}</div>
+            {(() => {
+              const allDays = (seccion.rows || []).map((r: any) => r.dia).filter(Boolean);
+              const lastDay = allDays.length > 0 ? allDays[allDays.length - 1] : '';
+              return lastDay ? (
+                <span style={{ fontSize: 11, background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#1B0088', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                  <Calendar size={12} /> ACUMULADO: {lastDay}
+                </span>
+              ) : null;
+            })()}
+          </div>
         </div>
         <button 
           onClick={onBackToMap}
@@ -742,6 +769,7 @@ export const ClassicMissionBlock = ({ seccion, planetColor, onBackToMap, titleOv
       ) : Object.entries(groupedRows).map(([mt, mtRows], gi) => {
         const totalSecs = mtRows.reduce((acc, r) => acc + (r.tiempo ? (typeof r.tiempo === 'string' ? (r.tiempo.includes(':') ? r.tiempo.split(':').reduce((a:any,b:any)=>a*60+parseInt(b),0) : parseInt(r.tiempo)*60) : r.tiempo) : 0), 0);
         // Note: Simplified time calculation for brevity, could use timeToSeconds if exported
+        const uniqueDays = Array.from(new Set(mtRows.map((r: any) => r.dia).filter(Boolean)));
         
         return (
           <div key={gi} style={{ marginBottom: 40 }}>
@@ -751,6 +779,11 @@ export const ClassicMissionBlock = ({ seccion, planetColor, onBackToMap, titleOv
               borderBottom: `2px solid ${planetColor}`, paddingBottom: 10 
             }}>
               <div style={{ fontSize: 16, fontWeight: 900, color: '#111', textTransform: 'uppercase' }}>{mt}</div>
+              {uniqueDays.length > 0 && (
+                <div style={{ fontSize: 11, color: '#1B0088', background: '#f1f5f9', padding: '2px 10px', borderRadius: 12, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <Calendar size={12} /> {uniqueDays.length === 1 ? `DÍA: ${uniqueDays[0]}` : `DÍAS: ${uniqueDays.join(' - ')}`}
+                </div>
+              )}
               <div style={{ fontSize: 11, color: '#64748b', background: '#f1f5f9', padding: '2px 10px', borderRadius: 12, fontWeight: 700 }}>
                 ⏱ BLOQUE: {mtRows[0]?.tiempo?.includes(':') ? 'SUMA TÁCTICA' : `${mtRows.length} NODOS`}
               </div>
@@ -888,6 +921,23 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel }: any) => 
                 
                 {/* Context Stats */}
                 <div style={{ display: 'flex', gap: 15, marginTop: 20 }}>
+                    {node.dia && (
+                        <div style={{ 
+                            padding: '10px 18px', 
+                            background: '#FFFFFF', 
+                            borderRadius: 12, 
+                            fontSize: 11, 
+                            fontWeight: 900, 
+                            color: '#1B0088', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            gap: 10,
+                            border: `1px solid #E2E8F0`,
+                            boxShadow: `0 4px 15px rgba(0,0,0,0.05)`
+                        }}>
+                            <Calendar size={16} color={planetColor} /> <span style={{ letterSpacing: '1px' }}>Día:</span> {node.dia}
+                        </div>
+                    )}
                     <div style={{ 
                         padding: '10px 18px', 
                         background: '#FFFFFF', 
@@ -1127,6 +1177,22 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                             {allSecciones.reduce((acc, s) => acc + (s.rows || []).length, 0)}
                         </div>
                     </div>
+                    {(() => {
+                        const allDays = allSecciones.flatMap((s: any) => s.rows || []).map((r: any) => r.dia).filter(Boolean);
+                        const lastDay = allDays.length > 0 ? allDays[allDays.length - 1] : '';
+                        if (!lastDay) return null;
+                        return (
+                            <>
+                                <div style={{ height: 40, width: 2, background: 'rgba(255,255,255,0.1)' }} />
+                                <div style={{ textAlign: 'right' }}>
+                                    <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>ACUMULADO DÍAS</div>
+                                    <div style={{ fontSize: 22, color: '#FFF', fontWeight: 900 }}>
+                                        {lastDay}
+                                    </div>
+                                </div>
+                            </>
+                        );
+                    })()}
                 </div>
             </div>
 
@@ -1159,6 +1225,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
 
                                         return Object.entries(grouped).map(([mt, rows], gi) => {
                                             const isCollapsed = collapsedThemes.includes(mt);
+                                            const uniqueDays = Array.from(new Set(rows.map((r: any) => r.dia).filter(Boolean)));
                                             return (
                                                 <div key={gi} style={{ marginBottom: isCollapsed ? 20 : 50 }}>
                                                     {/* Premium Tactical Theme Header - NOW CLICKABLE TO COLLAPSE */}
@@ -1185,6 +1252,11 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
 
                                                         <div style={{ fontSize: 20, fontWeight: 900, color: '#1B0088', letterSpacing: '-0.02em', textTransform: 'uppercase', flex: 1 }}>{mt}</div>
                                                         
+                                                        {uniqueDays.length > 0 && (
+                                                            <div style={{ fontSize: 11, color: '#1B0088', background: 'rgba(27,0,136,0.05)', padding: '4px 12px', borderRadius: 12, fontWeight: 800, display: 'flex', alignItems: 'center', gap: 4 }}>
+                                                                <Calendar size={12} /> {uniqueDays.length === 1 ? `DÍA: ${uniqueDays[0]}` : `DÍAS: ${uniqueDays.join(' - ')}`}
+                                                            </div>
+                                                        )}
                                                         <div style={{ fontSize: 10, color: 'rgba(27,0,136,0.4)', fontWeight: 800 }}>{rows.length} NODOS DETECTADOS</div>
                                                     </motion.div>
                                                     

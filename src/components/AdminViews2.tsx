@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BackBtn } from './Shared';
 import { motion } from 'framer-motion';
-import { Globe, Layers, Plus, Trash2, Edit3, Settings, Database, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { Globe, Layers, Plus, Trash2, Edit3, Settings, Database, ArrowLeft, CheckCircle2, Calendar } from 'lucide-react';
 
 export const AdminExploracion = ({ currentStationConfig, updateStationConfig, onBack, onSatelites, onAdvancedContent }: any) => {
   const [activeSector, setActiveSector] = useState('frontLine');
@@ -160,7 +160,7 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
                     onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#FFB800'; e.currentTarget.style.background = '#ffffff'; }}
                     onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#F8FAFC'; }}
                     >
-                      <div style={{display: 'flex', alignItems: 'center', gap: 16, flex: 1}}>
+                      <div style={{display: 'flex', flexDirection: 'column', gap: 6, flex: 1}}>
                         <input 
                           value={onb.label || 'NAVE DE ONBOARDING'}
                           onChange={(e) => {
@@ -176,6 +176,23 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
                           onFocus={(e) => e.target.style.borderBottomColor = '#FFB800'}
                           onBlur={(e) => e.target.style.borderBottomColor = 'transparent'}
                         />
+                        {(() => {
+                          const allDays = (onb.data?.secciones || []).flatMap((s: any) => s.rows || []).map((r: any) => r.dia).filter(Boolean);
+                          const lastDay = allDays.length > 0 ? allDays[allDays.length - 1] : '';
+                          const nodeCount = (onb.data?.secciones || []).reduce((acc: number, s: any) => acc + (s.rows || []).length, 0);
+                          return (
+                            <div style={{ fontSize: '11px', color: '#64748b', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 12 }}>
+                              <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#1B0088' }}>
+                                ⏱ {nodeCount} NODOS CONFIGURADOS
+                              </span>
+                              {lastDay && (
+                                <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#1B0088', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                                  <Calendar size={12} /> ACUMULADO DÍAS: {lastDay}
+                                </span>
+                              )}
+                            </div>
+                          );
+                        })()}
                       </div>
                       <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
                         <button 

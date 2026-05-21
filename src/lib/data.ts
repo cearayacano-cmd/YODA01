@@ -7721,7 +7721,7 @@ export const LAE_DATA = {  "texture": "RINGS",
     },
     {
       "tipo": "mision1",
-      "label": "MISSÃO 6: ADV / EVALUACIÓN",
+      "label": "MISSÃO 6: ADV / AVALIAÇÃO",
       "rows": [
         {
           "macroTema": "Resumo",
