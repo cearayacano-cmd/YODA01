@@ -3,10 +3,14 @@ import { BackBtn } from './Shared';
 import { motion } from 'framer-motion';
 import { Save, Rocket, Settings, Database, Edit3, Trash2, Plus, Link as LinkIcon, CheckCircle2, Activity, LayoutGrid, GraduationCap, ArrowUpRight, Globe, ArrowLeft } from 'lucide-react';
 
-export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLider, onViewStation }: any) => {
+export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLider, onViewStation, onSave }: any) => {
   const [activeStation, setActiveStation] = useState('BR');
   const [saved, setSaved] = useState(false);
-  const handleSave = () => { setSaved(true); setTimeout(()=>setSaved(false),2200); };
+  const handleSave = () => { 
+    setSaved(true); 
+    setTimeout(()=>setSaved(false),2200); 
+    if (onSave) onSave();
+  };
   const sk = activeStation.toLowerCase();
   const updateF = (field: any, val: any) => {
     const now = new Date();

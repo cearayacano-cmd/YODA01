@@ -3,9 +3,13 @@ import { BackBtn } from './Shared';
 import { motion } from 'framer-motion';
 import { Save, CheckCircle2, Plus, Trash2, GraduationCap, Link as LinkIcon, Clock, FileText, Lightbulb, Shield, ArrowLeft, ArrowUpRight } from 'lucide-react';
 
-export const AdminRutaLider = ({ rutaData, setRutaData, onBack, title }: any) => {
+export const AdminRutaLider = ({ rutaData, setRutaData, onBack, title, onSave }: any) => {
   const [saved, setSaved] = useState(false);
-  const saveFlash = () => { setSaved(true); setTimeout(()=>setSaved(false), 2000); };
+  const saveFlash = () => { 
+    setSaved(true); 
+    setTimeout(()=>setSaved(false), 2000); 
+    if (onSave) onSave();
+  };
   
   const inp = (extra={}) => ({
     background:'#ffffff', 

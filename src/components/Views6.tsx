@@ -189,7 +189,17 @@ const FERR_ICONS: any = {
     Doc: <Target size={14} />,
     'Operação': <Shield size={14} />,
     Simulador: <Cpu size={14} />,
-    'N/A': <Activity size={14} />
+    'N/A': <Activity size={14} />,
+    '🖼️ Slide': <Activity size={14} />,
+    '🖼️  Slide': <Activity size={14} />,
+    '🎬 Video': <Zap size={14} />,
+    '🎬  Video': <Zap size={14} />,
+    '🎮 Educaplay': <Star size={14} />,
+    '🎮  Educaplay': <Star size={14} />,
+    '🔗 Link': <ExternalLink size={14} />,
+    '🔗  Link': <ExternalLink size={14} />,
+    '➖ NA': <Activity size={14} />,
+    '➖  NA': <Activity size={14} />
 };
 
 const MissionHeaderHUD = ({ sectorLabel, planetLabel, planetColor, onBack }: any) => (

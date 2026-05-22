@@ -31,6 +31,8 @@ import {
   ONBOARDING_EMPTY
 } from './lib/data';
 
+import appConfigJson from './lib/appConfig.json';
+
 import { AdminCenter } from './components/AdminViews';
 import { AdminExploracion } from './components/AdminViews2';
 import { AdminRutaLider } from './components/AdminViews3';
@@ -148,55 +150,7 @@ export default function App() {
     }));
   };
 
-  const [appConfig, setAppConfig] = useState({
-    br: {
-      monitoringUrl:"https://lookerstudio.google.com/u/0/reporting/9d1f44d6-e585-4a9c-af76-c0883ed691e2/page/p_wtg2od23vd",
-      iaraLink: "https://amelia.appslatam.com/#/assistants/chat/aa857c06-5a06-4450-8518-8568cdd28dfd",
-      preparacaoLink: "https://sites.google.com/latam.com/elevar-el-conocimiento-siempre/untitled-page",
-      suministros:[
-        {label: "Solicitação Validação Novos Instrutores", url: "https://docs.google.com/forms/d/e/1FAIpQLSd-8RqlYtBRf52-BD3DguIBI5avHCTL_W1Iubo61zKiNHJTnw/viewform"},
-        {label: "BD KON BR", url: "https://docs.google.com/spreadsheets/d/13DSQiW2usoVceoS8dzIcRpE7zwS4DrRq0xWLOWe4ikc/edit?gid=415048431#gid=415048431"},
-        {label: "BD AEC", url: "https://docs.google.com/spreadsheets/d/19Po56LC5YYTLnQLpVwsFaQIRwAroJos7hd6OqTubxRI/edit?gid=2137519498#gid=2137519498"}
-      ],
-      ingenieria:[{label:"REVA 2026",url:"#",desc:"Acesse conteúdos que irão elevar seu conhecimento e levar nossa operação cada vez mais alto!"}],
-      laboratorio:[],
-      operaciones:[
-        {label: "Usuários Treinamento", url: "https://docs.google.com/spreadsheets/d/1m3MQb4O517HkmrvECuAeyTTlAo9XGHPpLrhk294eXvI/edit?gid=683623643#gid=683623643"},
-        {label: "Indução Instrutor Guardião", url: "https://docs.google.com/presentation/d/1pagklV4v8J09sciVVeFR5ZA3fRIHDJ5hoyXKWYSWXtc/edit?slide=id.g366a722ea15_0_5562#slide=id.g366a722ea15_0_5562"},
-        {label: "Gravações Meet", url: "https://drive.google.com/drive/folders/1W3G9vWvZK7c4C9vCGQmUG2iKPAmGwAN4"},
-        {label: "Rota de Saber/ Escuta de Chamadas", url: "https://docs.google.com/forms/d/e/1FAIpQLSc6skAZ2tsMQx3b5uMjVzI_0kbafi11Bj7rsOJgVbrOzgLWtw/viewform"}
-      ],
-      lastUpdate: "30/04/2026",
-      rutaLider: RUTA_DATA_DEFAULT,
-      onboarding: [
-        { label: "NAVE DE ONBOARDING BASE", data: ONBOARDING_DATA_DEFAULT },
-        { label: "NAVE DE ONBOARDING Vendas + WS 12 dias", data: ONBOARDING_VENDAS_DATA }
-      ],
-      frontLineContent: [VENDAS_WS_12_DATA, BASE_PLANET_DATA, POS_VENDA_1_DATA, POS_VENDA_2_DATA, HVC_BAG_DATA, LAE_DATA],
-      soporteContent: initGalaxy(["Soporte 1","Soporte 2"]),
-      fsc: initGalaxy(["FSC 1","FSC 2"]),
-      satelites: { conhecendo: CONHECENDO_DATA, imersao: IMERSAO_DATA },
-      exploracion:{
-        frontLine:[VENDAS_WS_12_DATA, BASE_PLANET_DATA, POS_VENDA_1_DATA, POS_VENDA_2_DATA, HVC_BAG_DATA, LAE_DATA],
-        soporte:initGalaxy(["Soporte BO (Pendiente)","Soporte FFP (Pendiente)"]),
-        fieldSupport:initGalaxy(["FSC (Pendiente)"])
-      }
-    },
-    ssc: {
-      monitoringUrl:"",
-      iaraLink: "https://amelia.appslatam.com/#/assistants/chat/aa857c06-5a06-4450-8518-8568cdd28dfd",
-      preparacaoLink: "",
-      suministros:[],ingenieria:[],laboratorio:[],operaciones:[],
-      lastUpdate: "---",
-      rutaLider:[],
-      onboarding: [[]],
-      frontLineContent: [],
-      soporteContent: [],
-      satelites: { conhecendo: [], imersao: [] },
-      fsc: [],
-      exploracion:{frontLine:[],soporte:[],fieldSupport:[]}
-    }
-  });
+  const [appConfig, setAppConfig] = useState(appConfigJson);
 
   React.useEffect(() => {
     // ONE-TIME AUTO WIPE FOR VERSION UPDATE
@@ -210,7 +164,45 @@ export default function App() {
       localStorage.setItem('yoda_auto_wipe_v4', 'true');
       console.log('Automated wipe complete.');
     }
+
+    // Dynamic config loading from /api/config
+    const fetchConfig = async () => {
+      try {
+        const res = await fetch('/api/config');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.br) {
+            setAppConfig(data);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load dynamic config, using bundle config', err);
+      }
+    };
+    fetchConfig();
   }, []);
+
+  const configRef = React.useRef(appConfig);
+  React.useEffect(() => {
+    configRef.current = appConfig;
+  }, [appConfig]);
+
+  const saveConfigToDisk = async () => {
+    try {
+      const res = await fetch('/api/save-config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(configRef.current)
+      });
+      if (!res.ok) {
+        console.error('Failed to save configuration to disk');
+      } else {
+        console.log('Configuration saved to disk successfully');
+      }
+    } catch (err) {
+      console.error('Error saving configuration:', err);
+    }
+  };
 
   const activeConfig = currentStation==='BR' ? appConfig.br : appConfig.ssc;
   const go = (v: string, sector: string | null = null, courseIdx: number | null = null) => {
@@ -269,6 +261,7 @@ export default function App() {
             onViewStation={(st: string) => go(st.toLowerCase())}
             onExploracion={(st: string)=>{setAdminStation(st);go('admin-exploracion')}}
             onRutaLider={(st: string)=>{setAdminStation(st);go('admin-ruta-lider')}}
+            onSave={saveConfigToDisk}
           />
         );
       case 'admin-exploracion':
@@ -294,6 +287,7 @@ export default function App() {
             }}
             onBack={()=>go('admin')}
             title={`EDITOR RUTA DEL LÍDER - ${adminStation}`}
+            onSave={saveConfigToDisk}
           />
         );
       case 'admin-satelites':
@@ -342,6 +336,7 @@ export default function App() {
               initialPlanet={adminCourseIdx}
               title={title}
               isOnboarding={adminSector === 'onboarding'}
+              onSave={saveConfigToDisk}
             />
           );
         }

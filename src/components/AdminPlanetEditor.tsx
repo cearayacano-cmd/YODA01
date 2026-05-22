@@ -31,7 +31,7 @@ const secondsToTime = (secs: number) => {
   return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 };
 
-export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, initialPlanet, title = "EDITOR", isOnboarding }: any) => {
+export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, initialPlanet, title = "EDITOR", isOnboarding, onSave }: any) => {
   const [activePlanet, setActivePlanet] = useState(initialPlanet || 0);
   const [editingSecIdx, setEditingSecIdx] = useState<number | null>(null);
   const [saved, setSaved] = useState(false);
@@ -156,7 +156,11 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
     updateSections(next);
   };
 
-  const saveFlash = () => { setSaved(true); setTimeout(() => setSaved(false), 2000); };
+  const saveFlash = () => { 
+    setSaved(true); 
+    setTimeout(() => setSaved(false), 2000); 
+    if (onSave) onSave();
+  };
 
   const inp = (extra={}) => ({
     background:'#ffffff', border:'1px solid #E2E8F0', padding:'10px 14px', fontFamily:'inherit', fontSize:13, color:'#1B0088', outline:'none', borderRadius:10, transition: 'all 0.2s ease', ...extra
