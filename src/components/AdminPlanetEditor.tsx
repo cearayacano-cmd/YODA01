@@ -133,6 +133,16 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
     updateSections(next);
   };
 
+  const updateMultipleRows = (secIdx: number, rowIndices: number[], field: string, val: any) => {
+    const next = [...currentSections];
+    const rows = [...next[secIdx].rows];
+    rowIndices.forEach(rowIdx => {
+      rows[rowIdx] = { ...rows[rowIdx], [field]: val };
+    });
+    next[secIdx] = { ...next[secIdx], rows };
+    updateSections(next);
+  };
+
   const addRow = (secIdx: number) => {
     const next = [...currentSections];
     const rows = [...next[secIdx].rows, { macroTema: '', dia: '', tema: '', detalhe: '', consejo: '', herramientas: [{ tipo: '🖼️ Slide', url: '' }], iaPic: [], tiempo: '' }];
@@ -378,7 +388,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                     <input 
                                         value={mt === 'SIN MACROTEMA' ? '' : mt} 
                                         onClick={e => e.stopPropagation()}
-                                        onChange={e => { const newVal = e.target.value; rows.forEach(r => updateRow(si, r.originalIndex, 'macroTema', newVal)); }} 
+                                        onChange={e => { const newVal = e.target.value; updateMultipleRows(si, rows.map(r => r.originalIndex), 'macroTema', newVal); }} 
                                         style={{ background: 'transparent', border: 'none', color: '#1B0088', fontSize: '16px', fontWeight: 900, outline: 'none', width: '400px' }} 
                                         placeholder="DEFINA MACRO TEMA..." 
                                     />
@@ -388,7 +398,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                       <span style={{ fontSize: '11px', fontWeight: 900, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '0.1em' }}>DÍA:</span>
                                       <input 
                                         value={rows[0]?.dia || ''} 
-                                        onChange={e => { const newVal = e.target.value; rows.forEach(r => updateRow(si, r.originalIndex, 'dia', newVal)); }} 
+                                        onChange={e => { const newVal = e.target.value; const parsed = newVal === '' ? '' : (isNaN(Number(newVal)) ? newVal : Number(newVal)); updateMultipleRows(si, rows.map(r => r.originalIndex), 'dia', parsed); }} 
                                         style={{ background: '#f1f5f9', border: '1px solid #1B0088', borderRadius: '6px', padding: '6px 12px', color: '#1B0088', fontSize: '12px', fontWeight: 900, outline: 'none', width: '90px', textAlign: 'center' }} 
                                         placeholder="Ex: Dia 1" 
                                       />
