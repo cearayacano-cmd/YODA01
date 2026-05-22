@@ -166,6 +166,63 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
     updateSections(next);
   };
 
+  const moveMacroTema = (secIdx: number, mtName: string, dir: number) => {
+    const next = [...currentSections];
+    const rows = [...next[secIdx].rows];
+    const mtOrder: string[] = [];
+    rows.forEach((r: any) => {
+      const mt = r.macroTema || 'SIN MACROTEMA';
+      if (!mtOrder.includes(mt)) mtOrder.push(mt);
+    });
+    const currIdx = mtOrder.indexOf(mtName);
+    if (currIdx === -1) return;
+    const targetIdx = currIdx + dir;
+    if (targetIdx < 0 || targetIdx >= mtOrder.length) return;
+
+    const newMtOrder = [...mtOrder];
+    [newMtOrder[currIdx], newMtOrder[targetIdx]] = [newMtOrder[targetIdx], newMtOrder[currIdx]];
+
+    const grouped: { [key: string]: any[] } = {};
+    rows.forEach((r: any) => {
+      const mt = r.macroTema || 'SIN MACROTEMA';
+      if (!grouped[mt]) grouped[mt] = [];
+      grouped[mt].push(r);
+    });
+
+    const newRows: any[] = [];
+    newMtOrder.forEach((mt) => {
+      if (grouped[mt]) newRows.push(...grouped[mt]);
+    });
+
+    next[secIdx] = { ...next[secIdx], rows: newRows };
+    updateSections(next);
+  };
+
+  const moveRowWithinMacroTema = (secIdx: number, rowIdx: number, dir: number) => {
+    const next = [...currentSections];
+    const rows = [...next[secIdx].rows];
+    const currentMt = rows[rowIdx]?.macroTema || 'SIN MACROTEMA';
+    
+    let step = dir;
+    let targetIdx = -1;
+    while (true) {
+      const checkIdx = rowIdx + step;
+      if (checkIdx < 0 || checkIdx >= rows.length) break;
+      const checkMt = rows[checkIdx]?.macroTema || 'SIN MACROTEMA';
+      if (checkMt === currentMt) {
+        targetIdx = checkIdx;
+        break;
+      }
+      break;
+    }
+    
+    if (targetIdx !== -1) {
+      [rows[rowIdx], rows[targetIdx]] = [rows[targetIdx], rows[rowIdx]];
+      next[secIdx] = { ...next[secIdx], rows };
+      updateSections(next);
+    }
+  };
+
   const saveFlash = () => { 
     setSaved(true); 
     setTimeout(() => setSaved(false), 2000); 
@@ -384,6 +441,34 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                     <div style={{ width: 24, height: 24, borderRadius: 6, background: '#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
                                         {isCollapsed ? <ChevronDown size={14}/> : <ChevronUp size={14}/>}
                                     </div>
+                                    
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }} onClick={e => e.stopPropagation()}>
+                                      <button 
+                                        disabled={gi === 0}
+                                        onClick={() => moveMacroTema(si, mt, -1)}
+                                        style={{ 
+                                          background: 'transparent', border: 'none', padding: 0, cursor: gi === 0 ? 'default' : 'pointer', 
+                                          color: gi === 0 ? '#cbd5e1' : '#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                          height: 12
+                                        }}
+                                        title="Subir Macrotema"
+                                      >
+                                        <ChevronUp size={14} style={{ strokeWidth: 3 }} />
+                                      </button>
+                                      <button 
+                                        disabled={gi === Object.keys(groupedRows).length - 1}
+                                        onClick={() => moveMacroTema(si, mt, 1)}
+                                        style={{ 
+                                          background: 'transparent', border: 'none', padding: 0, cursor: gi === Object.keys(groupedRows).length - 1 ? 'default' : 'pointer', 
+                                          color: gi === Object.keys(groupedRows).length - 1 ? '#cbd5e1' : '#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                          height: 12
+                                        }}
+                                        title="Bajar Macrotema"
+                                      >
+                                        <ChevronDown size={14} style={{ strokeWidth: 3 }} />
+                                      </button>
+                                    </div>
+
                                     <span style={{ fontSize: '11px', fontWeight: 900, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '0.1em' }}>MACROTEMA:</span>
                                     <input 
                                         value={mt === 'SIN MACROTEMA' ? '' : mt} 
@@ -398,7 +483,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                       <span style={{ fontSize: '11px', fontWeight: 900, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '0.1em' }}>DÍA:</span>
                                       <input 
                                         value={rows[0]?.dia || ''} 
-                                        onChange={e => { const newVal = e.target.value; const parsed = newVal === '' ? '' : (isNaN(Number(newVal)) ? newVal : Number(newVal)); updateMultipleRows(si, rows.map(r => r.originalIndex), 'dia', parsed); }} 
+                                        onChange={e => updateMultipleRows(si, rows.map(r => r.originalIndex), 'dia', e.target.value)} 
                                         style={{ background: '#f1f5f9', border: '1px solid #1B0088', borderRadius: '6px', padding: '6px 12px', color: '#1B0088', fontSize: '12px', fontWeight: 900, outline: 'none', width: '90px', textAlign: 'center' }} 
                                         placeholder="Ex: Dia 1" 
                                       />
@@ -448,7 +533,47 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                             <button onClick={() => { const nextIA = Array.isArray(row.iaPic) ? [...row.iaPic] : (row.iaPic ? [{ label: 'PIC LINK', url: row.iaPic }] : []); nextIA.push({ label: 'PIC LINK', url: '' }); updateRow(si, oi, 'iaPic', nextIA); }} style={{ background: '#f0f9ff', border: '1px dashed #bae6fd', width: '100%', padding: '4px', fontSize: '9px', cursor: 'pointer', borderRadius: 4, color: '#0369a1', fontWeight: 700 }}>+ ADD PIC</button>
                                           </td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}><input value={row.tiempo || row.ch} onChange={e => updateRow(si, oi, 'tiempo', e.target.value)} style={{ background: 'transparent', border: 'none', color: '#111', fontSize: '12px', fontWeight: 800, textAlign: 'center', width: '100%' }} /></td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}><button onClick={() => deleteRow(si, oi)} style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', opacity: 0.5 }} onMouseEnter={e=>e.currentTarget.style.opacity='1'} onMouseLeave={e=>e.currentTarget.style.opacity='0.5'}><Trash2 size={14}/></button></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                                              <button 
+                                                disabled={ri === 0}
+                                                onClick={() => moveRowWithinMacroTema(si, oi, -1)}
+                                                style={{ 
+                                                  background: 'transparent', border: 'none', color: ri === 0 ? '#cbd5e1' : '#1B0088', 
+                                                  cursor: ri === 0 ? 'default' : 'pointer', opacity: ri === 0 ? 0.4 : 0.7, padding: 0,
+                                                  display: 'flex', alignItems: 'center'
+                                                }}
+                                                onMouseEnter={e => { if (ri !== 0) e.currentTarget.style.opacity = '1'; }}
+                                                onMouseLeave={e => { if (ri !== 0) e.currentTarget.style.opacity = '0.7'; }}
+                                                title="Subir Actividad"
+                                              >
+                                                <ChevronUp size={14} />
+                                              </button>
+                                              <button 
+                                                disabled={ri === rows.length - 1}
+                                                onClick={() => moveRowWithinMacroTema(si, oi, 1)}
+                                                style={{ 
+                                                  background: 'transparent', border: 'none', color: ri === rows.length - 1 ? '#cbd5e1' : '#1B0088', 
+                                                  cursor: ri === rows.length - 1 ? 'default' : 'pointer', opacity: ri === rows.length - 1 ? 0.4 : 0.7, padding: 0,
+                                                  display: 'flex', alignItems: 'center'
+                                                }}
+                                                onMouseEnter={e => { if (ri !== rows.length - 1) e.currentTarget.style.opacity = '1'; }}
+                                                onMouseLeave={e => { if (ri !== rows.length - 1) e.currentTarget.style.opacity = '0.7'; }}
+                                                title="Bajar Actividad"
+                                              >
+                                                <ChevronDown size={14} />
+                                              </button>
+                                              <button 
+                                                onClick={() => deleteRow(si, oi)} 
+                                                style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', opacity: 0.5, padding: 0, display: 'flex', alignItems: 'center' }} 
+                                                onMouseEnter={e=>e.currentTarget.style.opacity='1'} 
+                                                onMouseLeave={e=>e.currentTarget.style.opacity='0.5'}
+                                                title="Eliminar Actividad"
+                                              >
+                                                <Trash2 size={14}/>
+                                              </button>
+                                            </div>
+                                          </td>
                                         </tr>
                                       );
                                     })}

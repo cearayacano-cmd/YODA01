@@ -437,7 +437,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Perfis de Tarifa",
@@ -451,7 +452,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": "3"
+                "dia": 3
               },
               {
                 "macroTema": "Taxas",
@@ -464,7 +465,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Taxas",
@@ -477,7 +479,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053045793-Taxa-de-Servi%C3%A7o#h_01GR8YGS63GM064315Z7N3J5EQ"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Acordos",
@@ -490,7 +493,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360052986693-Generalidades-Codeshare"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Acordos",
@@ -503,7 +507,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/22162184180499-Acordo-Delta-DL"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Acordos",
@@ -516,7 +521,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Bagagem",
@@ -529,7 +535,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360049744854-Generalidades-Bagagem-"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Serviços e Pax Expeciais",
@@ -542,7 +549,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Serviços e Pax Expeciais",
@@ -555,7 +563,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055886633-Protocolo-Servi%C3%A7os-Especiais"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Serviços e Pax Expeciais",
@@ -597,7 +606,8 @@
                     "label": "Cadeira de Rodas",
                     "url": ""
                   }
-                ]
+                ],
+                "dia": 3
               },
               {
                 "macroTema": "Serviços e Pax Expeciais",
@@ -627,7 +637,8 @@
                     "label": "Animais de Assistência (SVAN-ESAN)",
                     "url": ""
                   }
-                ]
+                ],
+                "dia": 3
               },
               {
                 "macroTema": "Serviços e Pax Expeciais",
@@ -640,7 +651,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -653,7 +665,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -666,7 +679,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360052861173-Reserva-e-emiss%C3%A3o-de-passagens"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Resumo",
@@ -679,7 +693,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 4
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -692,7 +707,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -705,7 +721,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -718,7 +735,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360054073254-Protocolo-Estrutura-de-Chamadas#h_01G8C6XH6XV4BH2DPH8EMNX9AP"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -731,7 +749,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -744,7 +763,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/4411825576083-Pagamento-Link"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -757,7 +777,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/4407703691155-Comprovante-%C3%9Anico-de-Venda-CUV"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -770,7 +791,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -783,7 +805,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/4407014380307-Ordens-de-Clientes"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -796,7 +819,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053236793-Check-In"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -809,7 +833,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -822,7 +847,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055936373-Split-de-Reserva-Individuais-e-Grupo"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -835,7 +861,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -848,7 +875,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/12943186481299-Processo-para-isen%C3%A7%C3%A3o-de-taxa-de-servi%C3%A7o-em-latamairlines-com"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -861,7 +889,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -874,7 +903,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -887,7 +917,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/4414246715027-LATAM-Wallet"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 3
               },
               {
                 "macroTema": "Solicitação de Serviços Agente 360",
@@ -900,7 +931,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 4
               },
               {
                 "macroTema": "Solicitação de Serviços Agente 360",
@@ -913,7 +945,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 4
               },
               {
                 "macroTema": "Ancillaries",
@@ -926,7 +959,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360052161874-EMD"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 4
               },
               {
                 "macroTema": "Ancillaries",
@@ -939,7 +973,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/47091784533395-05-12-25-SERVI%C3%87OS-ESPECIAIS-Ativa-se-a-venda-dos-servi%C3%A7os-de-menor-desacompanhado-UMNR-animal-de-estima%C3%A7%C3%A3o-na-cabine-PETC-e-no-por%C3%A3o-AVIH-por-meio-do-agente-360"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 4
               },
               {
                 "macroTema": "Ancillaries",
@@ -952,7 +987,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/4414544635155-Venda-de-Malas"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 4
               },
               {
                 "macroTema": "Ancillaries",
@@ -965,7 +1001,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/37493881988371-Venda-Assistida-de-bagagem-pelo-Agente-360"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 4
               },
               {
                 "macroTema": "Ancillaries",
@@ -978,7 +1015,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360049744894-Venda-de-Sele%C3%A7%C3%A3o-de-Assentos"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 4
               },
               {
                 "macroTema": "Ancillaries",
@@ -991,7 +1029,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/17098820775187-LATAM-FLEX"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 4
               },
               {
                 "macroTema": "Resumo",
@@ -1004,7 +1043,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 4
               },
               {
                 "macroTema": "Ancillaries",
@@ -1017,7 +1057,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 4
               },
               {
                 "macroTema": "Ancillaries",
@@ -1030,7 +1071,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 4
               },
               {
                 "macroTema": "Painel de Pagamento Agente 360",
@@ -1043,7 +1085,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/5443079309971-Console-XPSP"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               },
               {
                 "macroTema": "Lista de Vendas",
@@ -1056,7 +1099,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               },
               {
                 "macroTema": "Lista de Vendas",
@@ -1069,7 +1113,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/40176305951123-NOVA-FUNCIONALIDADE-LISTA-DE-VENDAS-AGENTES"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               },
               {
                 "macroTema": "Perfil Cliente",
@@ -1082,7 +1127,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               },
               {
                 "macroTema": "Perfil Cliente",
@@ -1095,7 +1141,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/43013540923667-Sem%C3%A1foro-de-afeta%C3%A7%C3%A3o-Criticality-Score"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               },
               {
                 "macroTema": "Perfil Cliente",
@@ -1108,7 +1155,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/4403974273299-Erros-de-pagamento"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               },
               {
                 "macroTema": "INCIDENTES",
@@ -1121,7 +1169,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/4405966901523-Detalle-Formularios-Incidencias"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               },
               {
                 "macroTema": "Avaliação Vendas A360",
@@ -1134,7 +1183,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               }
             ]
           },
@@ -1157,7 +1207,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/40223076355091-10-04-25-Elimina%C3%A7%C3%A3o-de-cria%C3%A7%C3%A3o-de-casos-atrav%C3%A9s-do-Centro-de-Ajuda-do-site"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               },
               {
                 "macroTema": "Casos",
@@ -1170,7 +1221,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               },
               {
                 "macroTema": "Zendesk",
@@ -1183,7 +1235,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055558073-Zendesk"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               },
               {
                 "macroTema": "Zendesk",
@@ -1196,7 +1249,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055558073-Zendesk"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               },
               {
                 "macroTema": "Zendesk",
@@ -1209,7 +1263,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055558073-Zendesk"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               },
               {
                 "macroTema": "Zendesk",
@@ -1222,7 +1277,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055558073-Zendesk"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               },
               {
                 "macroTema": "Zendesk",
@@ -1235,7 +1291,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055558073-Zendesk"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               },
               {
                 "macroTema": "Zendesk",
@@ -1248,7 +1305,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               },
               {
                 "macroTema": "Avaliação Zendesk",
@@ -1261,7 +1319,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 5
               }
             ]
           },
@@ -1280,7 +1339,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               },
               {
                 "macroTema": "LATAM PASS",
@@ -1297,7 +1357,8 @@
                     "url": "https://www.youtube.com/shorts/YlKrAL_wgKo?feature=share"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               },
               {
                 "macroTema": "LATAM PASS",
@@ -1310,7 +1371,8 @@
                     "url": "https://www.youtube.com/shorts/vX9srzIRZNw?feature=share"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               },
               {
                 "macroTema": "LATAM PASS",
@@ -1327,7 +1389,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053169173-Produto-Categorias-e-Benef%C3%ADcios-LATAM-Pass"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               },
               {
                 "macroTema": "LATAM PASS",
@@ -1344,7 +1407,8 @@
                     "url": "https://www.educaplay.com/learning-resources/26744315-latam_pass_categorias_em_foco.html"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               },
               {
                 "macroTema": "LATAM PASS",
@@ -1357,7 +1421,8 @@
                     "url": "https://www.youtube.com/shorts/ZSgsCW5dQmo?feature=share"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               },
               {
                 "macroTema": "LATAM PASS",
@@ -1370,7 +1435,8 @@
                     "url": "https://www.youtube.com/shorts/NbFTLrPXnVw?feature=share"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               },
               {
                 "macroTema": "LATAM PASS",
@@ -1383,7 +1449,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/37307768474899-B%C3%B4nus-LATAM-Pass"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               },
               {
                 "macroTema": "LATAM PASS",
@@ -1396,7 +1463,8 @@
                     "url": "https://www.youtube.com/shorts/71J3rlILGY4?feature=share"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               },
               {
                 "macroTema": "LATAM PASS",
@@ -1409,7 +1477,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               },
               {
                 "macroTema": "LATAM PASS",
@@ -1422,7 +1491,8 @@
                     "url": "https://www.youtube.com/shorts/wYmA_Q1ZKyo?feature=share"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               },
               {
                 "macroTema": "LATAM PASS",
@@ -1435,7 +1505,8 @@
                     "url": "https://www.youtube.com/shorts/G5Np4zshbpQ?feature=share"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               },
               {
                 "macroTema": "LATAM PASS",
@@ -1448,7 +1519,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/4408047222803-Resgate-de-tickets-pr%C3%AAmios-com-novo-modelo-de-resgate-FFP-milhas-pontos"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               },
               {
                 "macroTema": "LATAM PASS",
@@ -1461,7 +1533,8 @@
                     "url": "https://www.youtube.com/shorts/jEMsqNPVfOk?feature=share"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               },
               {
                 "macroTema": "LATAM PASS",
@@ -1474,7 +1547,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               },
               {
                 "macroTema": "LATAM PASS",
@@ -1487,7 +1561,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               },
               {
                 "macroTema": "Avaliação LATAM PASS",
@@ -1500,7 +1575,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": 6
               }
             ]
           },
@@ -1519,7 +1595,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "6,7"
               },
               {
                 "macroTema": "NÃO VOZ",
@@ -1532,7 +1609,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "6,7"
               },
               {
                 "macroTema": "NÃO VOZ",
@@ -1545,7 +1623,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/40120600616851-Acesso-ao-Whatsapp-Genesys"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "6,7"
               },
               {
                 "macroTema": "NÃO VOZ",
@@ -1558,7 +1637,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "6,7"
               },
               {
                 "macroTema": "NÃO VOZ",
@@ -1571,7 +1651,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "6,7"
               },
               {
                 "macroTema": "NÃO VOZ",
@@ -1584,7 +1665,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/42671984510995-Anexos-N%C3%A3o-Voz-por-processo"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "6,7"
               },
               {
                 "macroTema": "NÃO VOZ",
@@ -1597,7 +1679,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "6,7"
               },
               {
                 "macroTema": "NÃO VOZ",
@@ -1610,7 +1693,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/34169487426323-Solicita%C3%A7%C3%A3o-de-documenta%C3%A7%C3%A3o-via-WhatsApp"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "6,7"
               },
               {
                 "macroTema": "NÃO VOZ",
@@ -1623,20 +1707,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/30270075990803-Forma-do-pagamento-OT-Pago-para-Canal-N%C3%A3o-Voz"
                   }
                 ],
-                "iaPic": []
-              },
-              {
-                "macroTema": "Resumo",
-                "tema": "Resumo do dia anterior",
-                "detalhe": "- Instrutor atividade de chuva de idéias para resgatar con os alunos os temas relevantes vistos no dia anterior.\nDica: Pode utilizar sites como Mentimeter para chuva de ideias ou escrever diretamente em un flipchart ou quadro os temas.",
-                "tiempo": "0:05:00",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ PPT",
-                    "url": "https://docs.google.com/presentation/d/1Ueeo7fq-I20yqWiWGPFgt1_Tt-Zqs5auNraYoezpgRw/edit?slide=id.g1e447d4f136_1_44#slide=id.g1e447d4f136_1_44"
-                  }
-                ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "6,7"
               },
               {
                 "macroTema": "Prática",
@@ -1649,7 +1721,8 @@
                     "url": "https://view.genially.com/699ceeb2c29dd6b1df292e3e"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "7"
               },
               {
                 "macroTema": "Prática",
@@ -1662,7 +1735,37 @@
                     "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3af9331569d_0_2#slide=id.g3af9331569d_0_2"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "7"
+              },
+              {
+                "macroTema": "Resumo",
+                "tema": "Resumo do dia anterior",
+                "detalhe": "- Instrutor atividade de chuva de idéias para resgatar con os alunos os temas relevantes vistos no dia anterior.\nDica: Pode utilizar sites como Mentimeter para chuva de ideias ou escrever diretamente em un flipchart ou quadro os temas.",
+                "tiempo": "0:05:00",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ PPT",
+                    "url": "https://docs.google.com/presentation/d/1Ueeo7fq-I20yqWiWGPFgt1_Tt-Zqs5auNraYoezpgRw/edit?slide=id.g1e447d4f136_1_44#slide=id.g1e447d4f136_1_44"
+                  }
+                ],
+                "iaPic": [],
+                "dia": "8"
+              },
+              {
+                "macroTema": "Prática 2",
+                "dia": "8",
+                "tema": "Casos",
+                "detalhe": "- Instrutor mostra PPT com exemplos de casos reais e analisa junto com os alunos.",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3af9331569d_0_2#slide=id.g3af9331569d_0_2"
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": "0:30:00"
               },
               {
                 "macroTema": "Avaliação",
@@ -1675,7 +1778,8 @@
                     "url": "https://forms.gle/9DJ2W9msPdCbDScg9"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "8"
               },
               {
                 "macroTema": "Avaliação",
@@ -1688,7 +1792,8 @@
                     "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3a31204c109_1_199#slide=id.g3a31204c109_1_199"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "8"
               },
               {
                 "macroTema": "Encerramento Expedição",
@@ -1701,7 +1806,8 @@
                     "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3a31204c109_1_199#slide=id.g3a31204c109_1_199"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "8"
               }
             ]
           },
@@ -1720,7 +1826,8 @@
                     "url": "https://docs.google.com/presentation/d/1_9NGVYmcU7YEoy7x_av2hRctf2FinggX7T_Fi-CHm8o/edit?usp=drive_link"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "8,9"
               },
               {
                 "macroTema": "LANDING",
@@ -1733,7 +1840,8 @@
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/34047723735571-Detalhes-Genesys"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "8,9"
               },
               {
                 "macroTema": "LANDING",
@@ -1746,7 +1854,8 @@
                     "url": "https://view.genially.com/699ceeb2c29dd6b1df292e3e"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "8,9"
               },
               {
                 "macroTema": "LANDING",
@@ -1763,7 +1872,8 @@
                     "url": "https://docs.google.com/forms/d/e/1FAIpQLSexgezH2lsexp3YzT2LdxJnPLqmaDA7849G2FVIrgQK78C1EA/viewform"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "8,9"
               },
               {
                 "macroTema": "LANDING",
@@ -1776,7 +1886,8 @@
                     "url": "https://forms.gle/rKS7Kt63hopmVMJE7"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "8,9"
               },
               {
                 "macroTema": "LANDING",
@@ -1789,7 +1900,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "8,9"
               }
             ]
           },
@@ -1808,7 +1920,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "9,10"
               },
               {
                 "macroTema": "Desafio OJT 1",
@@ -1821,7 +1934,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "9,10"
               },
               {
                 "macroTema": "Desafio OJT 1",
@@ -1834,7 +1948,8 @@
                     "url": ""
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "9,10"
               }
             ]
           },
@@ -1853,7 +1968,8 @@
                     "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "11"
               },
               {
                 "macroTema": "Abertura",
@@ -1866,85 +1982,8 @@
                     "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
                   }
                 ],
-                "iaPic": []
-              },
-              {
-                "macroTema": "Etapa 0: Clientes, Companhia, Produtos e Experiência.",
-                "tema": "Clientes, Companhia, Produtos e Experiência.",
-                "detalhe": "O instrutor baseado no ppt vai desenvolvendo e explicando cada tema contido:\na) Cliente: Indica como percebemos o cliente de hoje, como o escutamos e entendemos a sua percepção do nosso serviço.\nb) Companhia: Quem somos e a presença da LATAM no negócio aeronáutico.\nc) Produtos: Detalha as características de cada produto e seu valor. Ou seja, a experiência que o cliente vive ao adquirir os produtos e serviços. \nd) Papel do executivo: O que esperamos de un executivo de vendas LATAM Travel.",
-                "tiempo": "1:00:00",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ PPT",
-                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
-                  }
-                ],
-                "iaPic": []
-              },
-              {
-                "macroTema": "Etapa 1: Boas-vindas",
-                "tema": "Boas-vindas",
-                "detalhe": "O instrutor usa o ppt como apoio:\nDesenvolve como se realiza as boas-vindas, abordando todos os passos ideais para assegurar que o cliente se sinta acolhido.\nMostra cada un dos elementos que devem estar presentes nas boas-vidas.",
-                "tiempo": "0:30:00",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ PPT",
-                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
-                  }
-                ],
-                "iaPic": []
-              },
-              {
-                "macroTema": "Etapa 2: Indagar",
-                "tema": "Indagar",
-                "detalhe": "O instrutor usa o ppt como apoio:\n1. Explica aos participantes o que é a Inspeção e sua importância.\n2. Comenta qual é o objetivo principal na inspeção: Conseguir identificar a necessidade do cliente.\n3. Desenvolve como é feita a Inspeção, abordando os passos ideais para identificar o sonho do cliente.\nRoll playing (10 min):\n - O instrutor convida os alunos a participar nos roll playing dispostos para exercitar a realização da Inspeção. \n - Vai entregando feedback aos participantes e reforçando os elementos (perguntas abertas, fechadas e de confirmação).",
-                "tiempo": "1:30:00",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ PPT",
-                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
-                  }
-                ],
-                "iaPic": []
-              },
-              {
-                "macroTema": "Etapa 3: Oferecer",
-                "tema": "Oferecer",
-                "detalhe": "O instrutor usa o ppt como apoio:\n1. Explica aos participantes em que consiste a etapa de Oferecer/Cotar e qual é a sua importância.\n2. Comenta qual é o objetivo principal na inspeção Oferecer/cotar:  Cria uma proposta de viagem associada à necessidade do cliente.\n3. Desenvolve como é feito a oferta, cada un dos atributos dos nossos produtos e serviços associando-os a cada uma das necessidades do cliente.\n4. Mostra como cada un dos argumentos de venda de cada un dos produtos vai se desenvolvendo.\nRoll playing (10 min):\n - O instrutor convida os alunos a participar nos roll playing dispostos para exercitar a realização de como se oferece vinculando os atributos con as necessidades do cliente.\n - Vai entregando feedback aos participantes e reforçando os elementos (assegurar unir a “oferta” do produto à necessidade expressada pelo cliente).",
-                "tiempo": "1:30:00",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ PPT",
-                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
-                  }
-                ],
-                "iaPic": []
-              },
-              {
-                "macroTema": "Atividade",
-                "tema": "Roll playing integrales",
-                "detalhe": "ATIVIDADE - Roll playing : \n - O instrutor convida os alunos a participar nos roll playing dispostos para exercitar a persuadir o cliente. \n- Vai entregando feedback aos participantes e reforçando os elementos.",
-                "tiempo": "0:30:00",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ PPT",
-                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
-                  }
-                ],
-                "iaPic": []
-              },
-              {
-                "macroTema": "Encerramento",
-                "tema": "Recapitulação/Encerramento.",
-                "detalhe": "O instrutor:\n1. Recapitula os pontos principais e críticos de cada una das 4 etapas vistas.\n2. Faz o encerramento, despedindo-se e convidando-os para participar amanhã para a etapa seguinte.",
-                "tiempo": "0:10:00",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ PPT",
-                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
-                  }
-                ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "11"
               },
               {
                 "macroTema": "Abertura",
@@ -1957,25 +1996,41 @@
                     "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "11"
               },
               {
-                "macroTema": "Agenda",
-                "tema": "Agenda",
-                "detalhe": "O instrutor comenta:\n - O objetivo do curso dia 2.\n - A agenda de trabalho programada para o dia 2.",
-                "tiempo": "0:05:00",
+                "macroTema": "Etapa 0: Clientes, Companhia, Produtos e Experiência.",
+                "tema": "Clientes, Companhia, Produtos e Experiência.",
+                "detalhe": "O instrutor baseado no ppt vai desenvolvendo e explicando cada tema contido:\na) Cliente: Indica como percebemos o cliente de hoje, como o escutamos e entendemos a sua percepção do nosso serviço.\nb) Companhia: Quem somos e a presença da LATAM no negócio aeronáutico.\nc) Produtos: Detalha as características de cada produto e seu valor. Ou seja, a experiência que o cliente vive ao adquirir os produtos e serviços. \nd) Papel do executivo: O que esperamos de un executivo de vendas LATAM Travel.",
+                "tiempo": "1:00:00",
                 "herramientas": [
                   {
                     "tipo": "🖼️ PPT",
                     "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "11"
               },
               {
-                "macroTema": "Etapa 4: Gestão de objeções",
-                "tema": "Gestão de objeções.",
-                "detalhe": "O instrutor usa o ppt como apoio:\n1 - Mostra qual é o objetivo principal da gestão das objeções: É o persuadir o cliente, convencê-lo de comprar nosso produto.\n2 - Desenvolve as principais objeções apresentadas pelo cliente e a forma de abordá-la persuadindo a sua decisão.\n3 - Desenvolve como se gerencia e se persuade utilizando a argumentação para rebater as objeções do cliente. \n4- Usa, analisando cada un dos argumentos contidos no Manual de Gestão de objeções do executivo.",
+                "macroTema": "Etapa 1: Boas-vindas",
+                "tema": "Boas-vindas",
+                "detalhe": "O instrutor usa o ppt como apoio:\nDesenvolve como se realiza as boas-vindas, abordando todos os passos ideais para assegurar que o cliente se sinta acolhido.\nMostra cada un dos elementos que devem estar presentes nas boas-vidas.",
+                "tiempo": "0:30:00",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ PPT",
+                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
+                  }
+                ],
+                "iaPic": [],
+                "dia": "11"
+              },
+              {
+                "macroTema": "Etapa 2: Indagar",
+                "tema": "Indagar",
+                "detalhe": "O instrutor usa o ppt como apoio:\n1. Explica aos participantes o que é a Inspeção e sua importância.\n2. Comenta qual é o objetivo principal na inspeção: Conseguir identificar a necessidade do cliente.\n3. Desenvolve como é feita a Inspeção, abordando os passos ideais para identificar o sonho do cliente.\nRoll playing (10 min):\n - O instrutor convida os alunos a participar nos roll playing dispostos para exercitar a realização da Inspeção. \n - Vai entregando feedback aos participantes e reforçando os elementos (perguntas abertas, fechadas e de confirmação).",
                 "tiempo": "1:30:00",
                 "herramientas": [
                   {
@@ -1983,12 +2038,13 @@
                     "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "11"
               },
               {
-                "macroTema": "Etapa 5: Fechamento da venda",
-                "tema": "Fechamento da venda",
-                "detalhe": "O instrutor usa o ppt como apoio:\nDesenvolve como se realiza as boas-vindas, abordando todos os pasos ideais para assegurar que o cliente se sinta acolhido.\nMostra cada un dos elementos que devem estar presentes nas boas-vidas.",
+                "macroTema": "Etapa 3: Oferecer",
+                "tema": "Oferecer",
+                "detalhe": "O instrutor usa o ppt como apoio:\n1. Explica aos participantes em que consiste a etapa de Oferecer/Cotar e qual é a sua importância.\n2. Comenta qual é o objetivo principal na inspeção Oferecer/cotar:  Cria uma proposta de viagem associada à necessidade do cliente.\n3. Desenvolve como é feito a oferta, cada un dos atributos dos nossos produtos e serviços associando-os a cada uma das necessidades do cliente.\n4. Mostra como cada un dos argumentos de venda de cada un dos produtos vai se desenvolvendo.\nRoll playing (10 min):\n - O instrutor convida os alunos a participar nos roll playing dispostos para exercitar a realização de como se oferece vinculando os atributos con as necessidades do cliente.\n - Vai entregando feedback aos participantes e reforçando os elementos (assegurar unir a “oferta” do produto à necessidade expressada pelo cliente).",
                 "tiempo": "1:30:00",
                 "herramientas": [
                   {
@@ -1996,59 +2052,22 @@
                     "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "11"
               },
               {
-                "macroTema": "Etapa 6: Acompanhamento",
-                "tema": "Acompanhamento",
-                "detalhe": "O instrutor baseado no ppt:\n1- Mostra todos os pormenores para realizar o acompanhamento de un cliente, con o objetivo de realizar o fechamento efetivo da venda.\n2 - Desenvolve cada parte que compõe o acompanhamento.",
-                "tiempo": "0:40:00",
+                "macroTema": "Atividade",
+                "tema": "Roll playing integrales",
+                "detalhe": "ATIVIDADE - Roll playing : \n - O instrutor convida os alunos a participar nos roll playing dispostos para exercitar a persuadir o cliente. \n- Vai entregando feedback aos participantes e reforçando os elementos.",
+                "tiempo": "0:30:00",
                 "herramientas": [
                   {
                     "tipo": "🖼️ PPT",
                     "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
                   }
                 ],
-                "iaPic": []
-              },
-              {
-                "macroTema": "Etapa 7: Reserva ",
-                "tema": "Reserva",
-                "detalhe": "O instrutor usa o ppt como apoio:\n1. Explica cada un dos elementos que devem estar presentes no proceso de realização de uma reserva. \n2. Comenta qual é o objetivo principal na inspeção Reservas:  Entrega todos elementos relevantes que compõe a viagem do cliente.",
-                "tiempo": "0:10:00",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ PPT",
-                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
-                  }
-                ],
-                "iaPic": []
-              },
-              {
-                "macroTema": "Etapa 8: Pagamento",
-                "tema": "Pagamento",
-                "detalhe": "O instrutor usa o ppt como apoio:\n1. Explica cada un dos elementos que devem estar presentes no proceso de pagamento dos produtos e serviços adquiridos.\n2. Comenta qual é o objetivo principal da etapa de pagamento:  Ressalta a segurança que a companhia oferece nas formas de pagamento utilizadas pelo cliente e as facilidades de pagamento.",
-                "tiempo": "0:10:00",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ PPT",
-                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
-                  }
-                ],
-                "iaPic": []
-              },
-              {
-                "macroTema": "Etapa 9: Despedida",
-                "tema": "Despedida",
-                "detalhe": "O instrutor usa o ppt como apoio:\n1. Explica cada un dos elementos que devem estar presentes na despedida con o cliente.\n2. Comenta qual é o objetivo principal na despedida:  Fidelizar nossos clientes e assegurar que conosco eles tem uma experiência única e diferenciada.",
-                "tiempo": "0:10:00",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ PPT",
-                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
-                  }
-                ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "11"
               },
               {
                 "macroTema": "Atividade",
@@ -2061,7 +2080,22 @@
                     "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "11"
+              },
+              {
+                "macroTema": "Encerramento",
+                "tema": "Recapitulação/Encerramento.",
+                "detalhe": "O instrutor:\n1. Recapitula os pontos principais e críticos de cada una das 4 etapas vistas.\n2. Faz o encerramento, despedindo-se e convidando-os para participar amanhã para a etapa seguinte.",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ PPT",
+                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
+                  }
+                ],
+                "iaPic": [],
+                "dia": "11"
               },
               {
                 "macroTema": "Encerramento",
@@ -2074,7 +2108,151 @@
                     "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
                   }
                 ],
-                "iaPic": []
+                "iaPic": [],
+                "dia": "11"
+              },
+              {
+                "macroTema": "Abertura 2",
+                "dia": "12",
+                "tema": "Boas-vindas e Revisão",
+                "detalhe": "\"Boas-vindas:\nO instrutor realiza as boas-vindas para um novo dia de conhecimentos.\nRevisão:\nO instrutor faz perguntas para repassar e reforçar os temas desenvolvidos no dia anterior.\"",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": "0:05:00"
+              },
+              {
+                "macroTema": "Agenda",
+                "tema": "Agenda",
+                "detalhe": "O instrutor comenta:\n - O objetivo do curso dia 2.\n - A agenda de trabalho programada para o dia 2.",
+                "tiempo": "0:05:00",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ PPT",
+                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
+                  }
+                ],
+                "iaPic": [],
+                "dia": "12"
+              },
+              {
+                "macroTema": "Etapa 4: Gestão de objeções",
+                "tema": "Gestão de objeções.",
+                "detalhe": "O instrutor usa o ppt como apoio:\n1 - Mostra qual é o objetivo principal da gestão das objeções: É o persuadir o cliente, convencê-lo de comprar nosso produto.\n2 - Desenvolve as principais objeções apresentadas pelo cliente e a forma de abordá-la persuadindo a sua decisão.\n3 - Desenvolve como se gerencia e se persuade utilizando a argumentação para rebater as objeções do cliente. \n4- Usa, analisando cada un dos argumentos contidos no Manual de Gestão de objeções do executivo.",
+                "tiempo": "1:30:00",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ PPT",
+                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
+                  }
+                ],
+                "iaPic": [],
+                "dia": "12"
+              },
+              {
+                "macroTema": "Etapa 5: Fechamento da venda",
+                "tema": "Fechamento da venda",
+                "detalhe": "O instrutor usa o ppt como apoio:\nDesenvolve como se realiza as boas-vindas, abordando todos os pasos ideais para assegurar que o cliente se sinta acolhido.\nMostra cada un dos elementos que devem estar presentes nas boas-vidas.",
+                "tiempo": "1:30:00",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ PPT",
+                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
+                  }
+                ],
+                "iaPic": [],
+                "dia": "12"
+              },
+              {
+                "macroTema": "Etapa 6: Acompanhamento",
+                "tema": "Acompanhamento",
+                "detalhe": "O instrutor baseado no ppt:\n1- Mostra todos os pormenores para realizar o acompanhamento de un cliente, con o objetivo de realizar o fechamento efetivo da venda.\n2 - Desenvolve cada parte que compõe o acompanhamento.",
+                "tiempo": "0:40:00",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ PPT",
+                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
+                  }
+                ],
+                "iaPic": [],
+                "dia": "12"
+              },
+              {
+                "macroTema": "Etapa 7: Reserva ",
+                "tema": "Reserva",
+                "detalhe": "O instrutor usa o ppt como apoio:\n1. Explica cada un dos elementos que devem estar presentes no proceso de realização de uma reserva. \n2. Comenta qual é o objetivo principal na inspeção Reservas:  Entrega todos elementos relevantes que compõe a viagem do cliente.",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ PPT",
+                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
+                  }
+                ],
+                "iaPic": [],
+                "dia": "12"
+              },
+              {
+                "macroTema": "Etapa 8: Pagamento",
+                "tema": "Pagamento",
+                "detalhe": "O instrutor usa o ppt como apoio:\n1. Explica cada un dos elementos que devem estar presentes no proceso de pagamento dos produtos e serviços adquiridos.\n2. Comenta qual é o objetivo principal da etapa de pagamento:  Ressalta a segurança que a companhia oferece nas formas de pagamento utilizadas pelo cliente e as facilidades de pagamento.",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ PPT",
+                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
+                  }
+                ],
+                "iaPic": [],
+                "dia": "12"
+              },
+              {
+                "macroTema": "Etapa 9: Despedida",
+                "tema": "Despedida",
+                "detalhe": "O instrutor usa o ppt como apoio:\n1. Explica cada un dos elementos que devem estar presentes na despedida con o cliente.\n2. Comenta qual é o objetivo principal na despedida:  Fidelizar nossos clientes e assegurar que conosco eles tem uma experiência única e diferenciada.",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ PPT",
+                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
+                  }
+                ],
+                "iaPic": [],
+                "dia": "12"
+              },
+              {
+                "macroTema": "Atividade 2",
+                "dia": "12",
+                "tema": "Roll playing ",
+                "detalhe": "\"ATIVIDADE - Roll playing : \n - O instrutor convida os alunos a participar nos roll playing dispostos para exercitar a persuadir o cliente. \n- Vai entregando feedback aos participantes e reforçando os elementos.\"",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": "0:30:00"
+              },
+              {
+                "macroTema": "Encerramento 2",
+                "dia": "12",
+                "tema": "Recapitulação/Atividade Final",
+                "detalhe": "\"O instrutor:\n1. Recapitula os pontos principais ou críticos de cada uma das 3 etapas vistas.\n2. Pede para que participem nesta recapitulação.\n3. Faz o encerramento, despedindo-se e convidando-os para participar amanhã para a etapa seguinte.\"",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": "0:10:00"
               }
             ]
           }
@@ -2149,7 +2327,7 @@
                 "iaPic": []
               },
               {
-                "macroTema": "Apresentação PIC",
+                "macroTema": "Apresenta��ão PIC",
                 "tema": "PIC",
                 "detalhe": "Instrutor entra no PIC e mostra estrutura PIC, formas de busca.\nAcessa Matriz de Atendimento Vendas e Protocolos:\n1. Protocolo Estrutura de Chamadas (Foco em Boas Vindas, Deixar Pax em Espera, Despedida);\n2. Protocolo Informação de Viagem;\n3. Protocolos Check-in\n4. Protocolo de reconfirmação de dados de PNR\nInstrutor reforça a importância de reconfirmar os dados da reserva con o cliente antes de emitir ou alterar qualquer reserva.",
                 "tiempo": "0:30:00",
@@ -7443,7 +7621,7 @@
                 "tiempo": "01:20:00"
               },
               {
-                "macroTema": "Criação de PIR ( DPR)",
+                "macroTema": "Criaç����o de PIR ( DPR)",
                 "tema": "Criação de PIR ( DPR)",
                 "detalhe": "- Instrutor mostra no WTD Training, o passo a passo para criar um PIR de dano.",
                 "consejo": "",
@@ -8089,7 +8267,7 @@
                 "consejo": ""
               },
               {
-                "macroTema": "Pedido de informação",
+                "macroTema": "Pedido de informa��ão",
                 "tema": "Video 4 - Pedido de Informação",
                 "detalhe": "- Instrutor mostra vídeo de introdução PI",
                 "tiempo": "0:05:00",
@@ -9760,7 +9938,7 @@
                 {
                   "macroTema": "LATAM PASS",
                   "tema": "Resgate de tickets prêmios ",
-                  "detalhe": "- Instrutor explica a definição de resgate de pontos, considerações para resgate, outras considerações, processo de resgate através do Agente 360 e taxa de resgate e emissão.\n- Instrutor faz uma simulação no latamairlines.com para mostrar as opções de quantidade de pontos por perfil de tarifa e as opções de pontos + dinheiro que o passageiro pode selecionar, caso não tenha pontos disponíveis.",
+                  "detalhe": "- Instrutor explica a definição de resgate de pontos, considerações para resgate, outras considerações, processo de resgate através do Agente 360 e taxa de resgate e emissão.\n- Instrutor faz uma simulação no latamairlines.com para mostrar as opções de quantidade de pontos por perfil de tarifa e as opç��es de pontos + dinheiro que o passageiro pode selecionar, caso não tenha pontos disponíveis.",
                   "tiempo": "0:45:00",
                   "herramientas": [
                     {
@@ -10718,7 +10896,7 @@
                 {
                   "macroTema": "Ordens e Vendas Agente 360",
                   "tema": "Atividade \"Ajuste de Rota con o Navegador\" Login e Reserva",
-                  "detalhe": "- Instrutor passa o login da ferramenta Training (A360), mostra a maneira de se logar e explica que na operação irão logar con seu BP e senha.\n- Instrutor entra na ferramenta Training e propõe que um aluno mostre como realizar a reserva e criar uma ordem simples através da ferramenta training (instrutor será o pax e realizará o pagamento no seu perfil do agente 360, através do link de pagamento).\nO aluno deverá seguir o passo a passo do PIC e o instrutor sendo um dos passageiros (passar seus dados e email).\nAo final, instrutor mostra os campos do Agente 360 (lado esquerdo). Explica brevemente que o histórico de todas as ações fica registrado e que eles aprenderão a leitura na Expedição PV 2.",
+                  "detalhe": "- Instrutor passa o login da ferramenta Training (A360), mostra a maneira de se logar e explica que na opera��ão irão logar con seu BP e senha.\n- Instrutor entra na ferramenta Training e propõe que um aluno mostre como realizar a reserva e criar uma ordem simples através da ferramenta training (instrutor será o pax e realizará o pagamento no seu perfil do agente 360, através do link de pagamento).\nO aluno deverá seguir o passo a passo do PIC e o instrutor sendo um dos passageiros (passar seus dados e email).\nAo final, instrutor mostra os campos do Agente 360 (lado esquerdo). Explica brevemente que o histórico de todas as ações fica registrado e que eles aprenderão a leitura na Expedição PV 2.",
                   "tiempo": "0:25:00",
                   "herramientas": [
                     {
@@ -15717,7 +15895,7 @@
                 {
                   "macroTema": "Sistema de consulta BRS WEB",
                   "tema": "Sistema de consulta BRS WEB",
-                  "detalhe": "- Instrutor direciona os alunos para página de WTD no PIC.",
+                  "detalhe": "- Instrutor direciona os alunos para p����gina de WTD no PIC.",
                   "consejo": "",
                   "herramientas": [],
                   "iaPic": [
