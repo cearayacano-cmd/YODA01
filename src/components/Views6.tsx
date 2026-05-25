@@ -736,11 +736,14 @@ export const ClassicMissionBlock = ({ seccion, planetColor, onBackToMap, titleOv
   const rows = seccion.rows || [];
   
   // Grouping logic
-  const groupedRows: { [key: string]: any[] } = {};
+  const groupedRows: { macroTema: string; rows: any[] }[] = [];
   rows.forEach((row: any) => {
     const mt = row.macroTema || 'CONTENIDO GENERAL';
-    if (!groupedRows[mt]) groupedRows[mt] = [];
-    groupedRows[mt].push(row);
+    if (groupedRows.length > 0 && groupedRows[groupedRows.length - 1].macroTema === mt) {
+      groupedRows[groupedRows.length - 1].rows.push(row);
+    } else {
+      groupedRows.push({ macroTema: mt, rows: [row] });
+    }
   });
 
   return (
@@ -776,7 +779,7 @@ export const ClassicMissionBlock = ({ seccion, planetColor, onBackToMap, titleOv
           <div style={{ fontSize: 18, fontWeight: 900, color: '#1B0088', marginBottom: 8 }}>SIN INFORMACIÓN CONFIGURADA</div>
           <div style={{ fontSize: 14, color: '#64748b' }}>Aún no se han agregado módulos. Ingresa al panel de administrador para configurar esta sección.</div>
         </div>
-      ) : Object.entries(groupedRows).map(([mt, mtRows], gi) => {
+      ) : groupedRows.map(({ macroTema: mt, rows: mtRows }, gi) => {
         const totalSecs = mtRows.reduce((acc, r) => acc + (r.tiempo ? (typeof r.tiempo === 'string' ? (r.tiempo.includes(':') ? r.tiempo.split(':').reduce((a:any,b:any)=>a*60+parseInt(b),0) : parseInt(r.tiempo)*60) : r.tiempo) : 0), 0);
         // Note: Simplified time calculation for brevity, could use timeToSeconds if exported
         const uniqueDays = Array.from(new Set(mtRows.map((r: any) => r.dia).filter(Boolean)));
@@ -1076,9 +1079,20 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel }: any) => 
 const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOverride, subtitleOverride, tick, planetLabel, sectorLabel }: any) => {
     const allSecciones = secciones || (seccion ? [seccion] : []);
     const initialThemes = useMemo(() => {
-        const themes = new Set<string>();
-        allSecciones.forEach((s: any) => (s.rows || []).forEach((r: any) => { if (r.macroTema) themes.add(r.macroTema); }));
-        return Array.from(themes);
+        const keys: string[] = [];
+        allSecciones.forEach((s: any, sidx: number) => {
+            const contiguous: string[] = [];
+            (s.rows || []).forEach((r: any) => {
+                const mt = r.macroTema || 'GENERAL';
+                if (contiguous.length === 0 || contiguous[contiguous.length - 1] !== mt) {
+                    contiguous.push(mt);
+                }
+            });
+            contiguous.forEach((mt, gi) => {
+                keys.push(`${sidx}-${gi}-${mt}`);
+            });
+        });
+        return keys;
     }, [allSecciones]);
 
     const [collapsedThemes, setCollapsedThemes] = useState<string[]>(initialThemes);
@@ -1226,22 +1240,26 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                             ) : (
                                 <>
                                     {(() => {
-                                        const grouped: { [key: string]: any[] } = {};
+                                        const grouped: { macroTema: string; rows: any[] }[] = [];
                                         (sec.rows || []).forEach((r: any, i: number) => {
                                             const mt = r.macroTema || 'GENERAL';
-                                            if (!grouped[mt]) grouped[mt] = [];
-                                            grouped[mt].push({ ...r, originalIndex: i });
+                                            if (grouped.length > 0 && grouped[grouped.length - 1].macroTema === mt) {
+                                                grouped[grouped.length - 1].rows.push({ ...r, originalIndex: i });
+                                            } else {
+                                                grouped.push({ macroTema: mt, rows: [{ ...r, originalIndex: i }] });
+                                            }
                                         });
 
-                                        return Object.entries(grouped).map(([mt, rows], gi) => {
-                                            const isCollapsed = collapsedThemes.includes(mt);
+                                        return grouped.map(({ macroTema: mt, rows }, gi) => {
+                                            const themeKey = `${sidx}-${gi}-${mt}`;
+                                            const isCollapsed = collapsedThemes.includes(themeKey);
                                             const uniqueDays = Array.from(new Set(rows.map((r: any) => r.dia).filter(Boolean)));
                                             return (
-                                                <div key={gi} style={{ marginBottom: isCollapsed ? 20 : 50 }}>
+                                                <div key={themeKey} style={{ marginBottom: isCollapsed ? 20 : 50 }}>
                                                     {/* Premium Tactical Theme Header - NOW CLICKABLE TO COLLAPSE */}
                                                     <motion.div 
                                                         whileHover={{ background: 'rgba(27,0,136,0.06)' }}
-                                                        onClick={() => toggleTheme(mt)}
+                                                        onClick={() => toggleTheme(themeKey)}
                                                         style={{ 
                                                             display: 'flex', alignItems: 'center', gap: 20, marginBottom: isCollapsed ? 0 : 24, 
                                                             padding: '16px 24px', background: 'rgba(27,0,136,0.03)', 

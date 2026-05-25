@@ -166,32 +166,31 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
     updateSections(next);
   };
 
-  const moveMacroTema = (secIdx: number, mtName: string, dir: number) => {
+  const moveMacroTema = (secIdx: number, blockIdx: number, dir: number) => {
     const next = [...currentSections];
     const rows = [...next[secIdx].rows];
-    const mtOrder: string[] = [];
-    rows.forEach((r: any) => {
-      const mt = r.macroTema || 'SIN MACROTEMA';
-      if (!mtOrder.includes(mt)) mtOrder.push(mt);
-    });
-    const currIdx = mtOrder.indexOf(mtName);
-    if (currIdx === -1) return;
-    const targetIdx = currIdx + dir;
-    if (targetIdx < 0 || targetIdx >= mtOrder.length) return;
-
-    const newMtOrder = [...mtOrder];
-    [newMtOrder[currIdx], newMtOrder[targetIdx]] = [newMtOrder[targetIdx], newMtOrder[currIdx]];
-
-    const grouped: { [key: string]: any[] } = {};
-    rows.forEach((r: any) => {
-      const mt = r.macroTema || 'SIN MACROTEMA';
-      if (!grouped[mt]) grouped[mt] = [];
-      grouped[mt].push(r);
+    
+    // Group contiguously
+    const groups: { macroTema: string; rows: any[] }[] = [];
+    rows.forEach((row: any) => {
+      const mt = row.macroTema || 'SIN MACROTEMA';
+      if (groups.length > 0 && groups[groups.length - 1].macroTema === mt) {
+        groups[groups.length - 1].rows.push(row);
+      } else {
+        groups.push({ macroTema: mt, rows: [row] });
+      }
     });
 
+    const targetIdx = blockIdx + dir;
+    if (targetIdx < 0 || targetIdx >= groups.length) return;
+
+    // Swap groups
+    [groups[blockIdx], groups[targetIdx]] = [groups[targetIdx], groups[blockIdx]];
+
+    // Flatten back to rows
     const newRows: any[] = [];
-    newMtOrder.forEach((mt) => {
-      if (grouped[mt]) newRows.push(...grouped[mt]);
+    groups.forEach(g => {
+      newRows.push(...g.rows);
     });
 
     next[secIdx] = { ...next[secIdx], rows: newRows };
@@ -202,24 +201,14 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
     const next = [...currentSections];
     const rows = [...next[secIdx].rows];
     const currentMt = rows[rowIdx]?.macroTema || 'SIN MACROTEMA';
-    
-    let step = dir;
-    let targetIdx = -1;
-    while (true) {
-      const checkIdx = rowIdx + step;
-      if (checkIdx < 0 || checkIdx >= rows.length) break;
-      const checkMt = rows[checkIdx]?.macroTema || 'SIN MACROTEMA';
-      if (checkMt === currentMt) {
-        targetIdx = checkIdx;
-        break;
+    const targetIdx = rowIdx + dir;
+    if (targetIdx >= 0 && targetIdx < rows.length) {
+      const targetMt = rows[targetIdx]?.macroTema || 'SIN MACROTEMA';
+      if (targetMt === currentMt) {
+        [rows[rowIdx], rows[targetIdx]] = [rows[targetIdx], rows[rowIdx]];
+        next[secIdx] = { ...next[secIdx], rows };
+        updateSections(next);
       }
-      break;
-    }
-    
-    if (targetIdx !== -1) {
-      [rows[rowIdx], rows[targetIdx]] = [rows[targetIdx], rows[rowIdx]];
-      next[secIdx] = { ...next[secIdx], rows };
-      updateSections(next);
     }
   };
 
@@ -414,22 +403,26 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
               <div style={{ padding: '40px' }}>
                   <div style={{ background: '#ffffff', borderRadius: '16px', padding: '40px', border: '1px solid #E2E8F0', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
                         {(() => {
-                          const groupedRows: { [key: string]: any[] } = {};
+                          const groupedRows: { macroTema: string; rows: any[] }[] = [];
                           sec.rows.forEach((row: any, idx: number) => {
                             const mt = row.macroTema || 'SIN MACROTEMA';
-                            if (!groupedRows[mt]) groupedRows[mt] = [];
-                            groupedRows[mt].push({ ...row, originalIndex: idx });
+                            if (groupedRows.length > 0 && groupedRows[groupedRows.length - 1].macroTema === mt) {
+                              groupedRows[groupedRows.length - 1].rows.push({ ...row, originalIndex: idx });
+                            } else {
+                              groupedRows.push({ macroTema: mt, rows: [{ ...row, originalIndex: idx }] });
+                            }
                           });
 
-                          return Object.entries(groupedRows).map(([mt, rows], gi) => {
-                            const isCollapsed = collapsedThemes.includes(mt);
+                          return groupedRows.map(({ macroTema: mt, rows }, gi) => {
+                            const themeKey = `${si}-${gi}-${mt}`;
+                            const isCollapsed = collapsedThemes.includes(themeKey);
                             const totalSecs = rows.reduce((acc, r) => acc + timeToSeconds(r.tiempo || r.ch || ''), 0);
                             const uniqueDays = Array.from(new Set(rows.map((r: any) => r.dia).filter(Boolean)));
 
                             return (
-                              <div key={mt} style={{ marginBottom: isCollapsed ? '16px' : '48px' }}>
+                              <div key={themeKey} style={{ marginBottom: isCollapsed ? '16px' : '48px' }}>
                                 <div 
-                                  onClick={() => toggleTheme(mt)}
+                                  onClick={() => toggleTheme(themeKey)}
                                   style={{ 
                                     display: 'flex', alignItems: 'center', justifyContent: 'space-between', 
                                     background: isCollapsed ? '#f8fafc' : '#ffffff', border: '2px solid #1B0088', 
@@ -445,7 +438,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }} onClick={e => e.stopPropagation()}>
                                       <button 
                                         disabled={gi === 0}
-                                        onClick={() => moveMacroTema(si, mt, -1)}
+                                        onClick={() => moveMacroTema(si, gi, -1)}
                                         style={{ 
                                           background: 'transparent', border: 'none', padding: 0, cursor: gi === 0 ? 'default' : 'pointer', 
                                           color: gi === 0 ? '#cbd5e1' : '#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -456,11 +449,11 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                         <ChevronUp size={14} style={{ strokeWidth: 3 }} />
                                       </button>
                                       <button 
-                                        disabled={gi === Object.keys(groupedRows).length - 1}
-                                        onClick={() => moveMacroTema(si, mt, 1)}
+                                        disabled={gi === groupedRows.length - 1}
+                                        onClick={() => moveMacroTema(si, gi, 1)}
                                         style={{ 
-                                          background: 'transparent', border: 'none', padding: 0, cursor: gi === Object.keys(groupedRows).length - 1 ? 'default' : 'pointer', 
-                                          color: gi === Object.keys(groupedRows).length - 1 ? '#cbd5e1' : '#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                          background: 'transparent', border: 'none', padding: 0, cursor: gi === groupedRows.length - 1 ? 'default' : 'pointer', 
+                                          color: gi === groupedRows.length - 1 ? '#cbd5e1' : '#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center',
                                           height: 12
                                         }}
                                         title="Bajar Macrotema"

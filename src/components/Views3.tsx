@@ -397,14 +397,15 @@ const SatelliteSectorMap = ({ topics, color, onSelect }: any) => {
 /* ── SATELLITE VIEWS ─────────────────────────────────────────────────── */
 export const ConhecendoRutaView = ({ onBack, data }: any) => {
   const rows = data || [];
-  const macroTemas = [...new Set(rows.map((r: any)=>r.macroTema))];
-  const byMacro: any = {};
-  macroTemas.forEach(mt=>{ byMacro[String(mt)]=rows.filter((r: any)=>r.macroTema===mt); });
-
-  const secciones = macroTemas.map((mt: any) => ({
-      nombre: mt,
-      rows: byMacro[String(mt)]
-  }));
+  const secciones: { nombre: string; rows: any[] }[] = [];
+  rows.forEach((r: any) => {
+    const mt = r.macroTema || 'GENERAL';
+    if (secciones.length > 0 && secciones[secciones.length - 1].nombre === mt) {
+      secciones[secciones.length - 1].rows.push(r);
+    } else {
+      secciones.push({ nombre: mt, rows: [r] });
+    }
+  });
 
   const planetObj = {
       color: '#00D6CC',
@@ -424,14 +425,15 @@ export const ConhecendoRutaView = ({ onBack, data }: any) => {
 
 export const ImersaoRutaView = ({ onBack, data }: any) => {
   const rows = data || [];
-  const macroTemas = [...new Set(rows.map((r: any)=>r.macroTema))];
-  const byMacro: any = {};
-  macroTemas.forEach(mt=>{ byMacro[String(mt)]=rows.filter((r: any)=>r.macroTema===mt); });
-
-  const secciones = macroTemas.map((mt: any) => ({
-      nombre: mt,
-      rows: byMacro[String(mt)]
-  }));
+  const secciones: { nombre: string; rows: any[] }[] = [];
+  rows.forEach((r: any) => {
+    const mt = r.macroTema || 'GENERAL';
+    if (secciones.length > 0 && secciones[secciones.length - 1].nombre === mt) {
+      secciones[secciones.length - 1].rows.push(r);
+    } else {
+      secciones.push({ nombre: mt, rows: [r] });
+    }
+  });
 
   const planetObj = {
       color: '#FFE017',
