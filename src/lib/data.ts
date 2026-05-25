@@ -9810,5 +9810,734 @@ export const LAE_DATA = {
   "evalKon": [],
   "evalAec": [],
   "evalMsg": "Os alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\n\nDuração: 40 min",
-  "secciones": []
+  "secciones": [
+    {
+      "tipo": "mision1",
+      "label": "Missão 1: Introdução PI",
+      "rows": [
+        {
+          "macroTema": "Introdução",
+          "dia": 1,
+          "tema": "Boas Vindas",
+          "detalhe": "- Instrutor se apresenta e também convida os agentes a se apresentarem.\n- Explica acordos de trabalho e regras do curso.\n- E depois, apresenta a agenda do dia.",
+          "tiempo": "00:15:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/17qiCiu3wc-8L4QLGvdnNwloGUZUWMYRN3fkQp40c0Zs/edit?slide=id.g3d5bda70cb8_0_1564#slide=id.g3d5bda70cb8_0_1564"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Introdução",
+          "dia": 1,
+          "tema": "Video 1 - Boas Vindas",
+          "detalhe": "- Instrutor mostra o vídeo Universo LAE PI (Boas Vindas)\n(No mesmo vídeo tem as boas vindas da supervisora de LAE PI)",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "Video",
+              "url": "https://drive.google.com/file/d/1vzTutuE--HCTYxmjEJoYvlHvknOH1W6Q/view?usp=drive_link"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Aeroportos: Operação e Contingências",
+          "dia": 1,
+          "tema": "Video 2 \"Aeroportos: Operação e Contingências\"",
+          "detalhe": "- Instrutor mostra vídeo de introdução Aerorportos (Operação e Contingências).\nApós visualização, questiona os agentes sobre o que acharam do vídeo e enfatiza a necessidade da nossa operação em fazer todo possível para apoiar nossa defesa.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "Vídeo",
+              "url": "https://drive.google.com/file/d/1wq9zyOOM0lwXVn1dvzmZjU_9Jhp8xO_t/view?usp=drive_link"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "MSP [Manual de Serviço ao Passageiro]",
+          "dia": 1,
+          "tema": "MSP",
+          "detalhe": "- Instrutor explica o passo a passo de como encontrar o MSP via A360 e informa a finalidade de ter o conhecimento deste manual.\n(Call Center temos o PIC e nos aeroportos os agentes usam o MSP)\nBrevemente destaca os capítulos com os temas mais recorrentes:\n- Capítulo 10 - Assentos\n- Capítulo 18 - Contingências\n- Capítulo 19 - Sobre Reserva (Overbooking)\n(mostrar como forma de informação e contexto, um resumo de cada capítulo)",
+          "tiempo": "1:00:00",
+          "herramientas": [
+            {
+              "tipo": "MSP",
+              "url": "https://sites.google.com/latam.com/spaxlatam/por/msp-pt?authuser=0"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Declaração de Embarque e contingências",
+          "dia": 1,
+          "tema": "Definição: Declaração de Embarque e Declaração de Contingência",
+          "detalhe": "- Instrutor mostra onde localizar o tema no PIC realiza a explicação da diferença entre:\n1. Declaração de embarque (Documento comprobatorio)\n2. Declaração de Contingência (Obrigatório sempre que o cliente solicitar)",
+          "tiempo": "00:20:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "PIC",
+              "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053237453-Declara%C3%A7%C3%A3o-de-Embarque-e-Declara%C3%A7%C3%A3o-de-Conting%C3%AAncia"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Exclusivo LAE Recomendação Legal",
+          "dia": 1,
+          "tema": "Exceções: Pilar fora de política e waiver",
+          "detalhe": "- Instrutor aborda brevemente o tema de exceções fora da política, mostrando a tabela que contempla: Pilar fora de política e waiver (Exclusivo LAE - Recomendação Legal).",
+          "tiempo": "00:20:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "PIC",
+              "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/1500007916562-Crit%C3%A9rios-para-a-entrada-de-waivers-por-erro-de-agente-e-entrega-de-exce%C3%A7%C3%B5es-fora-da-pol%C3%ADtica#h_01JWS4B9K3P367Y5KQH4RC2ESE"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Declarações e Exclusivo LAE",
+          "dia": 1,
+          "tema": "Atividade \"Briefing de Missão\" Declarações e Exclusivo LAE",
+          "detalhe": "- Instrutor pede para que cada aluno leia e faça um resumo dos 2 temas: (5 min)\nTema 1. Declaração de Embarque e Declaração de Contingência\nTema 2. Exclusivo LAE (Pilar exceções fora da política)\n- Instrutor de forma aleatória convida três alunos para responder o resumo feito do primeiro tema. Assim que finalizarem, da mais 5 min. para realizarem o resumo do segundo tema e repete a ação, chamando cada um de forma aleatória.\n- Instrutor pergunta se alguém quer complementar.",
+          "tiempo": "00:30:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "PIC",
+              "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053237453-Declara%C3%A7%C3%A3o-de-Embarque-e-Declara%C3%A7%C3%A3o-de-Conting%C3%AAncia#:~:text=WIFI%20Pago-,Declara%C3%A7%C3%A3o%20de%20Embarque%20e%20Declara%C3%A7%C3%A3o%20de%20Conting%C3%AAncia,-h%C3%A1%2011%20dias"
+            },
+            {
+              "label": "PIC",
+              "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/1500007916562-Crit%C3%A9rios-para-a-entrada-de-waivers-por-erro-de-agente-e-entrega-de-exce%C3%A7%C3%B5es-fora-da-pol%C3%ADtica#h_01JWS4B9K3P367Y5KQH4RC2ESE"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "ANAC",
+          "dia": 1,
+          "tema": "Vídeo 3 - Conhecendo a R-400",
+          "detalhe": "- Instrutor passa o vídeo de introdução da R-400 e R218 e reforça que é preciso ter esse tema muito claro.",
+          "tiempo": "0:10:00",
+          "herramientas": [
+            {
+              "tipo": "Vídeo",
+              "url": "https://drive.google.com/file/d/1GPbP2WDb_SIPUajPeJmaUE87QdN0BSQi/view"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "ANAC",
+          "dia": 1,
+          "tema": "Conhecendo a R-400",
+          "detalhe": "- Instrutor abre R-400 no site da ANAC. Mas realiza a leitura e explicação com o GUIA:\n- Instrutor descreve itens R-400 mais utilizados no PI (Contingências / Reclamações de bagagem / Overbooking / Preterição de passageiro).",
+          "tiempo": "00:40:00",
+          "herramientas": [
+            {
+              "tipo": "GUIA",
+              "url": "https://docs.google.com/document/d/1kJlwwKS-toD_p-3tushEABjAjknNzgeMiNbtsrfsJ3Q/edit?tab=t.0#heading=h.epmwztdrm8ri"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Gastos Incorridos",
+          "dia": 1,
+          "tema": "Definições de Gastos Incorridos",
+          "detalhe": "- Instrutor reforça e enfatiza os principais pontos de cada tema:\n1. Gastos que podem ser analisados e reembolsados\n2. Gastos que não poderão ser reembolsados\n3. Tipos de Comprovantes\n4. Países onde se aplica compensação legal por atrasos ou cancelamentos.",
+          "tiempo": "1:00:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "PIC",
+              "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/45240235968531-Reclama%C3%A7%C3%B5es-por-servi%C3%A7os-b%C3%A1sicos-e-ou-gastos-incorridos-decorrentes-de-atrasos-ou-cancelamento-de-voos-da-LATAM"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Gastos Incorridos",
+          "dia": 1,
+          "tema": "GUIA: Gastos Incorridos",
+          "detalhe": "- Instrutor reforça como verificar os serviços básicos, gastos incorridos e/ou compensação legal que se aplicam ao cliente, deve-se consultar o: Guia de Gastos Incorridos e Serviços Básicos.",
+          "tiempo": "00:15:00",
+          "herramientas": [
+            {
+              "tipo": "GUIA",
+              "url": "https://datastudio.google.com/u/0/reporting/3b790e5c-55b7-4c9a-a932-37b9dedc7f0f/page/p_f0jukq82wd?s=hFN33d8i1Gk"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Gastos Incorridos",
+          "dia": 1,
+          "tema": "Atividade \"Briefing de Missão\" Gastos Incorridos",
+          "detalhe": "- Instrutor pede para os alunos se dividirem em 2 grupos e cada grupo realiza um resumo de 2 temas cada, sendo:\nGrupo 1: Gastos que podem ser analisados e reembolsados & Gastos que não poderão ser reembolsados\nGrupo 2: Tipos de Comprovantes & Países onde se aplica compensação legal por atrasos ou cancelamentos.\n10 min para fazer o resumo e 5 min para cada grupo apresentar.",
+          "tiempo": "00:30:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "PIC",
+              "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/45240235968531-Reclama%C3%A7%C3%B5es-por-servi%C3%A7os-b%C3%A1sicos-e-ou-gastos-incorridos-decorrentes-de-atrasos-ou-cancelamento-de-voos-da-LATAM#:~:text=Gastos%20incorridos%20reembols%C3%A1veis%20e%20n%C3%A3o%20reembols%C3%A1veis"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Gastos Incorridos",
+          "dia": 1,
+          "tema": "Atividade \"Ajuste de Rota com o Navegador\" Gastos Incorridos",
+          "detalhe": "- Instrutor convida alunos de forma aleatória para ir até sua mesa mostrar para os demais alunos como fazer as 3 consultas no Painel contingências de um voo que sofreu contingência recentemente.\n- Instrutor pergunta se algum grupo quer complementar.",
+          "tiempo": "00:30:00",
+          "herramientas": [
+            {
+              "tipo": "Painel",
+              "url": "https://datastudio.google.com/u/0/reporting/90377e61-d09d-4917-9ecf-7241be64a498/page/p_1y8no774td?s=leFlXkzOXxc"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        }
+      ]
+    },
+    {
+      "tipo": "mision1",
+      "label": "Missão 2: Pedido de Informação",
+      "rows": [
+        {
+          "macroTema": "Resumo",
+          "dia": 2,
+          "tema": "Resumo do dia anterior",
+          "detalhe": "- Instrutor atividade de chuva de idéias para resgatar com os alunos os temas relevantes vistos no dia anterior.",
+          "tiempo": "00:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1sNbehkng-SC5hO5Wcl9G4r63l7X8wqq5L-XmIlbl_94/edit?slide=id.g3a553516cad_0_14#slide=id.g3a553516cad_0_14"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Pedido de informação",
+          "dia": 2,
+          "tema": "Video 4 - Pedido de Informação",
+          "detalhe": "- Instrutor mostra vídeo de introdução PI",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "Vídeo",
+              "url": "https://drive.google.com/file/d/1KS10nK1o1dBUgiKgznAyWFd5ONZfbaYu/view?usp=drive_link"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Legal Box",
+          "dia": 2,
+          "tema": "Passo a Passo Legal Box",
+          "detalhe": "- Instrutor apresenta a finalidade da ferramenta e mostra detalhadamente abas do Legal Box e suas funções. (Usadas em PI).",
+          "tiempo": "0:20:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1i2KGD5u9fmSgq9rhlaqAiC25qsnO-6PDbsHL255jo64/edit?slide=id.g3d5e41808b5_0_971#slide=id.g3d5e41808b5_0_971"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Legal Box",
+          "dia": 2,
+          "tema": "Video 5 - Login Legal Box e envio de PI",
+          "detalhe": "- Em seguida mostra o vídeo Login e envio de um caso no Legal Box.",
+          "tiempo": "0:10:00",
+          "herramientas": [
+            {
+              "tipo": "Vídeo",
+              "url": "https://docs.google.com/presentation/d/1i2KGD5u9fmSgq9rhlaqAiC25qsnO-6PDbsHL255jo64/edit?slide=id.g3d5e41808b5_0_971#slide=id.g3d5e41808b5_0_971"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Advogados",
+          "dia": 2,
+          "tema": "Escritórios de Defesa Jurídica LATAM",
+          "detalhe": "- Instrutor apresenta os escritórios e o seu papel junto a equipe LAE PI.",
+          "tiempo": "00:10:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1i2KGD5u9fmSgq9rhlaqAiC25qsnO-6PDbsHL255jo64/edit?slide=id.g3d5e41808b5_0_971#slide=id.g3d5e41808b5_0_971"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Padrões de Respostas",
+          "dia": 2,
+          "tema": "Padrões de Respostas",
+          "detalhe": "- Instrutor descreve as informações que são imprescindíveis para cada tema PI\n- Enfatiza a importância da qualidade e respostas completas a serem enviadas em cada caso.",
+          "tiempo": "01:00:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1i2KGD5u9fmSgq9rhlaqAiC25qsnO-6PDbsHL255jo64/edit?slide=id.g3d5e41808b5_0_971#slide=id.g3d5e41808b5_0_971"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Principais Temas dos Processos",
+          "dia": 2,
+          "tema": "Principais Temas dos Processos",
+          "detalhe": "- Instrutor mostra alguns exemplos de casos PI de forma detalhada, destacando a atenção em cada detalhe de como investigar todos os pontos importantes em nossas ferramentas.",
+          "tiempo": "02:00:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1i2KGD5u9fmSgq9rhlaqAiC25qsnO-6PDbsHL255jo64/edit?slide=id.g3d5e41808b5_0_971#slide=id.g3d5e41808b5_0_971"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Planilha de controle PI",
+          "dia": 2,
+          "tema": "Introdução a planilha de controle",
+          "detalhe": "- Instrutor apresenta todos as abas da planilha de controle explicando a finalidade e o preenchimento de cada coluna. (Controle da supervisão).",
+          "tiempo": "0:20:00",
+          "herramientas": [
+            {
+              "tipo": "Planilha",
+              "url": "https://docs.google.com/spreadsheets/d/1ujZd1EP1ZqZfhSVoJ65JV8BvUyAplq9ClCCt3ZfleN0/edit?gid=0#gid=0"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Pedido de informação - PI",
+          "dia": 2,
+          "tema": "Atividade \"Ajuste de Rota com Navegador\"",
+          "detalhe": "- Instrutor escolhe um aluno para vir a sua mesa responder um caso PI do zero. De forma aleatória convida agentes para irem indicando os passos de como responder um PI de forma completa.",
+          "tiempo": "01:30:00",
+          "herramientas": [
+            {
+              "tipo": "Legal Box",
+              "url": "https://www.legalbox.com.br/latam6/new_login.asp"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        }
+      ]
+    },
+    {
+      "tipo": "mision1",
+      "label": "Missão 3: Sistemas",
+      "rows": [
+        {
+          "macroTema": "Resumo",
+          "dia": 3,
+          "tema": "Resumo do dia anterior",
+          "detalhe": "- Instrutor atividade de chuva de idéias para resgatar com os alunos os temas relevantes vistos no dia anterior.",
+          "tiempo": "00:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1sNbehkng-SC5hO5Wcl9G4r63l7X8wqq5L-XmIlbl_94/edit?slide=id.g3a553516cad_0_14#slide=id.g3a553516cad_0_14"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Sistemas",
+          "dia": 3,
+          "tema": "Sistemas utilizados em LAE PI",
+          "detalhe": "- Instrutor apresenta todos os sistemas utilizados em LAE PI e qual sua finalidade.\n- Alguns sistemas já serão conhecidos pelos agentes. Contudo, instrutor vai abrindo cada um e explicando as consultas que devem ser feitas, para que possam construir sua resposta PI\n- Instrutor enfatizar que a equipe LAE PI não executa ação nestes sistemas, somente realiza consultas.",
+          "tiempo": "02:30:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1WKpyzzzl2IWZS_OC5l58fIRsxzD6cY6p7iw2MpI_w9I/edit?slide=id.g3d62d643511_0_172#slide=id.g3d62d643511_0_172"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Quiz Genially",
+          "dia": 3,
+          "tema": "Atividade \"Controle de Voo e Lançamento\"",
+          "detalhe": "- Instrutor envia link do Genially (Quiz Sistemas)",
+          "tiempo": "00:20:00",
+          "herramientas": [
+            {
+              "tipo": "Genially",
+              "url": "https://view.genially.com/69e137fc406a9a0bc062d4ae"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Sistemas",
+          "dia": 3,
+          "tema": "Atividade \"Ajuste de Rota com o Navegador\" Sistemas",
+          "detalhe": "- Instrutor abre um caso no Legal Box e convida de forma aleatório alunos para irem até sua mesa e mostrar qual sistema deve ser utilizado (De acordo com a pergunta do instrutor) e realizar a consulta solicitada respondendo um PI (Mesa do instrutor)\nApós a finalização, indicar o que poderia ser melhorado.",
+          "tiempo": "01:00:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1WKpyzzzl2IWZS_OC5l58fIRsxzD6cY6p7iw2MpI_w9I/edit?slide=id.g3d62d643511_0_172#slide=id.g3d62d643511_0_172"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        }
+      ]
+    },
+    {
+      "tipo": "mision1",
+      "label": "Missão 4: Evidências",
+      "rows": [
+        {
+          "macroTema": "Evidências",
+          "dia": 3,
+          "tema": "Evidências Unilaterais",
+          "detalhe": "- Instrutor passa vídeo de introdução (Evidências)\n- Instrutor explica o que são as evidências unilaterais, sua importância dentro do PI e o seu papel dentro de uma defesa.\n- Mostra prints/imagens dos sistemas que devem ser enviados após a consulta.\n- Instrutor alerta sobre destacar (informações relevantes) e legendar cada print/imagem enviada.\n- Instrutor enfatiza que os advogados não tem conhecimento de nossas ferramentas e nomenclatura, por isso se faz necessário detalhar com explicações tudo o que é enviado.",
+          "tiempo": "00:30:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/18DA9mSI-M3Le49kcxUvG31XYueYzYvMcWsL9kUcvcLA/edit?slide=id.g3d5dde6c94e_0_2#slide=id.g3d5dde6c94e_0_2"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Evidências",
+          "dia": 3,
+          "tema": "Evidências Bilaterais",
+          "detalhe": "- Instrutor explica o que são as evidências bilaterais e o tamanho da sua importância dentro do processo.\n- Instrutor abre cada documento no Legal Box e explica sobre suas funções.\n- Reforçar onde os documentos bilaterais são encontrados, enfatizando a utilização do Legal Box para este fim.",
+          "tiempo": "00:35:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/18DA9mSI-M3Le49kcxUvG31XYueYzYvMcWsL9kUcvcLA/edit?slide=id.g3d5dde6c94e_0_2#slide=id.g3d5dde6c94e_0_2"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Evidências",
+          "dia": 3,
+          "tema": "Atividade \"Controle de Voo e Lançamento\" Sistemas",
+          "detalhe": "A turma irá indicar a função de cada documento bilateral e apontar onde encontrar, responder PI (Simulação) focado somente nos prints das telas, responder o PI completo (Simulação) também com o resumo de cada evidência.",
+          "tiempo": "00:40:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/18DA9mSI-M3Le49kcxUvG31XYueYzYvMcWsL9kUcvcLA/edit?slide=id.g3d5dde6c94e_0_2#slide=id.g3d5dde6c94e_0_2"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        }
+      ]
+    },
+    {
+      "tipo": "mision1",
+      "label": "Missão 5: Bagagem",
+      "rows": [
+        {
+          "macroTema": "Resumo",
+          "dia": 4,
+          "tema": "Resumo do dia anterior",
+          "detalhe": "- Instrutor atividade de chuva de idéias para resgatar com os alunos os temas relevantes vistos no dia anterior.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1sNbehkng-SC5hO5Wcl9G4r63l7X8wqq5L-XmIlbl_94/edit?slide=id.g3a553516cad_0_14#slide=id.g3a553516cad_0_14"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Bagagens X Aeroportos",
+          "dia": 4,
+          "tema": "Gestão de Reclamações",
+          "detalhe": "- Instrutor mostra como é realizado o gerenciamento dos processos iniciais no aeroporto",
+          "tiempo": "00:15:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1-d0JxQ3PXq1aiHGWQv2psVRjT7z9H6wAkLEyjQWkVkA/edit?slide=id.g3d5e41808b5_0_1259#slide=id.g3d5e41808b5_0_1259"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Termos e Definições",
+          "dia": 4,
+          "tema": "RIBs e Prazos - MSP",
+          "detalhe": "- Instrutor explica o que é RIB e detalha as informações encontradas num relatório de extravio e danificação.\n- Informa os prazos para abertura do RIB, para a busca da mala e para a indenização",
+          "tiempo": "01:00:00",
+          "herramientas": [
+            {
+              "tipo": "MSP",
+              "url": "https://docs.google.com/document/d/1Gm_xNYZjePg-w0XsCq2FoQD8jaB6oNCBII9LT9xjAmo/edit?tab=t.0"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Termos e Definições",
+          "dia": 4,
+          "tema": "Declaração de ítens",
+          "detalhe": "- Instrutor explica o procedimento para Declaração de itens de valor na bagagem despachada (Voos dentro e saindo do Brasil;",
+          "tiempo": "00:20:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "PIC",
+              "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/38916416878867-10-04-25-RECLAMA%C3%87%C3%95ES-BAGAGEM-Declara%C3%A7%C3%A3o-de-itens-de-valor-na-bagagem-despachada-Voos-dentro-e-saindo-do-Brasil"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Termos e Definições",
+          "dia": 4,
+          "tema": "Reclamações de Bagagens",
+          "detalhe": "- Instrutor com os temas abaixo (PIC), explica brevemente os pontos mais relevantes que a operação recebe.\nGeneralidades e Guia Reclamações de Bagagem\nCriação de compensação de Bagagem por meio do Agente 360 ou Travel Voucher\nBagagem Danificada e/ou com Violação de Objeto Proveniente de Extravio\nBagagem Danificada e Bagagem Violada\nBagagem Extraviada ou Atrasada\nOutras Reclamações de Bagagem (Switch LATAM / Remanescente LATAM / em Conexão com Outras Companhias Aéreas / Found Property LATAM)\nReclamações por bagagem de mão despachada no porão",
+          "tiempo": "01:00:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "PIC",
+              "url": "https://pic-latam.zendesk.com/hc/pt-br/sections/4413742094227-Reclama%C3%A7%C3%B5es-Bagagem"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "World Tracer Desktop (WTD)",
+          "dia": 4,
+          "tema": "Atividade \"Relatório de Exploração\" WTD",
+          "detalhe": "- Instrutor com o PIC explica os processos abaixo linkando com WTD:\nGENERALIDADES\nBAGAGEM EXTRAVIADA OU ATRASADA\nBAGAGEM DANIFICADA E/OU VIOLADA (DPR)\nBAGAGEM COM DANO OU VIOLAÇÃO PROVENIENTE DE EXTRAVIO\nCRIAÇÃO DE PIR BAGAGEM EXTRAVIADA OU ATRASADA\nCRIAÇÃO DE PIR POR DANO\nCRIAÇÃO DO PIR POR VIOLAÇÃO\nCRIAÇÃO DO PIR POR DANO E VIOLAÇÃO\nCRIAÇÃO DE PIR POR DANO OU PROVENIENTE DE EXTRAVIO (AHL)\nCOMPENSAÇÃO\nENCERRAMENTO DPR\nFOUND PROPERTY",
+          "tiempo": "01:00:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "PIC",
+              "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/35758923132947-World-Tracer-Desktop-WTD#h_01JDHQK77TY0RWPB1H1WMTPK77"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "World Tracer Desktop (WTD)",
+          "dia": 4,
+          "tema": "Atividade \"Relatório de Exploração\" WTD",
+          "detalhe": "- Instrutor mostra casos Casos PI Sobre Bag",
+          "tiempo": "01:00:00",
+          "herramientas": [
+            {
+              "tipo": "Casos PI BG",
+              "url": "https://docs.google.com/document/d/1ySMrqqPo-VJEaOBijvS52mbH-CrUA_-w/edit?tab=t.0"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "World Tracer Desktop (WTD)",
+          "dia": 4,
+          "tema": "Atividade \"Relatório de Exploração\" WTD",
+          "detalhe": "- Instrutor solicita que os agentes que acessem a ferramenta WTD Training para juntos fazerem buscas de Ribs de reclamações mais frequentes na operação, enfatizando onde cada informação pertinente para PI pode ser encontrada.\n- Instrutor faz consultas de relatórios (RIB) e questiona a turma onde encontrar as informações pertinentes ao PI.\n- Instrutor realiza juntamente com os alunos a busca de bagagens danificada em 5 tópicos, sendo:\n1 - Por PIR\n2 - Por etiqueta de bagagem\n3 - Pelo sobrenome\n4 - História\n5 - Lista Geral",
+          "tiempo": "01:00:00",
+          "herramientas": [
+            {
+              "tipo": "WTD Training",
+              "url": "https://desktop.worldtracer.aero/desktop/index.html"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Resumo",
+          "dia": 5,
+          "tema": "Resumo do dia anterior",
+          "detalhe": "- Instrutor atividade de chuva de idéias para resgatar com os alunos os temas relevantes vistos no dia anterior.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1sNbehkng-SC5hO5Wcl9G4r63l7X8wqq5L-XmIlbl_94/edit?slide=id.g3a553516cad_0_14#slide=id.g3a553516cad_0_14"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "World Tracer Desktop (WTD)",
+          "dia": 5,
+          "tema": "Atividade \"Relatório de Exploração\" WTD",
+          "detalhe": "- Instrutor solicita que os agentes que acessem a ferramenta WTD Training para juntos fazerem buscas de Ribs de reclamações mais frequentes na operação, enfatizando onde cada informação pertinente para PI pode ser encontrada.\n- Instrutor faz consultas de relatórios (RIB) e questiona a turma onde encontrar as informações pertinentes ao PI.\n- Instrutor realiza juntamente com os alunos a busca de bagagens danificada em 5 tópicos, sendo:\n1 - Por PIR\n2 - Por etiqueta de bagagem\n3 - Pelo sobrenome\n4 - História\n5 - Lista Geral",
+          "tiempo": "01:00:00",
+          "herramientas": [
+            {
+              "tipo": "WTD Training",
+              "url": "https://desktop.worldtracer.aero/desktop/index.html"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        }
+      ]
+    },
+    {
+      "tipo": "mision1",
+      "label": "Missão 6: ADV",
+      "rows": [
+        {
+          "macroTema": "Revisão",
+          "dia": 5,
+          "tema": "Revisão",
+          "detalhe": "- Instrutor realiza revisão enfatizando temas da avaliação.\n- No PPT de resumo do último dia, possui todos os resumos dos demais dias para auxiliar na revisão",
+          "tiempo": "00:20:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1sNbehkng-SC5hO5Wcl9G4r63l7X8wqq5L-XmIlbl_94/edit?slide=id.g3a553516cad_0_14#slide=id.g3a553516cad_0_14"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Avaliação",
+          "dia": 5,
+          "tema": "Jornada pelo Universo do Conhecimento",
+          "detalhe": "- Instrutor compartilha link Forms da Avaliação.",
+          "tiempo": "00:40:00",
+          "herramientas": [
+            {
+              "tipo": "Forms AeC",
+              "url": "https://docs.google.com/forms/d/e/1FAIpQLSemDPbpsw82SyJJYgjk3bA09nJZrWo64ujsio90v5Plz0FYQQ/viewform"
+            },
+            {
+              "tipo": "Forms KON",
+              "url": "https://docs.google.com/forms/d/e/1FAIpQLSdqjbKL4u5zmhQlVCTjGLAM8nUoLFkxMxa-yCeGd38yT-MO7A/viewform"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Correção",
+          "dia": 5,
+          "tema": "Correção da avaliação",
+          "detalhe": "- Instrutor faz correção da avaliação de recuperação",
+          "tiempo": "00:15:00",
+          "herramientas": [
+            {
+              "tipo": "Forms AeC",
+              "url": "https://docs.google.com/forms/d/e/1FAIpQLSdu6H1DwR1C-2lm1PVckIHQxFeOAL64kCOSWGakBTAaIXtHqQ/viewform"
+            },
+            {
+              "tipo": "Forms KON",
+              "url": "https://docs.google.com/forms/d/e/1FAIpQLSeF8eY8jUJ6KS3vbDLi1BUTxRSUFhXYLWzP7RNPd60I5IaGNQ/viewform"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "NPS",
+          "dia": 5,
+          "tema": "Pesquisa de Satisfação",
+          "detalhe": "- Instrutor compartilha sua tela para que os Agentes possam escanear o QR Code e realizem a pesquisa de reação.",
+          "tiempo": "00:10:00",
+          "herramientas": [
+            {
+              "tipo": "Forms AeC",
+              "url": "https://docs.google.com/forms/d/e/1FAIpQLSdKzaV5gJK1SsZnnjJb4nW3kFIXjdYPBJNPrxF9WQL79Jtg8w/viewform"
+            },
+            {
+              "tipo": "Forms KON",
+              "url": "https://docs.google.com/forms/d/e/1FAIpQLSdOqLYLlS_-qeW_u-GqMYZSTbOKGncZf1_qBGIKWiehnpWBZA/viewform"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "ADV",
+          "dia": 5,
+          "tema": "ADV",
+          "detalhe": "ADV - Encontro com advogados para esclarecimentos de como tudo processo funciona. OU seja, como solicitam as informação para PI, como recebem e a importância de cada detalhe para que possam montar suas defesas.",
+          "tiempo": "01:30:00",
+          "herramientas": [
+            {
+              "tipo": "Meet e/ou Presencial",
+              "url": "https://docs.google.com/presentation/d/1Z81hurod8FBOVt-ibMTn7KFlNBmuox45/edit?slide=id.p1#slide=id.p1"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Encerramento",
+          "dia": 5,
+          "tema": "Video 6 - Encerramento",
+          "detalhe": "- Instrutor mostra vídeo de introdução PI",
+          "tiempo": "0:10:00",
+          "herramientas": [
+            {
+              "tipo": "Vídeo",
+              "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223693-Bagagem-Extraviada-ou-Atrasada"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        }
+      ]
+    }
+  ]
 };
+
