@@ -9690,7 +9690,7 @@ export const HVC_BAG_DATA = {
       ]
     },
     {
-      "tipo": "mision1",
+      "tipo": "avaliacao",
       "label": "Avaliação",
       "rows": [
         {
