@@ -6939,7 +6939,20 @@ export const POS_VENDA_2_DATA = {
         }
       ]
     }
-  ]
+  ],
+  "evalKon": [
+    {
+      "label": "AJUSTE DE ROTA: KON",
+      "url": "https://forms.gle/xsiXgaiG8SDM6EVq9"
+    }
+  ],
+  "evalAec": [
+    {
+      "label": "AJUSTE DE ROTA: AeC",
+      "url": "https://forms.gle/vsCYSxLCexky2z4L7"
+    }
+  ],
+  "evalMsg": "Os alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\n\nDuração: 30 min"
 };
 
 export const HVC_BAG_DATA = {
