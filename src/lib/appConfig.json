@@ -3620,7 +3620,7 @@
             "rows": [
               {
                 "macroTema": "NÃO VOZ",
-                "dia": 6,
+                "dia": "6,7",
                 "tema": "Introdução NÃO VOZ",
                 "detalhe": "- Instrutor explica os tipos de interação NÃO VOZ (CHAT e WS) e mostra no PPT como o passageiro pode entrar em contato pelo WS através do Latam.com",
                 "tiempo": "0:30:00",
@@ -3635,7 +3635,7 @@
               },
               {
                 "macroTema": "NÃO VOZ",
-                "dia": 6,
+                "dia": "6,7",
                 "tema": "Video 8 [Vendas] \nFerramenta (chat e WS)",
                 "detalhe": "- Instrutor apresenta Video de introdução.",
                 "tiempo": "1:00:00",
@@ -3650,7 +3650,7 @@
               },
               {
                 "macroTema": "NÃO VOZ",
-                "dia": 6,
+                "dia": "6,7",
                 "tema": "Genesys Whatsapp/Chat",
                 "detalhe": "- Instrutor apresenta através do PPT:\nInterações através do serviço whatsapp\nFunções botões dinâmicos\nProcesso de Finalização\nInterações simultáneas\nTransferencia Exitosa\nInterações Pro ativas",
                 "tiempo": "0:15:00",
@@ -3665,7 +3665,7 @@
               },
               {
                 "macroTema": "NÃO VOZ",
-                "dia": 7,
+                "dia": "6,7",
                 "tema": "Whatsapp x Chat FCI/CDA",
                 "detalhe": "- Instrutor destaca que há duas opções de canais para o atendimento NOVOZ. Na opção chat, existem dois subtipos: Chat CDA e Chat FCI. Ele explica, passo a passo, os fluxos de atendimento e as diferenças entre os procedimentos que podem ser realizados em cada canal.",
                 "tiempo": "0:30:00",
@@ -3680,7 +3680,7 @@
               },
               {
                 "macroTema": "NÃO VOZ",
-                "dia": 7,
+                "dia": "6,7",
                 "tema": "Chat FCI x Chat CDA",
                 "detalhe": "- O instrutor reforça as diferenças entre os tipos de chat e aproveita para solicitar que um participante da turma explique, em poucas palavras, o que caracteriza cada um.",
                 "tiempo": "0:45:00",
@@ -3695,7 +3695,7 @@
               },
               {
                 "macroTema": "NÃO VOZ",
-                "dia": 7,
+                "dia": "6,7",
                 "tema": "Anexos",
                 "detalhe": "- Instrutor mostra conteúdos anexos através do PIC. Explica que se trata de um conjunto de documentos para auxiliar \nAnexo 1 - Fluxo derivação  Chat web Genesys (INVOL) \nAnexo 2 - Fluxo derivação  Chat web Genesys (Booking)\nAnexo 3 - Chat web Genesys (Alterações Voluntárias)\nAnexo 4 - WhatsApp Compra de bagagens\nAnexo 5 - Fluxo  Chat web Genesys (Ancillaries)\nAnexo 6 - Fluxo derivação Chat web Genesys (SDFC)\nAnexo 7 - Chat web Check-in\nAnexo 8 -  Chat web Devoluções\nAnexo 9 - Chat Web Cola Default Interações sem informação\nAnexo 10 - Chat web Booking milhas\nAnexo 11 - Chat Web Recovery Assentos \nAnexo 12 - Fluxo Derivação GBM (Google Business Messages) \nAnexo 13 - Fluxo Derivação Chat Web Necessidades Especiais",
                 "tiempo": "0:45:00",
@@ -3710,7 +3710,7 @@
               },
               {
                 "macroTema": "NÃO VOZ",
-                "dia": 7,
+                "dia": "6,7",
                 "tema": "Envio Pendente",
                 "detalhe": "O instrutor informa que, quando há inatividade do passageiro superior a 5 minutos no atendimento NOVOZ, a conversa deve ser encaminhado para o fluxo Pendente Passageiro.",
                 "tiempo": "1:00:00",
@@ -3725,7 +3725,7 @@
               },
               {
                 "macroTema": "NÃO VOZ",
-                "dia": 7,
+                "dia": "6,7",
                 "tema": "Solicitação de documentação online no atendimento telefônico, via WhastApp e Chat",
                 "detalhe": "- Instrutor introduz processos realizados pelo canal novoz. Revisa os processos que estão disponíveis para a solicitação e recepção de documentos estando online com o cliente, enfatizando os passos do processo WhatsApp e Chat, em seguida mostra o passo a passo.",
                 "tiempo": "0:30:00",
@@ -3740,7 +3740,7 @@
               },
               {
                 "macroTema": "NÃO VOZ",
-                "dia": 7,
+                "dia": "6,7",
                 "tema": "Forma de Pagamento OT WS",
                 "detalhe": "- Instrutor explica a FOP OT e mostra passo a passo PIC.",
                 "tiempo": "0:25:00",
@@ -3870,7 +3870,7 @@
             "rows": [
               {
                 "macroTema": "LANDING",
-                "dia": 8,
+                "dia": "8,9",
                 "tema": "Configuração Perfil Zendesk",
                 "detalhe": "- Instrutor deve orientar agentes na configuração do perfil Zendesk, inserindo o logo da LATAM na foto de perfil e a assinatura deve ser o nome conforme registro MOP.",
                 "tiempo": "0:45:00",
@@ -3885,7 +3885,7 @@
               },
               {
                 "macroTema": "LANDING",
-                "dia": 8,
+                "dia": "8,9",
                 "tema": "Genesys Cloud",
                 "detalhe": "- Instrutor apresenta no PIC as funcionalidades da ferramenta Genesys Cloud.\n- Instrutor reforça a importância de derivação à EPA em todas chamadas.\n- Instrutor mostra a diferença de transferência para Suporte  (VOZ e NOVOZ)",
                 "tiempo": "1:00:00",
@@ -3900,7 +3900,7 @@
               },
               {
                 "macroTema": "LANDING",
-                "dia": 8,
+                "dia": "8,9",
                 "tema": "Simulador Genesys",
                 "detalhe": "- Instrutor orienta os alunos a acessarem o simulador.\n Na tela inicial o aluno deve inserir o BP.",
                 "tiempo": "0:40:00",
@@ -3915,7 +3915,7 @@
               },
               {
                 "macroTema": "LANDING",
-                "dia": 8,
+                "dia": "8,9",
                 "tema": "Teste de Acessos",
                 "detalhe": "Testar acessos dos sistemas e Genesys Cloud",
                 "tiempo": "1:45:00",
@@ -3930,7 +3930,7 @@
               },
               {
                 "macroTema": "LANDING",
-                "dia": 9,
+                "dia": "8,9",
                 "tema": "Teste de Acessos",
                 "detalhe": "Testar acessos dos sistemas e Genesys Cloud",
                 "tiempo": "3:30:00",
@@ -3940,7 +3940,7 @@
               },
               {
                 "macroTema": "LANDING",
-                "dia": 9,
+                "dia": "8,9",
                 "tema": "Treinamentos obrigatórios",
                 "detalhe": "Treinamento obrigatório PCI LATAM",
                 "tiempo": "1:00:00",
@@ -3955,7 +3955,7 @@
               },
               {
                 "macroTema": "LANDING",
-                "dia": 9,
+                "dia": "8,9",
                 "tema": "Treinamentos obrigatórios",
                 "detalhe": "Código de Conduta",
                 "tiempo": "1:10:00",
