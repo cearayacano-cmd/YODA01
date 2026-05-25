@@ -76,6 +76,1667 @@ export const BASE_PLANET_DATA = {
           "consejo": ""
         }
       ]
+    },
+    {
+      "tipo": "mision1",
+      "label": "Missão 1: Vendas",
+      "rows": [
+        {
+          "macroTema": "Introdução",
+          "dia": 3,
+          "tema": "Video 1 [Vendas] \nBoas Vindas",
+          "detalhe": "- Instrutor dá as boas vindas: \"A partir de agora, o nosso treinamento muda de nome: Sejam bem-vindos à Expedição Vendas pelo Universo LATAM!\"\n- Instrutor passa o vídeo de introdução.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?usp=sharing"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Apresentação PIC",
+          "dia": 3,
+          "tema": "PIC",
+          "detalhe": "Instrutor entra no PIC e mostra estrutura PIC, formas de busca. \nAcessa Matriz de Atendimento Vendas e Protocolos:\n1. Protocolo Estrutura de Chamadas (Foco em Boas Vindas, Deixar Pax em Espera, Despedida);\n2. Protocolo Informação de Viagem;\n3. Protocolos Check-in\n4. Protocolo de reconfirmação de dados de PNR\nInstrutor reforça a importância de reconfirmar os dados da reserva com o cliente antes de emitir ou alterar qualquer reserva.",
+          "tiempo": "0:30:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360054073254-Protocolo-Estrutura-de-Chamadas#h_01G8C6XH6XV4BH2DPH8EMNX9AP",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Apresentação Amélia",
+          "dia": 3,
+          "tema": "Amélia",
+          "detalhe": "- Instrutor apresenta a ferramenta Amélia (Chat Livre em ambiente controlado LATAM)",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "Amélia",
+              "url": "https://amelia.appslatam.com/#/chat"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Introdução Site",
+          "dia": 3,
+          "tema": "Conhecendo o site latamairlines",
+          "detalhe": "- Instrutor navega no site com o foco em mostrar a visão do passageiro: Onde buscar voos, informações, LATAM PASS.\n- Instrutor pede para os alunos criarem contas no seu nome em latamairlines.com.\n*Eles precisam ter acesso ao email inserido, pois irão utilizar posteriormente nos exercícios. Caso não tenham acesso, sugerir que criem um email gmail.",
+          "tiempo": "0:30:00",
+          "herramientas": [
+            {
+              "tipo": "Latamairlines.com",
+              "url": "http://latamairlines.com/"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Perfis de Tarifa",
+          "dia": 3,
+          "tema": "Atividade \"Briefing de Missão\"\nTarifas LATAM",
+          "detalhe": "- Instrutor propõe atividade de busca de tarifas e seus atributos:\n1. Alunos realizam breve resumo das tarifas disponíveis na LATAM (3 min)\n2. Instrutor pede para que um aluno explique os atributos do Brand Light ( Voos dentro do Brasil e fora da América do Sul e América Central/Caribe)\n3. Pede para que o próximo aluno complemente com o atributo que o Brand Standard possui à mais.\n4. Pede para que o próximo aluno complemente com o atributo que o Brand Full possui à mais.\n5. Instrutor pede para que alguém dê um exemplo de voo LATAM dentro do Brasil e fora da América do Sul. (Ex. BSB/GYN - GRU/NYC)\n6. Instrutor pede para que um aluno explique os atributos do Brand Light (Voos nacionais de outros paises da América do Sul e entre a América)\n7. Instrutor pede para que alguém dê um exemplo de voo LATAM entre Américas (Ex. GRU/LIM)\n8. Instrutor pede para que um aluno explique os atributos do Brand Premium Economy.\n9.Instrutor pede para que um aluno explique os atributos do Brand Premium Business.",
+          "tiempo": "0:30:00",
+          "herramientas": [
+            {
+              "tipo": "Site",
+              "url": "https://www.latamairlines.com/br/pt/experiencia/prepare-sua-viagem/tarifas"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Perfis de Tarifa",
+          "dia": 3,
+          "tema": "Introdução Branded Fares",
+          "detalhe": "- Instrutor mostra aos alunos o capítulo do PIC onde podem ser encontradas mais informações sobre as tarifas.\n- Instrutor explica os tipos de rota (Doméstica, Regional, Long Haul).",
+          "tiempo": "0:10:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360050549933-Tarifas-",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Taxas",
+          "dia": 3,
+          "tema": "Taxa de Embarque e Taxa de Serviço",
+          "detalhe": "- Instrutor explica o que taxas de embarque através do site LATAM.",
+          "tiempo": "0:10:00",
+          "herramientas": [
+            {
+              "tipo": "Site",
+              "url": "https://www.latamairlines.com/br/pt/experiencia/prepare-sua-viagem/tarifas"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Taxas",
+          "dia": 3,
+          "tema": "Taxa de Embarque e Taxa de Serviço",
+          "detalhe": "- Instrutor explica o que é taxa de serviço focando nas considerações gerais BR, código de taxa DU e considerações de cobrança na emissão disponíveis no PIC.",
+          "tiempo": "0:10:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053045793-Taxa-de-Servi%C3%A7o#h_01GR8YGS63GM064315Z7N3J5EQ",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Acordos",
+          "dia": 3,
+          "tema": "Atividade \n\"Briefing de Missão\"\nCodeshare\nAcordo Delta",
+          "detalhe": "- Instrutor mostra o caminho no PIC para encontrar informações sobre Codeshare,",
+          "tiempo": "0:10:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360052986693-Generalidades-Codeshare",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Acordos",
+          "dia": 3,
+          "tema": "Atividade \n\"Briefing de Missão\"\nCodeshare\nAcordo Delta",
+          "detalhe": "- Instrutor mostra o caminho no PIC para encontrar informações sobre Codeshare e Acordo Delta.\n- Divide sala em grupos e pede para que metade dos grupos faça um resumo do tema Codeshare e a outra metade sobre o acordo Delta.  (5 min).\n- Instrutor pede para que 1 representante de cada grupo fale sobre os principais pontos dos acordos, pede para os demais grupos complementarem e caso falte alguma informação, acrescenta.",
+          "tiempo": "0:20:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/22162184180499-Acordo-Delta-DL",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Acordos",
+          "dia": 3,
+          "tema": "Atividade \"Guerra nas Estrelas\"\nAcordos e tarifas",
+          "detalhe": "- Instrutor menciona que a atividade é individual e tem como finalidade fixar o conteúdo aprendido \n- Instrutor envia link EducaPlay e explica tipo e tempo de (acordo com cronograma) para praticarem\nVale ressaltar que é possível jogar mais de uma vez, caso terminem antes do prazo",
+          "tiempo": "0:10:00",
+          "herramientas": [
+            {
+              "tipo": "Educaplay",
+              "url": "https://www.educaplay.com/learning-resources/25056994-acordos_e_tarifas.html"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Bagagem",
+          "dia": 3,
+          "tema": "Atividade\n \"Relatório de Exploração\"\n0. Introdução à Bagagens\n1. Franquia LATAM e Interline\n2. Excesso de Bagagem\n3. Bagagem Especial\n4. Artigos restritos (itens perigosos)",
+          "detalhe": "- Instrutor entra no PIC- Manual Procedimentos Comerciais  Bagagem, explica o \"menu\" lateral esquerdo e explica a dinâmica da atividade.\n1. Instrutor projeta a pergunta através do GENIALLY  os alunos terão o tempo de 2 minutos  para encontrar as respostas no PIC. Quem encontrar primeiro, se manifesta e marca ponto.\n2. Aluno responde e explica onde encontrou a resposta (instrutor projeta e vai mostrando no computador e corrige ou complementa, se necessário)\nRepetir a mesma dinâmica para todas as perguntas. \n- Ao final, instrutor questiona se alguém ficou com dúvidas. \nOBS. Se o tempo  acabar e ninguém encontrar a resposta, instrutor mostra onde está no PIC.",
+          "tiempo": "0:25:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360049744854-Generalidades-Bagagem-",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Serviços e Pax Expeciais",
+          "dia": 3,
+          "tema": "Vídeo UMNR e PETC",
+          "detalhe": "- Instrutor explica que a LATAM possui alguns serviços especiais e que na alta temporada os mais tranportados são UMNR e PETC.\n- Em seguida passa os vídeos do \"Tá no Ar\"",
+          "tiempo": "0:10:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g364eaff9e51_0_653#slide=id.g364eaff9e51_0_653"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Serviços e Pax Expeciais",
+          "dia": 3,
+          "tema": "Protocolos",
+          "detalhe": "- Instrutor mostra os protocolos a serem utilizados para SSEE.",
+          "tiempo": "0:05:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055886633-Protocolo-Servi%C3%A7os-Especiais",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Serviços e Pax Expeciais",
+          "dia": 3,
+          "tema": "Atividade \n\"Briefing de Missão\"\nSSEE",
+          "detalhe": "- Instrutor mostra o caminho no PIC para encontrar SSSE, em seguida dividir em grupos e dar um tema para cada:\nCada grupo deverá ler sobre o SSEE que lhe corresponda e apresentá-lo aos demais da classe.\n6 temas\n5 min para fazer o resumo e 5 min para cada grupo apresentar.\nInstrutor corrige e complementa sempre que necessário.\nTemas:\nAnimais (AVIH/PETC)\nAssento adicional (EXST/CBBG)\nBaby Bassinet (BSCT)/ Bebe conforto (INCU)\nMenor desacompanhado (UMNR)\nBebe conforto (INCU)\nAlimentação Especial\nCadeira de Rodas",
+          "tiempo": "0:45:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/sections/360011672273-Servi%C3%A7os-Especiais",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Serviços e Pax Expeciais",
+          "dia": 3,
+          "tema": "Atividade \n\"Briefing de Missão\"\nPassageiros Especiais",
+          "detalhe": "Instrutor mostra o caminho no PIC para encontrar Pax Especiais, em seguida dividir em grupos e dar um tema para cada:\nCada grupo deverá ler sobre o tema que lhe corresponda e apresentá-lo aos demais da classe.\n5 temas\n5 min para fazer o resumo e 5 min para cada grupo apresentar.\nInstrutor corrige e complementa sempre que necessário.\nTemas:\nPassageiros Especiais\nGestantes\nNecessidade de assistência especial\nCertificação médica (MEDIF)\nAnimais de Assistência (SVAN-ESAN)",
+          "tiempo": "0:30:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/sections/360010556514-Passageiros-Especiais",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Serviços e Pax Expeciais",
+          "dia": 3,
+          "tema": "Atividade \"Guerra nas Estrelas\"\n SSEE e Pax Especiais",
+          "detalhe": "- Instrutor menciona que a atividade é individual e tem como finalidade fixar o conteúdo aprendido \n- Instrutor envia link EducaPlay e explica tipo e tempo de (acordo com cronograma) para praticarem\nVale ressaltar que é possível jogar mais de uma vez, caso terminem antes do prazo",
+          "tiempo": "0:10:00",
+          "herramientas": [
+            {
+              "tipo": "Notebook LM",
+              "url": "https://notebooklm.google.com/notebook/19ccb53a-32b9-4ad2-98db-3eb9c0b9bbb4/artifact/4ca63eb9-9f47-4416-bd12-3d0f21018f78?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_2&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_2_"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 3,
+          "tema": "Video 2 [Vendas] \nIntrodutório Vendas A360",
+          "detalhe": "- Instrutor passa o vídeo.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g364eaff9e51_0_245#slide=id.g364eaff9e51_0_245"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 3,
+          "tema": "Atividade \n\"Briefing de Missão\"\nVendas",
+          "detalhe": "- Instrutor mostra o caminho do PIC e pede para se dividirem em 5 grupos. Cada grupo lerá as considerações, fazendo um resumo.\nUm representante do grupo apresenta uma consideração. 5 min para pesquisar                                                                                                                                                                                                                                                                                                                                       \n- Instrutor deve corrigir e complementar se necessário.",
+          "tiempo": "0:40:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360052861173-Reserva-e-emiss%C3%A3o-de-passagens",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Resumo",
+          "dia": 4,
+          "tema": "Resumo do dia anterior",
+          "detalhe": "- Instrutor atividade de chuva de idéias para resgatar com os alunos os temas relevantes vistos no dia anterior.\nDica: Pode utilizar sites como Mentimeter para chuva de ideias ou escrever diretamente em um flipchart ou quadro os temas.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1Ueeo7fq-I20yqWiWGPFgt1_Tt-Zqs5auNraYoezpgRw/edit?slide=id.g1e447d4f136_1_44#slide=id.g1e447d4f136_1_44"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 4,
+          "tema": "Atividade \n\"Ajuste de Rota com o Navegador\"\nLogin e Reserva",
+          "detalhe": "- Instrutor passa o login da ferramenta Training (A360), mostra a maneira de se logar e explica que na operação irão logar com seu BP e senha.\n- Instrutor entra na ferramenta Training e propõe que um aluno mostre como realizar a reserva e criar uma ordem simples através da ferramenta training  (instrutor será o pax e realizará o pagamento no seu perfil do agente 360, através do link de pagamento).\nO aluno deverá seguir o passo a passo do PIC e o instrutor sendo um dos passageiros (passar seus dados e email).\nAo final, instrutor mostra os campos do Agente 360 (lado esquerdo). Explica brevemente que o histórico de todas as ações fica registrado e que eles aprenderão a leitura na Expedição PV 2.",
+          "tiempo": "0:25:00",
+          "herramientas": [
+            {
+              "tipo": "A360 TRN",
+              "url": ""
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 4,
+          "tema": "Remarks",
+          "detalhe": "- Instrutor explica o que são remarks e que devem ser sempre inseridos como respaldo das informações passadas ao cliente e como podem ser visualizados na ferramenta Agente 360.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "A360 TRN",
+              "url": ""
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 4,
+          "tema": "Reforçar protocolo",
+          "detalhe": "Ao final da criação do PNR, o instrutor pede para os alunos olharem o protocolo de documentação, entra em latamairlines.com para mostrar onde está a informação e indica como adicionar a informação dada no RMK.",
+          "tiempo": "0:10:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360054073254-Protocolo-Estrutura-de-Chamadas#h_01G8C6XH6XV4BH2DPH8EMNX9AP",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 4,
+          "tema": "Video 3 [Vendas]\nLink de pagto",
+          "detalhe": "- Instrutor passa vídeo",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g364c015fc33_0_389#slide=id.g364c015fc33_0_389"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 4,
+          "tema": "Link de Pagamento",
+          "detalhe": "- Pede para o agente enviar o link de pagamento para o seu email, projeta e mostra como pagar com os dados do cartão ficticio (reforça que é a visão do pax).",
+          "tiempo": "0:05:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/4411825576083-Pagamento-Link",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 4,
+          "tema": "CUV",
+          "detalhe": "- Instrutor explica o que é o CUV e como reenviá-lo através do Agente 360,",
+          "tiempo": "0:10:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/4407703691155-Comprovante-%C3%9Anico-de-Venda-CUV",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 4,
+          "tema": "\"Controle de Voo e Lançamento\"\nReservas",
+          "detalhe": "- O instrutor pede para que os alunos realizem reservas de acordo com o proposto no GENIALLY.\n- instrutor indica para que todos os \"agentes\" fiquem com os protocols abertos e o utilizem nas simulações. \n- Instrutor mostra o campo \"minhas anotações\" da ferramenta Agente.  \nTodas as ordens devem ser anotadas em um arquivo que o aluno tenha acesso posteriormente.",
+          "tiempo": "1:00:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3a4ae7f28e5_0_185#slide=id.g3a4ae7f28e5_0_185"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 4,
+          "tema": "Ordens de Clientes",
+          "detalhe": "- Instrutor explica como realizar a busca e exibição de uma ordem e diferença de ordem logada de não logada.        \n- Instrutor explica como identificar a origem da ordem.",
+          "tiempo": "0:15:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/4407014380307-Ordens-de-Clientes",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 4,
+          "tema": "Check-in Automático",
+          "detalhe": "- Intrutor explica sobre o Check-in automático (indica que o check-in é automático para todos os passageiros com ordem (visualização do cliente)\n- Mostrar como chega a confirmação da compra e a notificação no e-mail do cliente, através das telas do PIC.",
+          "tiempo": "0:05:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053236793-Check-In",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 4,
+          "tema": "Video 4 [Vendas]\n Simulação Split",
+          "detalhe": "- Instrutor passa o vídeo.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g364c015fc33_0_413#slide=id.g364c015fc33_0_413"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 4,
+          "tema": "Atividade \n\"Ajuste de Rota com o Navegador\"\n Split Reservas",
+          "detalhe": "- Instrutor explica o que é o SPLIT, pede para agentes entrarem no PIC (split) e outro aluno vai até a mesa e demonstra em uma ordem previamente criada pelo instrutor, como dividir a ordem no Agente 360 TRN seguindo o passo a passo.",
+          "tiempo": "0:15:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055936373-Split-de-Reserva-Individuais-e-Grupo",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 4,
+          "tema": "Atividade \n\"Controle de Voo e Lançamento\"\n Split",
+          "detalhe": "- Com as ordens criadas anteriormente, os agentes voltam a ser pax e agente e simular um contato solicitando a divisão da ordem.",
+          "tiempo": "0:10:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3a4ae7f28e5_0_216#slide=id.g3a4ae7f28e5_0_216"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 4,
+          "tema": "Isenção de Taxa de Serviço",
+          "detalhe": "- Instrutor explica os casos em que a isenção da taxa DU pode ser realizada, mostrando o passo a passo no PIC.",
+          "tiempo": "0:10:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/12943186481299-Processo-para-isen%C3%A7%C3%A3o-de-taxa-de-servi%C3%A7o-em-latamairlines-com",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 4,
+          "tema": "Atividade \n\"Controle de Voo e Lançamento\"\nIsenção Taxa de Serviço",
+          "detalhe": "- O instrutor pede para que os alunos realizem reservas de acordo com o proposto no  Genially\ne procedam com a isenção da taxa DU.",
+          "tiempo": "0:10:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3a4ae7f28e5_0_232#slide=id.g3a4ae7f28e5_0_232"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 4,
+          "tema": "Video 5 [Vendas]\n Introdutório LATAM Wallet",
+          "detalhe": "- Instrutor passa o vídeo.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g364eaff9e51_0_379#slide=id.g364eaff9e51_0_379"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ordens e Vendas Agente 360",
+          "dia": 4,
+          "tema": "Atividade\n \"Relatório de Exploração\"\n LATAM Wallet",
+          "detalhe": "- Instrutor entra no PIC e mostra onde encontrar informações sobre a LATAM Wallet.\n- Instrutor dá 5 min para que os alunos façam um resumo do tema.\n Instrutor projeta a pergunta através do GENIALLY e escolhe um agente para responder. Caso ele erre, pede para outra pessoa responder. Se ele acertar, escolhe o aluno que responderá a próxima pergunta.\n- Ao final, instrutor questiona se alguém ficou com dúvidas.",
+          "tiempo": "0:30:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/4414246715027-LATAM-Wallet",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Solicitação de Serviços Agente 360",
+          "dia": 4,
+          "tema": "Video 6 [Vendas]\n Introdutório SSEE",
+          "detalhe": "- Instrutor mostra video",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g364c015fc33_0_482#slide=id.g364c015fc33_0_482"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Solicitação de Serviços Agente 360",
+          "dia": 4,
+          "tema": "Atividade \n\"Controle de Voo e Lançamento\"\nSSEE A360",
+          "detalhe": "- Instrutor pede para que os alunos simulem chamadas de acordo aos cases propostos no PPT.",
+          "tiempo": "0:15:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3a4ae7f28e5_0_264#slide=id.g3a4ae7f28e5_0_264"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ancillaries",
+          "dia": 4,
+          "tema": "Atividade \n\"Briefing de Missão\"\nAncillaries",
+          "detalhe": "- Instrutor mostra o caminho no PIC para encontrar o assunto Ancillaries e propõe para os grupos que pesquisem tipos de EMD. 5 min para fazer resumo e 3 min para apresentar para a sala.",
+          "tiempo": "0:15:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360052161874-EMD",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ancillaries",
+          "dia": 4,
+          "tema": "Atividade \n\"Briefing de Missão\"\nAncillaries",
+          "detalhe": "- Instrutor complementa com a explicação de quais e como realizar a venda de um ancillary de: (UMNR), (PETC) e (AVIH) por meio do A360",
+          "tiempo": "0:10:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/47091784533395-05-12-25-SERVI%C3%87OS-ESPECIAIS-Ativa-se-a-venda-dos-servi%C3%A7os-de-menor-desacompanhado-UMNR-animal-de-estima%C3%A7%C3%A3o-na-cabine-PETC-e-no-por%C3%A3o-AVIH-por-meio-do-agente-360",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ancillaries",
+          "dia": 4,
+          "tema": "Venda de Malas",
+          "detalhe": "- Instrutor explica  como pax solicita um bilhete com a venda de bag.",
+          "tiempo": "0:15:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/4414544635155-Venda-de-Malas",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ancillaries",
+          "dia": 4,
+          "tema": "Atividade \n\"Ajuste de Rota com o Navegador\"\nVenda Assistida de Malas",
+          "detalhe": "- Instrutor pede para um aluno ir até a mesa e mostrar como pax solicita um bilhete com a venda de bag.",
+          "tiempo": "0:15:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/37493881988371-Venda-Assistida-de-bagagem-pelo-Agente-360",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ancillaries",
+          "dia": 4,
+          "tema": "Venda de Assentos",
+          "detalhe": "- Instrutor explica  como realizar a venda de assentos.",
+          "tiempo": "0:15:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360049744894-Venda-de-Sele%C3%A7%C3%A3o-de-Assentos",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ancillaries",
+          "dia": 4,
+          "tema": "Atividade \n\"Relatório de Exploração\"\nLATAM Flex",
+          "detalhe": "- Instrutor entra no PIC Manual Procedimentos Comerciais - LATAM Flex e explica a dinâmica.\n1. Instrutor divide a sala em 2 grupos. Essa será uma \"batalha\" entre grupos. \n- Instrutor projeta a pergunta no GENIALLY  e coloca o cronômetro de 1 minuto. O grupo que achar a resposta primeiro se manifesta e tem o direito de resposta. Se a resposta estiver certa, marca ponto. Se estiver errada, o outro grupo tem direito a responder e marcar o ponto. \n2. Aluno representante do grupo que acertou  responde e explica onde encontrou a resposta (instrutor projeta e vai mostrando no computador)\nRepetir a mesma dinâmica para todas as perguntas.\n- Ao final, instrutor questiona se alguém ficou com dúvidas.\nOBS. Se o tempo de 1 minuto acabar e ninguém encontrar a resposta, instrutor mostra onde está no PIC.",
+          "tiempo": "0:20:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/17098820775187-LATAM-FLEX",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Resumo",
+          "dia": 5,
+          "tema": "Resumo do dia anterior",
+          "detalhe": "- Instrutor atividade de chuva de idéias para resgatar com os alunos os temas relevantes vistos no dia anterior.\nDica: Pode utilizar sites como Mentimeter para chuva de ideias ou escrever diretamente em um flipchart ou quadro os temas.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1Ueeo7fq-I20yqWiWGPFgt1_Tt-Zqs5auNraYoezpgRw/edit?slide=id.g1e447d4f136_1_44#slide=id.g1e447d4f136_1_44"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ancillaries",
+          "dia": 5,
+          "tema": "Atividade \n\"Controle de Voo e Lançamento\"\n Ancillaries",
+          "detalhe": "- O instrutor pede para que os alunos simulem chamadas de acordo aos cases propostos no PPT.",
+          "tiempo": "0:15:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3a4ae7f28e5_0_343#slide=id.g3a4ae7f28e5_0_343"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Ancillaries",
+          "dia": 3,
+          "tema": "Atividade\n\"Jornada pelo Universo do Conhecimento\"\nVendas com Ancillaries",
+          "detalhe": "- Instrutor pede para que os alunos abram o forms e realizem a atividade proposta. \n- Instrutor acompanha a folha de respostas e corrige as ordens: Atribuindo nota para  os acertos: \n1. Rota correta (20 p)\n2. PAX: 1 adulto e 1 criança (20 p)\n3. Tarifa Standard (20 p)\n4. Vendeu assento? (10 p)\n5. Vendeu bagagem? (10 p)\nApós corrigir as ordens, instrutor deve preencher\n Diário de Bordo",
+          "tiempo": "0:50:00",
+          "herramientas": [
+            {
+              "tipo": "Forms KON",
+              "url": ""
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "",
+          "dia": 5,
+          "tema": "",
+          "detalhe": "https://docs.google.com/forms/d/e/1FAIpQLSeR3mZyjaxWNWd0LpFm3dI159McZoAAC641A3bxiOpDIqDROw/viewform",
+          "tiempo": "https://docs.google.com/forms/d/e/1FAIpQLSeuZcXWwvu4nfkErXMyiJ7h2OJKAx5xYt1et2apRPLlFc6GSw/viewform?usp=publish-editor",
+          "herramientas": [
+            {
+              "tipo": "Link",
+              "url": "5"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Painel de Pagamento Agente 360",
+          "dia": 5,
+          "tema": "Atividade \n\"Briefing de Missão\"\nPainel de Pagamentos",
+          "detalhe": "- Instrutor pede para que os alunos acessem o material Console XP no PIC e dá 5 minutos para lerem o conteúdo. Depois pede para que um dos alunos explique para os demais da sala do que se trata a ferramenta e qual sua principal função.",
+          "tiempo": "0:20:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/5443079309971-Console-XPSP",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Lista de Vendas",
+          "dia": 5,
+          "tema": "Video 7 [Vendas]\nLista de vendas",
+          "detalhe": "- Instrutor mostra video",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g364c015fc33_0_518#slide=id.g364c015fc33_0_518"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Lista de Vendas",
+          "dia": 5,
+          "tema": "Lista de Vendas",
+          "detalhe": "- Instrutor mostra onde encontrar informação sobre lista de vendas no PIC.",
+          "tiempo": "0:05:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/40176305951123-NOVA-FUNCIONALIDADE-LISTA-DE-VENDAS-AGENTES",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Perfil Cliente",
+          "dia": 5,
+          "tema": "Semáforo de Afetação",
+          "detalhe": "- Instrutor explica o que é, mostrando as telas do PIC.",
+          "tiempo": "0:05:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/43013540923667-Sem%C3%A1foro-de-afeta%C3%A7%C3%A3o-Criticality-Score",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Perfil Cliente",
+          "dia": 5,
+          "tema": "Erros de pagamento",
+          "detalhe": "- Instrutor explica a tabela de erros de pagamento e dá 2 exemplos de solução.",
+          "tiempo": "0:05:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/4403974273299-Erros-de-pagamento",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "INCIDENTES",
+          "dia": 5,
+          "tema": "Relatar incidentes A360",
+          "detalhe": "- Instrutor mostra formulário incidências disponível no PIC e orienta que os agentes devem chamar o supervisor para auxiliar no preenchimento.",
+          "tiempo": "0:10:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/4405966901523-Detalle-Formularios-Incidencias",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Avaliação Vendas A360",
+          "dia": 3,
+          "tema": "Jornada pelo Universo do Conhecimento\n\"Vendas\"",
+          "detalhe": "- Instrutor aplica a avaliação.",
+          "tiempo": "0:30:00",
+          "herramientas": [
+            {
+              "tipo": "Forms KON",
+              "url": ""
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "",
+          "dia": 5,
+          "tema": "",
+          "detalhe": "https://forms.gle/67f3dewZVYoKRnja9",
+          "tiempo": "https://forms.gle/2jDtaTuQfDvMtw4P7",
+          "herramientas": [
+            {
+              "tipo": "Link",
+              "url": "5"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        }
+      ]
+    },
+    {
+      "tipo": "mision2",
+      "label": "Missão 2: Casos",
+      "rows": [
+        {
+          "macroTema": "Casos",
+          "dia": 5,
+          "tema": "Criação de Casos Agente 360",
+          "detalhe": "- Instrutor mostra através do Agente 360 Training o formulário de criação de casos, detalhando cada campo a ser preenchido, com ênfase naqueles que contém asteriscos.. Criação de casos via Agente 360\n- Instrutor mostra os processos que se faz necessário o cliente enviar documentos como Entrega ou Envio de CUV, solicitações de certificados (Declaração de embarque).   \n- Instrutor explica que nestes processos os casos não devem ser gerados pelo CDA e sim pelo Agente 360:",
+          "tiempo": "0:30:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/31926091283859-Abrir-caso-Zendesk",
+              "url": "PIC"
+            },
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/40223076355091-10-04-25-Elimina%C3%A7%C3%A3o-de-cria%C3%A7%C3%A3o-de-casos-atrav%C3%A9s-do-Centro-de-Ajuda-do-site",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Casos",
+          "dia": 5,
+          "tema": "Atividade \n\"Controle de Voo e Lançamento\"\nCriação de Casos Agente 360",
+          "detalhe": "- Instrutor pede para que os alunos simulem chamadas de acordo aos cases propostos no PPT.",
+          "tiempo": "0:15:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g364eaff9e51_0_653#slide=id.g364eaff9e51_0_653"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Zendesk",
+          "dia": 5,
+          "tema": "Introdução",
+          "detalhe": "- Instrutor apresenta a ferramenta e suas funcionalidades",
+          "tiempo": "0:15:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055558073-Zendesk",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Zendesk",
+          "dia": 5,
+          "tema": "1. Conceitos básicos",
+          "detalhe": "- Instrutor mostra a partir do PIC os conceitos básicos do aplicativo.",
+          "tiempo": "0:20:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055558073-Zendesk",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Zendesk",
+          "dia": 5,
+          "tema": "2. Inicio no Sistema Único de casos",
+          "detalhe": "- Instrutor mostra como entrar na ferramenta.",
+          "tiempo": "0:20:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055558073-Zendesk",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Zendesk",
+          "dia": 5,
+          "tema": "3. Funcionalidades",
+          "detalhe": "- Instrutor mostra suas funcionalidades a partir da ferramenta:\nVisualizações \nBusca de solicitante \nInclusão de um solicitante\nModificação de um solicitante\nClassificar um ticket\nReclassificar um ticket\nFundir tickets\nCriação de ticket filho\nReabrir casos com macros o Reenviar último comentário público",
+          "tiempo": "0:20:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055558073-Zendesk",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Zendesk",
+          "dia": 5,
+          "tema": "4. Navegação Zendesk",
+          "detalhe": "- Instrutor mostra suas funcionalidades a partir da ferramenta.\n-Instrutor mostra no PIC as funcionalidades da ferramenta.\n- Instrutor explica como utilizar a varinha inteligente.",
+          "tiempo": "0:15:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055558073-Zendesk",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Zendesk",
+          "dia": 5,
+          "tema": "Atividade \n\"Ajuste de Rota com o Navegador\"\nZendesk",
+          "detalhe": "- Instrutor mostra casos reais da ferramenta para identificar os requerimentos do cliente.\n- Instrutor mostra as partes do caso e possible resolução.",
+          "tiempo": "0:35:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3a4ae7f28e5_0_407#slide=id.g3a4ae7f28e5_0_407"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Avaliação Zendesk",
+          "dia": 5,
+          "tema": "Jornada pelo Universo do Conhecimento\n\"Casos\"",
+          "detalhe": "- Instrutor aplica a avaliação.",
+          "tiempo": "0:20:00",
+          "herramientas": [
+            {
+              "tipo": "Forms KON",
+              "url": "https://forms.gle/daMLEV4Nu3ShRwUV8"
+            },
+            {
+              "tipo": "Forms AeC",
+              "url": "https://docs.google.com/forms/d/e/1FAIpQLSfhje16pgcHfcNZ4glElSnnCLqD879HVLg9xlIWlGeSF6DlSA/viewform"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        }
+      ]
+    },
+    {
+      "tipo": "mision3",
+      "label": "Missão 3: LATAM PASS",
+      "rows": [
+        {
+          "macroTema": "LATAM PASS",
+          "dia": 6,
+          "tema": "Resumo do dia anterior",
+          "detalhe": "- Instrutor atividade de chuva de idéias para resgatar com os alunos os temas relevantes vistos no dia anterior.\nDica: Pode utilizar sites como Mentimeter para chuva de ideias ou escrever diretamente em um flipchart ou quadro os temas.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1Ueeo7fq-I20yqWiWGPFgt1_Tt-Zqs5auNraYoezpgRw/edit?slide=id.g1e447d4f136_1_44#slide=id.g1e447d4f136_1_44"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LATAM PASS",
+          "dia": 6,
+          "tema": "Video Introdução LATAM PASS",
+          "detalhe": "- Instrutor apresenta o vídeo e pede para que os alunos comentem o que entenderam.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "Carregando…"
+            },
+            {
+              "tipo": "Youtube",
+              "url": "Carregando…"
+            },
+            {
+              "tipo": "Aulas LATAM PASS",
+              "url": "Carregando…"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LATAM PASS",
+          "dia": 6,
+          "tema": "Video Categorias e Benefícios",
+          "detalhe": "- Instrutor apresenta o vídeo e pede para que os alunos comentem o que entenderam.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "Youtube",
+              "url": "https://www.youtube.com/shorts/vX9srzIRZNw?feature=share"
+            },
+            {
+              "tipo": "Aulas LATAM PASS",
+              "url": "https://www.youtube.com/shorts/vX9srzIRZNw?feature=share"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LATAM PASS",
+          "dia": 6,
+          "tema": "Produto, Categorias e Benefícios LATAM Pass",
+          "detalhe": "- Instrutor explica considerações  produto, categoria e benefícios LATAM PASS milhas de acordo com a publicação no PIC.\n- Instrutor fala sobre como é atribuido o número de sócio no BR. \n- Instrutor apresenta as categorias Latam Pass, regras para se qualificar e benefícios.",
+          "tiempo": "0:40:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3ab95949dfe_0_32#slide=id.g3ab95949dfe_0_32"
+            }
+          ],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053169173-Produto-Categorias-e-Benef%C3%ADcios-LATAM-Pass",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LATAM PASS",
+          "dia": 6,
+          "tema": "Atividade \"Guerra nas Estrelas\"\n(Produto Categorias e Beneficios)",
+          "detalhe": "- Instrutor menciona que a atividade é individual e tem como finalidade fixar o conteúdo aprendido \n- Instrutor envia link EducaPlay e explica tipo e tempo de (acordo com cronograma) para praticarem\nVale ressaltar que é possível jogar mais de uma vez, caso terminem antes do prazo",
+          "tiempo": "0:10:00",
+          "herramientas": [
+            {
+              "tipo": "Educaplay",
+              "url": "https://www.educaplay.com/learning-resources/26736432-latam_pass_categorias_em_foco.html"
+            },
+            {
+              "tipo": "EducaPlay",
+              "url": "https://www.educaplay.com/learning-resources/26744315-latam_pass_categorias_em_foco.html"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LATAM PASS",
+          "dia": 6,
+          "tema": "Video Milhas e Pontos Qualificáveis",
+          "detalhe": "- Instrutor apresenta o vídeo e pede para que os alunos comentem o que entenderam do vídeo.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "Youtube",
+              "url": "https://www.youtube.com/shorts/ZSgsCW5dQmo?feature=share"
+            },
+            {
+              "tipo": "Aulas LATAM PASS",
+              "url": "https://www.youtube.com/shorts/ZSgsCW5dQmo?feature=share"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LATAM PASS",
+          "dia": 6,
+          "tema": "Video Bonus LATAM PASS",
+          "detalhe": "- Instrutor apresenta o vídeo e pede para que os alunos comentem o que entenderam do vídeo.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "Youtube",
+              "url": "https://www.youtube.com/shorts/NbFTLrPXnVw?feature=share"
+            },
+            {
+              "tipo": "Aulas LATAM PASS",
+              "url": "https://www.youtube.com/shorts/NbFTLrPXnVw?feature=share"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LATAM PASS",
+          "dia": 6,
+          "tema": "Incidentes Bônus LATAM PASS",
+          "detalhe": "- Instrutor mostra tabela e explica que qualquer tipo de incidente deve ser derivado aos especialistas de DT FFP.",
+          "tiempo": "0:10:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/37307768474899-B%C3%B4nus-LATAM-Pass",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LATAM PASS",
+          "dia": 6,
+          "tema": "Video Acúmulo Milhas",
+          "detalhe": "- Instrutor apresenta o vídeo e pede para que os alunos comentem o que entenderam do vídeo.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "Youtube",
+              "url": "https://www.youtube.com/shorts/71J3rlILGY4?feature=share"
+            },
+            {
+              "tipo": "Aulas LATAM PASS",
+              "url": "https://www.youtube.com/shorts/71J3rlILGY4?feature=share"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LATAM PASS",
+          "dia": 6,
+          "tema": "Atividade \n\"Controle de Voo e Lançamento\"\nAcúmulo de Milhas",
+          "detalhe": "- O instrutor pede para que os alunos assistam aos vídeos com dúvidas de passageiros e elege um aluno diferente para entregar cada solução. A resposta correta está no rodapé do PPT.",
+          "tiempo": "0:30:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3a4ae7f28e5_0_469#slide=id.g3a4ae7f28e5_0_469"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LATAM PASS",
+          "dia": 6,
+          "tema": "Video latam.com (acúmulo parceiros)",
+          "detalhe": "- Instrutor apresenta o vídeo e pede para que os alunos comentem o que entenderam do vídeo.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "Youtube",
+              "url": "https://www.youtube.com/shorts/wYmA_Q1ZKyo?feature=share"
+            },
+            {
+              "tipo": "Aulas LATAM PASS",
+              "url": "https://www.youtube.com/shorts/wYmA_Q1ZKyo?feature=share"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LATAM PASS",
+          "dia": 6,
+          "tema": "Video Clube LATAM PASS",
+          "detalhe": "- Instrutor apresenta o vídeo e pede para que os alunos comentem o que entenderam do vídeo.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "Youtube",
+              "url": "https://www.youtube.com/shorts/G5Np4zshbpQ?feature=share"
+            },
+            {
+              "tipo": "Aulas LATAM PASS",
+              "url": "https://www.youtube.com/shorts/G5Np4zshbpQ?feature=share"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LATAM PASS",
+          "dia": 6,
+          "tema": "Resgate de tickets prêmios",
+          "detalhe": "- Instrutor explica a definição de resgate de pontos, considerações para resgate, outras considerações, processo de resgate através do Agente 360 e taxa de resgate e emissão.\n- Instrutor faz uma simulação no latamairlines.com para mostrar as opções de quantidade de pontos por perfil de tarifa e as opções de pontos + dinheiro que o passageiro pode selecionar, caso não tenha pontos disponíveis.",
+          "tiempo": "0:45:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/4408047222803-Resgate-de-tickets-pr%C3%AAmios-com-novo-modelo-de-resgate-FFP-milhas-pontos",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LATAM PASS",
+          "dia": 6,
+          "tema": "Video LATAM PASS\nResgate",
+          "detalhe": "- Instrutor apresenta o vídeo e pede para que os alunos comentem o que entenderam do vídeo.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "Youtube",
+              "url": "https://www.youtube.com/shorts/jEMsqNPVfOk?feature=share"
+            },
+            {
+              "tipo": "Aulas LATAM PASS",
+              "url": "https://www.youtube.com/shorts/jEMsqNPVfOk?feature=share"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LATAM PASS",
+          "dia": 6,
+          "tema": "Video Desvendando LATAM PASS",
+          "detalhe": "- Instrutor passa o vídeo.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3b0afb1e69c_1_0#slide=id.g3b0afb1e69c_1_0"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LATAM PASS",
+          "dia": 6,
+          "tema": "Quiz Genially + Revisão",
+          "detalhe": "- Instrutor passa atividades.",
+          "tiempo": "0:20:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3af9331569d_0_79#slide=id.g3af9331569d_0_79"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Avaliação LATAM PASS",
+          "dia": 6,
+          "tema": "Jornada pelo Universo do Conhecimento\n\" LATAM PASS\"",
+          "detalhe": "- Instrutor aplica a avaliação.",
+          "tiempo": "0:30:00",
+          "herramientas": [
+            {
+              "tipo": "Forms KON",
+              "url": "https://forms.gle/ZzcNLdujfe2fQa4K7"
+            },
+            {
+              "tipo": "Forms AeC",
+              "url": "https://docs.google.com/forms/d/e/1FAIpQLScwIsNq7Dqfmhp4pn1LPRSVUkRrWQSwwa7A8DjjpJmp8YdFWA/viewform"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        }
+      ]
+    },
+    {
+      "tipo": "mision4",
+      "label": "Missão 4 - NÃO VOZ",
+      "rows": [
+        {
+          "macroTema": "NÃO VOZ",
+          "dia": 6,
+          "tema": "Introdução NÃO VOZ",
+          "detalhe": "- Instrutor explica os tipos de interação NÃO VOZ (CHAT e WS) e mostra no PPT como o passageiro pode entrar em contato pelo WS através do Latam.com",
+          "tiempo": "0:30:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g364eaff9e51_0_11#slide=id.g364eaff9e51_0_11"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "NÃO VOZ",
+          "dia": 6,
+          "tema": "Video 8 [Vendas] \nFerramenta (chat e WS)",
+          "detalhe": "- Instrutor apresenta Video de introdução.",
+          "tiempo": "1:00:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3ace22d935a_1_39#slide=id.g3ace22d935a_1_39"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "NÃO VOZ",
+          "dia": 6,
+          "tema": "Genesys Whatsapp/Chat",
+          "detalhe": "- Instrutor apresenta através do PPT:\nInterações através do serviço whatsapp\nFunções botões dinâmicos\nProcesso de Finalização\nInterações simultáneas\nTransferencia Exitosa\nInterações Pro ativas",
+          "tiempo": "0:15:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/40120600616851-Acesso-ao-Whatsapp-Genesys",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "NÃO VOZ",
+          "dia": 7,
+          "tema": "Whatsapp x Chat FCI/CDA",
+          "detalhe": "- Instrutor destaca que há duas opções de canais para o atendimento NOVOZ. Na opção chat, existem dois subtipos: Chat CDA e Chat FCI. Ele explica, passo a passo, os fluxos de atendimento e as diferenças entre os procedimentos que podem ser realizados em cada canal.",
+          "tiempo": "0:30:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g396acdc1034_0_0#slide=id.g396acdc1034_0_0"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "NÃO VOZ",
+          "dia": 7,
+          "tema": "Chat FCI x Chat CDA",
+          "detalhe": "- O instrutor reforça as diferenças entre os tipos de chat e aproveita para solicitar que um participante da turma explique, em poucas palavras, o que caracteriza cada um.",
+          "tiempo": "0:45:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g364eaff9e51_0_693#slide=id.g364eaff9e51_0_693"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "NÃO VOZ",
+          "dia": 7,
+          "tema": "Anexos",
+          "detalhe": "- Instrutor mostra conteúdos anexos através do PIC. Explica que se trata de um conjunto de documentos para auxiliar \nAnexo 1 - Fluxo derivação  Chat web Genesys (INVOL) \nAnexo 2 - Fluxo derivação  Chat web Genesys (Booking)\nAnexo 3 - Chat web Genesys (Alterações Voluntárias)\nAnexo 4 - WhatsApp Compra de bagagens\nAnexo 5 - Fluxo  Chat web Genesys (Ancillaries)\nAnexo 6 - Fluxo derivação Chat web Genesys (SDFC)\nAnexo 7 - Chat web Check-in\nAnexo 8 -  Chat web Devoluções\nAnexo 9 - Chat Web Cola Default Interações sem informação\nAnexo 10 - Chat web Booking milhas\nAnexo 11 - Chat Web Recovery Assentos \nAnexo 12 - Fluxo Derivação GBM (Google Business Messages) \nAnexo 13 - Fluxo Derivação Chat Web Necessidades Especiais",
+          "tiempo": "0:45:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/42671984510995-Anexos-N%C3%A3o-Voz-por-processo",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "NÃO VOZ",
+          "dia": 7,
+          "tema": "Envio Pendente",
+          "detalhe": "O instrutor informa que, quando há inatividade do passageiro superior a 5 minutos no atendimento NOVOZ, a conversa deve ser encaminhado para o fluxo Pendente Passageiro.",
+          "tiempo": "1:00:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3d43ae23fc7_0_0#slide=id.g3d43ae23fc7_0_0"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "NÃO VOZ",
+          "dia": 7,
+          "tema": "Solicitação de documentação online no atendimento telefônico, via WhastApp e Chat",
+          "detalhe": "- Instrutor introduz processos realizados pelo canal novoz. Revisa os processos que estão disponíveis para a solicitação e recepção de documentos estando online com o cliente, enfatizando os passos do processo WhatsApp e Chat, em seguida mostra o passo a passo.",
+          "tiempo": "0:30:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/34169487426323-Solicita%C3%A7%C3%A3o-de-documenta%C3%A7%C3%A3o-via-WhatsApp",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "NÃO VOZ",
+          "dia": 7,
+          "tema": "Forma de Pagamento OT WS",
+          "detalhe": "- Instrutor explica a FOP OT e mostra passo a passo PIC.",
+          "tiempo": "0:25:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/30270075990803-Forma-do-pagamento-OT-Pago-para-Canal-N%C3%A3o-Voz",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Prática",
+          "dia": 7,
+          "tema": "Simulador Genesys Whatsapp/Chat",
+          "detalhe": "- Instrutor explica como acessar o simulador e passa módulo NOVOZ. Na tela inicial o aluno deve inserir o BP.",
+          "tiempo": "1:15:00",
+          "herramientas": [
+            {
+              "tipo": "Simulador",
+              "url": "https://view.genially.com/699ceeb2c29dd6b1df292e3e"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Prática",
+          "dia": 7,
+          "tema": "Casos",
+          "detalhe": "- Instrutor mostra PPT com exemplos de casos reais e analisa junto com os alunos.",
+          "tiempo": "0:30:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3af9331569d_0_2#slide=id.g3af9331569d_0_2"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Resumo",
+          "dia": 8,
+          "tema": "Resumo do dia anterior",
+          "detalhe": "- Instrutor atividade de chuva de idéias para resgatar com os alunos os temas relevantes vistos no dia anterior.\nDica: Pode utilizar sites como Mentimeter para chuva de ideias ou escrever diretamente em um flipchart ou quadro os temas.",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1Ueeo7fq-I20yqWiWGPFgt1_Tt-Zqs5auNraYoezpgRw/edit?slide=id.g1e447d4f136_1_44#slide=id.g1e447d4f136_1_44"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Prática",
+          "dia": 8,
+          "tema": "Casos",
+          "detalhe": "- Instrutor mostra PPT com exemplos de casos reais e analisa junto com os alunos.",
+          "tiempo": "0:30:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3af9331569d_0_2#slide=id.g3af9331569d_0_2"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Avaliação",
+          "dia": 8,
+          "tema": "Jornada pelo Universo do Conhecimento\n\"NO VOZ\"",
+          "detalhe": "- Instrutor pede para os alunos abrirem o link e realizarem a avaliação.",
+          "tiempo": "0:45:00",
+          "herramientas": [
+            {
+              "tipo": "Forms KON",
+              "url": "https://forms.gle/5f9oLmWumH1GuAHq7"
+            },
+            {
+              "tipo": "Forms AeC",
+              "url": "https://docs.google.com/forms/d/e/1FAIpQLScH1YpeZWeykUWukHU_MxPfUMmkr6fUVmLKtzW92Kyu1-dQZQ/viewform"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Avaliação",
+          "dia": 8,
+          "tema": "Correção Avaliação",
+          "detalhe": "- Instrutor corrige a avaliação",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "Link",
+              "url": "-"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "Encerramento Expedição",
+          "dia": 8,
+          "tema": "Video 9 [Vendas] \nEncerramento Expedição Vendas",
+          "detalhe": "- Instrutor passa vídeo de encerramento",
+          "tiempo": "0:05:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1M1GHHYDo_P9m1G4ftnCou-SlhuvCWAShrlALCrPc5no/edit?slide=id.g3a31204c109_1_199#slide=id.g3a31204c109_1_199"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        }
+      ]
+    },
+    {
+      "tipo": "landing",
+      "label": "LANDING 1",
+      "rows": [
+        {
+          "macroTema": "LANDING",
+          "dia": 8,
+          "tema": "Configuração Perfil Zendesk",
+          "detalhe": "- Instrutor deve orientar agentes na configuração do perfil Zendesk, inserindo o logo da LATAM na foto de perfil e a assinatura deve ser o nome conforme registro MOP.",
+          "tiempo": "0:45:00",
+          "herramientas": [
+            {
+              "tipo": "PPT",
+              "url": "https://docs.google.com/presentation/d/1_9NGVYmcU7YEoy7x_av2hRctf2FinggX7T_Fi-CHm8o/edit?usp=drive_link"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LANDING",
+          "dia": 8,
+          "tema": "Genesys Cloud",
+          "detalhe": "- Instrutor apresenta no PIC as funcionalidades da ferramenta Genesys Cloud.\n- Instrutor reforça a importância de derivação à EPA em todas chamadas.\n- Instrutor mostra a diferença de transferência para Suporte  (VOZ e NOVOZ)",
+          "tiempo": "1:00:00",
+          "herramientas": [],
+          "iaPic": [
+            {
+              "label": "https://pic-latam.zendesk.com/hc/pt-br/articles/34047723735571-Detalhes-Genesys",
+              "url": "PIC"
+            }
+          ],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LANDING",
+          "dia": 8,
+          "tema": "Simulador Genesys",
+          "detalhe": "- Instrutor orienta os alunos a acessarem o simulador.\n Na tela inicial o aluno deve inserir o BP.",
+          "tiempo": "0:40:00",
+          "herramientas": [
+            {
+              "tipo": "Simulador",
+              "url": "https://view.genially.com/699ceeb2c29dd6b1df292e3e"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LANDING",
+          "dia": 8,
+          "tema": "Teste de Acessos",
+          "detalhe": "Testar acessos dos sistemas e Genesys Cloud",
+          "tiempo": "1:45:00",
+          "herramientas": [
+            {
+              "tipo": "Sistemas produção",
+              "url": "Sin enlace"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LANDING",
+          "dia": 9,
+          "tema": "Teste de Acessos",
+          "detalhe": "Testar acessos dos sistemas e Genesys Cloud",
+          "tiempo": "3:30:00",
+          "herramientas": [],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LANDING",
+          "dia": 9,
+          "tema": "Treinamentos obrigatórios",
+          "detalhe": "Treinamento obrigatório PCI LATAM",
+          "tiempo": "1:00:00",
+          "herramientas": [
+            {
+              "tipo": "SAP",
+              "url": "https://forms.gle/rKS7Kt63hopmVMJE7"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        },
+        {
+          "macroTema": "LANDING",
+          "dia": 9,
+          "tema": "Treinamentos obrigatórios",
+          "detalhe": "Código de Conduta",
+          "tiempo": "1:10:00",
+          "herramientas": [
+            {
+              "tipo": "SAP",
+              "url": "Sin enlace"
+            }
+          ],
+          "iaPic": [],
+          "consejo": ""
+        }
+      ]
     }
   ],
   "materiais": [],
