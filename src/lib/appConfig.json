@@ -7787,7 +7787,1768 @@
         "evalKon": [],
         "evalAec": [],
         "evalMsg": "Os alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\n\nDuração: 30 min",
-        "secciones": []
+        "secciones": [
+          {
+            "tipo": "mision1",
+            "label": "Introdução",
+            "rows": [
+              {
+                "macroTema": "Boas Vindas",
+                "dia": 1,
+                "tema": "Boas Vindas",
+                "detalhe": "-Instrutor apresenta vídeo “Introdução ao serviço HVC”",
+                "tiempo": "0:05:00",
+                "herramientas": [
+                  {
+                    "tipo": "PPT",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Boas Vindas",
+                "dia": 1,
+                "tema": "Boas Vindas",
+                "detalhe": "Conhecendo os clientes HVC ",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "PPT",
+                    "url": "https://docs.google.com/presentation/d/1CCxXGUdQ3G1fOSMD_UAmrikB2LFyAZ4hAvj7VfCrPx8/edit?slide=id.p799#slide=id.p799"
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              }
+            ]
+          },
+          {
+            "tipo": "mision1",
+            "label": "Missão 1: Latam PASS",
+            "rows": [
+              {
+                "macroTema": "Conhecendo o produto LATAM PASS",
+                "dia": 1,
+                "tema": "Conhecendo o produto LATAM PASS",
+                "detalhe": "-Instrutor explica a definição das categorias do programa LATAM Pass e suas metas para qualificação",
+                "tiempo": "00:12:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053169173-Produto-Categorias-e-Benef%C3%ADcios-LATAM-Pass"
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Número e categoria do sócio",
+                "dia": 1,
+                "tema": "Número e categoria do sócio",
+                "detalhe": "-Instrutor explica as atribuições do número de sócios de acordo com a tabela disponível no PIC",
+                "tiempo": "00:12:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053169173-Produto-Categorias-e-Benef%C3%ADcios-LATAM-Pass"
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Qualificação para as categorias Elite",
+                "dia": 1,
+                "tema": "Qualificação para as categorias Elite",
+                "detalhe": "- Instrutor deixar claro como o cliente se qualifica para categorias Elite, ensina como calcular e onde consultar os pontos qualificáveis",
+                "tiempo": "00:12:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053169173-Produto-Categorias-e-Benef%C3%ADcios-LATAM-Pass"
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Processo de qualificacação Anual",
+                "dia": 1,
+                "tema": "Processo de qualificacação Anual",
+                "detalhe": "-Instrutor explica como funciona o YEP, protocolos e mostra o painel de pontos qualificáveis",
+                "tiempo": "00:12:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053169173-Produto-Categorias-e-Benef%C3%ADcios-LATAM-Pass"
+                  }
+                ],
+                "consejo": "https://lookerstudio.google.com/u/0/reporting/30aae1d4-db9c-4d00-9599-8ea24a7627ae/page/tEnnC"
+              },
+              {
+                "macroTema": "Conhecendo os beneficios da categoria Elite",
+                "dia": 1,
+                "tema": "Conhecendo os beneficios da categoria Elite",
+                "detalhe": "-Instrutor explica os beneficios da categoria Elite através do site",
+                "tiempo": "00:12:00",
+                "herramientas": [
+                  {
+                    "tipo": "Site",
+                    "url": "https://latampass.latam.com/pt_br/categorias-elite/pontos-qualificaveis"
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Atividade 1: Briefing da missão:: Explorando Competências - Mapa de Benefícios por Categoria",
+                "dia": 1,
+                "tema": "Atividade 1: Briefing da missão:: Explorando Competências - Mapa de Benefícios por Categoria",
+                "detalhe": "Formato: times de 3–5 pessoas.\n\nMateriais: planilha/quadro com colunas “Categoria” e “Benefícios”\n\nDinâmica:\n\nCada time recebe 3–4 cartões de “Categoria” (ex.: Gold, Gold Plus, Platinum, Black, Black Signature).\nDevem listar os 4–6 benefícios principais de cada categoria (ex.: prioridade no check-in/embarque, bagagem, upgrades, bônus de pontos, assentos preferenciais etc.).\nEntregam em 7 min; o instrutor compara com a “gabarito” do artigo.\n\n\nDica para o instrturor e objetivo da atividade : reforçar diferenças sutis entre níveis (ex.: quantidade de bagagem extra, % de pontos bônus, regras de upgrade).",
+                "tiempo": "0:15:00",
+                "herramientas": [
+                  {
+                    "tipo": "PPT",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Benefícios para titulares de cartões bancários e do Clube Latam Pass",
+                "dia": 1,
+                "tema": "Benefícios para titulares de cartões bancários e do Clube Latam Pass",
+                "detalhe": "- Instrutor apresenta os benefícios dos titulares de cartão de crédito e clube Latam Pass. Em segui apresenta a planilha de benefícios dos cartões",
+                "tiempo": "0:15:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053169173-Produto-Categorias-e-Benef%C3%ADcios-LATAM-Pass"
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Atribuição de assento favorito para acompanhantes de passageiros black e black signature com tarifa \"Light/Plus/Standard\".",
+                "dia": 1,
+                "tema": "Atribuição de assento favorito para acompanhantes de passageiros black e black signature com tarifa \"Light/Plus/Standard\".",
+                "detalhe": "-Instrutor descrever o procedimento aplicável a passageiros Black/Black Signature para a alocação de assentos a acompanhantes com tarifas Light/Plus/Standard.”",
+                "tiempo": "0:15:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": "https://lucid.app/documents/embedded/48e0b506-f24f-40e4-90e7-e2f7fb204a7d?invitationId=inv_64f660de-8fa6-4005-9bbe-d419733336d3#"
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Devolução EMD de Assento ou Bagagem cobrado por erro de passageiro Preferente,",
+                "dia": 1,
+                "tema": "Devolução EMD de Assento ou Bagagem cobrado por erro de passageiro Preferente,",
+                "detalhe": "-O instrutor explica o fluxo de devolução para casos in que passageiros preferenciais pagaram, por engano, por assentos ou bagagens.",
+                "tiempo": "0:15:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": "https://lucid.app/documents/embedded/1eb1a282-a511-484d-abd1-fcef0b0c8eee/0_0?invitationId=inv_0835815c-af27-4c66-8c9c-47b5fff98d17"
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Extensão por licença  parental ",
+                "dia": 1,
+                "tema": "Extensão por licença  parental ",
+                "detalhe": "-O instrutor explica o procedimento para casos em que clientes preferenciais desejam fazer uma pausa por motivos de maternidade, nascimento de um filho ou adoção, resultando na redução da frequência de voos.",
+                "tiempo": "0:15:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": "https://lucid.app/documents/embedded/b435b3ca-3910-48d8-a2b6-2fe51c9f517e/Pdrr1UshZCgz?invitationId=inv_b25139bb-3caf-455e-b2d6-ea8842af802c"
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Segmento UPG Priority com cartões bancários",
+                "dia": 1,
+                "tema": "Segmento UPG Priority com cartões bancários",
+                "detalhe": "- Instrutor  explica que é possível atender os sócios que nos contatarem informando que não consegue visualizar o benefício do seu cartão bancário na prioridade da lista de postulação com trechos cortesia. através deste fluxo.",
+                "tiempo": "0:15:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": "https://lucid.app/documents/embedded/64e06907-1b33-4734-94a7-8aa5c7a5c759?invitationId=inv_d3701676-324d-4bf8-a016-6bb0b686343a#"
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Painel Promoções FFP 2025",
+                "dia": 1,
+                "tema": "Painel Promoções FFP 2025",
+                "detalhe": "- Instrutor apresenta o Painel de Promoções e explica que é possível consultar os detalhes das campanhas promocionais direcionadas aos sócios LATAM Pass durante o ano de 2025.",
+                "tiempo": "0:05:00",
+                "herramientas": [
+                  {
+                    "tipo": "Painel",
+                    "url": "https://lookerstudio.google.com/u/0/reporting/a4a2e2e7-f2d8-46f2-8809-e52beea50d8f/page/p_saq0x9vvrd"
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Painel Promoções FFP 2026",
+                "dia": 1,
+                "tema": "Painel Promoções FFP 2026",
+                "detalhe": "- Instrutor apresenta o Painel de Promoções e explica que é possível consultar os detalhes das campanhas promocionais direcionadas aos sócios LATAM Pass durante o ano de 2025.",
+                "tiempo": "0:05:00",
+                "herramientas": [
+                  {
+                    "tipo": "Descrição",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/42461678256403-25-06-25-FFP-LATAM-PASS-Painel-Promo%C3%A7%C3%B5es-FFP-2025"
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Bônus Latam Pass",
+                "dia": 1,
+                "tema": "Bônus Latam Pass",
+                "detalhe": "-Instrutor explica o artigo Bônus Latam Pass",
+                "tiempo": "0:55:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/37307768474899-B%C3%B4nus-LATAM-Pass"
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Atividade Ajuste de rota com o navegador:",
+                "dia": 1,
+                "tema": "Atividade Ajuste de rota com o navegador: Bônus LATAM PASS",
+                "detalhe": "- Instrutor vai apresentar 3 cenários e pedir a justificativa com base no arquivo do PIC, atividade pode realizada em dupla\nCenário 1: Cliente comprou passagem no site oficial durante uma campanha com 20% de bônus. A tarifa foi “Promo” e o CPF está associado ao LATAM Pass. Pergunta: O bônus será creditado? Quando? Algum risco de negação?\n\nCenário 2 : Cliente remarcou o voo para data fora do período da campanha. Pergunta: O bônus permanece? O que deve ser comunicado ao cliente?\nCenário 3:\nCompra feita via agência parceira que não participa da campanha, com cartão de terceiros. Pergunta: O bônus é aplicado? Se não, qual orientação correta?\nMicrosimulação de atendimento (5 min)\nO participante escreve uma resposta clara e empática para um cliente que pergunta:\nCritérios: clareza, prazos, condições, e orientação sobre acompanhamento.",
+                "tiempo": "00:50:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/11712520071443-Remarca%C3%A7%C3%B5es-volunt%C3%A1rias"
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Upload de Respaldo no Genesys Cloud",
+                "dia": 1,
+                "tema": "Upload de Respaldo no Genesys Cloud",
+                "detalhe": "- Instrutor apresenta sistema para consulta de status de conta FFP",
+                "tiempo": "0:20:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Atualização de email ",
+                "dia": 1,
+                "tema": "Atualização de email ",
+                "detalhe": "Instrutor explica o passo a passo para realizar o upload de documento através do Genesys",
+                "tiempo": "0:10:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Conta ativa com problemas de transação",
+                "dia": 1,
+                "tema": "Conta ativa com problemas de transação",
+                "detalhe": "-O instrutor contextualiza os procedimento e apresenta o fluxo HVC +  DP FFP ( se aplicável para BR) ",
+                "tiempo": "0:30:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Erro de criação do perfil Site Clientes",
+                "dia": 2,
+                "tema": "Erro de criação do perfil Site Clientes",
+                "detalhe": "-O instrutor contextualiza os procedimento e apresenta o fluxo HVC +  DP FFP ( se aplicável para BR) ",
+                "tiempo": "0:20:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Mudança País De Residência Sócio",
+                "dia": 2,
+                "tema": "Mudança País De Residência Sócio",
+                "detalhe": "-O instrutor contextualiza os procedimento e apresenta o fluxo HVC +  DP FFP ( se aplicável para BR) ",
+                "tiempo": "0:20:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Encerramento De Conta LATAM Pass",
+                "dia": 2,
+                "tema": "Encerramento De Conta LATAM Pass",
+                "detalhe": "-O instrutor contextualiza os procedimento e apresenta o fluxo HVC +  DP FFP ( se aplicável para BR) ",
+                "tiempo": "0:30:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Correção de nome / sobrenome /data de nascimento na conta LATAM Pass",
+                "dia": 2,
+                "tema": "Correção de nome / sobrenome /data de nascimento na conta LATAM Pass",
+                "detalhe": "-O instrutor contextualiza os procedimento e apresenta o fluxo HVC +  DP FFP ( se aplicável para BR) ",
+                "tiempo": "0:20:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Bloqueio por comercio de pontos ou resgates para terceiros ",
+                "dia": 2,
+                "tema": "Bloqueio por comercio de pontos ou resgates para terceiros ",
+                "detalhe": "- Instrutor faz uma breve apresentação sobre a tratativa de casos contendo dados sensíveis",
+                "tiempo": "0:10:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/45219338064275-Tratamento-de-casos-com-informa%C3%A7%C3%B5es-sens%C3%ADveis"
+                  },
+                  {
+                    "label": "Fluxo",
+                    "url": "https://lucid.app/documents/embedded/3ae11b12-3029-4d75-9f90-9df355cebd7f?invitationId=inv_63b1d1f7-47ac-478f-868b-29405ba30573#"
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Conta com saldos irregulares",
+                "dia": 2,
+                "tema": "Conta com saldos irregulares",
+                "detalhe": "- Instrutor faz uma breve apresentação sobre a tratativa de casos contendo dados sensíveis",
+                "tiempo": "0:10:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Desconhecimento de resgate ",
+                "dia": 2,
+                "tema": "Desconhecimento de resgate ",
+                "detalhe": "- Instrutor faz uma breve apresentação sobre a tratativa de casos contendo dados sensíveis",
+                "tiempo": "0:20:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "LOGIN status da Conta FFP auditado, fraude ou conta ativa com erro",
+                "dia": 2,
+                "tema": "LOGIN status da Conta FFP auditado, fraude ou conta ativa com erro",
+                "detalhe": "- Instrutor faz uma breve apresentação sobre a tratativa de casos contendo dados sensíveis",
+                "tiempo": "0:10:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Vencimento de milhas/pontos por conta falso positiva",
+                "dia": 2,
+                "tema": "Vencimento de milhas/pontos por conta falso positiva",
+                "detalhe": "- Instrutor faz uma breve apresentação sobre a tratativa de casos contendo dados sensíveis",
+                "tiempo": "0:05:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Soluções para Latam Wallet Suspensa ou Movimentos não Reconhecidos",
+                "dia": 2,
+                "tema": "Soluções para Latam Wallet Suspensa ou Movimentos não Reconhecidos",
+                "detalhe": "- Instrutor faz uma breve apresentação sobre a tratativa de casos contendo dados sensíveis",
+                "tiempo": "0:05:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "",
+                "dia": 2,
+                "tema": "",
+                "detalhe": "- Instrutor faz uma breve apresentação sobre a tratativa de casos contendo dados sensíveis",
+                "tiempo": "0:05:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              }
+            ]
+          },
+          {
+            "tipo": "mision1",
+            "label": "Missão 2: Vendas",
+            "rows": [
+              {
+                "macroTema": "Resgate de milhas com tarifas comerciais ",
+                "dia": 2,
+                "tema": "Resgate de milhas com tarifas comerciais ",
+                "detalhe": "- Instrutor faz uma breve apresentação sobre a tratativa de casos contendo dados sensíveis",
+                "tiempo": "0:40:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Processo alternativo de resgate ",
+                "dia": 2,
+                "tema": "Processo alternativo de resgate ",
+                "detalhe": "- Instrutor apresenta o processo de emissão com milhas através do site e pelo agente 360 ",
+                "tiempo": "0:40:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Processo alternativo de resgate ",
+                "dia": 2,
+                "tema": "Processo alternativo de resgate ",
+                "detalhe": "- Instrutor apresenta Resgate alternativo resgate alternativo fora do E- Business e Honrar tarifas\n",
+                "tiempo": "0:30:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Processo alternativo de resgate ",
+                "dia": 2,
+                "tema": "Processo alternativo de resgate ",
+                "detalhe": "- Instrutor apresenta resgate de Múltiplos passageiros na mesma ordem",
+                "tiempo": "0:30:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Processo alternativo de resgate ",
+                "dia": 2,
+                "tema": "Processo alternativo de resgate ",
+                "detalhe": "- Instrutor apresenta Resgate alternativo fora do E- Business - Moeda distinta",
+                "tiempo": "0:30:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Resgate 100% OLA",
+                "dia": 2,
+                "tema": "Resgate 100% OLA",
+                "detalhe": "- Instrutor explica as  incidências no processo de resgate no site para clientes ",
+                "tiempo": "0:15:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Resgate 100% OLA",
+                "dia": 3,
+                "tema": "Resgate 100% OLA",
+                "detalhe": "- Instrutor apresenta forma de resgate com outras CIAs",
+                "tiempo": "1:00:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Resgate 100% OLA",
+                "dia": 3,
+                "tema": "Resgate 100% OLA",
+                "detalhe": "",
+                "tiempo": "0:45:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Atividade controle de voo e lançamento: atividade prática ",
+                "dia": 3,
+                "tema": "Atividade controle de voo e lançamento: atividade prática \nSimulador Resgate 100% OLA (BR)",
+                "detalhe": "-O Instrutor orienta os alunos a emitirem de acordo com o Sabre de treinamento, aqui os agentes podem emitir voos OLA e voos 100% LATAM ",
+                "tiempo": "0:40:00",
+                "herramientas": [
+                  {
+                    "tipo": "Painel",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Retomar reservas de compras pendentes através do site",
+                "dia": 3,
+                "tema": "Retomar reservas de compras pendentes através do site",
+                "detalhe": "-O Instrutor orienta os alunos a emitirem de acordo com o simulador de reservas",
+                "tiempo": "0:15:00",
+                "herramientas": [
+                  {
+                    "tipo": "PPT",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Honrar Tarifa (tentativas de compra no site)",
+                "dia": 3,
+                "tema": "Honrar Tarifa (tentativas de compra no site)",
+                "detalhe": "- O instrutor explica como retoma a reserva automaticamente se a compra online não for finalizada.",
+                "tiempo": "0:15:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/11134876798355-Incidentes-de-emiss%C3%A3o-no-site-dinheiro-retido-honrar-tarifa-retomar-reservas-etc"
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Compras com dinheiro retido na LATAM Wallet",
+                "dia": 3,
+                "tema": "Compras com dinheiro retido na LATAM Wallet",
+                "detalhe": "-O instrutor explica como garantir  a mesma tarifa quando o cliente não consegue concluir a compra ou resgate online, sem qualquer débito de dinheiro ou milhas.",
+                "tiempo": "0:15:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/11134876798355-Incidentes-de-emiss%C3%A3o-no-site-dinheiro-retido-honrar-tarifa-retomar-reservas-etc"
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Compras com dinheiro retido na LATAM Wallet",
+                "dia": 3,
+                "tema": "Compras com dinheiro retido na LATAM Wallet",
+                "detalhe": "- Instrutor explica os caos de compra online quando não foi emitida, o valor foi debitado e ficou retido na LATAM Wallet ",
+                "tiempo": "0:15:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/11134876798355-Incidentes-de-emiss%C3%A3o-no-site-dinheiro-retido-honrar-tarifa-retomar-reservas-etc"
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Pedido de Lei Anac - Brasil",
+                "dia": 3,
+                "tema": "Pedido de Lei Anac - Brasil",
+                "detalhe": "- Instrutor explica os caos de compra online quando não foi emitida, o valor foi debitado e ficou retido na LATAM Wallet ",
+                "tiempo": "0:15:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/11134876798355-Incidentes-de-emiss%C3%A3o-no-site-dinheiro-retido-honrar-tarifa-retomar-reservas-etc"
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Lei Geral de Proteção de dados Brasil",
+                "dia": 3,
+                "tema": "Lei Geral de Proteção de dados Brasil",
+                "detalhe": "- Instrutor faz uma revisão com os agentes sobre o pedido de Lei Anac Brasil e explica as exceções aplicadas para esse caso ",
+                "tiempo": "0:15:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Tarifa de Emergência Falecimento\ne  Hospitalização",
+                "dia": 3,
+                "tema": "Tarifa de Emergência Falecimento\ne  Hospitalização",
+                "detalhe": "- Instrutor faz uma revisão com os agentes sobre lei de proteção de dados Brasil ",
+                "tiempo": "0:40:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Atividade controle de voo e lançamento: atividade prática ",
+                "dia": 3,
+                "tema": "Atividade controle de voo e lançamento: atividade prática \nEmissão e reembolso com tarifa de emergência ",
+                "detalhe": "-O instrutor contextualiza o procedimento e apresenta o fluxo de validar a documentação e realizar a gestão de tarifa ",
+                "tiempo": "0:30:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Passe livre judicial ",
+                "dia": 3,
+                "tema": "Passe livre judicial ",
+                "detalhe": "\n- Instrutor pede para os agentes emitirem passagens através do SABRE de treinamento , essas emissões devem ser feitas através da tarifa de emegência. \n- Instrutor pede para os agentes simularem o reembolso de passagens de tarifa de emergência  através do SABRE de treinamento.",
+                "tiempo": "0:05:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Passe livre judicial ",
+                "dia": 3,
+                "tema": "Passe livre judicial ",
+                "detalhe": "- Instrutor contextualiza sobre os passageiros vigentes \"Passe livre judicial\" e explica através do fluxo como tratar estes casos ",
+                "tiempo": "0:10:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              }
+            ]
+          },
+          {
+            "tipo": "mision1",
+            "label": "Missão 3: Alterações",
+            "rows": [
+              {
+                "macroTema": "Upgrade de Cabine (com trechos de cortesia)",
+                "dia": 3,
+                "tema": "Upgrade de Cabine (com trechos de cortesia)",
+                "detalhe": "- Instrutor explica as considerações para solicitação de UPG por trechos e apresenta o passo a passo através do A360 e Sabre com base no fluxo",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Upgrade de Cabine (com trechos de cortesia)",
+                "dia": 3,
+                "tema": "Upgrade de Cabine (com trechos de cortesia)",
+                "detalhe": "- Instrutor explica as considerações para solicitação de UPG por trechos e apresenta o passo a passo através do A360 e Sabre com base no fluxo",
+                "tiempo": "0:05:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Upgrade de Cabine (com trechos de cortesia)",
+                "dia": 3,
+                "tema": "Upgrade de Cabine (com trechos de cortesia)",
+                "detalhe": "- Instrutor explica as considerações para solicitação de UPG por trechos e apresenta o passo a passo através do A360 e Sabre com base no fluxo",
+                "tiempo": "0:05:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "Passo a passo A360",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Processo postulação manual UPG Interact Airport",
+                "dia": 4,
+                "tema": "Processo postulação manual UPG Interact Airport",
+                "detalhe": "- Instrutor explica as considerações para solicitação de UPG por trechos e apresenta o passo a passo através do A360 e Sabre com base no fluxo",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Cancelamento Manual de Postulação de UPG de Cortesia",
+                "dia": 4,
+                "tema": "Cancelamento Manual de Postulação de UPG de Cortesia",
+                "detalhe": "- O Instrutor apresenta o fluxo e explica o processo de inscrição manual do UPG Interact Airport e o fluxo que se aplica ao serviço HVC.",
+                "tiempo": "0:05:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Opções de UPG",
+                "dia": 4,
+                "tema": "Opções de UPG",
+                "detalhe": "- O Instrutor apresenta o fluxo e explica o processo de cancelamento manual do UPG através do Interact Airport",
+                "tiempo": "0:05:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Opções de UPG",
+                "dia": 4,
+                "tema": "Opções de UPG",
+                "detalhe": "- Instrutor apresenta os outros tipos de upgrade que um passageiro pode solicitar. Reforçando as considerações.",
+                "tiempo": "0:05:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Opções de UPG",
+                "dia": 4,
+                "tema": "Opções de UPG",
+                "detalhe": "Reembolso involuntário do EMD Seatboost",
+                "tiempo": "0:05:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Opções de UPG",
+                "dia": 4,
+                "tema": "Opções de UPG",
+                "detalhe": "Devolução de EMD (Leilão/Instantâneo)  por Downgrade de cabine",
+                "tiempo": "0:05:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Postulacão UPG",
+                "dia": 4,
+                "tema": "Postulacão UPG",
+                "detalhe": "Anulação de uma Aposta (Plusgrade)",
+                "tiempo": "0:05:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Postulacão UPG",
+                "dia": 4,
+                "tema": "Postulacão UPG",
+                "detalhe": "-Instrutor mostra a partir do PIC a plataforma para visualizar as seções de cortesia que um membro possui.",
+                "tiempo": "0:05:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Ajuste de rota com o navegador: \nProcesso de inscrição manual do Interact Airport",
+                "dia": 4,
+                "tema": "Ajuste de rota com o navegador: \nProcesso de inscrição manual do Interact Airport",
+                "detalhe": "-Instrutor mostra a partir do PIC a plataforma para visualizar as seções de cortesia que um membro possui.",
+                "tiempo": "0:15:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "Plataforma",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Opções de Upgrade (reembolso involuntário - Seatboost e Downgrade de cabine)",
+                "dia": 4,
+                "tema": "Opções de Upgrade (reembolso involuntário - Seatboost e Downgrade de cabine)",
+                "detalhe": "Resolva o seguinte caso em pares:\nCaso: Ao solicitar um manual cortesia UPG, siga o passo a passo e verifique se ele atende às características para o processo UPG. \nDe acordo com o fluxo, encontre a solução para o passageiro e depois apresente a solução com a ajuda do Instrutor.",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "PPT",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Opções de Upgrade (reembolso involuntário - Seatboost e Downgrade de cabine)",
+                "dia": 4,
+                "tema": "Opções de Upgrade (reembolso involuntário - Seatboost e Downgrade de cabine)",
+                "detalhe": "Instrutor faz um breve resumo sobre opções de upgrade (Leilão/Instantâneo). E reforça sobre os passageiros com Upg confirmado através do Seatboost que não utilizam por cancelamento ou remarcação de voo.",
+                "tiempo": "0:10:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Correção de nome em reservas com UPG confirmado",
+                "dia": 4,
+                "tema": "Correção de nome em reservas com UPG confirmado",
+                "detalhe": "Instrutor faz um breve resumo sobre opções de upgrade (Leilão/Instantâneo). E reforça sobre os passageiros com Upg confirmado através do Seatboost que não utilizam por cancelamento ou remarcação de voo.",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Antecipação e postergação Alteração de voo por Antecipação/Postergação a sócios Elite isentos de cobrança",
+                "dia": 4,
+                "tema": "Antecipação e postergação Alteração de voo por Antecipação/Postergação a sócios Elite isentos de cobrança",
+                "detalhe": "- Instutor explica o procedimento para alteração de nome nos casos em que o UPG está confirmado ",
+                "tiempo": "0:10:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Emissão/ Reemissão EXST/CBBG",
+                "dia": 4,
+                "tema": "Emissão/ Reemissão EXST/CBBG",
+                "detalhe": "- Instrutor apresenta  Antecipação/Postergação de Voo Confirmado (Sabre / E-Business) para a sócios Elite isentos de cobrança",
+                "tiempo": "0:20:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              }
+            ]
+          },
+          {
+            "tipo": "mision1",
+            "label": "Missão 4: Compensações e Staff Travel",
+            "rows": [
+              {
+                "macroTema": "Latam Wallet -Países e contas bancárias para retirada de dinheiro",
+                "dia": 4,
+                "tema": "Latam Wallet -Países e contas bancárias para retirada de dinheiro",
+                "detalhe": "- Instutor explica o procedimento ao assento adicional e o fluxo que se aplica ao atendimento HVC ",
+                "tiempo": "00:05:00",
+                "herramientas": [
+                  {
+                    "tipo": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360052932933-Assento-Adicional-EXST-CBBG-"
+                  },
+                  {
+                    "tipo": "Fluxo HVC",
+                    "url": "https://lucid.app/documents/embedded/ef69cbb4-c92c-4488-a924-00f291811644?invitationId=inv_d09465bf-3dc2-41f3-aba3-65841a686198#"
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Latam Wallet -Países e contas bancárias para retirada de dinheiro",
+                "dia": 4,
+                "tema": "Latam Wallet -Países e contas bancárias para retirada de dinheiro",
+                "detalhe": "- Instutor explica o procedimento ao assento adicional e o fluxo que se aplica ao atendimento HVC ",
+                "tiempo": "0:05:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Solução de problemas para troca de TV; Consulta de pagamento: recibo de pagamento do Travel Voucher",
+                "dia": 4,
+                "tema": "Solução de problemas para troca de TV; Consulta de pagamento: recibo de pagamento do Travel Voucher",
+                "detalhe": "- Instutor explica o procedimento ao assento adicional e o fluxo que se aplica ao atendimento HVC ",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Transferência Bancária",
+                "dia": 4,
+                "tema": "Transferência Bancária",
+                "detalhe": "- O instrutor entra no capítulo Compensações no PIC, analisa e apresenta os fluxos HVC + DT DEV",
+                "tiempo": "0:15:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Solução para problemas ao resgatar um TV: Envio do número do Travel Voucher",
+                "dia": 4,
+                "tema": "Solução para problemas ao resgatar um TV: Envio do número do Travel Voucher",
+                "detalhe": "- O instrutor entra no capítulo Compensações no PIC, analisa e apresenta los fluxos HVC + DT DEV",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Troca de TV in transferência de dinheiro: Correção de dados de transferência",
+                "dia": 4,
+                "tema": "Troca de TV em transferência de dinheiro: Correção de dados de transferência",
+                "detalhe": "- O instrutor entra no capítulo Compensações no PIC, analisa e apresenta os fluxos HVC + DT DEV",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Solução para problemas ao resgatar um TV: Desconhecimento de  resgate do Travel Voucher",
+                "dia": 4,
+                "tema": "Solução para problemas ao resgatar um TV: Desconhecimento de  resgate do Travel Voucher",
+                "detalhe": "- O instrutor entra no capítulo Compensações no PIC, analisa e apresenta os fluxos HVC + DT DEV",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Generalidades TV:   Reverter Travel Voucher (mudança de Status)",
+                "dia": 4,
+                "tema": "Generalidades TV:   Reverter Travel Voucher (mudança de Status)",
+                "detalhe": "- O instrutor entra no capítulo Compensações no PIC, analisa e apresenta os fluxos HVC + DT DEV",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Solução para problemas de troca de TV: solicitação de correção de TV para devolução",
+                "dia": 4,
+                "tema": "Solução para problemas de troca de TV: solicitação de correção de TV para devolução",
+                "detalhe": "- O instrutor entra no capítulo Compensações no PIC, analisa e apresenta os fluxos HVC + DT DEV",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Generalidades TV: Solicitação de criação de Travel Voucher (compensação de aeroporto ) ",
+                "dia": 4,
+                "tema": "Generalidades TV: Solicitação de criação de Travel Voucher (compensação de aeroporto ) ",
+                "detalhe": "- O instrutor entra no capítulo Compensações no PIC, analisa e apresenta los fluxos HVC + DT DEV",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Troca de TV em transferência de dinheiro: Consulta de transferência negada",
+                "dia": 4,
+                "tema": "Troca de TV em transferência de dinheiro: Consulta de transferência negada",
+                "detalhe": "- O instrutor entra no capítulo Compensações no PIC, analisa e apresenta os fluxos HVC + DT DEV",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Solução para problemas no resgate de TV: Consulta sobre pagamento de Travel Voucher",
+                "dia": 4,
+                "tema": "Solução para problemas no resgate de TV: Consulta sobre pagamento de Travel Voucher",
+                "detalhe": "- O instrutor entra no capítulo Compensações no PIC, analisa e apresenta os fluxos HVC + DT DEV",
+                "tiempo": "0:10:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Atividade Guerra nas estrelas: QUIZ \" Travel Voucher\"  ",
+                "dia": 4,
+                "tema": "Atividade Guerra nas estrelas: QUIZ \" Travel Voucher\"  ",
+                "detalhe": "- O instrutor entra no capítulo Compensações no PIC, analisa e apresenta os fluxos HVC + DT DEV",
+                "tiempo": "0:25:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Emissão, reemissão e devolução de Staff Travel ",
+                "dia": 4,
+                "tema": "Emissão, reemissão e devolução de Staff Travel ",
+                "detalhe": "- O instrutor apresenta o QUIZ nave espacial  com perguntas relacionadas ao TV ",
+                "tiempo": "0:30:00",
+                "herramientas": [
+                  {
+                    "tipo": "Genially",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": " Benefícios FFP para líderes e espirito de serviços",
+                "dia": 4,
+                "tema": " Benefícios FFP para líderes e espirito de serviços",
+                "detalhe": "- O instutor revisa o procedimento de Emissão, reemissão e devolução de Staff Travel de acordo com o PIC e reforça os fluxos ",
+                "tiempo": "00:30:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Beneficios para Executivos LATAM Black e B. Sig",
+                "dia": 4,
+                "tema": "Beneficios para Executivos LATAM Black e B. Sig",
+                "detalhe": "- O instrutor mostra no PIC os benefícios do FFP para líderes de serviço e passageiros Black, BL Signature e executivos LATAM.",
+                "tiempo": "00:30:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "  Exceções comerciais para Tkt Staff Travel com desconto EM",
+                "dia": 5,
+                "tema": "  Exceções comerciais para Tkt Staff Travel com desconto EM",
+                "detalhe": "- O instrutor mostra no PIC os benefícios do FFP para líderes de serviço e passageiros Black, BL Signature e executivos LATAM.",
+                "tiempo": "00:20:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Exercício ",
+                "dia": 5,
+                "tema": "Exercício ",
+                "detalhe": "\nO instrutor mostra o fluxo de exceções comerciais para viagens de TKT Staff Travel de acordo com o tipo de desconto.",
+                "tiempo": "0:45:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              }
+            ]
+          },
+          {
+            "tipo": "mision1",
+            "label": "Missão 5: Devoluções",
+            "rows": [
+              {
+                "macroTema": "Cielo ",
+                "dia": 5,
+                "tema": "Sistema Cielo",
+                "detalhe": "-O instrutor apresenta o que é Cielo, para que serve, acesso ao sistema e como faz a busca de carta de cancelamento.",
+                "tiempo": "0:25:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/36698766344467-Portal-Cielo-Exclusivo-Dream-Team-Devolu%C3%A7%C3%B5es-BR"
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Revera ",
+                "dia": 5,
+                "tema": "Sistema Revera",
+                "detalhe": "-O instrutor apresenta o que é o Revera, para que serve, acesso ao sistema e como faz a busca de bilhetes emitidos com mais de 2 anos .",
+                "tiempo": "0:25:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/32366805840403-Revera-Somente-para-o-Brasil"
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Reembolso de EMD ",
+                "dia": 5,
+                "tema": "Reembolso de EMD ",
+                "detalhe": "Exercícios para solicitação de postulação manual no Interact Airport para viagens de  Staff Travel.",
+                "tiempo": "0:20:00",
+                "herramientas": [
+                  {
+                    "tipo": "PPT\nSabre Cert",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Devolução EMD cobrado por erro de passageiro preferente",
+                "dia": 5,
+                "tema": "Devolução EMD cobrado por erro de passageiro preferente",
+                "detalhe": "-O instrutor contextualiza o procedimento e apresenta o fluxo HVC + DT DEV de acordo com o PIC",
+                "tiempo": "0:20:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Devoluções Staff Travel ",
+                "dia": 5,
+                "tema": "Devoluções Staff Travel ",
+                "detalhe": "-O instrutor contextualiza o procedimento e apresenta o fluxo HVC + DT DEV de acordo com o PIC",
+                "tiempo": "0:30:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Anulação de cobrança ",
+                "dia": 5,
+                "tema": "Anulação de cobrança ",
+                "detalhe": "-O instrutor contextualiza o procedimento e apresenta o fluxo HVC + DT DEV de acordo com o PIC",
+                "tiempo": "0:30:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Cash In falhou",
+                "dia": 5,
+                "tema": "Cash In falhou",
+                "detalhe": "-O instrutor contextualiza o procedimento e apresenta o fluxo HVC + DT DEV de acordo com o PIC",
+                "tiempo": "0:25:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Cobrança de Valores Incorretos",
+                "dia": 5,
+                "tema": "Cobrança de Valores Incorretos",
+                "detalhe": "-O instrutor contextualiza o procedimento e apresenta o fluxo HVC + DT DEV de acordo com o PIC",
+                "tiempo": "0:30:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Comprovantes de pagamentos em moedas diferente de BRL",
+                "dia": 5,
+                "tema": "Comprovantes de pagamentos em moedas diferente de BRL",
+                "detalhe": "-O instrutor contextualiza o procedimento e apresenta o fluxo HVC + DT DEV de acordo com o PIC",
+                "tiempo": "0:20:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Atividade relatório de exploração ",
+                "dia": 5,
+                "tema": "Atividade relatório de exploração ",
+                "detalhe": "-O instrutor mostra no Zendesk e analisa juntos com os agentes casos em que o passageiro solicita reembolso ",
+                "tiempo": "0:20:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Cobrança em duplicidade ",
+                "dia": 5,
+                "tema": "Cobrança em duplicidade ",
+                "detalhe": "- Instrutor segue a linha do tempo do mapa do universo para chegar a solução para o cliente ",
+                "tiempo": "0:30:00",
+                "herramientas": [
+                  {
+                    "tipo": "Genially",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Consulta por reembolso Negado / Recusado",
+                "dia": 6,
+                "tema": "Consulta por reembolso Negado / Recusado",
+                "detalhe": "-O instrutor contextualiza o procedimento e apresenta o fluxo de acordo com o PIC ( fluxos de empoderamente HVC + DT DEV) ",
+                "tiempo": "0:15:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "Fluxo",
+                    "url": "https://lucid.app/documents/embedded/61a6506e-fa95-4c82-82ca-9511954be967?invitationId=inv_3ea3c67a-c40d-4eef-8656-2ed8cfa1efee#"
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Consulta por reembolso fora do prazo/pagamento não creditado",
+                "dia": 6,
+                "tema": "Consulta por reembolso fora do prazo/pagamento não creditado",
+                "detalhe": "-O instrutor contextualiza o procedimento e apresenta o fluxo de acordo com o PIC ( fluxos de empoderamente HVC + DT DEV) ",
+                "tiempo": "0:30:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Consulta de reembolso pago com discordância de valor",
+                "dia": 6,
+                "tema": "Consulta de reembolso pago com discordância de valor",
+                "detalhe": "-O instrutor contextualiza o procedimento e apresenta o fluxo de acordo com o PIC ( fluxos de empoderamente HVC + DT DEV) ",
+                "tiempo": "0:30:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": " Passageiros com conta em outros países\nMercados sem cash out",
+                "dia": 6,
+                "tema": " Passageiros com conta em outros países\nMercados sem cash out",
+                "detalhe": "-O instrutor contextualiza o procedimento e apresenta o fluxo de acordo com o PIC ( fluxos de empoderamente HVC + DT DEV) ",
+                "tiempo": "0:45:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Atividade relatório de exploração ",
+                "dia": 6,
+                "tema": "Atividade relatório de exploração ",
+                "detalhe": "-O instrutor contextualiza o procedimento e apresenta o fluxo de acordo com o PIC ( fluxos de empoderamente HVC + DT DEV) ",
+                "tiempo": "0:55:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Consulta por reembolso pago com TV ",
+                "dia": 6,
+                "tema": "Consulta por reembolso pago com TV ",
+                "detalhe": "-O instrutor mostra no Zendesk e analisa juntos com os agentes casos em que o passageiro solicita reembolso ",
+                "tiempo": "0:25:00",
+                "herramientas": [
+                  {
+                    "tipo": "PPT",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Criação TV Saldo a Favor - Crédito TV a LATAM wallet",
+                "dia": 6,
+                "tema": "Criação TV Saldo a Favor - Crédito TV a LATAM wallet",
+                "detalhe": "-O instrutor contextualiza o procedimento e apresenta o fluxo de acordo com o PIC ( fluxos de empoderamente HVC + DT DEV) ",
+                "tiempo": "0:25:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Reembolso de pontos - Taxas foram pagas",
+                "dia": 6,
+                "tema": "Reembolso de pontos - Taxas foram pagas",
+                "detalhe": "-O instrutor contextualiza o procedimento e apresenta o fluxo de acordo com o PIC ( fluxos de empoderamente HVC + DT DEV) ",
+                "tiempo": "0:30:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Atividade relatório de exploração ",
+                "dia": 6,
+                "tema": "Atividade relatório de exploração ",
+                "detalhe": "- O instrutor mostra casos de solicitação de reembolso negado   ( cliente Black Sig. ) e gera uma discussão com a participação e comentários dos alunos.",
+                "tiempo": "0:40:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              }
+            ]
+          },
+          {
+            "tipo": "mision1",
+            "label": "Missão 6: Reclamações",
+            "rows": [
+              {
+                "macroTema": "Reclamações de  Casos LAE\n-Casos sensíveis ",
+                "dia": 6,
+                "tema": "Reclamações de  Casos LAE\n-Casos sensíveis ",
+                "detalhe": "- O instrutor mostra uma chamada de solicitação de reembolso negado   ( cliente Black Sig. ) e gera uma discussão com a participação e comentários dos alunos.",
+                "tiempo": "0:30:00",
+                "herramientas": [
+                  {
+                    "tipo": "PPT",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Reclamações por cobranças",
+                "dia": 6,
+                "tema": "Reclamações por cobranças",
+                "detalhe": "O instrutor reforça o conteúdo do processo “Casos Sensíveis”\nComo trabalhar esses casos com casos sensíveis.",
+                "tiempo": "0:15:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Reclamações por cobranças",
+                "dia": 7,
+                "tema": "Reclamações por cobranças",
+                "detalhe": "O instrutor reforça o conteúdo do processo “Casos Sensíveis”\nComo trabalhar esses casos com casos sensíveis.",
+                "tiempo": "0:15:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Solicitação de chamada FALE ( revisão) ",
+                "dia": 7,
+                "tema": "Solicitação de chamada FALE ( revisão) ",
+                "detalhe": "- Instrutor  revisa fluxo sobre anulação de cobrança",
+                "tiempo": "0:30:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Gestão de Reclamações SAB",
+                "dia": 7,
+                "tema": "Gestão de Reclamações SAB",
+                "detalhe": "- O instrutor revisa as solicitações de ligações dos clientes no Brasil em caso de possíveis quebra de serviço , de acordo com o fluxo no PIC ",
+                "tiempo": "0:15:00",
+                "herramientas": [
+                  {
+                    "tipo": "Fluxo",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "consejo": ""
+              },
+              {
+                "macroTema": "LIVRO DE \nRECLAMAÇÕES ",
+                "dia": 7,
+                "tema": "LIVRO DE \nRECLAMAÇÕES ",
+                "detalhe": "- Instrutor explica a compensação para assentos abaixo do padrão na cabine Economy",
+                "tiempo": "0:20:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Gastos incorridos",
+                "dia": 7,
+                "tema": "Gastos incorridos",
+                "detalhe": "- Instrutor explica qual a defiição e como os gastos BR chegam para as bandeijas HVC de acordo com o tipo de cliente.\n- Instrutor mostra os tópicos de como se deve gerenciar essas reclamações e prazos para tratativa.",
+                "tiempo": "0:30:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Exceções cliente HVC",
+                "dia": 7,
+                "tema": "Exceções cliente HVC",
+                "detalhe": "- O instrutor recapitula o fluxo a ser seguido para o reembolso de despesas básicas.",
+                "tiempo": "0:15:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              },
+              {
+                "macroTema": "Exceções cliente HVC",
+                "dia": 7,
+                "tema": "Exceções cliente HVC",
+                "detalhe": "- Instrutor explica a Cortesia HVC",
+                "tiempo": "0:15:00",
+                "herramientas": [],
+                "iaPic": [
+                  {
+                    "label": "PIC",
+                    "url": ""
+                  }
+                ],
+                "consejo": ""
+              }
+            ]
+          }
+        ]
       },
       {
         "texture": "RINGS",
