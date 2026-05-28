@@ -213,6 +213,21 @@
               "tipo": "mision1",
               "rows": [
                 {
+                  "macroTema": "Onboarding OS",
+                  "dia": "1",
+                  "tema": "Onboarding OS",
+                  "detalhe": "Reservado para Onboarding Fábrica",
+                  "consejo": "",
+                  "herramientas": [
+                    {
+                      "tipo": "🖼️ Slide",
+                      "url": ""
+                    }
+                  ],
+                  "iaPic": [],
+                  "tiempo": "05:40:00"
+                },
+                {
                   "macroTema": "Onboarding LATAM",
                   "dia": 2,
                   "tema": "1. Boas Vindas",
