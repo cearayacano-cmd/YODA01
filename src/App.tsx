@@ -204,12 +204,16 @@ export default function App() {
     }
   };
 
-  const activeConfig = currentStation==='BR' ? appConfig.br : appConfig.ssc;
+  const activeConfig = appConfig?.[currentStation.toLowerCase()] || appConfigJson[currentStation.toLowerCase()] || appConfig?.br || appConfigJson.br;
   const go = (v: string, sector: string | null = null, courseIdx: number | null = null) => {
     setView(v);
     if(sector) setActiveSector(sector);
     if(courseIdx!==null) setActiveCourseIdx(courseIdx);
-    window.scrollTo(0,0);
+    try {
+      window.scrollTo(0,0);
+    } catch (e) {
+      console.error("window.scrollTo failed:", e);
+    }
   };
 
   const renderView = () => {
@@ -217,7 +221,7 @@ export default function App() {
       case 'landing':
         return <Landing onNavigate={(st: string)=>{setCurrentStation(st.toUpperCase());go(st==='br'?'br':'ssc-pending')}} onAdmin={()=>go('admin')}/>;
       case 'br':
-        return <BaseStation stationName="BR" config={appConfig.br} onBack={()=>go('landing')} onNavigate={go}/>;
+        return <BaseStation stationName="BR" config={appConfig?.br || appConfigJson.br} onBack={()=>go('landing')} onNavigate={go}/>;
       case 'galaxies':
         return <GalaxySelection onNavigate={go} onBack={()=>go('br')}/>;
       case 'planets':
@@ -255,7 +259,7 @@ export default function App() {
       case 'admin':
         return (
           <AdminCenter 
-            config={appConfig} 
+            config={appConfig || appConfigJson} 
             setConfig={setAppConfig} 
             onBack={()=>go('landing')}
             onViewStation={(st: string) => go(st.toLowerCase())}
@@ -267,10 +271,10 @@ export default function App() {
       case 'admin-exploracion':
         return (
           <AdminExploracion 
-            currentStationConfig={adminStation==='BR'?appConfig.br:appConfig.ssc}
+            currentStationConfig={adminStation==='BR' ? (appConfig?.br || appConfigJson.br) : (appConfig?.ssc || appConfig?.br || appConfigJson.br)}
             updateStationConfig={(f: string, v: any)=>{
               const sk = adminStation.toLowerCase();
-              setAppConfig((prev: any)=>({...prev, [sk]:{...prev[sk], [f]:v}}));
+              setAppConfig((prev: any)=>({...prev, [sk]:{...(prev[sk] || prev.br || appConfigJson.br), [f]:v}}));
             }}
             onBack={()=>go('admin')}
             onSatelites={(pk: string)=>{setAdminSatellitePk(pk);go('admin-satelites')}}
@@ -280,10 +284,10 @@ export default function App() {
       case 'admin-ruta-lider':
         return (
           <AdminRutaLider 
-            rutaData={adminStation==='BR'?appConfig.br.rutaLider:appConfig.ssc.rutaLider}
+            rutaData={adminStation==='BR' ? (appConfig?.br?.rutaLider || appConfigJson.br.rutaLider) : (appConfig?.ssc?.rutaLider || appConfig?.br?.rutaLider || appConfigJson.br.rutaLider)}
             setRutaData={(v: any)=>{
               const sk = adminStation.toLowerCase();
-              setAppConfig((prev: any)=>({...prev, [sk]:{...prev[sk], rutaLider:v}}));
+              setAppConfig((prev: any)=>({...prev, [sk]:{...(prev[sk] || prev.br || appConfigJson.br), rutaLider:v}}));
             }}
             onBack={()=>go('admin')}
             title={`EDITOR RUTA DEL LÍDER - ${adminStation}`}
@@ -294,10 +298,10 @@ export default function App() {
         return (
           <AdminSatelites 
             pk={adminSatellitePk}
-            satelites={adminStation==='BR'?appConfig.br.satelites:appConfig.ssc.satelites}
+            satelites={adminStation==='BR' ? (appConfig?.br?.satelites || appConfigJson.br.satelites) : (appConfig?.ssc?.satelites || appConfig?.br?.satelites || appConfigJson.br.satelites)}
             setSatelites={(v: any)=>{
               const sk = adminStation.toLowerCase();
-              setAppConfig((prev: any)=>({...prev, [sk]:{...prev[sk], satelites:v}}));
+              setAppConfig((prev: any)=>({...prev, [sk]:{...(prev[sk] || prev.br || appConfigJson.br), satelites:v}}));
             }}
             onBack={()=>go('admin-exploracion')}
           />
@@ -319,19 +323,21 @@ export default function App() {
             title = 'EDITOR DE ONBOARDING (NAVE)';
           }
 
+          const targetConfig = appConfig?.[sk] || appConfig?.br || appConfigJson.br;
+
           return (
             <AdminPlanetEditor 
-              dataArray={appConfig[sk][contentKey]}
+              dataArray={targetConfig[contentKey] || []}
               setDataArray={(v: any) => {
                 setAppConfig((prev: any) => ({
                   ...prev,
                   [sk]: {
-                    ...prev[sk],
+                    ...(prev[sk] || prev.br || appConfigJson.br),
                     [contentKey]: v
                   }
                 }));
               }}
-              planets={adminSector === 'onboarding' ? (appConfig[sk].onboarding || []) : appConfig[sk].exploracion[adminSector]}
+              planets={adminSector === 'onboarding' ? (targetConfig.onboarding || []) : (targetConfig.exploracion?.[adminSector] || [])}
               onBack={() => go('admin-exploracion')}
               initialPlanet={adminCourseIdx}
               title={title}

@@ -1728,10 +1728,13 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
   const [dimLights, setDimLights] = useState(false);
   const [showIara, setShowIara] = useState(false);
 
+  // Guard: if config is not yet loaded, show nothing to avoid crash
+  if (!config) return null;
+
   return (
     <div style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden', backgroundColor: '#0F004F', fontFamily: '"Inter", sans-serif', display: 'flex', flexDirection: 'column' }}>
       <SpaceBackground showEarth={true} showShip={true} />
-      <IaraHologram isVisible={showIara} onClose={() => setShowIara(false)} iaraLink={config.iaraLink} />
+      <IaraHologram isVisible={showIara} onClose={() => setShowIara(false)} iaraLink={config?.iaraLink} />
       {!hudHidden && <CommandCenterInterior isAlert={alertMode} isDim={dimLights} isHudHidden={hudHidden} />}
       {!hudHidden && <CommandCenterInterior isAlert={alertMode} isDim={dimLights} isHudHidden={hudHidden} />}
 
@@ -1761,11 +1764,11 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
         <ConsoleSideFrame side="left">
           <ModuleCard 
             sec="SEC-A1" title="Portal Instrutor" subtitle="" color="#FFE017" side="left"
-            icon={<GraduationCap />} stats={[{label: 'MÓDULOS', val: config.operaciones?.length || 0}, {label: 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('operaciones')} 
+            icon={<GraduationCap />} stats={[{label: 'MÓDULOS', val: config?.operaciones?.length || 0}, {label: 'ATUALIZADO', val: config?.lastUpdate || '---'}]} onClick={() => onNavigate('operaciones')} 
           />
           <ModuleCard 
             sec="SEC-A2" title="Formulários" subtitle="" color="#00FFF2" side="left"
-            icon={<Package />} stats={[{label: 'MÓDULOS', val: config.suministros?.length || 0}, {label: 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('suministros')} 
+            icon={<Package />} stats={[{label: 'MÓDULOS', val: config?.suministros?.length || 0}, {label: 'ATUALIZADO', val: config?.lastUpdate || '---'}]} onClick={() => onNavigate('suministros')} 
           />
         </ConsoleSideFrame>
         
@@ -1791,10 +1794,10 @@ export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) =>
               onAlert={() => setAlertMode(!alertMode)}
               onHud={() => setHudHidden(!hudHidden)}
               onDim={() => setDimLights(!dimLights)}
-              onMonitoring={() => config.monitoringUrl && window.open(config.monitoringUrl, '_blank')}
+              onMonitoring={() => config?.monitoringUrl && window.open(config.monitoringUrl, '_blank')}
               onIara={() => setShowIara(prev => !prev)}
               iaraActive={showIara}
-              onPreparacao={() => config.preparacaoLink && window.open(config.preparacaoLink, '_blank')}
+              onPreparacao={() => config?.preparacaoLink && window.open(config.preparacaoLink, '_blank')}
               states={{ alertMode, hudHidden, dimLights }}
               isIntegrated={true} // New prop to handle internal styling
             />

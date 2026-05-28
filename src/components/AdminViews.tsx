@@ -18,13 +18,13 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
     const mm = String(now.getMonth() + 1).padStart(2, '0');
     const yyyy = now.getFullYear();
     const dateStr = `${dd}/${mm}/${yyyy}`;
-    setConfig((prev: any)=>({...prev,[sk]:{...prev[sk],[field]:val, lastUpdate: dateStr}}));
+    setConfig((prev: any)=>({...prev,[sk]:{...(prev[sk]||prev.br||{}),[field]:val, lastUpdate: dateStr}}));
   };
-  const tempConfig = config;
-  const addItem = (field: any) => updateF(field,[...tempConfig[sk][field],{label:'NUEVO_LINK',url:'https://'}]);
-  const removeItem = (field: any, idx: any) => updateF(field,tempConfig[sk][field].filter((_: any,i: any)=>i!==idx));
+  const tempConfig = config || {};
+  const addItem = (field: any) => updateF(field,[...((tempConfig[sk] || tempConfig.br || {})[field] || []),{label:'NUEVO_LINK',url:'https://'}]);
+  const removeItem = (field: any, idx: any) => updateF(field,((tempConfig[sk] || tempConfig.br || {})[field] || []).filter((_: any,i: any)=>i!==idx));
   const updateLink = (f: any, i: any, sub: any, v: any) => {
-    const next=[...tempConfig[sk][f]]; next[i]={...next[i],[sub]:v}; updateF(f,next);
+    const next=[...((tempConfig[sk] || tempConfig.br || {})[f] || [])]; next[i]={...next[i],[sub]:v}; updateF(f,next);
   };
   const MODULE_FIELDS = [
     { field:'laboratorio', key:'lab',  defaultTitle:'Portal de Lideres',   defaultSub:'Portal de Lideres', color: '#99CC33' },
@@ -32,9 +32,9 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
     { field:'suministros', key:'sup',  defaultTitle:'Formulários',  defaultSub:'Formulários', color: '#00D6CC' },
     { field:'operaciones', key:'ops',  defaultTitle:'Portal Instrutor',  defaultSub:'Portal Instrutor', color: '#FFE017' },
   ];
-  const getModuleMeta = (key: any) => tempConfig[sk]?.moduleMeta?.[key] || {};
+  const getModuleMeta = (key: any) => (tempConfig[sk] || tempConfig.br || {})?.moduleMeta?.[key] || {};
   const updateModuleMeta = (key: any, field: any, val: any) => {
-    const prev = tempConfig[sk]?.moduleMeta || {};
+    const prev = (tempConfig[sk] || tempConfig.br || {})?.moduleMeta || {};
     updateF('moduleMeta', {...prev, [key]: {...(prev[key]||{}), [field]: val}});
   };
   const inp = (extra={}) => ({
@@ -261,9 +261,8 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                   <div style={{fontSize:14, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
                     LIVE TELEMETRY · MONITORING URL
                   </div>
-                </div>
-                <input 
-                  value={tempConfig[sk].monitoringUrl||''} 
+                            <input 
+                  value={(tempConfig[sk] || tempConfig.br || {}).monitoringUrl||''} 
                   onChange={e=>updateF('monitoringUrl',e.target.value)}
                   style={{...inp({ padding: '14px 20px', border: '1px solid #E2E8F0', fontSize: 14, background: '#F8FAFC' }), width:'100%'}} 
                   placeholder="https://lookerstudio.google.com/..."
@@ -280,7 +279,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                   </div>
                 </div>
                 <input 
-                  value={tempConfig[sk].iaraLink !== undefined ? tempConfig[sk].iaraLink : 'https://amelia.appslatam.com/#/assistants/chat/aa857c06-5a06-4450-8518-8568cdd28dfd'} 
+                  value={(tempConfig[sk] || tempConfig.br || {}).iaraLink !== undefined ? (tempConfig[sk] || tempConfig.br || {}).iaraLink : 'https://amelia.appslatam.com/#/assistants/chat/aa857c06-5a06-4450-8518-8568cdd28dfd'} 
                   onChange={e=>updateF('iaraLink',e.target.value)}
                   style={{...inp({ padding: '14px 20px', border: '1px solid #E2E8F0', fontSize: 14, background: '#F8FAFC' }), width:'100%'}} 
                   placeholder="https://amelia.appslatam.com/..."
@@ -300,7 +299,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                 <span style={{ fontSize:11, color:'#00D6CC', fontWeight:700, background:'rgba(0,214,204,0.08)', border:'1px solid rgba(0,214,204,0.3)', borderRadius:6, padding:'2px 10px' }}>Matriz Migrações</span>
               </div>
               <input 
-                value={tempConfig[sk].preparacaoLink || ''} 
+                value={(tempConfig[sk] || tempConfig.br || {}).preparacaoLink || ''} 
                 onChange={e=>updateF('preparacaoLink',e.target.value)}
                 style={{...inp({ padding: '14px 20px', border: '1px solid #E2E8F0', fontSize: 14, background: '#F8FAFC' }), width:'100%'}} 
                 placeholder="https://docs.google.com/spreadsheets/..."
@@ -308,6 +307,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                 onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#F8FAFC'; }}
               />
             </div>
+          </div>
           </div>
 
           <div style={{display: 'flex', alignItems: 'center', gap: 14, marginBottom: 28}}>
@@ -320,7 +320,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
           <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:32, marginBottom:48}}>
             {MODULE_FIELDS.map(({field,key,defaultTitle,defaultSub, color})=>{
               const meta = getModuleMeta(key);
-              const items = tempConfig[sk][field]||[];
+              const items = (tempConfig[sk] || tempConfig.br || {})[field]||[];
               return (
                 <div key={field} style={{
                   background:'#ffffff',
