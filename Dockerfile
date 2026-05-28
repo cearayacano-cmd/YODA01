@@ -1,14 +1,5 @@
-# Use Node.js base image
-FROM node:20-slim
-
-# Set working directory
+FROM node:20-alpine
 WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
 
 # Copy the rest of the application
 COPY . .
