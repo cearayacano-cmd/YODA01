@@ -1722,19 +1722,37 @@ const StationIcon = () => {
   );
 };
 
-export const BaseStation = ({ stationName, config, onBack, onNavigate }: any) => {
+
+export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: any) => {
   const [alertMode, setAlertMode] = useState(false);
   const [hudHidden, setHudHidden] = useState(false);
   const [dimLights, setDimLights] = useState(false);
   const [showIara, setShowIara] = useState(false);
 
-  // Guard: if config is not yet loaded, show nothing to avoid crash
-  if (!config) return null;
+  // Debug log para ver qué llega realmente
+  if (typeof window !== 'undefined') {
+    // eslint-disable-next-line no-console
+    console.log('[BaseStation] config:', config);
+  }
+
+  const safeConfig = config && typeof config === 'object' ? config : {};
+
+  // Guard: if config is not yet loaded, show fallback UI to avoid crash
+  if (Object.keys(safeConfig).length === 0) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#0F004F', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, fontWeight: 900 }}>
+        Cargando configuración de estación...
+      </div>
+    );
+  }
+
+  // Solo accede a iaraLink si existe y es string
+  const iaraLink = typeof safeConfig?.iaraLink === 'string' ? safeConfig.iaraLink : '';
 
   return (
     <div style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden', backgroundColor: '#0F004F', fontFamily: '"Inter", sans-serif', display: 'flex', flexDirection: 'column' }}>
       <SpaceBackground showEarth={true} showShip={true} />
-      <IaraHologram isVisible={showIara} onClose={() => setShowIara(false)} iaraLink={config?.iaraLink} />
+      <IaraHologram isVisible={showIara} onClose={() => setShowIara(false)} iaraLink={iaraLink} />
       {!hudHidden && <CommandCenterInterior isAlert={alertMode} isDim={dimLights} isHudHidden={hudHidden} />}
       {!hudHidden && <CommandCenterInterior isAlert={alertMode} isDim={dimLights} isHudHidden={hudHidden} />}
 
