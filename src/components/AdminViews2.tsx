@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { BackBtn } from './Shared';
 import { motion } from 'framer-motion';
-import { Globe, Layers, Plus, Trash2, Edit3, Settings, Database, ArrowLeft, CheckCircle2, Calendar } from 'lucide-react';
+import { Globe, Layers, Plus, Trash2, Edit3, Settings, Database, ArrowLeft, CheckCircle2, Calendar, Save } from 'lucide-react';
 
 export const AdminExploracion = ({ currentStationConfig, updateStationConfig, onBack, onSatelites, onAdvancedContent }: any) => {
   const [activeSector, setActiveSector] = useState('frontLine');
+  const [saved, setSaved] = useState(false);
+  const saveFlash = () => { 
+    setSaved(true); 
+    setTimeout(() => setSaved(false), 2000); 
+  };
   const exploracion = currentStationConfig.exploracion || { frontLine:[], soporte:[], fieldSupport:[] };
   const satelites = currentStationConfig.satelites || { conhecendo:[], imersao:[] };
   const galaxyConfig = exploracion[activeSector] || [];
@@ -58,22 +63,32 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
         padding:'18px 40px', 
         display:'flex', 
         alignItems:'center', 
-        gap:32,
+        justifyContent:'space-between',
         borderBottom: '4px solid #99CC33',
         boxShadow: '0 8px 32px rgba(27,0,136,0.15)',
         zIndex: 100
       }}>
-        <button onClick={onBack} style={{ 
-          background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#ffffff', padding: '10px 24px', 
-          borderRadius: 8, cursor: 'pointer', fontSize: 13, fontWeight: 800, textTransform: 'uppercase',
-          display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s'
-        }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}>
-          <ArrowLeft size={16} /> VOLVER
-        </button>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <Database size={22} color="#99CC33" />
-          <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>EDITOR DE BASE DE DATOS <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> EXPLORACIÓN</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+          <button onClick={onBack} style={{ 
+            background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#ffffff', padding: '10px 24px', 
+            borderRadius: 8, cursor: 'pointer', fontSize: 13, fontWeight: 800, textTransform: 'uppercase',
+            display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s'
+          }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}>
+            <ArrowLeft size={16} /> VOLVER
+          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <Database size={22} color="#99CC33" />
+            <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>EDITOR DE BASE DE DATOS <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> EXPLORACIÓN</span>
+          </div>
         </div>
+        <motion.button 
+          whileHover={{ scale: 1.05 }} 
+          whileTap={{ scale: 0.95 }} 
+          onClick={saveFlash} 
+          style={{ background: saved ? '#00D6CC' : '#99CC33', border: 'none', padding: '10px 28px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, color: '#ffffff', display: 'flex', alignItems: 'center', gap: 8, boxShadow: `0 8px 20px ${saved ? '#00D6CC' : '#99CC33'}40` }}
+        >
+          {saved ? <CheckCircle2 size={18}/> : <Save size={18}/>} {saved ? 'GUARDADO' : 'GUARDAR'}
+        </motion.button>
       </div>
       
       <div style={{display:'flex', flex:1, overflow: 'hidden'}}>
