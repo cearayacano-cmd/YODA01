@@ -233,7 +233,7 @@ const MissionHeaderHUD = ({ sectorLabel, planetLabel, planetColor, onBack }: any
   </div>
 );
 
-const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', directUrl = '', label = '', subGroups = [], evalMsg = '' }: any) => {
+const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', directUrl = '', label = '', subGroups = [], evalMsg = '', evalTime = '' }: any) => {
     const [isOpen, setIsOpen] = React.useState(false);
     const [activeGroup, setActiveGroup] = React.useState<string | null>(null);
 
@@ -360,14 +360,19 @@ const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', d
                                 padding: '16px 20px',
                                 borderRadius: 12,
                                 marginBottom: 16,
-                                fontSize: 12,
-                                color: 'rgba(255,255,255,0.9)',
-                                lineHeight: 1.6,
-                                whiteSpace: 'pre-line',
                                 border: '1px solid rgba(255,255,255,0.05)',
                                 boxShadow: 'inset 0 0 20px rgba(0,0,0,0.3)'
                             }}>
-                                {evalMsg}
+                                {evalTime && (
+                                    <div style={{ marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+                                        <span style={{ background: color, color: '#fff', fontSize: 10, fontWeight: 900, padding: '4px 10px', borderRadius: 12, display: 'inline-flex', alignItems: 'center', gap: 6, letterSpacing: '0.05em' }}>
+                                            <Clock size={12} /> {evalTime}
+                                        </span>
+                                    </div>
+                                )}
+                                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.9)', lineHeight: 1.6, whiteSpace: 'pre-line' }}>
+                                    {evalMsg}
+                                </div>
                             </div>
                         )}
 
@@ -1513,6 +1518,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                     icon={<BadgeCheck size={24} />} 
                                     color="#00D6CC"
                                     evalMsg={planetObj?.evalMsg}
+                                    evalTime={planetObj?.evalTime}
                                     subGroups={[
                                         { id: 'kon', label: 'KON BR', color: '#99CC33', links: planetObj?.evalKon || [] },
                                         { id: 'aec', label: 'AeC', color: '#00D6CC', links: planetObj?.evalAec || [] }

@@ -53,7 +53,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
     ? (planetObjRaw?.data || { secciones: [], materiais: [], evalKon: [], evalAec: [], evalMsg: '' }) 
     : (planetObjRaw && !Array.isArray(planetObjRaw) 
         ? planetObjRaw 
-        : { secciones: Array.isArray(planetObjRaw) ? planetObjRaw : [], materiais: [], evalKon: [], evalAec: [], evalMsg: '' });
+        : { secciones: Array.isArray(planetObjRaw) ? planetObjRaw : [], materiais: [], evalKon: [], evalAec: [], evalMsg: '', evalTime: '' });
 
   const currentSections = planetObj.secciones || [];
 
@@ -291,7 +291,18 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                           <div style={{ marginBottom: 12 }}>
-                              <label style={{ fontSize: '9px', color: '#64748b', fontWeight: 900, textTransform: 'uppercase', marginBottom: 4, display: 'block' }}>Avaliação de Recuperação</label>
+                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+                                  <label style={{ fontSize: '9px', color: '#64748b', fontWeight: 900, textTransform: 'uppercase', display: 'block' }}>Avaliação de Recuperação</label>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                                      <label style={{ fontSize: '9px', color: '#64748b', fontWeight: 900, textTransform: 'uppercase' }}>Tiempo:</label>
+                                      <input 
+                                        value={planetObj.evalTime || ''} 
+                                        onChange={e => updateGlobalField('evalTime', e.target.value)} 
+                                        placeholder="Ej: 00:30:00"
+                                        style={{ ...inp({ width: '80px', fontSize: 10, padding: '4px 8px', textAlign: 'center', background: '#F8FAFC' }) }}
+                                      />
+                                  </div>
+                              </div>
                               <textarea 
                                 value={planetObj.evalMsg || ''} 
                                 onChange={e => updateGlobalField('evalMsg', e.target.value)} 
