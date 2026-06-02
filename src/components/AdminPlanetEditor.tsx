@@ -34,6 +34,7 @@ const secondsToTime = (secs: number) => {
 export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, initialPlanet, title = "EDITOR", isOnboarding, onSave }: any) => {
   const [activePlanet, setActivePlanet] = useState(initialPlanet || 0);
   const [editingSecIdx, setEditingSecIdx] = useState<number | null>(null);
+  const [editingExtraIdx, setEditingExtraIdx] = useState<number | null>(null);
   const [saved, setSaved] = useState(false);
   const [collapsedThemes, setCollapsedThemes] = useState<string[]>([]);
   const [collapsedSections, setCollapsedSections] = useState<number[]>([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
@@ -369,6 +370,9 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: '12px' }}>
+                  {sec.tipo === 'ojt' && (
+                    <button onClick={() => setEditingExtraIdx(si)} style={{ background: '#f8fafc', border: '2px solid #E2E8F0', color: '#1B0088', padding: '10px 20px', borderRadius: '12px', cursor: 'pointer', fontSize: '11px', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 8 }}><Layers size={16}/> TARJETA EXTRA</button>
+                  )}
                   <button onClick={() => addRow(si)} style={{ background: '#1B0088', color: '#fff', border: 'none', padding: '12px 24px', borderRadius: '12px', cursor: 'pointer', fontSize: '11px', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 8, boxShadow: '0 8px 25px rgba(27,0,136,0.2)' }}><Plus size={16}/> AGREGAR NODO</button>
                   <button onClick={() => setEditingSecIdx(editingSecIdx === si ? null : si)} style={{ background: '#ffffff', border: '1px solid #E2E8F0', padding: '12px 20px', borderRadius: '12px', cursor: 'pointer', fontSize: '11px', fontWeight: 900, color: '#1B0088', display: 'flex', alignItems: 'center', gap: 8 }}>{editingSecIdx === si ? <CheckCircle2 size={16}/> : <Edit3 size={16}/>} {editingSecIdx === si ? 'FINALIZAR' : 'RECONFIGURAR'}</button>
                   
@@ -616,14 +620,9 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
 
                   {sec.tipo === 'ojt' && (
                   <div style={{ marginTop: '32px', borderTop: '1px solid #E2E8F0', paddingTop: '32px' }}>
-                    <div style={{ fontSize: '11px', fontWeight: 900, marginBottom: '24px', color: '#1B0088', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 10 }}><Layers size={18}/> TARJETA EXTRA OJT (PANEL DERECHO)</div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
-                      <div><label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Título</label><input value={sec.ojtExtraTitle || ''} onChange={e => updateSecField(si, 'ojtExtraTitle', e.target.value)} placeholder="Ej: Título del recuadro..." style={{ ...inp({ fontSize: 12 }), width: '100%' }} /></div>
-                      <div><label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Link / URL</label><input value={sec.ojtExtraLink || ''} onChange={e => updateSecField(si, 'ojtExtraLink', e.target.value)} placeholder="https://..." style={{ ...inp({ fontSize: 12, color: '#1a56db' }), width: '100%' }} /></div>
-                    </div>
-                    <div>
-                      <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Descripción</label>
-                      <textarea value={sec.ojtExtraDesc || ''} onChange={e => updateSecField(si, 'ojtExtraDesc', e.target.value)} placeholder="Descripción para la tarjeta extra..." style={{ ...inp({ minHeight: 80, lineHeight: 1.6 }), width: '100%', resize: 'vertical' }} />
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
+                      <div style={{ fontSize: '11px', fontWeight: 900, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 10 }}><Layers size={18}/> TARJETA EXTRA OJT (PANEL DERECHO)</div>
+                      <button onClick={() => setEditingExtraIdx(si)} style={{ background: '#1B0088', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '6px', fontSize: '10px', fontWeight: 900, cursor: 'pointer' }}>EDITAR TARJETA</button>
                     </div>
                   </div>
                   )}
@@ -636,6 +635,46 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
           </motion.div>
             );
           })}
+
+        {/* Modal para Tarjeta Extra OJT */}
+        <AnimatePresence>
+          {editingExtraIdx !== null && (
+            <motion.div 
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 99999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >
+              <motion.div 
+                initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
+                style={{ background: '#fff', borderRadius: '24px', padding: '40px', width: '100%', maxWidth: '600px', boxShadow: '0 20px 60px rgba(0,0,0,0.1)' }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+                  <div style={{ fontSize: '18px', fontWeight: 900, color: '#1B0088', display: 'flex', alignItems: 'center', gap: 12 }}><Layers size={24}/> TARJETA EXTRA OJT</div>
+                  <button onClick={() => setEditingExtraIdx(null)} style={{ background: '#f1f5f9', border: 'none', width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#64748b' }}><X size={18}/></button>
+                </div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div>
+                    <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Título (Tarjeta Extra)</label>
+                    <input value={currentSections[editingExtraIdx].ojtExtraTitle || ''} onChange={e => updateSecField(editingExtraIdx, 'ojtExtraTitle', e.target.value)} placeholder="Ej: Material de Apoyo..." style={{ ...inp({ fontSize: 13 }), width: '100%' }} />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Link / URL</label>
+                    <input value={currentSections[editingExtraIdx].ojtExtraLink || ''} onChange={e => updateSecField(editingExtraIdx, 'ojtExtraLink', e.target.value)} placeholder="https://..." style={{ ...inp({ fontSize: 13, color: '#1a56db' }), width: '100%' }} />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Descripción</label>
+                    <textarea value={currentSections[editingExtraIdx].ojtExtraDesc || ''} onChange={e => updateSecField(editingExtraIdx, 'ojtExtraDesc', e.target.value)} placeholder="Breve descripción..." style={{ ...inp({ minHeight: 100, lineHeight: 1.6, fontSize: 13 }), width: '100%', resize: 'vertical' }} />
+                  </div>
+                </div>
+
+                <div style={{ marginTop: '32px', display: 'flex', justifyContent: 'flex-end' }}>
+                  <button onClick={() => setEditingExtraIdx(null)} style={{ background: '#1B0088', color: '#fff', border: 'none', padding: '14px 32px', borderRadius: '12px', fontSize: '12px', fontWeight: 900, cursor: 'pointer' }}>LISTO</button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
           <div style={{ height: 100 }} />
         </div>
       </div>
