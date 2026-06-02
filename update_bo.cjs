@@ -561,6 +561,9 @@ const newData = [
   {
     tipo: 'ojt',
     label: 'Desafio OJT',
+    ojtExtraTitle: 'DB OJT',
+    ojtExtraDesc: 'Atenção: Lembre de reservar um tempo para preencher o Diário de Bordo OJT',
+    ojtExtraLink: 'https://drive.google.com/drive/folders/1K9JNLTcBn5h2Gbv7e3mGpPNT77nvpDxJ',
     rows: [
       {
         macroTema: 'Desafio OJT',
@@ -585,6 +588,11 @@ for (const stationKey of Object.keys(dataJSON)) {
       const planets = station.exploracion[sector] || [];
       const idx = planets.findIndex(p => p.label === 'BO');
       if (idx !== -1) {
+        // Actualizar propiedades globales del planeta BO
+        planets[idx].evalMsg = 'Os alunos que não atingirem a média final de 80% devem realizar o "Ajuste de Rota" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.';
+        planets[idx].evalAec = [{ label: 'Forms AeC', url: 'https://docs.google.com/forms/d/e/1FAIpQLSdI7bXPs4pL-SzW2Vr3PMin8Envs9OH5jSSyXRqLi9p_b6GiA/viewform?usp=preview' }];
+        planets[idx].evalKon = [{ label: 'Forms KON', url: 'https://docs.google.com/forms/d/e/1FAIpQLSdbX7c5altxMwpNxbdh_rpRh7XR-Xa-Ytu21sorS7R5b83m5A/viewform' }];
+        
         const contentKey = sector === 'soporte' ? 'soporteContent' : sector === 'frontLine' ? 'frontLineContent' : 'fsc';
         if (!station[contentKey]) {
           station[contentKey] = [];
