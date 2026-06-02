@@ -618,14 +618,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                     </div>
                   </div>
 
-                  {sec.tipo === 'ojt' && (
-                  <div style={{ marginTop: '32px', borderTop: '1px solid #E2E8F0', paddingTop: '32px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
-                      <div style={{ fontSize: '11px', fontWeight: 900, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 10 }}><Layers size={18}/> TARJETA EXTRA OJT (PANEL DERECHO)</div>
-                      <button onClick={() => setEditingExtraIdx(si)} style={{ background: '#1B0088', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '6px', fontSize: '10px', fontWeight: 900, cursor: 'pointer' }}>EDITAR TARJETA</button>
-                    </div>
-                  </div>
-                  )}
+                  {/* Tarjeta Extra eliminada de aquí */}
 
                 </motion.div>
               )}
@@ -655,15 +648,15 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div>
                     <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Título (Tarjeta Extra)</label>
-                    <input value={currentSections[editingExtraIdx].ojtExtraTitle || ''} onChange={e => updateSecField(editingExtraIdx, 'ojtExtraTitle', e.target.value)} placeholder="Ej: Material de Apoyo..." style={{ ...inp({ fontSize: 13 }), width: '100%' }} />
+                    <input value={currentSections[editingExtraIdx]?.ojtExtraTitle || ''} onChange={e => updateSecField(editingExtraIdx, 'ojtExtraTitle', e.target.value)} placeholder="Ej: Material de Apoyo..." style={{ ...inp({ fontSize: 13 }), width: '100%' }} />
                   </div>
                   <div>
                     <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Link / URL</label>
-                    <input value={currentSections[editingExtraIdx].ojtExtraLink || ''} onChange={e => updateSecField(editingExtraIdx, 'ojtExtraLink', e.target.value)} placeholder="https://..." style={{ ...inp({ fontSize: 13, color: '#1a56db' }), width: '100%' }} />
+                    <input value={currentSections[editingExtraIdx]?.ojtExtraLink || ''} onChange={e => updateSecField(editingExtraIdx, 'ojtExtraLink', e.target.value)} placeholder="https://..." style={{ ...inp({ fontSize: 13, color: '#1a56db' }), width: '100%' }} />
                   </div>
                   <div>
                     <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Descripción</label>
-                    <textarea value={currentSections[editingExtraIdx].ojtExtraDesc || ''} onChange={e => updateSecField(editingExtraIdx, 'ojtExtraDesc', e.target.value)} placeholder="Breve descripción..." style={{ ...inp({ minHeight: 100, lineHeight: 1.6, fontSize: 13 }), width: '100%', resize: 'vertical' }} />
+                    <textarea value={currentSections[editingExtraIdx]?.ojtExtraDesc || ''} onChange={e => updateSecField(editingExtraIdx, 'ojtExtraDesc', e.target.value)} placeholder="Breve descripción..." style={{ ...inp({ minHeight: 100, lineHeight: 1.6, fontSize: 13 }), width: '100%', resize: 'vertical' }} />
                   </div>
                 </div>
 
