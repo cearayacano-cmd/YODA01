@@ -2280,7 +2280,8 @@
             "url": "https://forms.gle/CkUwWV9wv41TpWfr9"
           }
         ],
-        "evalMsg": "Os alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\nDuração: 30 min"
+        "evalMsg": "Os alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\nDuração: 30 min",
+        "evalTime": "00:30:00"
       },
       {
         "texture": "CRATERS",
@@ -3999,7 +4000,8 @@
             "url": "https://docs.google.com/forms/d/e/1FAIpQLSexgezH2lsexp3YzT2LdxJnPLqmaDA7849G2FVIrgQK78C1EA/viewform"
           }
         ],
-        "evalMsg": "AJUSTE DE ROTA PARA REPROVADOS\n\nOs alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\n\nDuração: 30 min"
+        "evalMsg": "AJUSTE DE ROTA PARA REPROVADOS\n\nOs alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\n\nDuração: 30 min",
+        "evalTime": "00:30:00"
       },
       {
         "texture": "GAS",
@@ -5311,7 +5313,8 @@
               }
             ]
           }
-        ]
+        ],
+        "evalTime": "00:30:00"
       },
       {
         "texture": "CRATERS",
@@ -8074,7 +8077,8 @@
             "url": "https://forms.gle/vsCYSxLCexky2z4L7"
           }
         ],
-        "evalMsg": "Os alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\n\nDuração: 30 min"
+        "evalMsg": "Os alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\n\nDuração: 30 min",
+        "evalTime": "00:30:00"
       },
       {
         "texture": "OCEAN",
@@ -10921,7 +10925,8 @@
               }
             ]
           }
-        ]
+        ],
+        "evalTime": "00:30:00"
       },
       {
         "texture": "RINGS",
@@ -11658,7 +11663,8 @@
               }
             ]
           }
-        ]
+        ],
+        "evalTime": "00:40:00"
       },
       {
         "secciones": [
@@ -12509,7 +12515,8 @@
             "label": "Forms KON",
             "url": "https://docs.google.com/forms/d/e/1FAIpQLSdbX7c5altxMwpNxbdh_rpRh7XR-Xa-Ytu21sorS7R5b83m5A/viewform"
           }
-        ]
+        ],
+        "evalTime": "00:40:00"
       },
       {
         "secciones": [
@@ -13832,7 +13839,8 @@
         "materiais": [],
         "evalKon": [],
         "evalAec": [],
-        "evalMsg": "Os alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\nDuração: 30 min"
+        "evalMsg": "Os alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\n",
+        "evalTime": "00:30:00"
       }
     ],
     "soporteContent": [
