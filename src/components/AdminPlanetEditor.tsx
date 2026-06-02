@@ -613,6 +613,21 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                       <div><label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Carga Horaria de Ajuste</label><input value={sec.ajusteRotaCh} onChange={e => updateSecField(si, 'ajusteRotaCh', e.target.value)} placeholder="0:30:00" style={{ ...inp({ fontWeight: 900, textAlign: 'center' }), width: '100%' }} /></div>
                     </div>
                   </div>
+
+                  {sec.tipo === 'ojt' && (
+                  <div style={{ marginTop: '32px', borderTop: '1px solid #E2E8F0', paddingTop: '32px' }}>
+                    <div style={{ fontSize: '11px', fontWeight: 900, marginBottom: '24px', color: '#1B0088', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 10 }}><Layers size={18}/> TARJETA EXTRA OJT (PANEL DERECHO)</div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
+                      <div><label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Título</label><input value={sec.ojtExtraTitle || ''} onChange={e => updateSecField(si, 'ojtExtraTitle', e.target.value)} placeholder="Ej: Título del recuadro..." style={{ ...inp({ fontSize: 12 }), width: '100%' }} /></div>
+                      <div><label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Link / URL</label><input value={sec.ojtExtraLink || ''} onChange={e => updateSecField(si, 'ojtExtraLink', e.target.value)} placeholder="https://..." style={{ ...inp({ fontSize: 12, color: '#1a56db' }), width: '100%' }} /></div>
+                    </div>
+                    <div>
+                      <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Descripción</label>
+                      <textarea value={sec.ojtExtraDesc || ''} onChange={e => updateSecField(si, 'ojtExtraDesc', e.target.value)} placeholder="Descripción para la tarjeta extra..." style={{ ...inp({ minHeight: 80, lineHeight: 1.6 }), width: '100%', resize: 'vertical' }} />
+                    </div>
+                  </div>
+                  )}
+
                 </motion.div>
               )}
               </motion.div>

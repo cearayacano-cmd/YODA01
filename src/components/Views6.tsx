@@ -1392,7 +1392,41 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                         )}
                     </div>
 
-                    {/* Support Block Removed */}
+                    {/* Extra OJT Card */}
+                    {firstSec && firstSec.tipo === 'ojt' && (firstSec.ojtExtraTitle || firstSec.ojtExtraDesc || firstSec.ojtExtraLink) && (
+                        <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 24, padding: 32, boxShadow: '0 10px 30px rgba(0,0,0,0.04)' }}>
+                            {firstSec.ojtExtraTitle && (
+                                <div style={{ fontSize: 14, fontWeight: 900, color: '#1B0088', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 10 }}>
+                                    <Target size={18} color={planetColor} /> {firstSec.ojtExtraTitle}
+                                </div>
+                            )}
+                            
+                            {firstSec.ojtExtraDesc && (
+                                <div style={{ fontSize: 13, color: '#64748b', lineHeight: 1.6, marginBottom: firstSec.ojtExtraLink ? 20 : 0, whiteSpace: 'pre-wrap' }}>
+                                    {firstSec.ojtExtraDesc}
+                                </div>
+                            )}
+
+                            {firstSec.ojtExtraLink && (
+                                <a 
+                                    href={firstSec.ojtExtraLink} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    style={{ 
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                                        width: '100%', background: 'rgba(27,0,136,0.05)', color: '#1B0088', 
+                                        padding: '12px', borderRadius: 10, fontSize: 12, fontWeight: 900, 
+                                        textDecoration: 'none', transition: 'all 0.2s', border: '1px solid rgba(27,0,136,0.1)'
+                                    }}
+                                    onMouseEnter={e => { e.currentTarget.style.background = '#1B0088'; e.currentTarget.style.color = '#fff'; }}
+                                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(27,0,136,0.05)'; e.currentTarget.style.color = '#1B0088'; }}
+                                >
+                                    <ExternalLink size={16} /> ABRIR RECURSO EXTRA
+                                </a>
+                            )}
+                        </div>
+                    )}
+
                 </div>
             </div>
         </motion.div>
