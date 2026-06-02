@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
     ArrowLeft, Save, CheckCircle2, Plus, Trash2, Database, Layers, Satellite, Globe, Shield, Zap,
     Edit3, Briefcase, Rocket, Target, Anchor, ChevronUp, ChevronDown, Monitor, FileText, Link as LinkIcon, AlertTriangle, Clock, Cpu,
-    Maximize2, Minimize2, GripVertical, GraduationCap, Calendar
+    Maximize2, Minimize2, GripVertical, GraduationCap, Calendar, X
 } from 'lucide-react';
 
 const TIPO_INFO: any = {
