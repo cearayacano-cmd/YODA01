@@ -12517,7 +12517,9 @@
           }
         ],
         "evalTime": "00:40:00"
-      },
+      }
+    ],
+    "soporteContent": [
       {
         "secciones": [
           {
@@ -13841,26 +13843,6 @@
         "evalAec": [],
         "evalMsg": "Os alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\n",
         "evalTime": "00:30:00"
-      }
-    ],
-    "soporteContent": [
-      {
-        "label": "Soporte 1",
-        "color": "#ED1650",
-        "secciones": [],
-        "materiais": [],
-        "evalKon": [],
-        "evalAec": [],
-        "evalMsg": ""
-      },
-      {
-        "label": "Soporte 2",
-        "color": "#00D6CC",
-        "secciones": [],
-        "materiais": [],
-        "evalKon": [],
-        "evalAec": [],
-        "evalMsg": ""
       }
     ],
     "fsc": [
@@ -22179,44 +22161,16 @@
               "url": "https://docs.google.com/forms/d/e/1FAIpQLSdbX7c5altxMwpNxbdh_rpRh7XR-Xa-Ytu21sorS7R5b83m5A/viewform"
             }
           ]
-        },
+        }
+      ],
+      "soporte": [
         {
           "label": "Suporte HVC",
           "color": "#ffe017",
           "texture": "RINGS"
         }
       ],
-      "soporte": [
-        {
-          "label": "Soporte BO (Pendiente)",
-          "color": "#ED1650",
-          "secciones": [],
-          "materiais": [],
-          "evalKon": [],
-          "evalAec": [],
-          "evalMsg": ""
-        },
-        {
-          "label": "Soporte FFP (Pendiente)",
-          "color": "#00D6CC",
-          "secciones": [],
-          "materiais": [],
-          "evalKon": [],
-          "evalAec": [],
-          "evalMsg": ""
-        }
-      ],
-      "fieldSupport": [
-        {
-          "label": "FSC (Pendiente)",
-          "color": "#ED1650",
-          "secciones": [],
-          "materiais": [],
-          "evalKon": [],
-          "evalAec": [],
-          "evalMsg": ""
-        }
-      ]
+      "fieldSupport": []
     }
   },
   "ssc": {

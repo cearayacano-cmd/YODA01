@@ -16,7 +16,7 @@ import {
 
 import { 
   RUTA_DATA_DEFAULT, 
-  SOPORTE_PLANET_1, 
+  SUPORTE_PLANET_1, 
   FSC_DATA_DEFAULT, 
   CONHECENDO_DATA, 
   IMERSAO_DATA,
@@ -233,7 +233,7 @@ export default function App() {
                              activeConfig.frontLineContent;
           const planetLabel = activeConfig.exploracion[activeSector]?.[activeCourseIdx]?.label || 'Planeta';
           const sectorLabel = activeSector === 'frontLine' ? 'FRONT LINE' : 
-                              activeSector === 'soporte' ? 'SOPORTE' : 'FIELD SUPPORT';
+                              activeSector === 'soporte' ? 'SUPORTE' : 'FIELD SUPPORT';
           
           return (
             <PlanetContentView 
@@ -317,7 +317,7 @@ export default function App() {
             title = 'EDITOR FRONT LINE';
           } else if (adminSector === 'soporte') {
             contentKey = 'soporteContent';
-            title = 'EDITOR SOPORTE';
+            title = 'EDITOR SUPORTE';
           } else if (adminSector === 'onboarding') {
             contentKey = 'onboarding';
             title = 'EDITOR DE ONBOARDING (NAVE)';

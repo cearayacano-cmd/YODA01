@@ -187,7 +187,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
   if(activeMap === 'imersao')    return <ImersaoRutaView    data={satelites.imersao}    onBack={()=>setActiveMap(null)}/>;
   if(activeMap === 'onboarding') return <OnboardingRutaView data={config.onboarding}    onBack={()=>setActiveMap(null)}/>;
   
-  const sectorLabel = sectorId==='frontLine'?'FRONT LINE':sectorId==='soporte'?'SOPORTE':'FIELD SUPPORT';
+  const sectorLabel = sectorId==='frontLine'?'FRONT LINE':sectorId==='soporte'?'SUPORTE':'FIELD SUPPORT';
   
   return (
     <div style={{ minHeight: '100vh', background: 'radial-gradient(circle at 50% 50%, #1B0088 0%, #0F004F 100%)', color: '#fff', position: 'relative', overflow: 'hidden', paddingBottom: 150 }}>

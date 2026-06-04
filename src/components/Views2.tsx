@@ -253,7 +253,7 @@ export const GalaxySelection = ({ onNavigate, onBack }: any) => {
     },
     { 
       id: 'soporte',   
-      label: 'SOPORTE',    
+      label: 'SUPORTE',    
       desc: '', 
       color: '#D400FF', 
       tag: 'GLX-002'

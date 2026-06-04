@@ -4,13 +4,13 @@ export const RUTA_DATA_DEFAULT = [
   { poder: "Estratégia de Vendas", tema: "Cierre de Ventas", tiempo: "3H", desc: "Metodologias para fechar negociações exitosas.", consejo: "Identifica las objeciones temprano.", adjunto: "#" }
 ];
 
-export const SOPORTE_PLANET_1 = [
+export const SUPORTE_PLANET_1 = [
   {
     tipo: 'mision1',
-    nombre: 'FUNDAMENTOS DE SOPORTE',
+    nombre: 'FUNDAMENTOS DE SUPORTE',
     rows: [
-      { macroTema: "Soporte Nivel 1", dia: 1, tema: "Arquitectura de Red", detalle: "Conceptos b\u00e1sicos de conectividad.", herramientas: "PPT", tiempo: "2:00" },
-      { macroTema: "Soporte Nivel 1", dia: 1, tema: "Gesti\u00f3n de Tickets", detalle: "Uso del software de mesa de ayuda.", herramientas: "Simulador", tiempo: "1:30" }
+      { macroTema: "Suporte Nivel 1", dia: 1, tema: "Arquitectura de Red", detalle: "Conceptos b\u00e1sicos de conectividad.", herramientas: "PPT", tiempo: "2:00" },
+      { macroTema: "Suporte Nivel 1", dia: 1, tema: "Gesti\u00f3n de Tickets", detalle: "Uso del software de mesa de ayuda.", herramientas: "Simulador", tiempo: "1:30" }
     ]
   }
 ];

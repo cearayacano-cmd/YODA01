@@ -128,7 +128,7 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
               }}
             >
               <Layers size={20} color={activeSector===s ? '#99CC33' : 'rgba(255,255,255,0.4)'} />
-              <span style={{ fontSize: 13, letterSpacing: '0.05em' }}>{s==='frontLine'?'Front Line':s==='soporte'?'Soporte':'Field Support'}</span>
+              <span style={{ fontSize: 13, letterSpacing: '0.05em' }}>{s==='frontLine'?'Front Line':s==='soporte'?'Suporte':'Field Support'}</span>
             </motion.div>
           ))}
         </div>

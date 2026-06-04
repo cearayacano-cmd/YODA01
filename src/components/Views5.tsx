@@ -963,7 +963,7 @@ export const IngenieriaView = ({ config, links, onBack, onNavigate, title, subti
       themeColor={themeColor}
       heroIcon={heroIcon}
       listIcon={<Cpu size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
-      headerTitle="MANTENIMIENTO · PROTOCOLOS · SOPORTE"
+      headerTitle="MANTENIMIENTO · PROTOCOLOS · SUPORTE"
       footerTitle="Workshops"
     />
   );
@@ -993,7 +993,7 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
       themeColor={themeColor}
       heroIcon={heroIcon}
       listIcon={<Microscope size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
-      headerTitle="MANTENIMIENTO · PROTOCOLOS · SOPORTE"
+      headerTitle="MANTENIMIENTO · PROTOCOLOS · SUPORTE"
       footerTitle="PORTAL DE LÍDERES"
       footerLogo="/logo_blanco_1.png"
       topDecalLeft="ESTRATEGIA"
@@ -1102,7 +1102,7 @@ export const SuministrosView = ({ config, links, onBack, onNavigate, title, subt
       themeColor={themeColor}
       heroIcon={heroIcon}
       listIcon={<Box size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
-      headerTitle="MANTENIMIENTO · PROTOCOLOS · SOPORTE"
+      headerTitle="MANTENIMIENTO · PROTOCOLOS · SUPORTE"
       footerTitle="Formulários"
       description="Formularios de solicitud, inventario y recursos logísticos."
     />
@@ -1131,7 +1131,7 @@ export const OperacionesView = ({ config, links, onBack, onNavigate, title, subt
       themeColor={themeColor}
       heroIcon={heroIcon}
       listIcon={<GraduationCap size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
-      headerTitle="MANTENIMIENTO · PROTOCOLOS · SOPORTE"
+      headerTitle="MANTENIMIENTO · PROTOCOLOS · SUPORTE"
       footerTitle="Portal Instrutor"
       description="Recursos de instrução, monitoramento e operações de voo."
     />
