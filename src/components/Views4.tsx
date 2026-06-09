@@ -18,7 +18,7 @@ export const LinksView = ({ title, subtitle, links, onBack, children }: any) => 
           onMouseEnter={e=>e.currentTarget.style.borderColor='#111111'}
           onMouseLeave={e=>e.currentTarget.style.borderColor='#cccccc'}>
           <div style={{fontSize:14, fontWeight:700, color:'#111111', textTransform:'uppercase'}}>{link.label}</div>
-          <div style={{fontSize:11, color:'#555555'}}>{link.url&&link.url!=='#'?'ABRIR ↗':'SIN LINK'}</div>
+          <div style={{fontSize:11, color:'#555555'}}>{link.url&&link.url!=='#'&&link.url!=='-'&&link.url.trim()!==''?'ABRIR ↗':'SIN LINK'}</div>
         </div>
       ))}
     </div>
@@ -77,7 +77,7 @@ export const RutaLiderView = ({ links, rutaData, onBack }) => {
                         <div key={ii} style={{padding:'8px 12px', marginBottom:4, border:'1px solid #eeeeee', borderRadius:3, background:'#ffffff'}}>
                           <div style={{fontSize:12, color:'#222222', marginBottom:item.consejo&&item.consejo!=='-'?4:0}}>{item.desc}</div>
                           {item.consejo&&item.consejo!=='-' && <div style={{fontSize:10, color:'#666666'}}>💡 {item.consejo}</div>}
-                          {item.adjunto&&item.adjunto!=='#' && <button onClick={()=>window.open(item.adjunto,'_blank')} style={{marginTop:6, background:'#ffffff', border:'1px solid #cccccc', padding:'3px 8px', cursor:'pointer', fontSize:10, borderRadius:3}}>ADJUNTO ↗</button>}
+                          {item.adjunto&&item.adjunto!=='#'&&item.adjunto!=='-'&&item.adjunto.trim()!=='' && <button onClick={()=>window.open(item.adjunto,'_blank')} style={{marginTop:6, background:'#ffffff', border:'1px solid #cccccc', padding:'3px 8px', cursor:'pointer', fontSize:10, borderRadius:3}}>ADJUNTO ↗</button>}
                         </div>
                       ))}
                     </div>

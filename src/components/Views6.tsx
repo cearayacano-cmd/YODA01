@@ -832,7 +832,7 @@ export const ClassicMissionBlock = ({ seccion, planetColor, onBackToMap, titleOv
                                      (row.ferramentas ? [row.ferramentas] : []));
                         return (
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'center' }}>
-                            {recs.filter((r:any) => r && r.url && r.url !== '#').map((r:any, i:number) => (
+                            {recs.filter((r:any) => r && r.url && r.url !== '#' && r.url !== '-' && r.url.trim() !== '').map((r:any, i:number) => (
                               <a 
                                 key={i}
                                 href={r.url} target="_blank" rel="noopener noreferrer"
@@ -983,7 +983,9 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel }: any) => 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, minWidth: '220px', justifyContent: 'center' }}>
                 {/* PIC LINKS GROUP */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                    {(Array.isArray(node.iaPic) ? node.iaPic : node.iaPic ? [{ label: 'PIC LINK', url: node.iaPic }] : []).map((link: any, li: number) => (
+                    {(Array.isArray(node.iaPic) ? node.iaPic : node.iaPic ? [{ label: 'PIC LINK', url: node.iaPic }] : [])
+                        .filter((link: any) => link && link.url && link.url !== '#' && link.url !== '-' && link.url.trim() !== '')
+                        .map((link: any, li: number) => (
                         <motion.a 
                             key={li}
                             whileHover={{ scale: 1.02, background: `${planetColor}10` }}
@@ -1012,7 +1014,7 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel }: any) => 
                 </div>
 
                 {/* MAIN ACTION BUTTONS */}
-                {recs.length > 0 && recs.map((rec: any, ri: number) => (
+                {recs.filter((r: any) => r && r.url && r.url !== '#' && r.url !== '-' && r.url.trim() !== '').map((rec: any, ri: number) => (
                     <motion.a 
                         key={ri}
                         whileHover={{ scale: 1.05, background: planetColor }}

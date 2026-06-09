@@ -306,7 +306,7 @@ const PowerDiscoveryTerminal = ({ p, nodes, onBack, onComplete }: any) => {
 
               {/* Action Column */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                {node.adjunto && node.adjunto !== '#' ? (
+                {node.adjunto && node.adjunto !== '#' && node.adjunto !== '-' && node.adjunto.trim() !== '' ? (
                   <a href={node.adjunto} target="_blank" rel="noopener noreferrer" style={{
                     background: '#1B0088', color: '#fff', border: 'none', padding: '12px 20px', borderRadius: 8, fontWeight: 900, fontSize: 11,
                     textDecoration: 'none', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, 

@@ -1734,7 +1734,7 @@ const StationIcon = () => {
   return (
     <div style={{ position: 'relative', width: 70, height: 70, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <img 
-        src="/guardioes_pt_shield.png" 
+        src="/YODA_Escudo_PT1.png" 
         alt="Shield Icon" 
         style={{ width: 70, height: 'auto', display: 'block' }} 
       />
