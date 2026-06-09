@@ -416,7 +416,7 @@ const FloatingSpaceship = () => {
       }}
     >
       <img 
-        src="/nava_exploracion.png" 
+        src="/nava_exploracion_2.png" 
         alt="Nava exploracion" 
         style={{ width: '100%', height: 'auto', display: 'block' }} 
       />
