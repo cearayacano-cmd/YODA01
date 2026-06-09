@@ -3988,20 +3988,10 @@
           }
         ],
         "materiais": [],
-        "evalKon": [
-          {
-            "label": "AVALIAÇÃO KON BR",
-            "url": "https://forms.gle/rKS7Kt63hopmVMJE7"
-          }
-        ],
-        "evalAec": [
-          {
-            "label": "AVALIAÇÃO AeC",
-            "url": "https://docs.google.com/forms/d/e/1FAIpQLSexgezH2lsexp3YzT2LdxJnPLqmaDA7849G2FVIrgQK78C1EA/viewform"
-          }
-        ],
-        "evalMsg": "AJUSTE DE ROTA PARA REPROVADOS\n\nOs alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\n\nDuração: 30 min",
-        "evalTime": "00:30:00"
+        "evalKon": [],
+        "evalAec": [],
+        "evalMsg": "",
+        "evalTime": ""
       },
       {
         "texture": "GAS",
@@ -10821,10 +10811,19 @@
               {
                 "macroTema": "Avaliação",
                 "dia": 13,
-                "tema": "Avaliação",
-                "detalhe": "- Instrutor apresenta Reivindicações de redução de bagagem de mão despachada no porão",
+                "tema": "Correção da Avaliação ",
+                "detalhe": "Avaliação via formulário ",
                 "tiempo": "0:50:00",
-                "herramientas": [],
+                "herramientas": [
+                  {
+                    "tipo": "📋 Form AeC",
+                    "url": "https://forms.gle/jUnNZzP3fcs17coM7"
+                  },
+                  {
+                    "tipo": "📋 Form Kon BR",
+                    "url": "https://forms.gle/1cb78aFQbm5Pq3KX9"
+                  }
+                ],
                 "iaPic": [
                   {
                     "label": "PIC",
@@ -10834,19 +10833,19 @@
                 "consejo": ""
               },
               {
-                "macroTema": "Correção da Avaliação",
+                "macroTema": "Correção da Avaliação ",
                 "dia": 13,
-                "tema": "Correção da Avaliação",
-                "detalhe": "Avaliação via formulário",
+                "tema": "Instrutor corrige avaliação",
+                "detalhe": "-",
                 "tiempo": "00:10:00",
                 "herramientas": [
                   {
-                    "tipo": "Forms AEC",
-                    "url": "https://forms.gle/jUnNZzP3fcs17coM7"
+                    "tipo": "➖ NA",
+                    "url": ""
                   },
                   {
-                    "tipo": "Forms KON",
-                    "url": "https://forms.gle/1cb78aFQbm5Pq3KX9"
+                    "tipo": "➖ NA",
+                    "url": ""
                   }
                 ],
                 "iaPic": [],
@@ -10932,8 +10931,18 @@
         "texture": "RINGS",
         "label": "LAE",
         "color": "#7000ab",
-        "evalKon": [],
-        "evalAec": [],
+        "evalKon": [
+          {
+            "label": "LINK",
+            "url": "https://docs.google.com/forms/d/e/1FAIpQLSdu6H1DwR1C-2lm1PVckIHQxFeOAL64kCOSWGakBTAaIXtHqQ/viewform"
+          }
+        ],
+        "evalAec": [
+          {
+            "label": "LINK",
+            "url": "https://docs.google.com/forms/d/e/1FAIpQLSeF8eY8jUJ6KS3vbDLi1BUTxRSUFhXYLWzP7RNPd60I5IaGNQ/viewform"
+          }
+        ],
         "evalMsg": "Os alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\n\nDuração: 40 min",
         "secciones": [
           {
@@ -11662,6 +11671,42 @@
                 "consejo": ""
               }
             ]
+          },
+          {
+            "tipo": "ojt",
+            "label": "DESAFIO OJT",
+            "rows": [
+              {
+                "macroTema": "Desafio OJT",
+                "dia": "5,6",
+                "tema": "Desafio OJT",
+                "detalhe": "Instrutor leva agentes até a operação \npara acompanhamento lado a lado.",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [
+                  {
+                    "label": "Operação",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223693-Bagagem-Extraviada-ou-Atrasada"
+                  }
+                ],
+                "tiempo": ""
+              }
+            ],
+            "dbOjtLabel": "Diário de Bordo · Grupo 01",
+            "dbOjtUrl": "",
+            "totalCh": "5:40:00",
+            "ajusteRota": "Os alumnos que não atingirem a média final de 80%...",
+            "ajusteRotaUrlKon": "",
+            "ajusteRotaUrlAec": "",
+            "ajusteRotaCh": "0:30:00",
+            "ojtExtraTitle": "Atenção",
+            "ojtExtraDesc": "Lembre de reservar um tempo para preencher o Diário de Bordo OJT",
+            "ojtExtraLink": "https://drive.google.com/drive/folders/1ASqpjkwTsAv0a9LNnJArjeLKi2cfB9gw"
           }
         ],
         "evalTime": "00:40:00"
@@ -12490,7 +12535,7 @@
                 "dia": 3,
                 "tema": "Desafio OJT",
                 "detalhe": "Instrutor leva agentes até a operação \npara acompanhamento lado a lado.",
-                "tiempo": "02:00:00",
+                "tiempo": "05:40:00",
                 "herramientas": [
                   {
                     "tipo": "➖ NA",
@@ -13835,13 +13880,26 @@
                 "iaPic": [],
                 "consejo": ""
               }
-            ]
+            ],
+            "ojtExtraTitle": "Diário de Bordo OJT",
+            "ojtExtraLink": "https://drive.google.com/drive/folders/1UKAFg1CLBiYMSxLNH0coaSwYE3jGICZG",
+            "ojtExtraDesc": "Atenção: Lembre de reservar um tempo para preencher o Diário de Bordo OJT\t\t\t"
           }
         ],
         "materiais": [],
-        "evalKon": [],
-        "evalAec": [],
-        "evalMsg": "Os alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\n",
+        "evalKon": [
+          {
+            "label": "Ajuste de Rota para Reprovados",
+            "url": "https://forms.gle/8pxrukUa4NC6RYwr7"
+          }
+        ],
+        "evalAec": [
+          {
+            "label": "Ajuste de Rota para Reprovados",
+            "url": "https://forms.gle/8pxrukUa4NC6RYwr7"
+          }
+        ],
+        "evalMsg": "Ajuste de Rota para Reprovados\t\n\"Os alunos que não atingirem a média final de 80% devem realizar o \"\"Ajuste de Rota\"\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\nDuração: 30 min\"\n",
         "evalTime": "00:30:00"
       }
     ],
