@@ -872,9 +872,7 @@ export const TechBaseView = ({
                   <div style={{ fontSize: 16, fontWeight: 900, color: themeColor }}>{(i + 1).toString().padStart(2, '0')}.</div>
                   <div style={{ fontSize: 15, fontWeight: 900, letterSpacing: '0.02em', color: '#ffffff', textTransform: 'none', flex: 1 }}>{link.label}</div>
                 </div>
-                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', lineHeight: 1.4, fontWeight: 500, fontFamily: 'sans-serif', marginTop: 8 }}>
-                  {link.desc || description}
-                </div>
+
               </div>
 
               <div style={{
