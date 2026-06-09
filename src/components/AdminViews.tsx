@@ -261,7 +261,8 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                   <div style={{fontSize:14, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
                     LIVE TELEMETRY · MONITORING URL
                   </div>
-                            <input 
+                </div>
+                <input 
                   value={(tempConfig[sk] || tempConfig.br || {}).monitoringUrl||''} 
                   onChange={e=>updateF('monitoringUrl',e.target.value)}
                   style={{...inp({ padding: '14px 20px', border: '1px solid #E2E8F0', fontSize: 14, background: '#F8FAFC' }), width:'100%'}} 
@@ -327,7 +328,6 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                 />
               </div>
             </div>
-          </div>
           </div>
 
           <div style={{display: 'flex', alignItems: 'center', gap: 14, marginBottom: 28}}>
