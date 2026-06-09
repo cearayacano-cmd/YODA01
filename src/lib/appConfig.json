@@ -347,7 +347,7 @@
         "secciones": [
           {
             "tipo": "imersao",
-            "label": "IMERSÃO",
+            "label": "Desafio Imersão",
             "rows": [
               {
                 "macroTema": "Imersão Operacional Estratégica 1",
@@ -1922,7 +1922,7 @@
           },
           {
             "tipo": "ojt",
-            "label": "Desafio OJT 1",
+            "label": "Desafio Imersão",
             "rows": [
               {
                 "macroTema": "Desafio OJT 1",
@@ -4000,19 +4000,9 @@
         "texture": "GAS",
         "label": "POS VENDA 1",
         "color": "#7000ab",
-        "evalKon": [
-          {
-            "label": "AJUSTE DE ROTA: KON",
-            "url": "https://forms.gle/Q35xvUmxyYXGd6mg7"
-          }
-        ],
-        "evalAec": [
-          {
-            "label": "AJUSTE DE ROTA: AeC",
-            "url": "https://docs.google.com/forms/d/e/1FAIpQLSfszwfMn6jVPGhNIKCxy_YcMLnG_N0GR8yqd5NMV7FWLYYU_Q/viewform"
-          }
-        ],
-        "evalMsg": "Os alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\n\nDuração: 30 min",
+        "evalKon": [],
+        "evalAec": [],
+        "evalMsg": "",
         "secciones": [
           {
             "tipo": "mision1",
@@ -5307,7 +5297,7 @@
             ]
           }
         ],
-        "evalTime": "00:30:00"
+        "evalTime": ""
       },
       {
         "texture": "CRATERS",
@@ -8077,8 +8067,18 @@
         "texture": "OCEAN",
         "label": "HVC + BAG",
         "color": "#7000ab",
-        "evalKon": [],
-        "evalAec": [],
+        "evalKon": [
+          {
+            "label": "NUEVO LINK",
+            "url": "https://forms.gle/r4H8CvbeEQcQQb9u7"
+          }
+        ],
+        "evalAec": [
+          {
+            "label": "NUEVO LINK",
+            "url": "https://forms.gle/kiqtE8z1jNNtrFEM8"
+          }
+        ],
         "evalMsg": "Os alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\n\nDuração: 30 min",
         "secciones": [
           {
@@ -13918,12 +13918,7 @@
             "url": "https://forms.gle/8pxrukUa4NC6RYwr7"
           }
         ],
-        "evalAec": [
-          {
-            "label": "Ajuste de Rota para Reprovados",
-            "url": "https://forms.gle/8pxrukUa4NC6RYwr7"
-          }
-        ],
+        "evalAec": [],
         "evalMsg": "Ajuste de Rota para Reprovados\t\n\"Os alunos que não atingirem a média final de 80% devem realizar o \"\"Ajuste de Rota\"\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\nDuração: 30 min\"\n",
         "evalTime": "00:30:00"
       }

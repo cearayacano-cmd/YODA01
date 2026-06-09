@@ -1293,7 +1293,7 @@ const TacticalKey = ({ label, color, active = false, onClick, large = false }: a
   </motion.div>
 );
 
-const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive, onPreparacao, states, isIntegrated = false }: any) => {
+const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive, onPreparacao, onIncidencias, states, isIntegrated = false }: any) => {
   const { alertMode, hudHidden, dimLights } = states;
   const color = alertMode ? "#B20F3B" : "#99CC33";
 
@@ -1410,7 +1410,7 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
 
       {/* MAIN CONSOLE ROW — Focused Actions */}
       <div style={{ 
-        marginTop: '8px', display: 'flex', justifyContent: 'center', gap: '10px',
+        marginTop: '8px', display: 'flex', justifyContent: 'center', gap: '6px',
         alignItems: 'center', position: 'relative', zIndex: 2 
       }}>
         {/* PAINÉIS & RELATÓRIOS */}
@@ -1421,16 +1421,16 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
           whileTap={{ scale: 0.97, backgroundColor: 'rgba(153,204,51,0.4)' }}
           onClick={onMonitoring}
           style={{
-            height: '36px', padding: '0 16px',
+            height: '36px', padding: '0 10px',
             background: 'transparent', border: '1.5px solid rgba(153,204,51,0.55)',
             borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer', position: 'relative', overflow: 'hidden', gap: 8,
+            cursor: 'pointer', position: 'relative', overflow: 'hidden', gap: 6,
             transition: 'background 0.3s, box-shadow 0.3s',
           }}
         >
           <motion.div animate={{ x: ['-100%', '200%'] }} transition={{ duration: 2.5, repeat: Infinity, ease: 'linear', repeatDelay: 2 }}
             style={{ position: 'absolute', top: 0, left: 0, width: '35%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(153,204,51,0.12), transparent)', pointerEvents: 'none' }} />
-          <span style={{ fontSize: 10, fontWeight: 900, color: '#fff', letterSpacing: '0.12em', textShadow: '0 0 8px rgba(153,204,51,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>📊 PAINÉIS</span>
+          <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '0.08em', textShadow: '0 0 8px rgba(153,204,51,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>📊 PAINÉIS</span>
         </motion.div>
 
         {/* IARA */}
@@ -1443,7 +1443,7 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
           whileTap={{ scale: 0.97 }}
           onClick={onIara}
           style={{
-            height: '36px', padding: '0 18px',
+            height: '36px', padding: '0 10px',
             background: iaraActive ? 'rgba(100,32,200,0.45)' : 'transparent',
             border: `1.5px solid ${iaraActive ? '#A060FF' : 'rgba(123,64,255,0.45)'}`,
             borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -1451,7 +1451,7 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
             transition: 'background 0.3s, box-shadow 0.3s',
           }}
         >
-          <span style={{ fontSize: 11, fontWeight: 900, color: '#fff', letterSpacing: '0.2em', fontFamily: 'monospace', textShadow: iaraActive ? '0 0 10px #C090FF, 0 0 3px #fff' : 'none', whiteSpace: 'nowrap' }}>🤖 IARA</span>
+          <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '0.1em', fontFamily: 'monospace', textShadow: iaraActive ? '0 0 10px #C090FF, 0 0 3px #fff' : 'none', whiteSpace: 'nowrap' }}>🤖 IARA</span>
         </motion.div>
 
         {/* PREPARAÇÃO */}
@@ -1462,16 +1462,36 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
           whileTap={{ scale: 0.97, backgroundColor: 'rgba(0,214,204,0.4)' }}
           onClick={onPreparacao}
           style={{
-            height: '36px', padding: '0 16px',
+            height: '36px', padding: '0 10px',
             background: 'transparent', border: '1.5px solid rgba(0,214,204,0.55)',
             borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer', position: 'relative', overflow: 'hidden', gap: 8,
+            cursor: 'pointer', position: 'relative', overflow: 'hidden', gap: 6,
             transition: 'background 0.3s, box-shadow 0.3s',
           }}
         >
           <motion.div animate={{ x: ['-100%', '200%'] }} transition={{ duration: 2.8, repeat: Infinity, ease: 'linear', repeatDelay: 2 }}
             style={{ position: 'absolute', top: 0, left: 0, width: '35%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(0,214,204,0.12), transparent)', pointerEvents: 'none' }} />
-          <span style={{ fontSize: 10, fontWeight: 900, color: '#fff', letterSpacing: '0.12em', textShadow: '0 0 8px rgba(0,214,204,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>📋 MATRIZ MIGRAÇÕES</span>
+          <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '0.05em', textShadow: '0 0 8px rgba(0,214,204,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>📋 MATRIZ MIGRAÇÕES</span>
+        </motion.div>
+
+        {/* INCIDÊNCIAS */}
+        <motion.div
+          animate={{ boxShadow: ['0 0 6px rgba(255,140,0,0.25)', '0 0 16px rgba(255,140,0,0.6)', '0 0 6px rgba(255,140,0,0.25)'] }}
+          transition={{ duration: 2.8, repeat: Infinity }}
+          whileHover={{ backgroundColor: 'rgba(255,140,0,0.22)', boxShadow: '0 0 18px rgba(255,140,0,0.8)' }}
+          whileTap={{ scale: 0.97, backgroundColor: 'rgba(255,140,0,0.4)' }}
+          onClick={onIncidencias}
+          style={{
+            height: '36px', padding: '0 10px',
+            background: 'transparent', border: '1.5px solid rgba(255,140,0,0.55)',
+            borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer', position: 'relative', overflow: 'hidden', gap: 6,
+            transition: 'background 0.3s, box-shadow 0.3s',
+          }}
+        >
+          <motion.div animate={{ x: ['-100%', '200%'] }} transition={{ duration: 2.8, repeat: Infinity, ease: 'linear', repeatDelay: 2 }}
+            style={{ position: 'absolute', top: 0, left: 0, width: '35%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(255,140,0,0.12), transparent)', pointerEvents: 'none' }} />
+          <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '0.05em', textShadow: '0 0 8px rgba(255,140,0,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>⚠️ INCIDÊNCIAS</span>
         </motion.div>
       </div>
     </div>
@@ -1816,6 +1836,7 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
               onIara={() => setShowIara(prev => !prev)}
               iaraActive={showIara}
               onPreparacao={() => config?.preparacaoLink && window.open(config.preparacaoLink, '_blank')}
+              onIncidencias={() => config?.incidenciasLink ? window.open(config.incidenciasLink, '_blank') : window.open('https://forms.gle/AF44FUbJZbrhKHoQA', '_blank')}
               states={{ alertMode, hudHidden, dimLights }}
               isIntegrated={true} // New prop to handle internal styling
             />
