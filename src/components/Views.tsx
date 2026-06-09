@@ -90,7 +90,7 @@ export const Landing = ({ onNavigate, onAdmin }: any) => {
 
   // Determine current variant: Hover takes priority, otherwise use auto-rotation
   const currentVariant = hoveredStation === 'br' ? 'pt' : (hoveredStation === 'ssc' ? 'es' : autoVariant);
-  const shipSrc = currentVariant === 'pt' ? '/nave_pt.png' : '/nave_es.png';
+  const shipSrc = currentVariant === 'pt' ? '/nave_pt2.png' : '/nave_es2.png';
 
   return (
   <div style={{minHeight:'100vh', background:'#0F004F', display:'flex', flexDirection:'column', position: 'relative', overflow: 'hidden'}}>
