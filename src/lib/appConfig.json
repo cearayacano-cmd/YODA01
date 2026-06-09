@@ -1921,7 +1921,7 @@
             ]
           },
           {
-            "tipo": "desafio",
+            "tipo": "ojt",
             "label": "Desafio OJT 1",
             "rows": [
               {
@@ -1966,7 +1966,10 @@
                 "iaPic": [],
                 "dia": "9,10"
               }
-            ]
+            ],
+            "ojtExtraDesc": "Lembre de reservar um tempo para preencher o Diário de Bordo OJT",
+            "ojtExtraTitle": "Atenção",
+            "ojtExtraLink": "https://drive.google.com/drive/folders/1QJT1NHI9cWM9e6z2QsMfYj9ZjsucLWBW?usp=drive_link"
           },
           {
             "tipo": "mision1",
@@ -12562,7 +12565,11 @@
           }
         ],
         "evalTime": "00:40:00"
-      }
+      },
+      [],
+      [],
+      [],
+      []
     ],
     "soporteContent": [
       {
@@ -13948,7 +13955,7 @@
         {
           "texture": "CRATERS",
           "color": "#1b0088",
-          "label": "Vendas + WS 12 dias",
+          "label": "Vendas",
           "onboardingIdx": 1,
           "secciones": [
             {
@@ -15410,7 +15417,7 @@
               ]
             },
             {
-              "tipo": "desafio",
+              "tipo": "ojt",
               "label": "Desafio OJT 1",
               "rows": [
                 {
@@ -19190,7 +19197,7 @@
         },
         {
           "texture": "OCEAN",
-          "label": "HVC + BAG",
+          "label": "HVC",
           "color": "#7000ab",
           "evalKon": [],
           "evalAec": [],
@@ -21488,7 +21495,7 @@
         },
         {
           "texture": "RINGS",
-          "label": "LAE",
+          "label": "LAE PI",
           "color": "#7000ab",
           "evalKon": [],
           "evalAec": [],
@@ -22219,6 +22226,26 @@
               "url": "https://docs.google.com/forms/d/e/1FAIpQLSdbX7c5altxMwpNxbdh_rpRh7XR-Xa-Ytu21sorS7R5b83m5A/viewform"
             }
           ]
+        },
+        {
+          "label": "LATAM Travel",
+          "color": "#1b0088",
+          "texture": "OCEAN"
+        },
+        {
+          "label": "RRSS",
+          "color": "#7000ab",
+          "texture": "CRATERS"
+        },
+        {
+          "label": "DT FFP",
+          "color": "#ed1650",
+          "texture": "GAS"
+        },
+        {
+          "label": "DT Devoluções",
+          "color": "#00d6cc",
+          "texture": "RINGS"
         }
       ],
       "soporte": [
