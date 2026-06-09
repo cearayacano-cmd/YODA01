@@ -5,7 +5,7 @@ import { MacroTemaTable } from './Views2';
 import { 
   Moon, Star, Map, ChevronRight, Binary, Orbit, Shield, Zap, Target, 
   Activity, Radio, Compass, Cpu, Crosshair, Anchor, Rocket, ArrowLeft,
-  LayoutGrid, Share2, Award, Terminal
+  LayoutGrid, Share2, Award, Terminal, Lock
 } from 'lucide-react';
 import { PlanetContentView, ClassicMissionBlock } from './Views6';
 import { TacticalSatelliteIcon, HyperProPlanetVisual } from './Shared';
@@ -92,9 +92,22 @@ const CornerHUD = () => (
 
 
 /* ── TACTICAL PLANET CARD ────────────────────────────────────────────── */
-const TacticalPlanetCard = ({ course, index, color, type, onClick }: any) => {
+const TacticalPlanetCard = ({ course, index, color, type, contentData, onClick }: any) => {
   const planetLabel = course.label;
-  const allSecciones = course.secciones || [];
+  
+  let allSecciones: any[] = [];
+  if (contentData) {
+      if (contentData.secciones) {
+          allSecciones = contentData.secciones;
+      } else if (Array.isArray(contentData)) {
+          allSecciones = (contentData.length > 0 && (contentData[0].tipo || contentData[0].rows)) ? contentData : [{ rows: contentData }];
+      } else if (contentData.rows) {
+          allSecciones = [contentData];
+      }
+  } else if (course.secciones) {
+      allSecciones = course.secciones;
+  }
+
   let totalRows = 0;
   let resolvedCount = 0;
   
@@ -114,9 +127,9 @@ const TacticalPlanetCard = ({ course, index, color, type, onClick }: any) => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
-      onClick={onClick}
-      whileHover={{ y: -15 }}
-      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', perspective: '1000px' }}
+      onClick={totalRows > 0 ? onClick : undefined}
+      whileHover={totalRows > 0 ? { y: -15 } : {}}
+      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: totalRows > 0 ? 'pointer' : 'not-allowed', perspective: '1000px', opacity: totalRows > 0 ? 1 : 0.6 }}
     >
       <div style={{ marginBottom: 20 }}>
           <HyperProPlanetVisual color={color} index={index} texture={course.texture} />
@@ -147,17 +160,31 @@ const TacticalPlanetCard = ({ course, index, color, type, onClick }: any) => {
               <div style={{ height: '1.5px', background: `linear-gradient(90deg, transparent, ${color}44, transparent)`, marginBottom: 15 }} />
 
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-                  <div style={{ border: `1px solid ${color}44`, padding: '4px 10px', borderRadius: 4, fontSize: 8, fontWeight: 900, color: '#fff', background: `${color}11`, boxShadow: `0 0 10px ${color}33`, textShadow: `0 0 5px ${color}` }}>
-                    Status: Ativo
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                      <motion.div 
-                        animate={{ opacity: [1, 0.3, 1] }} 
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                        style={{ width: 6, height: 6, borderRadius: '50%', background: isCompleted ? '#99CC33' : color, boxShadow: `0 0 10px ${isCompleted ? '#99CC33' : color}` }} 
-                      />
-                      <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '1px' }}>{isCompleted ? 'Finalizado' : 'Em órbita'}</span>
-                  </div>
+                  {totalRows > 0 ? (
+                    <>
+                      <div style={{ border: `1px solid ${color}44`, padding: '4px 10px', borderRadius: 4, fontSize: 8, fontWeight: 900, color: '#fff', background: `${color}11`, boxShadow: `0 0 10px ${color}33`, textShadow: `0 0 5px ${color}` }}>
+                        Status: Ativo
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                          <motion.div 
+                            animate={{ opacity: [1, 0.3, 1] }} 
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                            style={{ width: 6, height: 6, borderRadius: '50%', background: isCompleted ? '#99CC33' : color, boxShadow: `0 0 10px ${isCompleted ? '#99CC33' : color}` }} 
+                          />
+                          <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '1px' }}>{isCompleted ? 'Finalizado' : 'Em órbita'}</span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div style={{ border: `1px solid rgba(255,255,255,0.2)`, padding: '4px 10px', borderRadius: 4, fontSize: 8, fontWeight: 900, color: 'rgba(255,255,255,0.5)', background: `rgba(255,255,255,0.05)` }}>
+                        Status: Bloqueado
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.5)' }}>
+                          <Lock size={12} />
+                          <span style={{ fontSize: 9, fontWeight: 900, letterSpacing: '1px' }}>Sem dados</span>
+                      </div>
+                    </>
+                  )}
               </div>
           </div>
 
@@ -175,6 +202,9 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
   const satelites = config.satelites || {};
   const [activeMap, setActiveMap] = useState<string | null>(null);
   
+  const contentKey = sectorId === 'fieldSupport' ? 'fsc' : sectorId === 'soporte' ? 'soporteContent' : 'frontLineContent';
+  const advData = config[contentKey] || [];
+
   const COLORS = ['#3B82F6', '#00D6CC', '#D400FF', '#FFE017'];
   const TYPES = ['INFERNO_CORE', 'AQUA_STREAM', 'VOID_VOID', 'SOLAR_FLARE'];
 
@@ -317,6 +347,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                         return (
                             <TacticalPlanetCard 
                                 key={i} index={i} course={course} color={color} type={type}
+                                contentData={advData[i]}
                                 onClick={() => onNavigate('mission', sectorId, i)}
                             />
                         );
