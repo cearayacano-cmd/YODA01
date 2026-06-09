@@ -11015,7 +11015,7 @@
               {
                 "macroTema": "Declaração de Embarque e contingências",
                 "dia": 1,
-                "tema": "Definição: Declaração de Embarque e Declaração de Contingência",
+                "tema": "Definiç��o: Declaração de Embarque e Declaração de Contingência",
                 "detalhe": "- Instrutor mostra onde localizar o tema no PIC realiza a explicação da diferença entre:\n1. Declaração de embarque (Documento comprobatorio)\n2. Declaração de Contingência (Obrigatório sempre que o cliente solicitar)",
                 "tiempo": "00:20:00",
                 "herramientas": [],
@@ -12569,7 +12569,25 @@
       [],
       [],
       [],
-      []
+      [],
+      {
+        "secciones": [],
+        "materiais": [],
+        "evalKon": [
+          {
+            "label": "Avaliação de Recuperação ",
+            "url": "https://docs.google.com/forms/d/e/1FAIpQLScKEf3hmeMD58-hy_FvA208pcYVqT0o4hTP6F0FsIqiBcIQhA/viewform"
+          }
+        ],
+        "evalAec": [
+          {
+            "label": "Avaliação de Recuperação ",
+            "url": "https://docs.google.com/forms/d/10ypg24Lc73zhx4-zUujOXKmgKsRKP90ZqgIOuUPpomk/edit"
+          }
+        ],
+        "evalMsg": "Ajuste de Rota\" para Reprovados\t\nOs alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de accesos.",
+        "evalTime": "00:40:00"
+      }
     ],
     "soporteContent": [
       {
@@ -22245,6 +22263,11 @@
         {
           "label": "DT Devoluções",
           "color": "#00d6cc",
+          "texture": "RINGS"
+        },
+        {
+          "label": "Fale Voz",
+          "color": "#7da81a",
           "texture": "RINGS"
         }
       ],
