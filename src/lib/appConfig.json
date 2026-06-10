@@ -12566,10 +12566,6 @@
         ],
         "evalTime": "00:40:00"
       },
-      [],
-      [],
-      [],
-      [],
       {
         "secciones": [
           {
@@ -13116,7 +13112,24 @@
         ],
         "evalMsg": "Ajuste de Rota\" para Reprovados\t\nOs alunos que não atingirem a média final de 80% devem realizar o \"Ajuste de Rota\" - Avaliação de recuperação e somente após a aprovação realizar os testes de accesos.",
         "evalTime": "00:40:00"
-      }
+      },
+      {
+        "secciones": [],
+        "materiais": [],
+        "evalKon": [],
+        "evalAec": [
+          {
+            "label": "NUEVO LINK",
+            "url": "https://docs.google.com/forms/d/e/1FAIpQLSfjG0F2BHJyqNumXmnUZHUpYGYtfVL_9xhc3FN6JeRP0FBGbQ/viewform"
+          }
+        ],
+        "evalMsg": "Ajuste de rotas para reprovados \nOs alunos que não atingirem a média final de 80% devem realizar o \"\"Ajuste de Rota\"\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\nDuração: 30 min",
+        "evalTime": "0:30:00"
+      },
+      [],
+      [],
+      [],
+      []
     ],
     "soporteContent": [
       {
@@ -22770,9 +22783,19 @@
           ]
         },
         {
+          "label": "Fale Voz",
+          "color": "#7da81a",
+          "texture": "RINGS"
+        },
+        {
+          "label": "Bagagem",
+          "color": "#7da81a",
+          "texture": "CRATERS"
+        },
+        {
           "label": "LATAM Travel",
           "color": "#1b0088",
-          "texture": "OCEAN"
+          "texture": "CRATERS"
         },
         {
           "label": "RRSS",
@@ -22782,17 +22805,12 @@
         {
           "label": "DT FFP",
           "color": "#ed1650",
-          "texture": "GAS"
+          "texture": "CRATERS"
         },
         {
           "label": "DT Devoluções",
           "color": "#00d6cc",
-          "texture": "RINGS"
-        },
-        {
-          "label": "Fale Voz",
-          "color": "#7da81a",
-          "texture": "RINGS"
+          "texture": "CRATERS"
         }
       ],
       "soporte": [
