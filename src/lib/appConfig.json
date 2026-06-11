@@ -3115,7 +3115,7 @@
               },
               {
                 "macroTema": "Avaliação Vendas A360",
-                "dia": 3,
+                "dia": "5",
                 "tema": "Jornada pelo Universo do Conhecimento\n\"Vendas\"",
                 "detalhe": "- Instrutor aplica a avaliação.",
                 "tiempo": "0:30:00",
@@ -12886,7 +12886,7 @@
                 "dia": 1
               },
               {
-                "macroTema": "Política:\nReclamações\npor agente 360",
+                "macroTema": "Pol��tica:\nReclamações\npor agente 360",
                 "tiempo": "0:20:00",
                 "tema": "Atividade\n\"Relatório de Exploração\"\nReclamações A360",
                 "detalhe": "- No PPT temos algumas descrições de demandas da (Matriz de Processos).\n- Intrutor de forma aleatoria convida os agentes para lerem e buscarem na Matriz, de qual demanda se trata.\n- Após localizar explicar qual o fluxo correto se deve seguir para tal demanda.",
@@ -13355,7 +13355,7 @@
                 "macroTema": "Ferramentas",
                 "tiempo": "00:30:00",
                 "tema": "Atividade relatório de exploração",
-                "detalhe": "- Instrutor direciona os alunos para página de WTD no PIC e projeta as perguntas, realizando a batalha entre grupos ( os grupos devem ser sorteados através do site )\n1. O que significa PIR?\n2. O que é PIR AHL?\n3. O que é Found Property?\n4. Qual o nome do relatório sobre bagagem danificada ou com subtração de artigos?\n5. O que é Delayed Bag?\n6. O que é Damage Bag?\n7. O que significa Bag tag number, e como posso adquirir essa informação ?\n8. Na PIR onde ficam as informações da bagagem como cor,elementos dfiscritivos,marcas e etc...?\n9. O que significa \" Reason for Loss: 91- Merma e Dano?\n- Instrutor corrige e complementa sempre que necessário.",
+                "detalhe": "- Instrutor direciona os alunos para página de WTD no PIC e projeta as perguntas, realizando a batalha entre grupos ( os grupos devem ser sorteados através do site )\n1. O que significa PIR?\n2. O que é PIR AHL?\n3. O que é Found Property?\n4. Qual o nome do relatório sobre bagagem danificada ou com subtração de artigos?\n5. O que é Delayed Bag?\n6. O que é Damage Bag?\n7. O que significa Bag tag number, e como posso adquirir essa informa��ão ?\n8. Na PIR onde ficam as informações da bagagem como cor,elementos dfiscritivos,marcas e etc...?\n9. O que significa \" Reason for Loss: 91- Merma e Dano?\n- Instrutor corrige e complementa sempre que necessário.",
                 "ferramentas": [
                   {
                     "label": "PPT",
