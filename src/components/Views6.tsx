@@ -988,27 +988,26 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel }: any) => 
                         .map((link: any, li: number) => (
                         <motion.a 
                             key={li}
-                            whileHover={{ scale: 1.02, background: `${planetColor}10` }}
+                            whileHover={{ scale: 1.05, background: '#e0f2fe' }}
                             href={link.url} target="_blank" rel="noopener noreferrer"
                             style={{ 
-                                border: `1.5px solid ${planetColor}`, 
-                                color: planetColor, 
-                                padding: '10px 14px', 
-                                borderRadius: 10, 
-                                fontSize: 9, 
-                                fontWeight: 900, 
+                                background: '#f0f9ff',
+                                border: '1px dashed #bae6fd', 
+                                color: '#0284c7', 
+                                padding: '6px 12px', 
+                                borderRadius: 8, 
+                                fontSize: 10, 
+                                fontWeight: 800, 
                                 textAlign: 'center', 
                                 textDecoration: 'none', 
-                                textTransform: 'uppercase', 
                                 letterSpacing: '0.5px',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                gap: 8,
-                                background: 'transparent'
+                                gap: 6
                             }}
                         >
-                            <ExternalLink size={12} /> {link.label || 'LINK PIC'}
+                            <ExternalLink size={12} /> {link.label && link.label.length < 30 ? link.label : 'PIC'}
                         </motion.a>
                     ))}
                 </div>
@@ -1189,12 +1188,25 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                         {typeIcons[tipo]}
                     </div>
                     <div>
-                        <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.6)', fontWeight: 900, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: 2 }}>{subtitleOverride || 'PROTOCOLO DE SEGMENTO'}</div>
+                        <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.6)', fontWeight: 900, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: 2 }}>
+                            {subtitleOverride || 'PROTOCOLO DE SEGMENTO'}
+                        </div>
                         <div style={{ fontSize: 26, fontWeight: 900, color: '#FFF' }}>{titleOverride || seccion.nombre?.toUpperCase() || seccion.label?.toUpperCase() || 'EXPLORAÇÃO TÁTICA'}</div>
                     </div>
                 </div>
 
                 <div style={{ marginLeft: 'auto', display: 'flex', gap: 48, alignItems: 'center' }}>
+                    {planetLabel && (
+                        <>
+                            <div style={{ textAlign: 'right' }}>
+                                <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>PLANETA</div>
+                                <div style={{ fontSize: 13, color: '#FFF', fontWeight: 900, textTransform: 'uppercase' }}>
+                                    {planetLabel}
+                                </div>
+                            </div>
+                            <div style={{ height: 40, width: 2, background: 'rgba(255,255,255,0.1)' }} />
+                        </>
+                    )}
                     <div style={{ textAlign: 'right' }}>
                         <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>Status</div>
                         <div style={{ fontSize: 13, color: '#99CC33', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'flex-end' }}>
