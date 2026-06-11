@@ -110,7 +110,17 @@ const bagagemData = [
     }
 ];
 
-bagagemPlanet.secciones = bagagemData;
+const bagagemIdx = data.br.exploracion.frontLine.findIndex(p => p.label === 'Bagagem');
+
+if (bagagemIdx === -1) {
+    console.error("Bagagem planet not found!");
+    process.exit(1);
+}
+
+if (!data.br.frontLineContent[bagagemIdx]) {
+    data.br.frontLineContent[bagagemIdx] = {};
+}
+data.br.frontLineContent[bagagemIdx].secciones = bagagemData;
 
 fs.writeFileSync(path, JSON.stringify(data, null, 2), 'utf8');
 console.log('Bagagem updated successfully!');

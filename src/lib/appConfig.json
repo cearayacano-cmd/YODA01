@@ -723,7 +723,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 3
+                "dia": "4"
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -737,7 +737,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 3
+                "dia": "4"
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -751,7 +751,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 3
+                "dia": "4"
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -765,7 +765,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 3
+                "dia": "4"
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -779,7 +779,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 3
+                "dia": "4"
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -793,7 +793,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 3
+                "dia": "4"
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -807,7 +807,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 3
+                "dia": "4"
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -821,7 +821,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 3
+                "dia": "4"
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -835,7 +835,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 3
+                "dia": "4"
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -849,7 +849,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 3
+                "dia": "4"
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -863,7 +863,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 3
+                "dia": "4"
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -877,7 +877,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 3
+                "dia": "4"
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -891,7 +891,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 3
+                "dia": "4"
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -905,7 +905,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 3
+                "dia": "4"
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -919,7 +919,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 3
+                "dia": "4"
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
@@ -933,7 +933,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 3
+                "dia": "4"
               },
               {
                 "macroTema": "Solicitação de Serviços Agente 360",
@@ -1059,7 +1059,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 4
+                "dia": "5"
               },
               {
                 "macroTema": "Ancillaries",
@@ -1073,7 +1073,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 4
+                "dia": "5"
               },
               {
                 "macroTema": "Ancillaries",
@@ -1087,7 +1087,7 @@
                   }
                 ],
                 "iaPic": [],
-                "dia": 4
+                "dia": "5"
               },
               {
                 "macroTema": "Painel de Pagamento Agente 360",
@@ -2294,7 +2294,7 @@
         "secciones": [
           {
             "tipo": "imersao",
-            "label": "IMERSÃO",
+            "label": "Desafio Imersão",
             "rows": [
               {
                 "macroTema": "Imersão Operacional Estratégica 1",
@@ -2634,7 +2634,7 @@
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
-                "dia": 4,
+                "dia": "4",
                 "tema": "Atividade \n\"Ajuste de Rota com o Navegador\"\nLogin e Reserva",
                 "detalhe": "- Instrutor passa o login da ferramenta Training (A360), mostra a maneira de se logar e explica que na operação irão logar com seu BP e senha.\n- Instrutor entra na ferramenta Training e propõe que um aluno mostre como realizar a reserva e criar uma ordem simples através da ferramenta training  (instrutor será o pax e realizará o pagamento no seu perfil do agente 360, através do link de pagamento).\nO aluno deverá seguir o passo a passo do PIC e o instrutor sendo um dos passageiros (passar seus dados e email).\nAo final, instrutor mostra os campos do Agente 360 (lado esquerdo). Explica brevemente que o histórico de todas as ações fica registrado e que eles aprenderão a leitura na Expedição PV 2.",
                 "tiempo": "0:25:00",
@@ -2649,7 +2649,7 @@
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
-                "dia": 4,
+                "dia": "4",
                 "tema": "Remarks",
                 "detalhe": "- Instrutor explica o que são remarks e que devem ser sempre inseridos como respaldo das informações passadas ao cliente e como podem ser visualizados na ferramenta Agente 360.",
                 "tiempo": "0:05:00",
@@ -2664,7 +2664,7 @@
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
-                "dia": 4,
+                "dia": "4",
                 "tema": "Reforçar protocolo",
                 "detalhe": "Ao final da criação do PNR, o instrutor pede para os alunos olharem o protocolo de documentação, entra em latamairlines.com para mostrar onde está a informação e indica como adicionar a informação dada no RMK.",
                 "tiempo": "0:10:00",
@@ -2679,7 +2679,7 @@
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
-                "dia": 4,
+                "dia": "4",
                 "tema": "Video 3 [Vendas]\nLink de pagto",
                 "detalhe": "- Instrutor passa vídeo",
                 "tiempo": "0:05:00",
@@ -2694,7 +2694,7 @@
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
-                "dia": 4,
+                "dia": "4",
                 "tema": "Link de Pagamento",
                 "detalhe": "- Pede para o agente enviar o link de pagamento para o seu email, projeta e mostra como pagar com os dados do cartão ficticio (reforça que é a visão do pax).",
                 "tiempo": "0:05:00",
@@ -2709,7 +2709,7 @@
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
-                "dia": 4,
+                "dia": "4",
                 "tema": "CUV",
                 "detalhe": "- Instrutor explica o que é o CUV e como reenviá-lo através do Agente 360,",
                 "tiempo": "0:10:00",
@@ -2724,7 +2724,7 @@
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
-                "dia": 4,
+                "dia": "4",
                 "tema": "\"Controle de Voo e Lançamento\"\nReservas",
                 "detalhe": "- O instrutor pede para que os alunos realizem reservas de acordo com o proposto no GENIALLY.\n- instrutor indica para que todos os \"agentes\" fiquem com os protocols abertos e o utilizem nas simulações. \n- Instrutor mostra o campo \"minhas anotações\" da ferramenta Agente.  \nTodas as ordens devem ser anotadas em um arquivo que o aluno tenha acesso posteriormente.",
                 "tiempo": "1:00:00",
@@ -2739,7 +2739,7 @@
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
-                "dia": 4,
+                "dia": "4",
                 "tema": "Ordens de Clientes",
                 "detalhe": "- Instrutor explica como realizar a busca e exibição de uma ordem e diferença de ordem logada de não logada.        \n- Instrutor explica como identificar a origem da ordem.",
                 "tiempo": "0:15:00",
@@ -2754,7 +2754,7 @@
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
-                "dia": 4,
+                "dia": "4",
                 "tema": "Check-in Automático",
                 "detalhe": "- Intrutor explica sobre o Check-in automático (indica que o check-in é automático para todos os passageiros com ordem (visualização do cliente)\n- Mostrar como chega a confirmação da compra e a notificação no e-mail do cliente, através das telas do PIC.",
                 "tiempo": "0:05:00",
@@ -2769,7 +2769,7 @@
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
-                "dia": 4,
+                "dia": "4",
                 "tema": "Video 4 [Vendas]\n Simulação Split",
                 "detalhe": "- Instrutor passa o vídeo.",
                 "tiempo": "0:05:00",
@@ -2784,7 +2784,7 @@
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
-                "dia": 4,
+                "dia": "4",
                 "tema": "Atividade \n\"Ajuste de Rota com o Navegador\"\n Split Reservas",
                 "detalhe": "- Instrutor explica o que é o SPLIT, pede para agentes entrarem no PIC (split) e outro aluno vai até a mesa e demonstra em uma ordem previamente criada pelo instrutor, como dividir a ordem no Agente 360 TRN seguindo o passo a passo.",
                 "tiempo": "0:15:00",
@@ -2799,7 +2799,7 @@
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
-                "dia": 4,
+                "dia": "4",
                 "tema": "Atividade \n\"Controle de Voo e Lançamento\"\n Split",
                 "detalhe": "- Com as ordens criadas anteriormente, os agentes voltam a ser pax e agente e simular um contato solicitando a divisão da ordem.",
                 "tiempo": "0:10:00",
@@ -2814,7 +2814,7 @@
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
-                "dia": 4,
+                "dia": "4",
                 "tema": "Isenção de Taxa de Serviço",
                 "detalhe": "- Instrutor explica os casos em que a isenção da taxa DU pode ser realizada, mostrando o passo a passo no PIC.",
                 "tiempo": "0:10:00",
@@ -2829,7 +2829,7 @@
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
-                "dia": 4,
+                "dia": "4",
                 "tema": "Atividade \n\"Controle de Voo e Lançamento\"\nIsenção Taxa de Serviço",
                 "detalhe": "- O instrutor pede para que os alunos realizem reservas de acordo com o proposto no  Genially\ne procedam com a isenção da taxa DU.",
                 "tiempo": "0:10:00",
@@ -2844,7 +2844,7 @@
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
-                "dia": 4,
+                "dia": "4",
                 "tema": "Video 5 [Vendas]\n Introdutório LATAM Wallet",
                 "detalhe": "- Instrutor passa o vídeo.",
                 "tiempo": "0:05:00",
@@ -2859,7 +2859,7 @@
               },
               {
                 "macroTema": "Ordens e Vendas Agente 360",
-                "dia": 4,
+                "dia": "4",
                 "tema": "Atividade\n \"Relatório de Exploração\"\n LATAM Wallet",
                 "detalhe": "- Instrutor entra no PIC e mostra onde encontrar informações sobre a LATAM Wallet.\n- Instrutor dá 5 min para que os alunos façam um resumo do tema.\n Instrutor projeta a pergunta através do GENIALLY e escolhe um agente para responder. Caso ele erre, pede para outra pessoa responder. Se ele acertar, escolhe o aluno que responderá a próxima pergunta.\n- Ao final, instrutor questiona se alguém ficou com dúvidas.",
                 "tiempo": "0:30:00",
@@ -3032,21 +3032,6 @@
                   {
                     "tipo": "Forms KON",
                     "url": ""
-                  }
-                ],
-                "iaPic": [],
-                "consejo": ""
-              },
-              {
-                "macroTema": "",
-                "dia": 5,
-                "tema": "",
-                "detalhe": "https://docs.google.com/forms/d/e/1FAIpQLSeR3mZyjaxWNWd0LpFm3dI159McZoAAC641A3bxiOpDIqDROw/viewform",
-                "tiempo": "https://docs.google.com/forms/d/e/1FAIpQLSeuZcXWwvu4nfkErXMyiJ7h2OJKAx5xYt1et2apRPLlFc6GSw/viewform?usp=publish-editor",
-                "herramientas": [
-                  {
-                    "tipo": "Link",
-                    "url": "5"
                   }
                 ],
                 "iaPic": [],
@@ -13114,7 +13099,925 @@
         "evalTime": "00:40:00"
       },
       {
-        "secciones": [],
+        "secciones": [
+          {
+            "nombre": "Missão 1: Introdução",
+            "rows": [
+              {
+                "macroTema": "Introdução",
+                "tiempo": "0:10:00",
+                "tema": "Introdução do serviço",
+                "detalhe": "- Instrutor conhece a turma e dá as \"Boas Vindas bagagem \"",
+                "ferramentas": [
+                  {
+                    "label": "PPT",
+                    "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3a31204c109_1_102#slide=id.g3a31204c109_1_102"
+                  }
+                ],
+                "dia": "1"
+              },
+              {
+                "macroTema": "Introdução",
+                "tiempo": "00:05:00",
+                "tema": "Video 1 - Video Jornada da Bagagem",
+                "detalhe": "- Instrutor mostra o vídeo da Jornada da Bagagem \"",
+                "ferramentas": [
+                  {
+                    "label": "Vídeo",
+                    "url": "https://drive.google.com/file/d/1S4DcgEZtUfJwA3qtMqDvSXCBPbp42506/view"
+                  }
+                ],
+                "dia": "1"
+              }
+            ],
+            "label": "Missão 1: Introdução "
+          },
+          {
+            "nombre": "Missão 2: Gestão de Reclamações de Bagagem",
+            "rows": [
+              {
+                "macroTema": "Reclamações",
+                "tiempo": "0:15:00",
+                "tema": "Generalidades do Serviço",
+                "detalhe": "- Instrutor mostra no PPT o comprometimento fundamental e as áreas envolvidas no processo.\n- Instrutor apresenta um contexto do fluxo dos canais de atendimento de bagagem, tais como URA / WhatsApp / Site / Aeroporto.",
+                "ferramentas": [
+                  {
+                    "label": "PPT",
+                    "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_0#slide=id.g3e204a75369_0_0"
+                  },
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053436714-Generalidades-e-Guia-Reclama%C3%A7%C3%B5es-de-Bagagem"
+                  }
+                ],
+                "dia": "1"
+              },
+              {
+                "macroTema": "Reclamações",
+                "tiempo": "00:30:00",
+                "tema": "Gestão de reclamações de bagagem no aeroporto",
+                "detalhe": "- Instrutor mostra como é realizado o gerenciamento dos processos iniciais no aeroporto",
+                "ferramentas": [
+                  {
+                    "label": "PPT",
+                    "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_28#slide=id.g3e204a75369_0_28"
+                  }
+                ],
+                "dia": "1"
+              },
+              {
+                "macroTema": "Reclamações",
+                "tiempo": "00:30:00",
+                "tema": "Gestão de reclamações no Contact Center",
+                "detalhe": "- Instrutor mostra conceito no PPT o fluxo de recebimento de reclamações pelo Contact Center.\n- Instrutor mostra brevemente como Cliente pode nos contatar (Site, Qr Code, Whats).",
+                "ferramentas": [
+                  {
+                    "label": "PPT",
+                    "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_11173#slide=id.g3e204a75369_0_11173"
+                  }
+                ],
+                "dia": "1"
+              },
+              {
+                "macroTema": "Reclamações",
+                "tiempo": "0:15:00",
+                "tema": "Reclamações legais",
+                "detalhe": "- Instrutor mostra os tópicos de como se deve gerenciar essas reclamações e prazos para tratativa ( no Caso do BR solicitação de chamada FALE - exclusivo BR)",
+                "ferramentas": [
+                  {
+                    "label": "PPT",
+                    "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_11209#slide=id.g3e204a75369_0_11209"
+                  },
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053439934-Reclama%C3%A7%C3%B5es-Legais"
+                  }
+                ],
+                "dia": "1"
+              }
+            ],
+            "label": "Missão 2:  Gestão de Reclamações de Bagagem"
+          },
+          {
+            "nombre": "Missão 3: Generalidades",
+            "rows": [
+              {
+                "macroTema": "Generalidades",
+                "tiempo": "0:06:00",
+                "tema": "Generalidades de reclamações de babagem",
+                "detalhe": "- Instrutor mostra Generalidades Reclamações Bagagem no PIC",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053436714-Generalidades-Reclama%C3%A7%C3%B5es-de-Bagagem"
+                  }
+                ],
+                "dia": "1"
+              },
+              {
+                "macroTema": "Generalidades",
+                "tiempo": "0:06:00",
+                "tema": "Processo para Passageiros reclamações frequentes de bagagem",
+                "detalhe": "- Instrutor mostra do PIC o processo para passageiros com muitas reclamações de bagagem.\n- Instrutor mostra o processo que deve-se fazer ao identificar um passageiro que apresenta muitas reclamações (suspeita de fraude)",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053436714-Generalidades-Reclama%C3%A7%C3%B5es-de-Bagagem"
+                  }
+                ],
+                "dia": "1"
+              },
+              {
+                "macroTema": "Generalidades",
+                "tiempo": "0:08:00",
+                "tema": "Manual de Bagagem no Portal",
+                "detalhe": "- Instrutor apresenta brevemente o Portal de Bagagem que vai ajudar em diversas situações.\nRota/caminho: Portal do Aeroporto/Serviço de Bagagens",
+                "ferramentas": [
+                  {
+                    "label": "Portal",
+                    "url": "https://sites.google.com/lan.com/centraldebagagens/"
+                  }
+                ],
+                "dia": "1"
+              },
+              {
+                "macroTema": "Generalidades",
+                "tiempo": "0:30:00",
+                "tema": "Desafio Cristais Cósmicos: Reclamações",
+                "detalhe": "- Instrutor menciona que a atividade é individual e tem como finalidade fixar o conteúdo aprendido\n- Instrutor envia link e explica tipo e tempo de (acordo com cronograma) para praticarem\nVale ressaltar que é possível jogar mais de uma vez, caso terminem antes do prazo",
+                "ferramentas": [
+                  {
+                    "label": "Genially",
+                    "url": "#"
+                  }
+                ],
+                "dia": "1"
+              }
+            ],
+            "label": "Missão 3: Generalidades "
+          },
+          {
+            "nombre": "Missão 4: Ferrramentas",
+            "rows": [
+              {
+                "macroTema": "Ferramentas",
+                "tiempo": "0:30:00",
+                "tema": "Zendesk",
+                "detalhe": "- Instrutor destaca todos os pontos que não podem deixar de ser seguidos nas tratativas de bagagens na ferramenta Zendesk.\n-Instrutor mostra a criação de um caso, envio aos corresponsáveis, criação de ticket filho, botão play, devolução de casos não gerenciados e funcionamento da ferramenta.",
+                "ferramentas": [
+                  {
+                    "label": "Zendesk Training",
+                    "url": "https://casounico1437403668.zendesk.com/hc/pt-br/requests/new?ticket_form_id=35418581926291"
+                  }
+                ],
+                "dia": "1"
+              },
+              {
+                "macroTema": "Ferramentas",
+                "tiempo": "00:20:00",
+                "tema": "Único Sign - Assinatura Digital",
+                "detalhe": "- Instrutor apresenta a ferramenta explicando que é utilizada exclusivamente para envio de acordos , de acordos com o fluxo, que serão assinados eletronicamente para respaldos jurídicos",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/43616861256467-Portal-%C3%9Anico-Assinatura-Digital"
+                  }
+                ],
+                "dia": "1"
+              },
+              {
+                "macroTema": "Ferramentas",
+                "tiempo": "0:10:00",
+                "tema": "World Tracer Desktop",
+                "detalhe": "- Instrutor destaca todos os pontos que não podem deixar de ser seguidos nas tratativas de bagagens na ferramenta WTR.\n- Instrutor mostra como fazer o login no sistema WT\n- Instrutor entrega as assinaturas aos executivos para que eles acessem o sistema.\n(as assinaturas devem ser solicitadas com antecedência para que fiquem prontas no primeiro dia de treinamento)",
+                "ferramentas": [
+                  {
+                    "label": "WTD Training",
+                    "url": "https://desktop.worldtracer.aero/desktop/index.html"
+                  }
+                ],
+                "dia": "1"
+              },
+              {
+                "macroTema": "Ferramentas",
+                "tiempo": "00:30:00",
+                "tema": "Procurar PIR através da World Tracer (WTD)",
+                "detalhe": "- Instrutor mostra no PIC os comandos para encontrar um PIR no WTD e verificar as siglas mais importantes e seus significados",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/35758923132947-World-Tracer-Desktop-WTD"
+                  }
+                ],
+                "dia": "1"
+              },
+              {
+                "macroTema": "Ferramentas",
+                "tiempo": "0:40:00",
+                "tema": "Aitividade guerra nas estrelas",
+                "detalhe": "- Instrutor pede aos alunos que realizarem buscas de PIRs, considerando os diferentes métodos de pesquisa",
+                "ferramentas": [
+                  {
+                    "label": "WTD Training",
+                    "url": "https://desktop.worldtracer.aero/desktop/index.html"
+                  }
+                ],
+                "dia": "1"
+              },
+              {
+                "macroTema": "Ferramentas",
+                "tiempo": "00:10:00",
+                "tema": "Consulta de processos inativos - PDI",
+                "detalhe": "- Instrutor mostra no PIC o comando PDI para consultar os processos que não estão ativos no sistema.",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055207153-Consulta-de-processos-inativos-PDI"
+                  }
+                ],
+                "dia": "1"
+              },
+              {
+                "macroTema": "Ferramentas",
+                "tiempo": "00:15:00",
+                "tema": "Capacitação Air Tag",
+                "detalhe": "- Instrutor mostra no PIC o material para capacitação do Air Tag, que consiste em passageiros que utilizam o aplicativo da “Apple AirTag”, para auxiliar na localização de bagagens extraviadas ou atrasadas.",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/43233442863251-Capacita%C3%A7%C3%A3o-Air-Tag"
+                  }
+                ],
+                "dia": "1"
+              },
+              {
+                "macroTema": "Ferramentas",
+                "tiempo": "00:30:00",
+                "tema": "Atividade relatório de exploração",
+                "detalhe": "- Instrutor direciona os alunos para página de WTD no PIC e projeta as perguntas, realizando a batalha entre grupos ( os grupos devem ser sorteados através do site )\n1. O que significa PIR?\n2. O que é PIR AHL?\n3. O que é Found Property?\n4. Qual o nome do relatório sobre bagagem danificada ou com subtração de artigos?\n5. O que é Delayed Bag?\n6. O que é Damage Bag?\n7. O que significa Bag tag number, e como posso adquirir essa informação ?\n8. Na PIR onde ficam as informações da bagagem como cor,elementos dfiscritivos,marcas e etc...?\n9. O que significa \" Reason for Loss: 91- Merma e Dano?\n- Instrutor corrige e complementa sempre que necessário.",
+                "ferramentas": [
+                  {
+                    "label": "PPT",
+                    "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_11393#slide=id.g3e204a75369_0_11393"
+                  }
+                ],
+                "dia": "1"
+              },
+              {
+                "macroTema": "Resumo ",
+                "dia": "2",
+                "tema": "Resumo do  dia anterior",
+                "detalhe": "- Instrutor explica a diferença entre os conceitos e aplicação de: Compensação, Ressarcimento ou Reembolso;                                                                                                                                                                                                                                                                                                                                                                                                    - Instrutor ativa chuva palavras através do site , nela os alunos vão relembrar através de palavras chaves os principais temas que foram abordados ",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": "0:10:00"
+              },
+              {
+                "macroTema": "",
+                "dia": "",
+                "tema": "Sistema de consulta BRS WEB",
+                "detalhe": "-Instrutor mostra o sistema BRS WEB para validar bagagens etiquetadas com liberação limitada e se foram identificadas na estação de origem",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [
+                  {
+                    "label": "PIC LINK",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/23045881587347-Sistema-de-consulta-BRS-WEB"
+                  }
+                ],
+                "tiempo": "0:40:00"
+              },
+              {
+                "macroTema": "",
+                "dia": "",
+                "tema": "Genesys Whatsapp ",
+                "detalhe": "\"-Instrutor apresenta os conceitos referente o fluxo que deve ser seguido para o atendimento via WhatsApp.                                                                                            - Instrutor mostra vídeos com exemplos de atendimentos de Bagagem via WhatsApp \n\"",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [
+                  {
+                    "label": "PIC LINK",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/40120600616851-Acesso-ao-Whatsapp-Genesys"
+                  }
+                ],
+                "tiempo": "00:30:00"
+              }
+            ],
+            "label": "Missão 4: Ferrramentas "
+          },
+          {
+            "nombre": "Missão 5: Reclamação de bagagem",
+            "rows": [
+              {
+                "macroTema": "Reclamações",
+                "tiempo": "01:00:00",
+                "tema": "Bagagem Danificada e/ou com Subtração de Objeto Proveniente de Extravio",
+                "detalhe": "-Instrutor mostra do PIC as considerações Bagagem Danificada e/ou com Subtração de Objeto Proveniente de Extravio",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223713-Bagagem-Danificada-e-ou-com-Viola%C3%A7%C3%A3o-de-Objeto-Proveniente-de-Extravioo"
+                  }
+                ],
+                "dia": "2"
+              },
+              {
+                "macroTema": "Reclamações",
+                "tiempo": "1:40:00",
+                "tema": "Atividade controle de voos e lançamento:Criação de PIR ( DPR)",
+                "detalhe": "Instrutor mostra no WTD Training, o passo a passo para criar um PIR de dano e/ou subtração de objetosproviniente extravio com todos os seus elementos.\n- Fazer pergunta aos alunos para que se lembrem dos conceitos -O que é DPR?\n- Pedi aos alunos que façam a atividade de abertura de PIR DPR no WTD Training utilizando as orinetações do PPT e o fluxo do PIC.",
+                "ferramentas": [
+                  {
+                    "label": "WTD Training",
+                    "url": "https://desktop.worldtracer.aero/desktop/index.html"
+                  }
+                ],
+                "dia": "2"
+              },
+              {
+                "macroTema": "Reclamações",
+                "tiempo": "1:40:00",
+                "tema": "Aitividade ajuste de rota com o navegador",
+                "detalhe": "- Instrutor vai fazer um sorteio através do site e formará grupos, os grupos farão:\n1. Por favor, completem as seguintes tarefas: Leitura Obrigatória: Acessem link do PIC e leiam atentamente a seção intitulada \"Bagagem Danificada e/ou com Violação de Objeto Proveniente de Extravio\n2. Após a leitura, prepare um breve resumo ou anote as respostas para estas perguntas (elas serão nosso ponto de partida na aula):\nQual é o primeiro passo absoluto que você deve tomar no WTD para iniciar um relatório de dano?\nO artigo menciona diferentes tipos de relatórios (ex: 'Missing', 'Damage'). Por que é crucial selecionar o tipo correto desde o início?\nQuais são os 5 campos de informação que você considera mais críticos para preencher corretamente, com base na leitura? (Ex: Nome do passageiro, número da etiqueta da bagagem, descrição do dano, etc.)\nQual a importância da seção \"Bag Tag Number\" (Número da Etiqueta da Bagagem) no processo?\nAnote 1 (uma) dúvida ou ponto que não ficou 100% claro para você após a leitura do guia.",
+                "ferramentas": [
+                  {
+                    "label": "PPT",
+                    "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_11442#slide=id.g3e204a75369_0_11442"
+                  }
+                ],
+                "dia": "2"
+              },
+              {
+                "macroTema": "Resumo do dia anterior",
+                "tiempo": "00:05:00",
+                "tema": "Resumo do dia anterior",
+                "detalhe": "- Instrutor atividade de chuva de idéias para resgatar com os alunos os temas relevantes vistos no dia anterior.",
+                "ferramentas": [
+                  {
+                    "label": "Site",
+                    "url": "https://www.mentimeter.com/pt-BR/features/word-cloud"
+                  }
+                ],
+                "dia": "3"
+              },
+              {
+                "macroTema": "Reclamações",
+                "tiempo": "0:05:00",
+                "tema": "Resumo dia 1",
+                "detalhe": "- Instrutor passa o resumo do tema exposto vinculado ao conceito JETS de acordo com o PPT.\n- Instrutor deve ler o rodapé onde está o detalhe com o resumo dos conceitos.",
+                "ferramentas": [],
+                "dia": "3"
+              },
+              {
+                "macroTema": "Dano e violação",
+                "tiempo": "00:25:00",
+                "tema": "Bagagem com Dano",
+                "detalhe": "Instrutor apreseta tipos de reclamaões de Bagagem com Dano",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053437054-Bagagem-Danificada-e-Bagagem-Violada-"
+                  }
+                ],
+                "dia": "3"
+              },
+              {
+                "macroTema": "Dano e violação",
+                "tiempo": "00:25:00",
+                "tema": "Política de compensações bagagem com dano",
+                "detalhe": "- Instrutor apresenta tipos de dano e a Política de compensação para cada tipo de dano em operação LATAM\n- Instrutor",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053437054-Bagagem-Danificada-e-Bagagem-Violada-"
+                  }
+                ],
+                "dia": "3"
+              },
+              {
+                "macroTema": "Dano e violação",
+                "tiempo": "00:25:00",
+                "tema": "Violação",
+                "detalhe": "Instrtutor apresenta tipos de reclamações de bagagem violada",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053437054-Bagagem-Danificada-e-Bagagem-Violada-"
+                  }
+                ],
+                "dia": "3"
+              },
+              {
+                "macroTema": "Dano e violação",
+                "tiempo": "00:25:00",
+                "tema": "Violação",
+                "detalhe": "Instrtutor apresenta as Política de compensação por bagagem violada e fluxo",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053437054-Bagagem-Danificada-e-Bagagem-Violada-"
+                  }
+                ],
+                "dia": "3"
+              },
+              {
+                "macroTema": "Dano e violação",
+                "tiempo": "1:00:00",
+                "tema": "Atividade: controle de voo e lançamento",
+                "detalhe": "Atividade controle de voo e lançamento: ( Bagagem com violação - utilizar as orientações do PPT )",
+                "ferramentas": [
+                  {
+                    "label": "WTD Training",
+                    "url": "https://desktop.worldtracer.aero/desktop/index.html"
+                  }
+                ],
+                "dia": "3"
+              },
+              {
+                "macroTema": "Dano e violação",
+                "tiempo": "00:25:00",
+                "tema": "Bagagem danificada e violada",
+                "detalhe": "Instrutor apresenta os tipos de reclamações para Bagagem danificada e violada",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053437054-Bagagem-Danificada-e-Bagagem-Violada-"
+                  }
+                ],
+                "dia": "3"
+              },
+              {
+                "macroTema": "Dano e violação",
+                "tiempo": "00:25:00",
+                "tema": "Política de comepnsação por Bagagem Danificada ou Violada",
+                "detalhe": "Instrutor apresenta as política de comepnsação por Bagagem Danificada ou Violada e fluxo",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053437054-Bagagem-Danificada-e-Bagagem-Violada-"
+                  }
+                ],
+                "dia": "3"
+              },
+              {
+                "macroTema": "Dano e violação",
+                "tiempo": "01:00:00.000",
+                "tema": "Atividade controle de voo e lançamento: criação de casos no sistema",
+                "detalhe": "- Instrutor apllica atividade controle de voo e lançamento: criação de casos no sistema ( orientações no PPT )",
+                "ferramentas": [
+                  {
+                    "label": "WTD Training",
+                    "url": "https://desktop.worldtracer.aero/desktop/index.html#!/index/login"
+                  }
+                ],
+                "dia": "3"
+              },
+              {
+                "macroTema": "Extravio ou atraso",
+                "tiempo": "00:16:00",
+                "tema": "Bagagem extraviada ou atrasada",
+                "detalhe": "- Instrutor explica as regras para registrar tipos de reclamações de bagagem atrasada ou extraviada PIR ( AHL )",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223693-Bagagem-Extraviada-ou-Atrasada"
+                  }
+                ],
+                "dia": "3"
+              },
+              {
+                "macroTema": "Extravio ou atraso",
+                "tiempo": "00:16:00",
+                "tema": "Buscas das bagagem",
+                "detalhe": "Instrutor explica o procedimento para buscas das bagagem e explica os prazos para envio",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223693-Bagagem-Extraviada-ou-Atrasada"
+                  }
+                ],
+                "dia": "3"
+              },
+              {
+                "macroTema": "Extravio ou atraso",
+                "tiempo": "00:16:00",
+                "tema": "Compensação por Bagagem Extraviada/ Atrasada",
+                "detalhe": "- Instrutor explica a compensação por Bagagem Extraviada/ Atrasada",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223693-Bagagem-Extraviada-ou-Atrasada"
+                  }
+                ],
+                "dia": "3"
+              },
+              {
+                "macroTema": "Extravio ou atraso",
+                "tiempo": "00:16:00",
+                "tema": "Lei DOT para Bagagens",
+                "detalhe": "- Instrutor explica a Lei DOT para Bagagens",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223693-Bagagem-Extraviada-ou-Atrasada"
+                  }
+                ],
+                "dia": "3"
+              },
+              {
+                "macroTema": "Extravio ou atraso",
+                "tiempo": "00:16:00",
+                "tema": "Air Tag",
+                "detalhe": "- Instrutor eplica como funciona a parceria para localizar uma babagem através da Air Tag",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223693-Bagagem-Extraviada-ou-Atrasada"
+                  }
+                ],
+                "dia": "3"
+              },
+              {
+                "macroTema": "Extravio ou atraso",
+                "tiempo": "0:40:00",
+                "tema": "Atividade controle de voo e lançamento- simulação de abertura PIR AHL",
+                "detalhe": "Atividade controle de voo e lançamento- simulação de abertura PIR AHL\n-Instrutor mostra chamada “Bagagem Extraviada”, em que o passageiro solicita ajuda com sua bagagem que não chegou no voo que fez com a LATAM.",
+                "ferramentas": [
+                  {
+                    "label": "WTD Training",
+                    "url": "https://desktop.worldtracer.aero/desktop/index.html#!/index/login"
+                  }
+                ],
+                "dia": "3"
+              },
+              {
+                "macroTema": "Resumo",
+                "tiempo": "0:05:00",
+                "tema": "Resumo do dia anterior",
+                "detalhe": "- Instrutor ativa chuva palavras através do site , nela os alunos vão relembrar através de palavras chaves os principais temas que foram abordados",
+                "ferramentas": [
+                  {
+                    "label": "Site",
+                    "url": "https://www.mentimeter.com/pt-BR/features/word-cloud"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Extravio ou atraso",
+                "tiempo": "0:25:00",
+                "tema": "Atividade controle de voo e lançamento- simulação de abertura PIR AHL",
+                "detalhe": "Atividade controle de voo e lançamento- simulação de abertura PIR AHL\n-Instrutor mostra chamada “Bagagem Extraviada”, em que o passageiro solicita ajuda com sua bagagem que não chegou no voo que fez com a LATAM.",
+                "ferramentas": [
+                  {
+                    "label": "WTD Training",
+                    "url": "https://desktop.worldtracer.aero/desktop/index.html#!/index/login"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Extravio ou atraso",
+                "tiempo": "00:20:00",
+                "tema": "Despesas de primeira necessidade / tripulantes / pax desembarcando no EC",
+                "detalhe": "- Instrutor explica como funciona as despesas de primeira necessidade / tripulantes / pax desembarcando no EC",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://www.google.com/url?q=https://pic-latam.zendesk.com/hc/pt-br/articles/360055223693-Bagagem-Extraviada-ou-Atrasada-%23h_01EK0SM0D050BT3K5PSB70TRSE&sa=D&source=editors&ust=1781029867031233&usg=AOvVaw1px2KKoiJqwrZ3Xz_c7ScK"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Extravio ou atraso",
+                "tiempo": "0:50:00",
+                "tema": "Proativo bagagem extraviada ( reforço inteligente com a Gabi )",
+                "detalhe": "- Instrutor explica como funiciona o contato proativo bagagem extraviada e apresenta o vídeo do reforço inteligente com a Gabi no PPT",
+                "ferramentas": [
+                  {
+                    "label": "PPT",
+                    "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_11569#slide=id.g3e204a75369_0_11569"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Extravio ou atraso",
+                "tiempo": "00:20:00",
+                "tema": "Habilitação do FlyBag e formulário de assistência",
+                "detalhe": "Instrtutor aperesenta o comunicado : Habilitação do FlyBag e formulário de assistência",
+                "ferramentas": [
+                  {
+                    "label": "Comunicado",
+                    "url": "https://drive.google.com/file/d/136fmT2sBOCXNyPDe85Qupggjf9GiL_KZ/view"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Extravio ou atraso",
+                "tiempo": "00:20:00",
+                "tema": "Nova casuística do Agente 360 para reembolso de transporte para",
+                "detalhe": "Instrutor apresenta o comunicado: nova casuística do Agente 360 para reembolso de transporte para",
+                "ferramentas": [
+                  {
+                    "label": "Comunicado",
+                    "url": "https://drive.google.com/file/d/1-r6z9uvOCUu9JuU5OHtbkPHEy9wAZNLr/view"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Extravio ou atraso",
+                "tiempo": "0:30:00",
+                "tema": "Negociação de bagagem extraviada ou atrasada",
+                "detalhe": "- Instrutor apresenta o fluxo para negociação de bagagem extraviada ou atrasada",
+                "ferramentas": [
+                  {
+                    "label": "Fluxo",
+                    "url": "https://lucid.app/documents/embeddedchart/be96d3d5-a352-4949-994d-384649bb1c6f#"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Extravio ou atraso",
+                "tiempo": "0:50:00",
+                "tema": "Atividade : Atividade ajuste de rota com o inavegador",
+                "detalhe": "Instrutor convida alguns alunos para explicar o passo a passo de de como funciona o contato proativo para bagagens danificada",
+                "ferramentas": [
+                  {
+                    "label": "PPT",
+                    "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_11579#slide=id.g3e204a75369_0_11579"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Bagagem Switch LATAM",
+                "tiempo": "0:10:00",
+                "tema": "Bagagem Switch LATAM",
+                "detalhe": "-Instrutor mostra o fluxo do processo de Bagagem Switch LATAM",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223813-Outras-Reclama%C3%A7%C3%B5es-de-Bagagem-Switch-LATAM-Remanescente-LATAM-em-Conex%C3%A3o-com-Outras-Companhias-A%C3%A9reas-Found-Property-LATAM"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Found Property LATAM",
+                "tiempo": "0:10:00",
+                "tema": "Considerações sobre Found Property LATAM",
+                "detalhe": "-Instrutor explica as considerações para objetos esquecidos a bordo ou nas depedências da LATAM",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223813-Outras-Reclama%C3%A7%C3%B5es-de-Bagagem-Switch-LATAM-Remanescente-LATAM-em-Conex%C3%A3o-com-Outras-Companhias-A%C3%A9reas-Found-Property-LATAM"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Found Property LATAM",
+                "tiempo": "0:10:00",
+                "tema": "Compensações Found Property LATAM",
+                "detalhe": "-Instrutor explica a compensação de Objetos esquecidos a bordo",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223813-Outras-Reclama%C3%A7%C3%B5es-de-Bagagem-Switch-LATAM-Remanescente-LATAM-em-Conex%C3%A3o-com-Outras-Companhias-A%C3%A9reas-Found-Property-LATAM"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Found Property LATAM",
+                "tiempo": "0:10:00",
+                "tema": "Compensações Found Property LATAM",
+                "detalhe": "- Instrutor explica a compensação por objetos esquecidos à bordo para passageiros Black e Black Signature",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223813-Outras-Reclama%C3%A7%C3%B5es-de-Bagagem-Switch-LATAM-Remanescente-LATAM-em-Conex%C3%A3o-com-Outras-Companhias-A%C3%A9reas-Found-Property-LATAM"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Found Property LATAM",
+                "tiempo": "0:30:00",
+                "tema": "Atividade controle de voo e lançamento",
+                "detalhe": "- Instrutor orienta os alunos a fazerem a busca no WTD de objetos esquecidos a bordo em duplas e",
+                "ferramentas": [
+                  {
+                    "label": "PPT",
+                    "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_11623#slide=id.g3e204a75369_0_11623"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Reclamações de Bagagem em Conexão com Outras Companhias Aéreas",
+                "tiempo": "0:10:00",
+                "tema": "Reclamações de Bagagem em Conexão com Outras Companhias Aéreas",
+                "detalhe": "- Instrutor explica como fazer reclamações de Bagagem em conexão (Outras Outras Companhias Aéreas), focando em DL e IB",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223813-Outras-Reclama%C3%A7%C3%B5es-de-Bagagem-Switch-LATAM-Remanescente-LATAM-em-Conex%C3%A3o-com-Outras-Companhias-A%C3%A9reas-Found-Property-LATAM"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Reclamações de Bagagem em Conexão com Outras Companhias Aéreas",
+                "tiempo": "0:10:00",
+                "tema": "Reclamações de Bagagem em Conexão com Outras Companhias Aéreas",
+                "detalhe": "- Instrutor explica quais sao as considerações para bagagens esquecidas na esteira",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223813-Outras-Reclama%C3%A7%C3%B5es-de-Bagagem-Switch-LATAM-Remanescente-LATAM-em-Conex%C3%A3o-com-Outras-Companhias-A%C3%A9reas-Found-Property-LATAM"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Contatos de aeroportos",
+                "tiempo": "0:10:00",
+                "tema": "Contatos de aeroportos",
+                "detalhe": "-Instrutor apresenta a lista de contatos de acordo com o aeroporto.",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053436714-Generalidades-e-Guia-Reclama%C3%A7%C3%B5es-de-Bagagem"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "bagagem de mão despachada no porão ocorrendo violação, dano ou extravio",
+                "tiempo": "0:15:00",
+                "tema": "bagagem de mão despachada no porão ocorrendo violação, dano ou extravio",
+                "detalhe": "-Instrutor mostra no PIC as considerações para bagagem de mão despachada com violação e suas compensações",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/13999979686931-Reclama%C3%A7%C3%B5es-por-bagagem-de-m%C3%A3o-despachada-no-por%C3%A3o#:~:text=BAGAGEM%20DE%20M%C3%83O%20DESPACHADA%20COM%20VIOLA%C3%87%C3%83O"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Resumo",
+                "tiempo": "0:05:00",
+                "tema": "Resumo do dia 4",
+                "detalhe": "Instrutor passa o resumo do tema exposto vinculado ao conceito JETS de acordo com o PPT.\n-Instrutor deve ler o rodapé onde está o detalhe com o resumo dos conceitos.",
+                "ferramentas": [
+                  {
+                    "label": "PPT",
+                    "url": "#"
+                  }
+                ],
+                "dia": "4"
+              },
+              {
+                "macroTema": "Resumo",
+                "tiempo": "0:05:00",
+                "tema": "Resumo do dia anterior",
+                "detalhe": "- Instrutor ativa chuva palavras através do site , nela os alunos vão relembrar através de palavras chaves os principais temas que foram abordados",
+                "ferramentas": [
+                  {
+                    "label": "Site",
+                    "url": "https://www.mentimeter.com/pt-BR/features/word-cloud"
+                  }
+                ],
+                "dia": "5"
+              },
+              {
+                "macroTema": "bagagem de mão despachada no porão ocorrendo violação, dano ou extravio",
+                "tiempo": "0:10:00",
+                "tema": "bagagem de mão despachada no porão ocorrendo violação, dano ou extravio",
+                "detalhe": "-Instrutor mostra no PIC o Fluxo de bagagem de mão despachada com dano ou extravio",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/13999979686931-Reclama%C3%A7%C3%B5es-por-bagagem-de-m%C3%A3o-despachada-no-por%C3%A3o#:~:text=BAGAGEM%20DE%20M%C3%83O%20DESPACHADA%20COM%20VIOLA%C3%87%C3%83O"
+                  }
+                ],
+                "dia": "5"
+              },
+              {
+                "macroTema": "bagagem de mão despachada no porão ocorrendo violação, dano ou extravio",
+                "tiempo": "0:10:00",
+                "tema": "bagagem de mão despachada no porão ocorrendo violação, dano ou extravio",
+                "detalhe": "- Instrutor informa como funciona a Declaração de itens de valor na bagagem despachada (Voos dentro e saindo do Brasil) e os tipos de compensações de passageiros com reclamações cujas bagagens de mão foram despachadas no porão (despacho voluntário)",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/13999979686931-Reclama%C3%A7%C3%B5es-por-bagagem-de-m%C3%A3o-despachada-no-por%C3%A3o#:~:text=BAGAGEM%20DE%20M%C3%83O%20DESPACHADA%20COM%20VIOLA%C3%87%C3%83O"
+                  }
+                ],
+                "dia": "5"
+              },
+              {
+                "macroTema": "Redução de bagagem de mão despachada no porão",
+                "tiempo": "0:10:00",
+                "tema": "Redução de bagagem de mão despachada no porão",
+                "detalhe": "- Instrutor apresenta Reivindicações de redução de bagagem de mão despachada no porão",
+                "ferramentas": [
+                  {
+                    "label": "PIC",
+                    "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/13999979686931-Reclama%C3%A7%C3%B5es-por-bagagem-de-m%C3%A3o-despachada-no-por%C3%A3o#:~:text=BAGAGEM%20DE%20M%C3%83O%20DESPACHADA%20COM%20VIOLA%C3%87%C3%83O"
+                  }
+                ],
+                "dia": "5"
+              }
+            ],
+            "label": "Missão 5: Reclamação de bagagem "
+          },
+          {
+            "nombre": "Missão 6: Workshop",
+            "rows": [
+              {
+                "macroTema": "Tom de Voz",
+                "tiempo": "0:20:00",
+                "tema": "Tom de voz",
+                "detalhe": "-O Instrutor apresenta as principais considerações para atendimento no serviço de Bagagem utilizando um tom de voz correto.",
+                "ferramentas": [
+                  {
+                    "label": "PPT",
+                    "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_11713#slide=id.g3e204a75369_0_11713"
+                  }
+                ],
+                "dia": "5"
+              }
+            ],
+            "label": "Missão 6: Workshop"
+          },
+          {
+            "tipo": "avaliacao",
+            "label": "AVALIAÇÃO",
+            "rows": [
+              {
+                "macroTema": "Avaliação ",
+                "dia": "5",
+                "tema": "Avaliação ",
+                "detalhe": "- Instrutor aplica avaliação via formulário ",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "📝 Form",
+                    "url": "https://docs.google.com/forms/d/e/1FAIpQLSeoSBLsX0l2ArJO2hzAxOdtX56All5mJF5ejZULs7cbzpg7Jw/viewform"
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": "01:00:00"
+              },
+              {
+                "macroTema": " Correção da avaliação ",
+                "dia": "5",
+                "tema": " Correção da Avaliação ",
+                "detalhe": "-O Instrutor corrige a Avaliação e compartilha  as respostas com a turma ",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": "0:10:00"
+              }
+            ],
+            "dbOjtLabel": "Diário de Bordo · Grupo 01",
+            "dbOjtUrl": "",
+            "totalCh": "5:40:00",
+            "ajusteRota": "Os alumnos que não atingirem a média final de 80%...",
+            "ajusteRotaUrlKon": "",
+            "ajusteRotaUrlAec": "",
+            "ajusteRotaCh": "0:30:00"
+          }
+        ],
         "materiais": [],
         "evalKon": [],
         "evalAec": [
@@ -14463,7 +15366,8 @@
         "evalAec": [],
         "evalMsg": "Ajuste de Rota para Reprovados\t\n\"Os alunos que não atingirem a média final de 80% devem realizar o \"\"Ajuste de Rota\"\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\nDuração: 30 min\"\n",
         "evalTime": "00:30:00"
-      }
+      },
+      []
     ],
     "fsc": [
       {
@@ -14483,7 +15387,9 @@
         "evalKon": [],
         "evalAec": [],
         "evalMsg": ""
-      }
+      },
+      [],
+      []
     ],
     "satelites": {
       "conhecendo": [
@@ -22790,861 +23696,7 @@
         {
           "label": "Bagagem",
           "color": "#7da81a",
-          "texture": "CRATERS",
-          "secciones": [
-            {
-              "nombre": "Missão 1: Introdução",
-              "rows": [
-                {
-                  "macroTema": "Introdução",
-                  "tiempo": "0:10:00",
-                  "tema": "Introdução do serviço",
-                  "detalhe": "- Instrutor conhece a turma e dá as \"Boas Vindas bagagem \"",
-                  "ferramentas": [
-                    {
-                      "label": "PPT",
-                      "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3a31204c109_1_102#slide=id.g3a31204c109_1_102"
-                    }
-                  ],
-                  "dia": "1"
-                },
-                {
-                  "macroTema": "Introdução",
-                  "tiempo": "00:05:00",
-                  "tema": "Video 1 - Video Jornada da Bagagem",
-                  "detalhe": "- Instrutor mostra o vídeo da Jornada da Bagagem \"",
-                  "ferramentas": [
-                    {
-                      "label": "Vídeo",
-                      "url": "https://drive.google.com/file/d/1S4DcgEZtUfJwA3qtMqDvSXCBPbp42506/view"
-                    }
-                  ],
-                  "dia": "1"
-                }
-              ]
-            },
-            {
-              "nombre": "Missão 2: Gestão de Reclamações de Bagagem",
-              "rows": [
-                {
-                  "macroTema": "Reclamações",
-                  "tiempo": "0:15:00",
-                  "tema": "Generalidades do Serviço",
-                  "detalhe": "- Instrutor mostra no PPT o comprometimento fundamental e as áreas envolvidas no processo.\n- Instrutor apresenta um contexto do fluxo dos canais de atendimento de bagagem, tais como URA / WhatsApp / Site / Aeroporto.",
-                  "ferramentas": [
-                    {
-                      "label": "PPT",
-                      "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_0#slide=id.g3e204a75369_0_0"
-                    },
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053436714-Generalidades-e-Guia-Reclama%C3%A7%C3%B5es-de-Bagagem"
-                    }
-                  ],
-                  "dia": "1"
-                },
-                {
-                  "macroTema": "Reclamações",
-                  "tiempo": "00:30:00",
-                  "tema": "Gestão de reclamações de bagagem no aeroporto",
-                  "detalhe": "- Instrutor mostra como é realizado o gerenciamento dos processos iniciais no aeroporto",
-                  "ferramentas": [
-                    {
-                      "label": "PPT",
-                      "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_28#slide=id.g3e204a75369_0_28"
-                    }
-                  ],
-                  "dia": "1"
-                },
-                {
-                  "macroTema": "Reclamações",
-                  "tiempo": "00:30:00",
-                  "tema": "Gestão de reclamações no Contact Center",
-                  "detalhe": "- Instrutor mostra conceito no PPT o fluxo de recebimento de reclamações pelo Contact Center.\n- Instrutor mostra brevemente como Cliente pode nos contatar (Site, Qr Code, Whats).",
-                  "ferramentas": [
-                    {
-                      "label": "PPT",
-                      "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_11173#slide=id.g3e204a75369_0_11173"
-                    }
-                  ],
-                  "dia": "1"
-                },
-                {
-                  "macroTema": "Reclamações",
-                  "tiempo": "0:15:00",
-                  "tema": "Reclamações legais",
-                  "detalhe": "- Instrutor mostra os tópicos de como se deve gerenciar essas reclamações e prazos para tratativa ( no Caso do BR solicitação de chamada FALE - exclusivo BR)",
-                  "ferramentas": [
-                    {
-                      "label": "PPT",
-                      "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_11209#slide=id.g3e204a75369_0_11209"
-                    },
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053439934-Reclama%C3%A7%C3%B5es-Legais"
-                    }
-                  ],
-                  "dia": "1"
-                }
-              ]
-            },
-            {
-              "nombre": "Missão 3: Generalidades",
-              "rows": [
-                {
-                  "macroTema": "Generalidades",
-                  "tiempo": "0:06:00",
-                  "tema": "Generalidades de reclamações de babagem",
-                  "detalhe": "- Instrutor mostra Generalidades Reclamações Bagagem no PIC",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053436714-Generalidades-Reclama%C3%A7%C3%B5es-de-Bagagem"
-                    }
-                  ],
-                  "dia": "1"
-                },
-                {
-                  "macroTema": "Generalidades",
-                  "tiempo": "0:06:00",
-                  "tema": "Processo para Passageiros reclamações frequentes de bagagem",
-                  "detalhe": "- Instrutor mostra do PIC o processo para passageiros com muitas reclamações de bagagem.\n- Instrutor mostra o processo que deve-se fazer ao identificar um passageiro que apresenta muitas reclamações (suspeita de fraude)",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053436714-Generalidades-Reclama%C3%A7%C3%B5es-de-Bagagem"
-                    }
-                  ],
-                  "dia": "1"
-                },
-                {
-                  "macroTema": "Generalidades",
-                  "tiempo": "0:08:00",
-                  "tema": "Manual de Bagagem no Portal",
-                  "detalhe": "- Instrutor apresenta brevemente o Portal de Bagagem que vai ajudar em diversas situações.\nRota/caminho: Portal do Aeroporto/Serviço de Bagagens",
-                  "ferramentas": [
-                    {
-                      "label": "Portal",
-                      "url": "https://sites.google.com/lan.com/centraldebagagens/"
-                    }
-                  ],
-                  "dia": "1"
-                },
-                {
-                  "macroTema": "Generalidades",
-                  "tiempo": "0:30:00",
-                  "tema": "Desafio Cristais Cósmicos: Reclamações",
-                  "detalhe": "- Instrutor menciona que a atividade é individual e tem como finalidade fixar o conteúdo aprendido\n- Instrutor envia link e explica tipo e tempo de (acordo com cronograma) para praticarem\nVale ressaltar que é possível jogar mais de uma vez, caso terminem antes do prazo",
-                  "ferramentas": [
-                    {
-                      "label": "Genially",
-                      "url": "#"
-                    }
-                  ],
-                  "dia": "1"
-                }
-              ]
-            },
-            {
-              "nombre": "Missão 4: Ferrramentas",
-              "rows": [
-                {
-                  "macroTema": "Ferramentas",
-                  "tiempo": "0:30:00",
-                  "tema": "Zendesk",
-                  "detalhe": "- Instrutor destaca todos os pontos que não podem deixar de ser seguidos nas tratativas de bagagens na ferramenta Zendesk.\n-Instrutor mostra a criação de um caso, envio aos corresponsáveis, criação de ticket filho, botão play, devolução de casos não gerenciados e funcionamento da ferramenta.",
-                  "ferramentas": [
-                    {
-                      "label": "Zendesk Training",
-                      "url": "https://casounico1437403668.zendesk.com/hc/pt-br/requests/new?ticket_form_id=35418581926291"
-                    }
-                  ],
-                  "dia": "1"
-                },
-                {
-                  "macroTema": "Ferramentas",
-                  "tiempo": "00:20:00",
-                  "tema": "Único Sign - Assinatura Digital",
-                  "detalhe": "- Instrutor apresenta a ferramenta explicando que é utilizada exclusivamente para envio de acordos , de acordos com o fluxo, que serão assinados eletronicamente para respaldos jurídicos",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/43616861256467-Portal-%C3%9Anico-Assinatura-Digital"
-                    }
-                  ],
-                  "dia": "1"
-                },
-                {
-                  "macroTema": "Ferramentas",
-                  "tiempo": "0:10:00",
-                  "tema": "World Tracer Desktop",
-                  "detalhe": "- Instrutor destaca todos os pontos que não podem deixar de ser seguidos nas tratativas de bagagens na ferramenta WTR.\n- Instrutor mostra como fazer o login no sistema WT\n- Instrutor entrega as assinaturas aos executivos para que eles acessem o sistema.\n(as assinaturas devem ser solicitadas com antecedência para que fiquem prontas no primeiro dia de treinamento)",
-                  "ferramentas": [
-                    {
-                      "label": "WTD Training",
-                      "url": "https://desktop.worldtracer.aero/desktop/index.html"
-                    }
-                  ],
-                  "dia": "1"
-                },
-                {
-                  "macroTema": "Ferramentas",
-                  "tiempo": "00:30:00",
-                  "tema": "Procurar PIR através da World Tracer (WTD)",
-                  "detalhe": "- Instrutor mostra no PIC os comandos para encontrar um PIR no WTD e verificar as siglas mais importantes e seus significados",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/35758923132947-World-Tracer-Desktop-WTD"
-                    }
-                  ],
-                  "dia": "1"
-                },
-                {
-                  "macroTema": "Ferramentas",
-                  "tiempo": "0:40:00",
-                  "tema": "Aitividade guerra nas estrelas",
-                  "detalhe": "- Instrutor pede aos alunos que realizarem buscas de PIRs, considerando os diferentes métodos de pesquisa",
-                  "ferramentas": [
-                    {
-                      "label": "WTD Training",
-                      "url": "https://desktop.worldtracer.aero/desktop/index.html"
-                    }
-                  ],
-                  "dia": "1"
-                },
-                {
-                  "macroTema": "Ferramentas",
-                  "tiempo": "00:10:00",
-                  "tema": "Consulta de processos inativos - PDI",
-                  "detalhe": "- Instrutor mostra no PIC o comando PDI para consultar os processos que não estão ativos no sistema.",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055207153-Consulta-de-processos-inativos-PDI"
-                    }
-                  ],
-                  "dia": "1"
-                },
-                {
-                  "macroTema": "Ferramentas",
-                  "tiempo": "00:15:00",
-                  "tema": "Capacitação Air Tag",
-                  "detalhe": "- Instrutor mostra no PIC o material para capacitação do Air Tag, que consiste em passageiros que utilizam o aplicativo da “Apple AirTag”, para auxiliar na localização de bagagens extraviadas ou atrasadas.",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/43233442863251-Capacita%C3%A7%C3%A3o-Air-Tag"
-                    }
-                  ],
-                  "dia": "1"
-                },
-                {
-                  "macroTema": "Ferramentas",
-                  "tiempo": "00:30:00",
-                  "tema": "Atividade relatório de exploração",
-                  "detalhe": "- Instrutor direciona os alunos para página de WTD no PIC e projeta as perguntas, realizando a batalha entre grupos ( os grupos devem ser sorteados através do site )\n1. O que significa PIR?\n2. O que é PIR AHL?\n3. O que é Found Property?\n4. Qual o nome do relatório sobre bagagem danificada ou com subtração de artigos?\n5. O que é Delayed Bag?\n6. O que é Damage Bag?\n7. O que significa Bag tag number, e como posso adquirir essa informação ?\n8. Na PIR onde ficam as informações da bagagem como cor,elementos dfiscritivos,marcas e etc...?\n9. O que significa \" Reason for Loss: 91- Merma e Dano?\n- Instrutor corrige e complementa sempre que necessário.",
-                  "ferramentas": [
-                    {
-                      "label": "PPT",
-                      "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_11393#slide=id.g3e204a75369_0_11393"
-                    }
-                  ],
-                  "dia": "1"
-                }
-              ]
-            },
-            {
-              "nombre": "Missão 4: Resumo",
-              "rows": [
-                {
-                  "macroTema": "Resumo",
-                  "tiempo": "0:10:00",
-                  "tema": "Resumo do dia anterior",
-                  "detalhe": "- Instrutor explica a diferença entre os conceitos e aplicação de: Compensação, Ressarcimento ou Reembolso;\n- Instrutor ativa chuva palavras através do site , nela os alunos vão relembrar através de palavras chaves os principais temas que foram abordados",
-                  "ferramentas": [],
-                  "dia": "2"
-                },
-                {
-                  "macroTema": "Ferramentas",
-                  "tiempo": "0:40:00",
-                  "tema": "Sistema de consulta BRS WEB",
-                  "detalhe": "-Instrutor mostra o sistema BRS WEB para validar bagagens etiquetadas com liberação limitada e se foram identificadas na estação de origem",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/23045881587347-Sistema-de-consulta-BRS-WEB"
-                    }
-                  ],
-                  "dia": "2"
-                },
-                {
-                  "macroTema": "Ferramentas",
-                  "tiempo": "00:30:00",
-                  "tema": "Genesys Whatsapp",
-                  "detalhe": "-Instrutor apresenta os conceitos referente o fluxo que deve ser seguido para o atendimento via WhatsApp.\n- Instrutor mostra vídeos com exemplos de atendimentos de Bagagem via WhatsApp",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/40120600616851-Acesso-ao-Whatsapp-Genesys"
-                    }
-                  ],
-                  "dia": "2"
-                }
-              ]
-            },
-            {
-              "nombre": "Missão 5: Reclamação de bagagem",
-              "rows": [
-                {
-                  "macroTema": "Reclamações",
-                  "tiempo": "01:00:00",
-                  "tema": "Bagagem Danificada e/ou com Subtração de Objeto Proveniente de Extravio",
-                  "detalhe": "-Instrutor mostra do PIC as considerações Bagagem Danificada e/ou com Subtração de Objeto Proveniente de Extravio",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223713-Bagagem-Danificada-e-ou-com-Viola%C3%A7%C3%A3o-de-Objeto-Proveniente-de-Extravioo"
-                    }
-                  ],
-                  "dia": "2"
-                },
-                {
-                  "macroTema": "Reclamações",
-                  "tiempo": "1:40:00",
-                  "tema": "Atividade controle de voos e lançamento:Criação de PIR ( DPR)",
-                  "detalhe": "Instrutor mostra no WTD Training, o passo a passo para criar um PIR de dano e/ou subtração de objetosproviniente extravio com todos os seus elementos.\n- Fazer pergunta aos alunos para que se lembrem dos conceitos -O que é DPR?\n- Pedi aos alunos que façam a atividade de abertura de PIR DPR no WTD Training utilizando as orinetações do PPT e o fluxo do PIC.",
-                  "ferramentas": [
-                    {
-                      "label": "WTD Training",
-                      "url": "https://desktop.worldtracer.aero/desktop/index.html"
-                    }
-                  ],
-                  "dia": "2"
-                },
-                {
-                  "macroTema": "Reclamações",
-                  "tiempo": "1:40:00",
-                  "tema": "Aitividade ajuste de rota com o navegador",
-                  "detalhe": "- Instrutor vai fazer um sorteio através do site e formará grupos, os grupos farão:\n1. Por favor, completem as seguintes tarefas: Leitura Obrigatória: Acessem link do PIC e leiam atentamente a seção intitulada \"Bagagem Danificada e/ou com Violação de Objeto Proveniente de Extravio\n2. Após a leitura, prepare um breve resumo ou anote as respostas para estas perguntas (elas serão nosso ponto de partida na aula):\nQual é o primeiro passo absoluto que você deve tomar no WTD para iniciar um relatório de dano?\nO artigo menciona diferentes tipos de relatórios (ex: 'Missing', 'Damage'). Por que é crucial selecionar o tipo correto desde o início?\nQuais são os 5 campos de informação que você considera mais críticos para preencher corretamente, com base na leitura? (Ex: Nome do passageiro, número da etiqueta da bagagem, descrição do dano, etc.)\nQual a importância da seção \"Bag Tag Number\" (Número da Etiqueta da Bagagem) no processo?\nAnote 1 (uma) dúvida ou ponto que não ficou 100% claro para você após a leitura do guia.",
-                  "ferramentas": [
-                    {
-                      "label": "PPT",
-                      "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_11442#slide=id.g3e204a75369_0_11442"
-                    }
-                  ],
-                  "dia": "2"
-                },
-                {
-                  "macroTema": "Resumo do dia anterior",
-                  "tiempo": "00:05:00",
-                  "tema": "Resumo do dia anterior",
-                  "detalhe": "- Instrutor atividade de chuva de idéias para resgatar com os alunos os temas relevantes vistos no dia anterior.",
-                  "ferramentas": [
-                    {
-                      "label": "Site",
-                      "url": "https://www.mentimeter.com/pt-BR/features/word-cloud"
-                    }
-                  ],
-                  "dia": "3"
-                },
-                {
-                  "macroTema": "Reclamações",
-                  "tiempo": "0:05:00",
-                  "tema": "Resumo dia 1",
-                  "detalhe": "- Instrutor passa o resumo do tema exposto vinculado ao conceito JETS de acordo com o PPT.\n- Instrutor deve ler o rodapé onde está o detalhe com o resumo dos conceitos.",
-                  "ferramentas": [],
-                  "dia": "3"
-                },
-                {
-                  "macroTema": "Dano e violação",
-                  "tiempo": "00:25:00",
-                  "tema": "Bagagem com Dano",
-                  "detalhe": "Instrutor apreseta tipos de reclamaões de Bagagem com Dano",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053437054-Bagagem-Danificada-e-Bagagem-Violada-"
-                    }
-                  ],
-                  "dia": "3"
-                },
-                {
-                  "macroTema": "Dano e violação",
-                  "tiempo": "00:25:00",
-                  "tema": "Política de compensações bagagem com dano",
-                  "detalhe": "- Instrutor apresenta tipos de dano e a Política de compensação para cada tipo de dano em operação LATAM\n- Instrutor",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053437054-Bagagem-Danificada-e-Bagagem-Violada-"
-                    }
-                  ],
-                  "dia": "3"
-                },
-                {
-                  "macroTema": "Dano e violação",
-                  "tiempo": "00:25:00",
-                  "tema": "Violação",
-                  "detalhe": "Instrtutor apresenta tipos de reclamações de bagagem violada",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053437054-Bagagem-Danificada-e-Bagagem-Violada-"
-                    }
-                  ],
-                  "dia": "3"
-                },
-                {
-                  "macroTema": "Dano e violação",
-                  "tiempo": "00:25:00",
-                  "tema": "Violação",
-                  "detalhe": "Instrtutor apresenta as Política de compensação por bagagem violada e fluxo",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053437054-Bagagem-Danificada-e-Bagagem-Violada-"
-                    }
-                  ],
-                  "dia": "3"
-                },
-                {
-                  "macroTema": "Dano e violação",
-                  "tiempo": "1:00:00",
-                  "tema": "Atividade: controle de voo e lançamento",
-                  "detalhe": "Atividade controle de voo e lançamento: ( Bagagem com violação - utilizar as orientações do PPT )",
-                  "ferramentas": [
-                    {
-                      "label": "WTD Training",
-                      "url": "https://desktop.worldtracer.aero/desktop/index.html"
-                    }
-                  ],
-                  "dia": "3"
-                },
-                {
-                  "macroTema": "Dano e violação",
-                  "tiempo": "00:25:00",
-                  "tema": "Bagagem danificada e violada",
-                  "detalhe": "Instrutor apresenta os tipos de reclamações para Bagagem danificada e violada",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053437054-Bagagem-Danificada-e-Bagagem-Violada-"
-                    }
-                  ],
-                  "dia": "3"
-                },
-                {
-                  "macroTema": "Dano e violação",
-                  "tiempo": "00:25:00",
-                  "tema": "Política de comepnsação por Bagagem Danificada ou Violada",
-                  "detalhe": "Instrutor apresenta as política de comepnsação por Bagagem Danificada ou Violada e fluxo",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053437054-Bagagem-Danificada-e-Bagagem-Violada-"
-                    }
-                  ],
-                  "dia": "3"
-                },
-                {
-                  "macroTema": "Dano e violação",
-                  "tiempo": "01:00:00.000",
-                  "tema": "Atividade controle de voo e lançamento: criação de casos no sistema",
-                  "detalhe": "- Instrutor apllica atividade controle de voo e lançamento: criação de casos no sistema ( orientações no PPT )",
-                  "ferramentas": [
-                    {
-                      "label": "WTD Training",
-                      "url": "https://desktop.worldtracer.aero/desktop/index.html#!/index/login"
-                    }
-                  ],
-                  "dia": "3"
-                },
-                {
-                  "macroTema": "Extravio ou atraso",
-                  "tiempo": "00:16:00",
-                  "tema": "Bagagem extraviada ou atrasada",
-                  "detalhe": "- Instrutor explica as regras para registrar tipos de reclamações de bagagem atrasada ou extraviada PIR ( AHL )",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223693-Bagagem-Extraviada-ou-Atrasada"
-                    }
-                  ],
-                  "dia": "3"
-                },
-                {
-                  "macroTema": "Extravio ou atraso",
-                  "tiempo": "00:16:00",
-                  "tema": "Buscas das bagagem",
-                  "detalhe": "Instrutor explica o procedimento para buscas das bagagem e explica os prazos para envio",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223693-Bagagem-Extraviada-ou-Atrasada"
-                    }
-                  ],
-                  "dia": "3"
-                },
-                {
-                  "macroTema": "Extravio ou atraso",
-                  "tiempo": "00:16:00",
-                  "tema": "Compensação por Bagagem Extraviada/ Atrasada",
-                  "detalhe": "- Instrutor explica a compensação por Bagagem Extraviada/ Atrasada",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223693-Bagagem-Extraviada-ou-Atrasada"
-                    }
-                  ],
-                  "dia": "3"
-                },
-                {
-                  "macroTema": "Extravio ou atraso",
-                  "tiempo": "00:16:00",
-                  "tema": "Lei DOT para Bagagens",
-                  "detalhe": "- Instrutor explica a Lei DOT para Bagagens",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223693-Bagagem-Extraviada-ou-Atrasada"
-                    }
-                  ],
-                  "dia": "3"
-                },
-                {
-                  "macroTema": "Extravio ou atraso",
-                  "tiempo": "00:16:00",
-                  "tema": "Air Tag",
-                  "detalhe": "- Instrutor eplica como funciona a parceria para localizar uma babagem através da Air Tag",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223693-Bagagem-Extraviada-ou-Atrasada"
-                    }
-                  ],
-                  "dia": "3"
-                },
-                {
-                  "macroTema": "Extravio ou atraso",
-                  "tiempo": "0:40:00",
-                  "tema": "Atividade controle de voo e lançamento- simulação de abertura PIR AHL",
-                  "detalhe": "Atividade controle de voo e lançamento- simulação de abertura PIR AHL\n-Instrutor mostra chamada “Bagagem Extraviada”, em que o passageiro solicita ajuda com sua bagagem que não chegou no voo que fez com a LATAM.",
-                  "ferramentas": [
-                    {
-                      "label": "WTD Training",
-                      "url": "https://desktop.worldtracer.aero/desktop/index.html#!/index/login"
-                    }
-                  ],
-                  "dia": "3"
-                },
-                {
-                  "macroTema": "Resumo",
-                  "tiempo": "0:05:00",
-                  "tema": "Resumo do dia anterior",
-                  "detalhe": "- Instrutor ativa chuva palavras através do site , nela os alunos vão relembrar através de palavras chaves os principais temas que foram abordados",
-                  "ferramentas": [
-                    {
-                      "label": "Site",
-                      "url": "https://www.mentimeter.com/pt-BR/features/word-cloud"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Extravio ou atraso",
-                  "tiempo": "0:25:00",
-                  "tema": "Atividade controle de voo e lançamento- simulação de abertura PIR AHL",
-                  "detalhe": "Atividade controle de voo e lançamento- simulação de abertura PIR AHL\n-Instrutor mostra chamada “Bagagem Extraviada”, em que o passageiro solicita ajuda com sua bagagem que não chegou no voo que fez com a LATAM.",
-                  "ferramentas": [
-                    {
-                      "label": "WTD Training",
-                      "url": "https://desktop.worldtracer.aero/desktop/index.html#!/index/login"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Extravio ou atraso",
-                  "tiempo": "00:20:00",
-                  "tema": "Despesas de primeira necessidade / tripulantes / pax desembarcando no EC",
-                  "detalhe": "- Instrutor explica como funciona as despesas de primeira necessidade / tripulantes / pax desembarcando no EC",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://www.google.com/url?q=https://pic-latam.zendesk.com/hc/pt-br/articles/360055223693-Bagagem-Extraviada-ou-Atrasada-%23h_01EK0SM0D050BT3K5PSB70TRSE&sa=D&source=editors&ust=1781029867031233&usg=AOvVaw1px2KKoiJqwrZ3Xz_c7ScK"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Extravio ou atraso",
-                  "tiempo": "0:50:00",
-                  "tema": "Proativo bagagem extraviada ( reforço inteligente com a Gabi )",
-                  "detalhe": "- Instrutor explica como funiciona o contato proativo bagagem extraviada e apresenta o vídeo do reforço inteligente com a Gabi no PPT",
-                  "ferramentas": [
-                    {
-                      "label": "PPT",
-                      "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_11569#slide=id.g3e204a75369_0_11569"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Extravio ou atraso",
-                  "tiempo": "00:20:00",
-                  "tema": "Habilitação do FlyBag e formulário de assistência",
-                  "detalhe": "Instrtutor aperesenta o comunicado : Habilitação do FlyBag e formulário de assistência",
-                  "ferramentas": [
-                    {
-                      "label": "Comunicado",
-                      "url": "https://drive.google.com/file/d/136fmT2sBOCXNyPDe85Qupggjf9GiL_KZ/view"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Extravio ou atraso",
-                  "tiempo": "00:20:00",
-                  "tema": "Nova casuística do Agente 360 para reembolso de transporte para",
-                  "detalhe": "Instrutor apresenta o comunicado: nova casuística do Agente 360 para reembolso de transporte para",
-                  "ferramentas": [
-                    {
-                      "label": "Comunicado",
-                      "url": "https://drive.google.com/file/d/1-r6z9uvOCUu9JuU5OHtbkPHEy9wAZNLr/view"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Extravio ou atraso",
-                  "tiempo": "0:30:00",
-                  "tema": "Negociação de bagagem extraviada ou atrasada",
-                  "detalhe": "- Instrutor apresenta o fluxo para negociação de bagagem extraviada ou atrasada",
-                  "ferramentas": [
-                    {
-                      "label": "Fluxo",
-                      "url": "https://lucid.app/documents/embeddedchart/be96d3d5-a352-4949-994d-384649bb1c6f#"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Extravio ou atraso",
-                  "tiempo": "0:50:00",
-                  "tema": "Atividade : Atividade ajuste de rota com o inavegador",
-                  "detalhe": "Instrutor convida alguns alunos para explicar o passo a passo de de como funciona o contato proativo para bagagens danificada",
-                  "ferramentas": [
-                    {
-                      "label": "PPT",
-                      "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_11579#slide=id.g3e204a75369_0_11579"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Bagagem Switch LATAM",
-                  "tiempo": "0:10:00",
-                  "tema": "Bagagem Switch LATAM",
-                  "detalhe": "-Instrutor mostra o fluxo do processo de Bagagem Switch LATAM",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223813-Outras-Reclama%C3%A7%C3%B5es-de-Bagagem-Switch-LATAM-Remanescente-LATAM-em-Conex%C3%A3o-com-Outras-Companhias-A%C3%A9reas-Found-Property-LATAM"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Found Property LATAM",
-                  "tiempo": "0:10:00",
-                  "tema": "Considerações sobre Found Property LATAM",
-                  "detalhe": "-Instrutor explica as considerações para objetos esquecidos a bordo ou nas depedências da LATAM",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223813-Outras-Reclama%C3%A7%C3%B5es-de-Bagagem-Switch-LATAM-Remanescente-LATAM-em-Conex%C3%A3o-com-Outras-Companhias-A%C3%A9reas-Found-Property-LATAM"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Found Property LATAM",
-                  "tiempo": "0:10:00",
-                  "tema": "Compensações Found Property LATAM",
-                  "detalhe": "-Instrutor explica a compensação de Objetos esquecidos a bordo",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223813-Outras-Reclama%C3%A7%C3%B5es-de-Bagagem-Switch-LATAM-Remanescente-LATAM-em-Conex%C3%A3o-com-Outras-Companhias-A%C3%A9reas-Found-Property-LATAM"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Found Property LATAM",
-                  "tiempo": "0:10:00",
-                  "tema": "Compensações Found Property LATAM",
-                  "detalhe": "- Instrutor explica a compensação por objetos esquecidos à bordo para passageiros Black e Black Signature",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223813-Outras-Reclama%C3%A7%C3%B5es-de-Bagagem-Switch-LATAM-Remanescente-LATAM-em-Conex%C3%A3o-com-Outras-Companhias-A%C3%A9reas-Found-Property-LATAM"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Found Property LATAM",
-                  "tiempo": "0:30:00",
-                  "tema": "Atividade controle de voo e lançamento",
-                  "detalhe": "- Instrutor orienta os alunos a fazerem a busca no WTD de objetos esquecidos a bordo em duplas e",
-                  "ferramentas": [
-                    {
-                      "label": "PPT",
-                      "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_11623#slide=id.g3e204a75369_0_11623"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Reclamações de Bagagem em Conexão com Outras Companhias Aéreas",
-                  "tiempo": "0:10:00",
-                  "tema": "Reclamações de Bagagem em Conexão com Outras Companhias Aéreas",
-                  "detalhe": "- Instrutor explica como fazer reclamações de Bagagem em conexão (Outras Outras Companhias Aéreas), focando em DL e IB",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223813-Outras-Reclama%C3%A7%C3%B5es-de-Bagagem-Switch-LATAM-Remanescente-LATAM-em-Conex%C3%A3o-com-Outras-Companhias-A%C3%A9reas-Found-Property-LATAM"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Reclamações de Bagagem em Conexão com Outras Companhias Aéreas",
-                  "tiempo": "0:10:00",
-                  "tema": "Reclamações de Bagagem em Conexão com Outras Companhias Aéreas",
-                  "detalhe": "- Instrutor explica quais sao as considerações para bagagens esquecidas na esteira",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360055223813-Outras-Reclama%C3%A7%C3%B5es-de-Bagagem-Switch-LATAM-Remanescente-LATAM-em-Conex%C3%A3o-com-Outras-Companhias-A%C3%A9reas-Found-Property-LATAM"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Contatos de aeroportos",
-                  "tiempo": "0:10:00",
-                  "tema": "Contatos de aeroportos",
-                  "detalhe": "-Instrutor apresenta a lista de contatos de acordo com o aeroporto.",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/360053436714-Generalidades-e-Guia-Reclama%C3%A7%C3%B5es-de-Bagagem"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "bagagem de mão despachada no porão ocorrendo violação, dano ou extravio",
-                  "tiempo": "0:15:00",
-                  "tema": "bagagem de mão despachada no porão ocorrendo violação, dano ou extravio",
-                  "detalhe": "-Instrutor mostra no PIC as considerações para bagagem de mão despachada com violação e suas compensações",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/13999979686931-Reclama%C3%A7%C3%B5es-por-bagagem-de-m%C3%A3o-despachada-no-por%C3%A3o#:~:text=BAGAGEM%20DE%20M%C3%83O%20DESPACHADA%20COM%20VIOLA%C3%87%C3%83O"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Resumo",
-                  "tiempo": "0:05:00",
-                  "tema": "Resumo do dia 4",
-                  "detalhe": "Instrutor passa o resumo do tema exposto vinculado ao conceito JETS de acordo com o PPT.\n-Instrutor deve ler o rodapé onde está o detalhe com o resumo dos conceitos.",
-                  "ferramentas": [
-                    {
-                      "label": "PPT",
-                      "url": "#"
-                    }
-                  ],
-                  "dia": "4"
-                },
-                {
-                  "macroTema": "Resumo",
-                  "tiempo": "0:05:00",
-                  "tema": "Resumo do dia anterior",
-                  "detalhe": "- Instrutor ativa chuva palavras através do site , nela os alunos vão relembrar através de palavras chaves os principais temas que foram abordados",
-                  "ferramentas": [
-                    {
-                      "label": "Site",
-                      "url": "https://www.mentimeter.com/pt-BR/features/word-cloud"
-                    }
-                  ],
-                  "dia": "5"
-                },
-                {
-                  "macroTema": "bagagem de mão despachada no porão ocorrendo violação, dano ou extravio",
-                  "tiempo": "0:10:00",
-                  "tema": "bagagem de mão despachada no porão ocorrendo violação, dano ou extravio",
-                  "detalhe": "-Instrutor mostra no PIC o Fluxo de bagagem de mão despachada com dano ou extravio",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/13999979686931-Reclama%C3%A7%C3%B5es-por-bagagem-de-m%C3%A3o-despachada-no-por%C3%A3o#:~:text=BAGAGEM%20DE%20M%C3%83O%20DESPACHADA%20COM%20VIOLA%C3%87%C3%83O"
-                    }
-                  ],
-                  "dia": "5"
-                },
-                {
-                  "macroTema": "bagagem de mão despachada no porão ocorrendo violação, dano ou extravio",
-                  "tiempo": "0:10:00",
-                  "tema": "bagagem de mão despachada no porão ocorrendo violação, dano ou extravio",
-                  "detalhe": "- Instrutor informa como funciona a Declaração de itens de valor na bagagem despachada (Voos dentro e saindo do Brasil) e os tipos de compensações de passageiros com reclamações cujas bagagens de mão foram despachadas no porão (despacho voluntário)",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/13999979686931-Reclama%C3%A7%C3%B5es-por-bagagem-de-m%C3%A3o-despachada-no-por%C3%A3o#:~:text=BAGAGEM%20DE%20M%C3%83O%20DESPACHADA%20COM%20VIOLA%C3%87%C3%83O"
-                    }
-                  ],
-                  "dia": "5"
-                },
-                {
-                  "macroTema": "Redução de bagagem de mão despachada no porão",
-                  "tiempo": "0:10:00",
-                  "tema": "Redução de bagagem de mão despachada no porão",
-                  "detalhe": "- Instrutor apresenta Reivindicações de redução de bagagem de mão despachada no porão",
-                  "ferramentas": [
-                    {
-                      "label": "PIC",
-                      "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/13999979686931-Reclama%C3%A7%C3%B5es-por-bagagem-de-m%C3%A3o-despachada-no-por%C3%A3o#:~:text=BAGAGEM%20DE%20M%C3%83O%20DESPACHADA%20COM%20VIOLA%C3%87%C3%83O"
-                    }
-                  ],
-                  "dia": "5"
-                }
-              ]
-            },
-            {
-              "nombre": "Missão 6: Workshop",
-              "rows": [
-                {
-                  "macroTema": "Tom de Voz",
-                  "tiempo": "0:20:00",
-                  "tema": "Tom de voz",
-                  "detalhe": "-O Instrutor apresenta as principais considerações para atendimento no serviço de Bagagem utilizando um tom de voz correto.",
-                  "ferramentas": [
-                    {
-                      "label": "PPT",
-                      "url": "https://docs.google.com/presentation/d/1zxzQ4pf6PPXOKxYkz_18qYpGpBVrNtSl5tL8mwsgoRo/edit?slide=id.g3e204a75369_0_11713#slide=id.g3e204a75369_0_11713"
-                    }
-                  ],
-                  "dia": "5"
-                }
-              ]
-            }
-          ]
+          "texture": "CRATERS"
         },
         {
           "label": "LATAM Travel",
@@ -23672,9 +23724,25 @@
           "label": "Suporte HVC",
           "color": "#ffe017",
           "texture": "RINGS"
+        },
+        {
+          "label": "Suporte",
+          "color": "#7da81a",
+          "texture": "CRATERS"
         }
       ],
-      "fieldSupport": []
+      "fieldSupport": [
+        {
+          "label": "FSC 1",
+          "color": "#1b0088",
+          "texture": "OCEAN"
+        },
+        {
+          "label": "FSC 2",
+          "color": "#ed1650",
+          "texture": "OCEAN"
+        }
+      ]
     }
   },
   "ssc": {
