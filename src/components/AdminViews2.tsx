@@ -3,12 +3,13 @@ import { BackBtn } from './Shared';
 import { motion } from 'framer-motion';
 import { Globe, Layers, Plus, Trash2, Edit3, Settings, Database, ArrowLeft, CheckCircle2, Calendar, Save } from 'lucide-react';
 
-export const AdminExploracion = ({ currentStationConfig, updateStationConfig, onBack, onSatelites, onAdvancedContent }: any) => {
+export const AdminExploracion = ({ currentStationConfig, updateStationConfig, onBack, onSatelites, onAdvancedContent, onSave }: any) => {
   const [activeSector, setActiveSector] = useState('frontLine');
   const [saved, setSaved] = useState(false);
   const saveFlash = () => { 
     setSaved(true); 
     setTimeout(() => setSaved(false), 2000); 
+    if (onSave) onSave();
   };
   const exploracion = currentStationConfig.exploracion || { frontLine:[], soporte:[], fieldSupport:[] };
   const satelites = currentStationConfig.satelites || { conhecendo:[], imersao:[] };

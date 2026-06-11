@@ -77,7 +77,7 @@ export const JourneyStartShip = ({ onboardingData, onClick }: any) => {
           style={{ position: 'relative', zIndex: 10, cursor: onClick ? 'pointer' : 'default' }}
         >
           <img 
-            src="/ship.png" 
+            src="./nava_exploracion_2.png" 
             alt="Nava Exploracion" 
             style={{ width: '300px', height: 'auto', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.6))' }}
           />

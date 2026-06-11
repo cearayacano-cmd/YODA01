@@ -279,6 +279,7 @@ export default function App() {
             onBack={()=>go('admin')}
             onSatelites={(pk: string)=>{setAdminSatellitePk(pk);go('admin-satelites')}}
             onAdvancedContent={(sec: string, idx: number)=>{setAdminSector(sec);setAdminCourseIdx(idx);go('admin-advanced-content')}}
+            onSave={saveConfigToDisk}
           />
         );
       case 'admin-ruta-lider':
