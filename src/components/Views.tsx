@@ -68,7 +68,7 @@ const LandingMissionCard = ({ title, subtitle, id, color, buttonText = "INICIAR 
   </motion.div>
 );
 
-export const Landing = ({ onNavigate, onAdmin }: any) => {
+export const Landing = ({ onNavigate, onAdmin, onActivityLog, activeUser, changeUser }: any) => {
   const [hoveredStation, setHoveredStation] = useState<string | null>(null);
   const [autoVariant, setAutoVariant] = useState('es');
 
@@ -102,11 +102,40 @@ export const Landing = ({ onNavigate, onAdmin }: any) => {
           <img src="/marca_logo.png" alt="Logo" style={{ width: 20, height: 'auto', filter: 'brightness(2)' }} />
         </div>
 
-        <span style={{color:'#ffffff', fontSize:12, fontWeight:900, letterSpacing:'0.3em', opacity: 0.8}}>Capacitación | Customer Care & Sales</span>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <span style={{color:'#ffffff', fontSize:12, fontWeight:900, letterSpacing:'0.3em', opacity: 0.8}}>Capacitación | Customer Care & Sales</span>
+          <select 
+            value={activeUser || 'carlose.araya@latam.com'} 
+            onChange={(e) => changeUser && changeUser(e.target.value)}
+            style={{ 
+              marginTop: 4, 
+              background: 'rgba(0,0,0,0.3)', 
+              color: '#00FFF2', 
+              border: '1px solid rgba(0, 255, 242, 0.3)', 
+              padding: '4px 8px', 
+              borderRadius: '4px', 
+              fontSize: '11px', 
+              fontWeight: 700, 
+              outline: 'none', 
+              cursor: 'pointer' 
+            }}
+          >
+            <option value="carlose.araya@latam.com">carlose.araya@latam.com (Admin)</option>
+            <option value="instructor@konectabr.com">instructor@konectabr.com</option>
+            <option value="instructor@aec.com">instructor@aec.com</option>
+          </select>
+        </div>
       </div>
-      <button onClick={onAdmin} style={{background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.2)', padding:'8px 24px', cursor:'pointer', fontSize:10, fontWeight:900, color:'#fff', borderRadius:30, letterSpacing: '0.15em', backdropFilter: 'blur(10px)'}}>
-        SYS.ADMIN
-      </button>
+      <div style={{ display: 'flex', gap: 12 }}>
+        <button onClick={onActivityLog} style={{background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.2)', padding:'8px 24px', cursor:'pointer', fontSize:10, fontWeight:900, color:'#fff', borderRadius:30, letterSpacing: '0.15em', backdropFilter: 'blur(10px)', transition: 'all 0.2s'}} onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.1)'} onMouseLeave={e=>e.currentTarget.style.background='rgba(255,255,255,0.05)'}>
+          VER SEGUIMIENTO
+        </button>
+        {activeUser === 'carlose.araya@latam.com' && (
+          <button onClick={onAdmin} style={{background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.2)', padding:'8px 24px', cursor:'pointer', fontSize:10, fontWeight:900, color:'#fff', borderRadius:30, letterSpacing: '0.15em', backdropFilter: 'blur(10px)', transition: 'all 0.2s'}} onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.1)'} onMouseLeave={e=>e.currentTarget.style.background='rgba(255,255,255,0.05)'}>
+            SYS.ADMIN
+          </button>
+        )}
+      </div>
     </div>
 
     {/* Content */}

@@ -44,6 +44,7 @@ import { PlanetSelection } from './components/Views3';
 import { LinksView } from './components/Views4';
 import { LaboratorioView, IngenieriaView, SuministrosView, OperacionesView, RutaLiderView } from './components/Views5';
 import { PlanetContentView } from './components/Views6';
+import { ActivityLogView } from './components/ActivityLogView';
 
 /* ── SIMPLE BUTTONS ─────────────────────────────────────────────────── */
 const Btn = ({ onClick, children, style={} }: any) => (
@@ -134,6 +135,35 @@ export default function App() {
   const [adminCourseIdx, setAdminCourseIdx] = useState(0);
   const [adminSatellitePk, setAdminSatellitePk] = useState('conhecendo');
   
+  // Profile and Activity Tracking
+  const [activeUser, setActiveUser] = useState('carlose.araya@latam.com');
+  const [activityLogs, setActivityLogs] = useState<{time: string, user: string, action: string, details: string}[]>([]);
+
+  useEffect(() => {
+    // Load persisted state
+    const savedLogs = localStorage.getItem('yoda_activity_logs');
+    if (savedLogs) {
+      try { setActivityLogs(JSON.parse(savedLogs)); } catch(e){}
+    }
+    const savedUser = localStorage.getItem('yoda_active_user');
+    if (savedUser) setActiveUser(savedUser);
+  }, []);
+
+  const changeUser = (email: string) => {
+    setActiveUser(email);
+    localStorage.setItem('yoda_active_user', email);
+    addLog('SYSTEM', `Usuario cambiado a: ${email}`, email);
+  };
+
+  const addLog = (action: string, details: string, explicitUser?: string) => {
+    const user = explicitUser || activeUser;
+    setActivityLogs(prev => {
+      const next = [{ time: new Date().toISOString(), user, action, details }, ...prev].slice(0, 1000); // keep last 1000 logs
+      localStorage.setItem('yoda_activity_logs', JSON.stringify(next));
+      return next;
+    });
+  };
+  
   const initGalaxy = (labels: string[]) => {
     const COLORS = [
       '#ED1650', '#00D6CC', '#D400FF', '#FFE017', '#99CC33', 
@@ -206,6 +236,11 @@ export default function App() {
 
   const activeConfig = appConfig?.[currentStation.toLowerCase()] || appConfigJson[currentStation.toLowerCase()] || appConfig?.br || appConfigJson.br;
   const go = (v: string, sector: string | null = null, courseIdx: number | null = null) => {
+    let details = `Navegación a: ${v}`;
+    if (sector) details += ` | Sector: ${sector}`;
+    if (courseIdx !== null) details += ` | Planeta Index: ${courseIdx}`;
+    addLog('NAVIGATE', details);
+    
     setView(v);
     if(sector) setActiveSector(sector);
     if(courseIdx!==null) setActiveCourseIdx(courseIdx);
@@ -219,7 +254,15 @@ export default function App() {
   const renderView = () => {
     switch(view) {
       case 'landing':
-        return <Landing onNavigate={(st: string)=>{setCurrentStation(st.toUpperCase());go(st==='br'?'br':'ssc-pending')}} onAdmin={()=>go('admin')}/>;
+        return <Landing 
+          onNavigate={(st: string)=>{setCurrentStation(st.toUpperCase());go(st==='br'?'br':'ssc-pending')}} 
+          onAdmin={()=>go('admin')}
+          onActivityLog={()=>go('activity-log')}
+          activeUser={activeUser}
+          changeUser={changeUser}
+        />;
+      case 'activity-log':
+        return <ActivityLogView logs={activityLogs} activeUser={activeUser} onBack={()=>go('landing')} />;
       case 'br':
         return <BaseStation stationName="BR" config={appConfig?.br || appConfigJson.br} onBack={()=>go('landing')} onNavigate={go}/>;
       case 'galaxies':
@@ -357,7 +400,13 @@ export default function App() {
           </div>
         );
       default:
-        return <Landing onNavigate={(st: string)=>{setCurrentStation(st.toUpperCase());go(st==='br'?'br':'ssc-pending')}} onAdmin={()=>go('admin')}/>;
+        return <Landing 
+          onNavigate={(st: string)=>{setCurrentStation(st.toUpperCase());go(st==='br'?'br':'ssc-pending')}} 
+          onAdmin={()=>go('admin')}
+          onActivityLog={()=>go('activity-log')}
+          activeUser={activeUser}
+          changeUser={changeUser}
+        />;
     }
   };
 
