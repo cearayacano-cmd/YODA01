@@ -181,7 +181,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                 color: '#ef4444',
                 fontSize: 11,
                 fontWeight: 900,
-                display: 'flex',
+                display: 'none', /* HIDDEN TEMPORARILY AS REQUESTED */
                 alignItems: 'center',
                 gap: 12,
                 cursor: 'pointer',

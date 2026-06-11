@@ -151,6 +151,14 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
     updateSections(next);
   };
 
+  const insertRowAfter = (secIdx: number, rowIdx: number, mt: string, d: string) => {
+    const next = [...currentSections];
+    const rows = [...next[secIdx].rows];
+    rows.splice(rowIdx + 1, 0, { macroTema: mt, dia: d, tema: '', detalhe: '', consejo: '', herramientas: [{ tipo: '🖼️ Slide', url: '' }], iaPic: [], tiempo: '' });
+    next[secIdx] = { ...next[secIdx], rows };
+    updateSections(next);
+  };
+
   const moveRow = (secIdx: number, rowIdx: number, dir: number) => {
     const next = [...currentSections];
     const rows = [...next[secIdx].rows];
@@ -542,44 +550,57 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                           </td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}><input value={row.tiempo || row.ch} onChange={e => updateRow(si, oi, 'tiempo', e.target.value)} style={{ background: 'transparent', border: 'none', color: '#111', fontSize: '12px', fontWeight: 800, textAlign: 'center', width: '100%' }} /></td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}>
-                                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                                              <button 
-                                                disabled={ri === 0}
-                                                onClick={() => moveRowWithinMacroTema(si, oi, -1)}
-                                                style={{ 
-                                                  background: 'transparent', border: 'none', color: ri === 0 ? '#cbd5e1' : '#1B0088', 
-                                                  cursor: ri === 0 ? 'default' : 'pointer', opacity: ri === 0 ? 0.4 : 0.7, padding: 0,
-                                                  display: 'flex', alignItems: 'center'
-                                                }}
-                                                onMouseEnter={e => { if (ri !== 0) e.currentTarget.style.opacity = '1'; }}
-                                                onMouseLeave={e => { if (ri !== 0) e.currentTarget.style.opacity = '0.7'; }}
-                                                title="Subir Actividad"
-                                              >
-                                                <ChevronUp size={14} />
-                                              </button>
-                                              <button 
-                                                disabled={ri === rows.length - 1}
-                                                onClick={() => moveRowWithinMacroTema(si, oi, 1)}
-                                                style={{ 
-                                                  background: 'transparent', border: 'none', color: ri === rows.length - 1 ? '#cbd5e1' : '#1B0088', 
-                                                  cursor: ri === rows.length - 1 ? 'default' : 'pointer', opacity: ri === rows.length - 1 ? 0.4 : 0.7, padding: 0,
-                                                  display: 'flex', alignItems: 'center'
-                                                }}
-                                                onMouseEnter={e => { if (ri !== rows.length - 1) e.currentTarget.style.opacity = '1'; }}
-                                                onMouseLeave={e => { if (ri !== rows.length - 1) e.currentTarget.style.opacity = '0.7'; }}
-                                                title="Bajar Actividad"
-                                              >
-                                                <ChevronDown size={14} />
-                                              </button>
-                                              <button 
-                                                onClick={() => deleteRow(si, oi)} 
-                                                style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', opacity: 0.5, padding: 0, display: 'flex', alignItems: 'center' }} 
-                                                onMouseEnter={e=>e.currentTarget.style.opacity='1'} 
-                                                onMouseLeave={e=>e.currentTarget.style.opacity='0.5'}
-                                                title="Eliminar Actividad"
-                                              >
-                                                <Trash2 size={14}/>
-                                              </button>
+                                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, flexWrap: 'wrap', width: 40 }}>
+                                              <div style={{ display: 'flex', gap: 4 }}>
+                                                <button 
+                                                  disabled={ri === 0}
+                                                  onClick={() => moveRowWithinMacroTema(si, oi, -1)}
+                                                  style={{ 
+                                                    background: 'transparent', border: 'none', color: ri === 0 ? '#cbd5e1' : '#1B0088', 
+                                                    cursor: ri === 0 ? 'default' : 'pointer', opacity: ri === 0 ? 0.4 : 0.7, padding: 0,
+                                                    display: 'flex', alignItems: 'center'
+                                                  }}
+                                                  onMouseEnter={e => { if (ri !== 0) e.currentTarget.style.opacity = '1'; }}
+                                                  onMouseLeave={e => { if (ri !== 0) e.currentTarget.style.opacity = '0.7'; }}
+                                                  title="Subir Actividad"
+                                                >
+                                                  <ChevronUp size={14} />
+                                                </button>
+                                                <button 
+                                                  disabled={ri === rows.length - 1}
+                                                  onClick={() => moveRowWithinMacroTema(si, oi, 1)}
+                                                  style={{ 
+                                                    background: 'transparent', border: 'none', color: ri === rows.length - 1 ? '#cbd5e1' : '#1B0088', 
+                                                    cursor: ri === rows.length - 1 ? 'default' : 'pointer', opacity: ri === rows.length - 1 ? 0.4 : 0.7, padding: 0,
+                                                    display: 'flex', alignItems: 'center'
+                                                  }}
+                                                  onMouseEnter={e => { if (ri !== rows.length - 1) e.currentTarget.style.opacity = '1'; }}
+                                                  onMouseLeave={e => { if (ri !== rows.length - 1) e.currentTarget.style.opacity = '0.7'; }}
+                                                  title="Bajar Actividad"
+                                                >
+                                                  <ChevronDown size={14} />
+                                                </button>
+                                              </div>
+                                              <div style={{ display: 'flex', gap: 6, marginTop: 4 }}>
+                                                <button 
+                                                  onClick={() => insertRowAfter(si, oi, row.macroTema, row.dia)} 
+                                                  style={{ background: 'transparent', border: 'none', color: '#10b981', cursor: 'pointer', opacity: 0.7, padding: 0, display: 'flex', alignItems: 'center' }} 
+                                                  onMouseEnter={e=>e.currentTarget.style.opacity='1'} 
+                                                  onMouseLeave={e=>e.currentTarget.style.opacity='0.7'}
+                                                  title="Añadir Actividad Aquí"
+                                                >
+                                                  <Plus size={15}/>
+                                                </button>
+                                                <button 
+                                                  onClick={() => deleteRow(si, oi)} 
+                                                  style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', opacity: 0.5, padding: 0, display: 'flex', alignItems: 'center' }} 
+                                                  onMouseEnter={e=>e.currentTarget.style.opacity='1'} 
+                                                  onMouseLeave={e=>e.currentTarget.style.opacity='0.5'}
+                                                  title="Eliminar Actividad"
+                                                >
+                                                  <Trash2 size={14}/>
+                                                </button>
+                                              </div>
                                             </div>
                                           </td>
                                         </tr>

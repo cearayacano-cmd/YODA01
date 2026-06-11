@@ -787,7 +787,7 @@ export const ClassicMissionBlock = ({ seccion, planetColor, onBackToMap, titleOv
       ) : groupedRows.map(({ macroTema: mt, rows: mtRows }, gi) => {
         const totalSecs = mtRows.reduce((acc, r) => acc + (r.tiempo ? (typeof r.tiempo === 'string' ? (r.tiempo.includes(':') ? r.tiempo.split(':').reduce((a:any,b:any)=>a*60+parseInt(b),0) : parseInt(r.tiempo)*60) : r.tiempo) : 0), 0);
         // Note: Simplified time calculation for brevity, could use timeToSeconds if exported
-        const uniqueDays = Array.from(new Set(mtRows.map((r: any) => r.dia).filter(Boolean)));
+        const uniqueDays = Array.from(new Set(mtRows.map((r: any) => r.dia).filter(Boolean))).sort((a: any, b: any) => Number(a) - Number(b));
         
         return (
           <div key={gi} style={{ marginBottom: 40 }}>
@@ -1272,7 +1272,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                         return grouped.map(({ macroTema: mt, rows }, gi) => {
                                             const themeKey = `${sidx}-${gi}-${mt}`;
                                             const isCollapsed = collapsedThemes.includes(themeKey);
-                                            const uniqueDays = Array.from(new Set(rows.map((r: any) => r.dia).filter(Boolean)));
+                                            const uniqueDays = Array.from(new Set(rows.map((r: any) => r.dia).filter(Boolean))).sort((a: any, b: any) => Number(a) - Number(b));
                                             return (
                                                 <div key={themeKey} style={{ marginBottom: isCollapsed ? 20 : 50 }}>
                                                     {/* Premium Tactical Theme Header - NOW CLICKABLE TO COLLAPSE */}
@@ -1304,6 +1304,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                                                 <Calendar size={12} /> {uniqueDays.length === 1 ? `DÍA: ${uniqueDays[0]}` : `DÍAS: ${uniqueDays.join(' - ')}`}
                                                             </div>
                                                         )}
+                                                        
                                                         <div style={{ fontSize: 10, color: 'rgba(27,0,136,0.4)', fontWeight: 800 }}>{rows.length} NODOS DETECTADOS</div>
                                                     </motion.div>
                                                     
