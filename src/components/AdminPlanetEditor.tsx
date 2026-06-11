@@ -507,26 +507,33 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                     <div style={{ background: '#1B0088', color: '#fff', padding: '6px 14px', borderRadius: '20px', fontSize: '11px', fontWeight: 900 }}>⏱ TOTAL BLOQUE: {secondsToTime(totalSecs)}</div>
                                   </div>
                                 </div>
-                                {!isCollapsed && (
-                                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                                  <thead>
-                                    <tr style={{ background: '#f1f5f9' }}>
-                                      <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0' }}>TEMA</th>
-                                      <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0' }}>DETALLE</th>
-                                      <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0', width: '200px' }}>RECURSOS (TIPO / URL)</th>
-                                      <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0', width: '200px' }}>CONSEJO TÁCTICO</th>
-                                      <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'center', border: '1px solid #e2e8f0', width: '180px' }}>LINK PIC</th>
-                                      <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'center', border: '1px solid #e2e8f0', width: '90px' }}>DURACIÓN</th>
-                                      <th style={{ padding: '10px', border: '1px solid #e2e8f0', width: '40px' }}></th>
-                                    </tr>
-                                  </thead>
+                                <AnimatePresence initial={false}>
+                                  {!isCollapsed && (
+                                  <motion.div 
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: 'auto', opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    style={{ overflow: 'hidden' }}
+                                  >
+                                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                      <thead>
+                                        <tr style={{ background: '#f1f5f9' }}>
+                                          <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0', width: '200px' }}>TEMA</th>
+                                          <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0' }}>DETALLE</th>
+                                          <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0', width: '200px' }}>RECURSOS (TIPO / URL)</th>
+                                          <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0', width: '200px' }}>CONSEJO TÁCTICO</th>
+                                          <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'center', border: '1px solid #e2e8f0', width: '150px' }}>LINK PIC</th>
+                                          <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'center', border: '1px solid #e2e8f0', width: '80px' }}>DURACIÓN</th>
+                                          <th style={{ padding: '10px', border: '1px solid #e2e8f0', width: '45px' }}></th>
+                                        </tr>
+                                      </thead>
                                   <tbody>
                                     {rows.map((row: any, ri: number) => {
                                       const oi = row.originalIndex;
                                       return (
                                         <tr key={oi} style={{ background: ri % 2 === 0 ? '#fff' : '#fafafa' }}>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><input value={row.tema} onChange={e => updateRow(si, oi, 'tema', e.target.value)} placeholder="Título..." style={{ background: 'transparent', border: 'none', color: '#111', fontSize: '13px', fontWeight: 700, width: '100%', outline: 'none' }} /></td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.detalhe} onChange={e => updateRow(si, oi, 'detalhe', e.target.value)} placeholder="Detalle..." style={{ background: 'transparent', border: 'none', color: '#64748b', fontSize: '11px', width: '100%', outline: 'none', resize: 'none', height: '60px' }} /></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.tema} onChange={e => updateRow(si, oi, 'tema', e.target.value)} placeholder="Título..." style={{ background: 'transparent', border: 'none', color: '#111', fontSize: '13px', fontWeight: 700, width: '100%', outline: 'none', resize: 'vertical', minHeight: '80px' }} /></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.detalhe} onChange={e => updateRow(si, oi, 'detalhe', e.target.value)} placeholder="Detalle..." style={{ background: 'transparent', border: 'none', color: '#64748b', fontSize: '11px', width: '100%', outline: 'none', resize: 'vertical', minHeight: '80px' }} /></td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
                                             {(Array.isArray(row.herramientas) ? row.herramientas : row.herramientas ? [row.herramientas] : []).map((h: any, hi: number) => (
                                               <div key={hi} style={{ marginBottom: 8, paddingBottom: 8, borderBottom: '1px dashed #e2e8f0', position: 'relative' }}>
@@ -537,7 +544,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                             ))}
                                             <button onClick={() => { const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : (row.herramientas ? [row.herramientas] : []); newH.push({ tipo: 'PPT', url: '' }); updateRow(si, oi, 'herramientas', newH); }} style={{ background: '#f1f5f9', border: '1px dashed #cbd5e1', width: '100%', padding: '4px', fontSize: '9px', cursor: 'pointer', borderRadius: 4, color: '#64748b' }}>+ AÑADIR RECURSO</button>
                                           </td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.consejo} onChange={e => updateRow(si, oi, 'consejo', e.target.value)} placeholder="Consejo..." style={{ background: 'transparent', border: 'none', fontSize: '10px', color: '#333', width: '100%', resize: 'none', height: '60px' }} /></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.consejo} onChange={e => updateRow(si, oi, 'consejo', e.target.value)} placeholder="Consejo..." style={{ background: 'transparent', border: 'none', fontSize: '10px', color: '#333', width: '100%', resize: 'vertical', minHeight: '80px' }} /></td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
                                             {(Array.isArray(row.iaPic) ? row.iaPic : row.iaPic ? [{ label: 'PIC LINK', url: row.iaPic }] : []).map((link: any, li: number) => (
                                               <div key={li} style={{ marginBottom: 6, paddingBottom: 6, borderBottom: '1px dashed #e2e8f0', position: 'relative' }}>
@@ -608,7 +615,9 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                     })}
                                   </tbody>
                                 </table>
-                                )}
+                                  </motion.div>
+                                  )}
+                                </AnimatePresence>
                               </div>
                             );
                           });
