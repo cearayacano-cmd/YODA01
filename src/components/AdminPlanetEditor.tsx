@@ -393,7 +393,9 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                     <button onClick={() => setEditingExtraIdx(si)} style={{ background: '#f8fafc', border: '2px solid #E2E8F0', color: '#1B0088', padding: '10px 20px', borderRadius: '12px', cursor: 'pointer', fontSize: '11px', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 8 }}><Layers size={16}/> TARJETA EXTRA</button>
                   )}
                   <button onClick={() => addRow(si)} style={{ background: '#1B0088', color: '#fff', border: 'none', padding: '12px 24px', borderRadius: '12px', cursor: 'pointer', fontSize: '11px', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 8, boxShadow: '0 8px 25px rgba(27,0,136,0.2)' }}><Plus size={16}/> AGREGAR NODO</button>
-                  <button onClick={() => setEditingSecIdx(editingSecIdx === si ? null : si)} style={{ background: '#ffffff', border: '1px solid #E2E8F0', padding: '12px 20px', borderRadius: '12px', cursor: 'pointer', fontSize: '11px', fontWeight: 900, color: '#1B0088', display: 'flex', alignItems: 'center', gap: 8 }}>{editingSecIdx === si ? <CheckCircle2 size={16}/> : <Edit3 size={16}/>} {editingSecIdx === si ? 'FINALIZAR' : 'RECONFIGURAR'}</button>
+                  {(sec.tipo === 'ojt' || sec.tipo === 'avaliacao') && (
+                    <button onClick={() => setEditingSecIdx(editingSecIdx === si ? null : si)} style={{ background: '#ffffff', border: '1px solid #E2E8F0', padding: '12px 20px', borderRadius: '12px', cursor: 'pointer', fontSize: '11px', fontWeight: 900, color: '#1B0088', display: 'flex', alignItems: 'center', gap: 8 }}>{editingSecIdx === si ? <CheckCircle2 size={16}/> : <Edit3 size={16}/>} {editingSecIdx === si ? 'FINALIZAR' : 'RECONFIGURAR'}</button>
+                  )}
                   
                   <button 
                     onClick={() => toggleSection(si)} 
@@ -445,6 +447,20 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                             return (
                               <div key={themeKey} style={{ marginBottom: isCollapsed ? '16px' : '48px' }}>
                                 <div 
+                                  draggable
+                                  onDragStart={e => { e.dataTransfer.setData('text/macro', String(gi)); e.currentTarget.style.opacity = '0.5'; }}
+                                  onDragEnd={e => { e.currentTarget.style.opacity = '1'; }}
+                                  onDragOver={e => { e.preventDefault(); e.currentTarget.style.border = '2px dashed #99CC33'; }}
+                                  onDragLeave={e => { e.currentTarget.style.border = '2px solid #1B0088'; }}
+                                  onDrop={e => {
+                                    e.preventDefault();
+                                    e.currentTarget.style.border = '2px solid #1B0088';
+                                    const fromGi = parseInt(e.dataTransfer.getData('text/macro'), 10);
+                                    if (!isNaN(fromGi) && fromGi !== gi) {
+                                      const dir = gi - fromGi;
+                                      moveMacroTema(si, fromGi, dir);
+                                    }
+                                  }}
                                   onClick={() => toggleTheme(themeKey)}
                                   style={{ 
                                     display: 'flex', alignItems: 'center', justifyContent: 'space-between', 
@@ -518,6 +534,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                     <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                       <thead>
                                         <tr style={{ background: '#f1f5f9' }}>
+                                          <th style={{ padding: '10px', width: '30px', border: '1px solid #e2e8f0' }}></th>
                                           <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0', width: '200px' }}>TEMA</th>
                                           <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0' }}>DETALLE</th>
                                           <th style={{ padding: '10px', fontSize: '10px', color: '#64748b', fontWeight: 900, textAlign: 'left', border: '1px solid #e2e8f0', width: '200px' }}>RECURSOS (TIPO / URL)</th>
@@ -531,9 +548,34 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                     {rows.map((row: any, ri: number) => {
                                       const oi = row.originalIndex;
                                       return (
-                                        <tr key={oi} style={{ background: ri % 2 === 0 ? '#fff' : '#fafafa' }}>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.tema} onChange={e => updateRow(si, oi, 'tema', e.target.value)} placeholder="Título..." style={{ background: 'transparent', border: 'none', color: '#111', fontSize: '13px', fontWeight: 700, width: '100%', outline: 'none', resize: 'vertical', minHeight: '80px' }} /></td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.detalhe} onChange={e => updateRow(si, oi, 'detalhe', e.target.value)} placeholder="Detalle..." style={{ background: 'transparent', border: 'none', color: '#64748b', fontSize: '11px', width: '100%', outline: 'none', resize: 'vertical', minHeight: '80px' }} /></td>
+                                        <tr 
+                                          key={oi} 
+                                          style={{ background: ri % 2 === 0 ? '#ffffff' : '#f8fafc', borderBottom: '1px solid #e2e8f0', transition: 'all 0.2s ease' }}
+                                          draggable
+                                          onDragStart={e => { e.dataTransfer.setData('text/row', String(oi)); e.currentTarget.style.opacity = '0.5'; }}
+                                          onDragEnd={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.borderTop = 'none'; e.currentTarget.style.borderBottom = '1px solid #e2e8f0'; }}
+                                          onDragOver={e => { e.preventDefault(); e.currentTarget.style.borderTop = '3px solid #1B0088'; }}
+                                          onDragLeave={e => { e.currentTarget.style.borderTop = 'none'; e.currentTarget.style.borderBottom = '1px solid #e2e8f0'; }}
+                                          onDrop={e => {
+                                            e.preventDefault();
+                                            e.currentTarget.style.borderTop = 'none';
+                                            const fromIdx = parseInt(e.dataTransfer.getData('text/row'), 10);
+                                            const toIdx = oi;
+                                            if (fromIdx === toIdx || isNaN(fromIdx)) return;
+                                            const next = [...currentSections];
+                                            const nextRows = [...next[si].rows];
+                                            const [item] = nextRows.splice(fromIdx, 1);
+                                            const adjustedToIdx = fromIdx < toIdx ? toIdx - 1 : toIdx;
+                                            nextRows.splice(adjustedToIdx, 0, item);
+                                            next[si] = { ...next[si], rows: nextRows };
+                                            updateSections(next);
+                                          }}
+                                        >
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center', cursor: 'grab', color: '#cbd5e1' }} onMouseEnter={e => e.currentTarget.style.color = '#1B0088'} onMouseLeave={e => e.currentTarget.style.color = '#cbd5e1'}>
+                                            <GripVertical size={16} />
+                                          </td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.tema} onChange={e => updateRow(si, oi, 'tema', e.target.value)} onInput={e => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={e => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(27,0,136,0.2)'; e.currentTarget.style.background = '#fff'; }} onBlur={e => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = 'transparent'; }} placeholder="Título..." style={{ background: 'transparent', border: '1px solid transparent', borderRadius: '8px', padding: '12px', color: '#1B0088', fontSize: '13px', fontWeight: 700, width: '100%', outline: 'none', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box' }} /></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.detalhe} onChange={e => updateRow(si, oi, 'detalhe', e.target.value)} onInput={e => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={e => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(27,0,136,0.2)'; e.currentTarget.style.background = '#fff'; }} onBlur={e => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = 'transparent'; }} placeholder="Detalle..." style={{ background: 'transparent', border: '1px solid transparent', borderRadius: '8px', padding: '12px', color: '#334155', fontSize: '12px', width: '100%', outline: 'none', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box', lineHeight: '1.5' }} /></td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
                                             {(Array.isArray(row.herramientas) ? row.herramientas : row.herramientas ? [row.herramientas] : []).map((h: any, hi: number) => (
                                               <div key={hi} style={{ marginBottom: 8, paddingBottom: 8, borderBottom: '1px dashed #e2e8f0', position: 'relative' }}>
@@ -544,7 +586,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                             ))}
                                             <button onClick={() => { const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : (row.herramientas ? [row.herramientas] : []); newH.push({ tipo: 'PPT', url: '' }); updateRow(si, oi, 'herramientas', newH); }} style={{ background: '#f1f5f9', border: '1px dashed #cbd5e1', width: '100%', padding: '4px', fontSize: '9px', cursor: 'pointer', borderRadius: 4, color: '#64748b' }}>+ AÑADIR RECURSO</button>
                                           </td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.consejo} onChange={e => updateRow(si, oi, 'consejo', e.target.value)} placeholder="Consejo..." style={{ background: 'transparent', border: 'none', fontSize: '10px', color: '#333', width: '100%', resize: 'vertical', minHeight: '80px' }} /></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.consejo} onChange={e => updateRow(si, oi, 'consejo', e.target.value)} onInput={e => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={e => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(153,204,51,0.4)'; e.currentTarget.style.background = '#fff'; }} onBlur={e => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = 'transparent'; }} placeholder="Consejo..." style={{ background: 'transparent', border: '1px solid transparent', borderRadius: '8px', padding: '12px', fontSize: '11px', color: '#333', width: '100%', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box', lineHeight: '1.5' }} /></td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
                                             {(Array.isArray(row.iaPic) ? row.iaPic : row.iaPic ? [{ label: 'PIC LINK', url: row.iaPic }] : []).map((link: any, li: number) => (
                                               <div key={li} style={{ marginBottom: 6, paddingBottom: 6, borderBottom: '1px dashed #e2e8f0', position: 'relative' }}>
@@ -615,6 +657,20 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                     })}
                                   </tbody>
                                 </table>
+                                <div style={{ padding: '8px', background: '#ffffff', borderBottomLeftRadius: '8px', borderBottomRightRadius: '8px', border: '1px solid #e2e8f0', borderTop: 'none' }}>
+                                    <button 
+                                      onClick={() => {
+                                        const lastRowIdx = rows.length > 0 ? rows[rows.length - 1].originalIndex : sec.rows.length - 1;
+                                        const dia = rows.length > 0 ? rows[rows.length - 1].dia : '';
+                                        insertRowAfter(si, lastRowIdx, mt === 'SIN MACROTEMA' ? '' : mt, dia);
+                                      }}
+                                      style={{ width: '100%', padding: '12px', background: '#f8fafc', border: '2px dashed #cbd5e1', borderRadius: '8px', color: '#1B0088', fontWeight: 900, fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, transition: 'all 0.2s ease' }}
+                                      onMouseEnter={e => { e.currentTarget.style.background = '#f1f5f9'; e.currentTarget.style.borderColor = '#1B0088'; e.currentTarget.style.transform = 'scale(1.01)'; }}
+                                      onMouseLeave={e => { e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.borderColor = '#cbd5e1'; e.currentTarget.style.transform = 'scale(1)'; }}
+                                    >
+                                      <Plus size={16} /> AÑADIR NUEVA ACTIVIDAD AL MACROTEMA
+                                    </button>
+                                </div>
                                   </motion.div>
                                   )}
                                 </AnimatePresence>
