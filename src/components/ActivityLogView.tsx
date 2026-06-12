@@ -108,9 +108,18 @@ export const ActivityLogView = ({ logs, activeUser, onBack }: any) => {
                         </div>
                       </td>
                       <td style={{ padding: '16px' }}>
-                        <span style={{ background: 'rgba(0, 255, 242, 0.1)', color: '#00FFF2', padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 900, letterSpacing: '0.1em' }}>
-                          {log.action}
-                        </span>
+                        {(() => {
+                          let color = '#00FFF2'; // default NAVIGATE
+                          if (log.action === 'SYSTEM') color = '#FFB800';
+                          if (log.action === 'OPEN_LINK') color = '#D400FF';
+                          if (log.action === 'COMPLETION') color = '#99CC33';
+                          
+                          return (
+                            <span style={{ background: `${color}22`, color: color, padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 900, letterSpacing: '0.1em' }}>
+                              {log.action}
+                            </span>
+                          );
+                        })()}
                       </td>
                       <td style={{ padding: '16px', color: 'rgba(255,255,255,0.8)', fontSize: '14px' }}>
                         {log.details}

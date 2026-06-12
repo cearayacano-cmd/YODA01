@@ -104,29 +104,41 @@ export const Landing = ({ onNavigate, onAdmin, onActivityLog, activeUser, change
 
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <span style={{color:'#ffffff', fontSize:12, fontWeight:900, letterSpacing:'0.3em', opacity: 0.8}}>Capacitación | Customer Care & Sales</span>
+        </div>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div style={{ position: 'relative' }}>
           <select 
             value={activeUser || 'carlose.araya@latam.com'} 
             onChange={(e) => changeUser && changeUser(e.target.value)}
             style={{ 
-              marginTop: 4, 
-              background: 'rgba(0,0,0,0.3)', 
-              color: '#00FFF2', 
-              border: '1px solid rgba(0, 255, 242, 0.3)', 
-              padding: '4px 8px', 
-              borderRadius: '4px', 
-              fontSize: '11px', 
-              fontWeight: 700, 
+              appearance: 'none',
+              background: 'transparent', 
+              color: '#ffffff', 
+              border: '1px solid rgba(255, 255, 255, 0.2)', 
+              padding: '8px 36px 8px 16px', 
+              borderRadius: '30px', 
+              fontSize: '10px', 
+              fontWeight: 900, 
               outline: 'none', 
-              cursor: 'pointer' 
+              cursor: 'pointer',
+              letterSpacing: '0.05em',
+              backdropFilter: 'blur(10px)',
+              transition: 'all 0.2s'
             }}
+            onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.05)'} 
+            onMouseLeave={e=>e.currentTarget.style.background='transparent'}
           >
-            <option value="carlose.araya@latam.com">carlose.araya@latam.com (Admin)</option>
-            <option value="instructor@konectabr.com">instructor@konectabr.com</option>
-            <option value="instructor@aec.com">instructor@aec.com</option>
+            <option value="carlose.araya@latam.com" style={{ background: '#0F004F', color: '#fff' }}>carlose.araya@latam.com (Admin)</option>
+            <option value="instructor@konectabr.com" style={{ background: '#0F004F', color: '#fff' }}>instructor@konectabr.com</option>
+            <option value="instructor@aec.com" style={{ background: '#0F004F', color: '#fff' }}>instructor@aec.com</option>
           </select>
+          <div style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L5 5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
         </div>
-      </div>
-      <div style={{ display: 'flex', gap: 12 }}>
         <button onClick={onActivityLog} style={{background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.2)', padding:'8px 24px', cursor:'pointer', fontSize:10, fontWeight:900, color:'#fff', borderRadius:30, letterSpacing: '0.15em', backdropFilter: 'blur(10px)', transition: 'all 0.2s'}} onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.1)'} onMouseLeave={e=>e.currentTarget.style.background='rgba(255,255,255,0.05)'}>
           VER SEGUIMIENTO
         </button>

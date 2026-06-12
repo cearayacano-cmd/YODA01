@@ -286,6 +286,7 @@ export default function App() {
               planetLabel={planetLabel}
               sectorLabel={sectorLabel}
               onboardingData={activeConfig.onboarding}
+              onTrackEvent={addLog}
             />
           );
         }
@@ -309,6 +310,7 @@ export default function App() {
             onExploracion={(st: string)=>{setAdminStation(st);go('admin-exploracion')}}
             onRutaLider={(st: string)=>{setAdminStation(st);go('admin-ruta-lider')}}
             onSave={saveConfigToDisk}
+            onActivityLog={()=>go('activity-log')}
           />
         );
       case 'admin-exploracion':

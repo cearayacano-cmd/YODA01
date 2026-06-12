@@ -3,7 +3,7 @@ import { BackBtn } from './Shared';
 import { motion } from 'framer-motion';
 import { Save, Rocket, Settings, Database, Edit3, Trash2, Plus, Link as LinkIcon, CheckCircle2, Activity, LayoutGrid, GraduationCap, ArrowUpRight, Globe, ArrowLeft } from 'lucide-react';
 
-export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLider, onViewStation, onSave }: any) => {
+export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLider, onViewStation, onSave, onActivityLog }: any) => {
   const [activeStation, setActiveStation] = useState('BR');
   const [saved, setSaved] = useState(false);
   const handleSave = () => { 
@@ -157,6 +157,33 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
               <span style={{ fontSize: 13, letterSpacing: '0.05em' }}>{st} STATION</span>
             </motion.div>
           ))}
+          
+          <div style={{ margin: '16px 16px 8px 16px', height: 1, background: 'rgba(255,255,255,0.1)' }} />
+          
+          <motion.button 
+            whileHover={{ scale: 1.02, background: 'rgba(255,255,255,0.1)' }}
+            whileTap={{ scale: 0.98 }}
+            onClick={onActivityLog} 
+            style={{
+              margin: '0 16px',
+              padding:'12px 20px', 
+              cursor:'pointer', 
+              borderRadius: 30, 
+              border: '1px solid rgba(255,255,255,0.2)',
+              fontWeight: 900, 
+              background: 'rgba(255,255,255,0.05)', 
+              color: '#ffffff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 10,
+              backdropFilter: 'blur(10px)',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            <Activity size={16} />
+            <span style={{ fontSize: 11, letterSpacing: '0.15em' }}>VER SEGUIMIENTO</span>
+          </motion.button>
           
           <div style={{ marginTop: 'auto', padding: '0 8px' }}>
             <motion.button 

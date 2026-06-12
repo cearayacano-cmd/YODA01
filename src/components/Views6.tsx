@@ -876,7 +876,7 @@ const secondsToTime = (secs: number) => {
     return `${m}m ${s}s`;
 };
 
-const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel }: any) => {
+const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, onTrackEvent }: any) => {
     const storageKey = `resolved_${planetLabel}_${node.tema}_${index}`;
     const isResolved = localStorage.getItem(storageKey) === 'true';
     const recs = Array.isArray(node.herramientas) ? node.herramientas : 
@@ -990,6 +990,7 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel }: any) => 
                             key={li}
                             whileHover={{ scale: 1.05, background: '#e0f2fe' }}
                             href={link.url} target="_blank" rel="noopener noreferrer"
+                            onClick={() => onTrackEvent && onTrackEvent('OPEN_LINK', `Abrió PIC: ${node.tema} - ${link.label || 'PIC'}`)}
                             style={{ 
                                 background: '#f0f9ff',
                                 border: '1px dashed #bae6fd', 
@@ -1020,6 +1021,7 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel }: any) => 
                         whileTap={{ scale: 0.98 }}
                         href={rec.url} 
                         target="_blank" rel="noopener noreferrer"
+                        onClick={() => onTrackEvent && onTrackEvent('OPEN_LINK', `Abrió recurso: ${node.tema} - ${rec.tipo || 'RECURSO'}`)}
                         style={{
                             background: '#1B0088', 
                             color: '#fff', 
@@ -1051,6 +1053,7 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel }: any) => 
                         const storageKey = `resolved_${planetLabel}_${node.tema}_${index}`;
                         const isDone = localStorage.getItem(storageKey) === 'true';
                         localStorage.setItem(storageKey, isDone ? 'false' : 'true');
+                        onTrackEvent && onTrackEvent('COMPLETION', `Marcó nodo como ${isDone ? 'Pendiente' : 'Finalizado'}: ${node.tema}`);
                         if (typeof window !== 'undefined' && (window as any).refreshOnboarding) {
                             (window as any).refreshOnboarding();
                         } else {
@@ -1082,7 +1085,7 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel }: any) => 
     );
 };
 
-const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOverride, subtitleOverride, tick, planetLabel, sectorLabel }: any) => {
+const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOverride, subtitleOverride, tick, planetLabel, sectorLabel, onTrackEvent }: any) => {
     const allSecciones = secciones || (seccion ? [seccion] : []);
     const initialThemes = useMemo(() => {
         const keys: string[] = [];
@@ -1109,6 +1112,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                 localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'true');
             });
         });
+        if (onTrackEvent) onTrackEvent('COMPLETION', `Marcó toda la expedición como finalizada: ${planetLabel}`);
         if ((window as any).refreshOnboarding) (window as any).refreshOnboarding();
         onBack();
     };
@@ -1121,6 +1125,8 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                 localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'false');
             });
         });
+        
+        if (onTrackEvent) onTrackEvent('COMPLETION', `Reinició el progreso de la expedición: ${planetLabel}`);
         
         // Clear congrats flag too
         const congratsKey = `congrats_shown_${planetLabel || titleOverride || seccion?.nombre || ''}_${sectorLabel || subtitleOverride || 'SECTOR'}`;
@@ -1323,6 +1329,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                                                         index={row.originalIndex} 
                                                                         planetColor={planetColor} 
                                                                         planetLabel={planetLabel}
+                                                                        onTrackEvent={onTrackEvent}
                                                                     />
                                                                 ))}
                                                             </motion.div>
@@ -1453,7 +1460,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     );
 };
 
-export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sectorLabel="SECTOR", onboardingData }: any) => {
+export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sectorLabel="SECTOR", onboardingData, onTrackEvent }: any) => {
     const [viewMode, setViewMode] = React.useState<'map' | 'detail' | 'onboarding'>('map');
     const [selectedIdx, setSelectedIdx] = React.useState(0);
     const [tick, setTick] = React.useState(0);
@@ -1585,6 +1592,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                     tick={tick}
                     planetLabel={planetLabel}
                     sectorLabel={sectorLabel}
+                    onTrackEvent={onTrackEvent}
                 />
             ) : (
                 <FscDetailedTerminal 
@@ -1596,6 +1604,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                     tick={tick}
                     planetLabel="NAVE DE ONBOARDING"
                     sectorLabel="PROTOCOLO DE PREPARACIÓN"
+                    onTrackEvent={onTrackEvent}
                 />
             )}
 
