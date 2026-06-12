@@ -1810,16 +1810,6 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
 
   return (
     <div style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden', backgroundColor: '#F8F7FF', fontFamily: '"Inter", sans-serif', display: 'flex', flexDirection: 'column' }}>
-      
-      {/* Light grid background */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        opacity: 0.15,
-        backgroundImage: 'linear-gradient(#1B0088 1px, transparent 1px), linear-gradient(90deg, #1B0088 1px, transparent 1px)',
-        backgroundSize: '40px 40px',
-        zIndex: 0
-      }} />
 
       {/* Central Portal Window for SpaceBackground */}
       <div style={{
@@ -1847,7 +1837,7 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
 
       <IaraHologram isVisible={showIara} onClose={() => setShowIara(false)} iaraLink={iaraLink} />
 
-      <div style={{ height: '84px', background: 'transparent', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 32px', transition: 'all 0.5s ease', borderBottom: '1px solid rgba(27,0,136,0.1)' }}>
+      <div style={{ height: '84px', background: '#FFFFFF', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 32px', transition: 'all 0.5s ease', borderBottom: '1px solid rgba(27,0,136,0.1)' }}>
         <BackBtn onClick={onBack} label="SAIR" />
         <div style={{ 
           position: 'absolute', 
@@ -1926,7 +1916,7 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
         </ConsoleSideFrame>
       </div>
 
-      <div style={{ height: '80px', background: 'transparent', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 40px', borderTop: '1px solid rgba(27,0,136,0.1)', transition: 'all 0.5s ease' }}>
+      <div style={{ height: '80px', background: '#FFFFFF', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 40px', borderTop: '1px solid rgba(27,0,136,0.1)', transition: 'all 0.5s ease' }}>
         <div style={{ transform: 'translateY(4px)' }}>
           <img src="/por_logo.png" alt="Capacitación Logo" style={{ height: '60px', width: 'auto', opacity: 1, filter: 'brightness(0.9)' }} />
         </div>
