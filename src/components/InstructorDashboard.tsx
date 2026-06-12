@@ -12,22 +12,26 @@ export const InstructorDashboard = ({ logs, onBack }: any) => {
   const filteredNavLogs = navigationLogs.filter((l: any) => l.user.toLowerCase().includes(searchTerm.toLowerCase()) || l.details.toLowerCase().includes(searchTerm.toLowerCase()));
   const filteredCompLogs = completionLogs.filter((l: any) => l.user.toLowerCase().includes(searchTerm.toLowerCase()) || l.details.toLowerCase().includes(searchTerm.toLowerCase()));
 
+  // Light theme brand colors
+  const primaryBrand = '#4F46E5'; // Indigo
+  const secondaryBrand = '#16A34A'; // Green
+
   return (
-    <div style={{ minHeight: '100vh', background: '#0F004F', display: 'flex', flexDirection: 'column', color: '#fff', fontFamily: '"Inter", Trebuchet MS, Arial, sans-serif' }}>
+    <div style={{ minHeight: '100vh', background: '#F8F7FF', display: 'flex', flexDirection: 'column', color: '#111827', fontFamily: '"Inter", Trebuchet MS, Arial, sans-serif' }}>
       
       {/* Header */}
-      <div style={{ background: 'rgba(255,255,255,0.05)', padding: '24px 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ background: '#FFFFFF', padding: '24px 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(0,0,0,0.1)', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
         <button 
           onClick={onBack} 
-          style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.3)', color: '#fff', padding: '8px 20px', borderRadius: '30px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, fontSize: '12px', fontWeight: 700, transition: 'all 0.2s' }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)' }}
+          style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.2)', color: '#111827', padding: '8px 20px', borderRadius: '30px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, fontSize: '12px', fontWeight: 700, transition: 'all 0.2s' }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.05)' }}
           onMouseLeave={e => { e.currentTarget.style.background = 'transparent' }}
         >
           <ChevronLeft size={16} /> VOLVER
         </button>
         
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <Users size={24} color="#00FFF2" />
+          <Users size={24} color={primaryBrand} />
           <div style={{ fontSize: '20px', fontWeight: 900, letterSpacing: '0.1em' }}>MONITOREO DE INSTRUCTORES</div>
         </div>
       </div>
@@ -36,9 +40,9 @@ export const InstructorDashboard = ({ logs, onBack }: any) => {
       <div style={{ padding: '48px', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '32px' }}>
           <div>
-            <div style={{ fontSize: '12px', color: '#00FFF2', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '8px', fontWeight: 700 }}>Panel de Control</div>
+            <div style={{ fontSize: '12px', color: primaryBrand, letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '8px', fontWeight: 700 }}>Panel de Control</div>
             <div style={{ fontSize: '28px', fontWeight: 900, marginBottom: '8px' }}>Rendimiento y Avance</div>
-            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px' }}>
+            <div style={{ color: 'rgba(0,0,0,0.6)', fontSize: '14px' }}>
               Seguimiento de actividad y marcas de instructores en la plataforma.
             </div>
           </div>
@@ -49,14 +53,15 @@ export const InstructorDashboard = ({ logs, onBack }: any) => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              background: 'rgba(0,0,0,0.3)',
-              border: '1px solid rgba(255,255,255,0.2)',
+              background: '#FFFFFF',
+              border: '1px solid rgba(0,0,0,0.2)',
               padding: '12px 20px',
               borderRadius: '8px',
-              color: '#fff',
+              color: '#111827',
               outline: 'none',
               width: '300px',
-              fontSize: '14px'
+              fontSize: '14px',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
             }}
           />
         </div>
@@ -67,16 +72,17 @@ export const InstructorDashboard = ({ logs, onBack }: any) => {
             onClick={() => setActiveTab('navigation')}
             style={{
               padding: '12px 24px',
-              background: activeTab === 'navigation' ? '#00FFF2' : 'rgba(255,255,255,0.05)',
-              color: activeTab === 'navigation' ? '#000' : '#fff',
-              border: 'none',
+              background: activeTab === 'navigation' ? primaryBrand : '#FFFFFF',
+              color: activeTab === 'navigation' ? '#fff' : '#6B7280',
+              border: activeTab === 'navigation' ? '1px solid transparent' : '1px solid rgba(0,0,0,0.1)',
               borderRadius: '8px',
               fontWeight: 800,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
+              boxShadow: activeTab === 'navigation' ? '0 4px 6px -1px rgba(79, 70, 229, 0.2)' : '0 1px 2px rgba(0,0,0,0.05)'
             }}
           >
             <Navigation size={18} /> Galaxias y Clases
@@ -85,16 +91,17 @@ export const InstructorDashboard = ({ logs, onBack }: any) => {
             onClick={() => setActiveTab('completion')}
             style={{
               padding: '12px 24px',
-              background: activeTab === 'completion' ? '#A4FF00' : 'rgba(255,255,255,0.05)',
-              color: activeTab === 'completion' ? '#000' : '#fff',
-              border: 'none',
+              background: activeTab === 'completion' ? secondaryBrand : '#FFFFFF',
+              color: activeTab === 'completion' ? '#fff' : '#6B7280',
+              border: activeTab === 'completion' ? '1px solid transparent' : '1px solid rgba(0,0,0,0.1)',
               borderRadius: '8px',
               fontWeight: 800,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
+              boxShadow: activeTab === 'completion' ? '0 4px 6px -1px rgba(22, 163, 74, 0.2)' : '0 1px 2px rgba(0,0,0,0.05)'
             }}
           >
             <CheckCircle size={18} /> Lo que Marcan
@@ -102,26 +109,26 @@ export const InstructorDashboard = ({ logs, onBack }: any) => {
         </div>
 
         {/* Data Table */}
-        <div style={{ background: 'rgba(0,0,0,0.2)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)', overflow: 'hidden' }}>
+        <div style={{ background: '#FFFFFF', borderRadius: '16px', border: '1px solid rgba(0,0,0,0.1)', overflow: 'hidden', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
-              <tr style={{ background: 'rgba(255,255,255,0.05)' }}>
-                <th style={{ padding: '16px', textAlign: 'left', fontSize: '12px', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.1em', width: '200px' }}>Fecha / Hora</th>
-                <th style={{ padding: '16px', textAlign: 'left', fontSize: '12px', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.1em', width: '250px' }}>Instructor</th>
-                <th style={{ padding: '16px', textAlign: 'left', fontSize: '12px', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Detalle de Actividad</th>
+              <tr style={{ background: '#F9FAFB', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
+                <th style={{ padding: '16px', textAlign: 'left', fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.1em', width: '200px', fontWeight: 700 }}>Fecha / Hora</th>
+                <th style={{ padding: '16px', textAlign: 'left', fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.1em', width: '250px', fontWeight: 700 }}>Instructor</th>
+                <th style={{ padding: '16px', textAlign: 'left', fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Detalle de Actividad</th>
               </tr>
             </thead>
             <tbody>
               {activeTab === 'navigation' && filteredNavLogs.length === 0 && (
                 <tr>
-                  <td colSpan={3} style={{ padding: '40px', textAlign: 'center', color: 'rgba(255,255,255,0.4)' }}>
+                  <td colSpan={3} style={{ padding: '40px', textAlign: 'center', color: '#6B7280' }}>
                     No hay registros de navegación de instructores.
                   </td>
                 </tr>
               )}
               {activeTab === 'completion' && filteredCompLogs.length === 0 && (
                 <tr>
-                  <td colSpan={3} style={{ padding: '40px', textAlign: 'center', color: 'rgba(255,255,255,0.4)' }}>
+                  <td colSpan={3} style={{ padding: '40px', textAlign: 'center', color: '#6B7280' }}>
                     No hay registros de marcas o completaciones de instructores.
                   </td>
                 </tr>
@@ -135,24 +142,24 @@ export const InstructorDashboard = ({ logs, onBack }: any) => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}
                     key={i} 
-                    style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
+                    style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}
                   >
-                    <td style={{ padding: '16px', color: 'rgba(255,255,255,0.7)', fontSize: '13px' }}>
+                    <td style={{ padding: '16px', color: '#4B5563', fontSize: '13px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Clock size={14} color={activeTab === 'navigation' ? "#00FFF2" : "#A4FF00"} />
+                        <Clock size={14} color={activeTab === 'navigation' ? primaryBrand : secondaryBrand} />
                         {date.toLocaleDateString()} {date.toLocaleTimeString()}
                       </div>
                     </td>
-                    <td style={{ padding: '16px', fontWeight: 600, fontSize: '13px' }}>
+                    <td style={{ padding: '16px', fontWeight: 600, fontSize: '13px', color: '#111827' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Users size={14} color="rgba(255,255,255,0.4)" />
+                        <Users size={14} color="#9CA3AF" />
                         {log.user}
                       </div>
                     </td>
-                    <td style={{ padding: '16px', color: 'rgba(255,255,255,0.9)', fontSize: '14px', fontWeight: 500 }}>
+                    <td style={{ padding: '16px', color: '#111827', fontSize: '14px', fontWeight: 500 }}>
                       <span style={{ 
-                        background: activeTab === 'navigation' ? 'rgba(0,255,242,0.1)' : 'rgba(164,255,0,0.1)', 
-                        color: activeTab === 'navigation' ? '#00FFF2' : '#A4FF00', 
+                        background: activeTab === 'navigation' ? 'rgba(79, 70, 229, 0.1)' : 'rgba(22, 163, 74, 0.1)', 
+                        color: activeTab === 'navigation' ? primaryBrand : secondaryBrand, 
                         padding: '4px 10px', 
                         borderRadius: '12px', 
                         fontSize: '11px', 
