@@ -139,9 +139,7 @@ export const Landing = ({ onNavigate, onAdmin, onActivityLog, activeUser, change
             </svg>
           </div>
         </div>
-        <button onClick={onActivityLog} style={{background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.2)', padding:'8px 24px', cursor:'pointer', fontSize:10, fontWeight:900, color:'#fff', borderRadius:30, letterSpacing: '0.15em', backdropFilter: 'blur(10px)', transition: 'all 0.2s'}} onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.1)'} onMouseLeave={e=>e.currentTarget.style.background='rgba(255,255,255,0.05)'}>
-          VER SEGUIMIENTO
-        </button>
+
         {activeUser === 'carlose.araya@latam.com' && (
           <button onClick={onAdmin} style={{background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.2)', padding:'8px 24px', cursor:'pointer', fontSize:10, fontWeight:900, color:'#fff', borderRadius:30, letterSpacing: '0.15em', backdropFilter: 'blur(10px)', transition: 'all 0.2s'}} onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.1)'} onMouseLeave={e=>e.currentTarget.style.background='rgba(255,255,255,0.05)'}>
             SYS.ADMIN
@@ -1811,13 +1809,45 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
   const iaraLink = typeof safeConfig?.iaraLink === 'string' ? safeConfig.iaraLink : '';
 
   return (
-    <div style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden', backgroundColor: '#0F004F', fontFamily: '"Inter", sans-serif', display: 'flex', flexDirection: 'column' }}>
-      <SpaceBackground showEarth={true} showShip={true} />
-      <IaraHologram isVisible={showIara} onClose={() => setShowIara(false)} iaraLink={iaraLink} />
-      {!hudHidden && <CommandCenterInterior isAlert={alertMode} isDim={dimLights} isHudHidden={hudHidden} />}
-      {!hudHidden && <CommandCenterInterior isAlert={alertMode} isDim={dimLights} isHudHidden={hudHidden} />}
+    <div style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden', backgroundColor: '#F8F7FF', fontFamily: '"Inter", sans-serif', display: 'flex', flexDirection: 'column' }}>
+      
+      {/* Light grid background */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        opacity: 0.15,
+        backgroundImage: 'linear-gradient(#1B0088 1px, transparent 1px), linear-gradient(90deg, #1B0088 1px, transparent 1px)',
+        backgroundSize: '40px 40px',
+        zIndex: 0
+      }} />
 
-      <div style={{ height: '84px', background: alertMode ? '#4A0618' : '#E8E7F2', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 32px', transition: 'all 0.5s ease' }}>
+      {/* Central Portal Window for SpaceBackground */}
+      <div style={{
+        position: 'absolute',
+        top: '12%',
+        left: '22%',
+        right: '22%',
+        bottom: '25%',
+        background: '#0F004F',
+        clipPath: 'polygon(5% 0, 95% 0, 100% 10%, 100% 90%, 95% 100%, 5% 100%, 0 90%, 0 10%)',
+        overflow: 'hidden',
+        zIndex: 1,
+        boxShadow: '0 20px 60px rgba(0,0,0,0.15)'
+      }}>
+        <SpaceBackground showEarth={true} showShip={true} />
+        {/* Glow border inside portal */}
+        <div style={{ 
+          position: 'absolute', 
+          inset: 0, 
+          border: '4px solid rgba(255,255,255,0.2)', 
+          clipPath: 'polygon(5% 0, 95% 0, 100% 10%, 100% 90%, 95% 100%, 5% 100%, 0 90%, 0 10%)', 
+          pointerEvents: 'none' 
+        }} />
+      </div>
+
+      <IaraHologram isVisible={showIara} onClose={() => setShowIara(false)} iaraLink={iaraLink} />
+
+      <div style={{ height: '84px', background: 'transparent', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 32px', transition: 'all 0.5s ease', borderBottom: '1px solid rgba(27,0,136,0.1)' }}>
         <BackBtn onClick={onBack} label="SAIR" />
         <div style={{ 
           position: 'absolute', 
@@ -1831,11 +1861,11 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
         }}>
           <StationIcon />
           <div>
-            <div style={{ fontSize: 11, letterSpacing: '0.4em', color: alertMode ? '#ff5555' : '#64748b', textTransform: 'uppercase', marginBottom: 2, fontWeight: 700 }}>ESTAÇÃO ESPACIAL</div>
-            <div style={{ fontSize: 24, fontWeight: 900, color: alertMode ? '#fff' : '#0F004F', letterSpacing: '0.1em' }}>{stationName} STATION</div>
+            <div style={{ fontSize: 11, letterSpacing: '0.4em', color: '#1B0088', opacity: 0.6, textTransform: 'uppercase', marginBottom: 2, fontWeight: 800 }}>ESTAÇÃO ESPACIAL</div>
+            <div style={{ fontSize: 24, fontWeight: 900, color: '#1B0088', letterSpacing: '0.1em' }}>{stationName} STATION</div>
           </div>
         </div>
-        <div style={{ display: 'flex', gap: 12, color: alertMode ? '#fff' : '#0B0033', fontSize: 10, fontWeight: 800 }}>
+        <div style={{ display: 'flex', gap: 12, color: '#0B0033', fontSize: 10, fontWeight: 800 }}>
         </div>
       </div>
 
@@ -1856,7 +1886,7 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
           display: 'flex', 
           flexDirection: 'column', 
           alignItems: 'center', 
-          transform: 'translateY(145px)', // Raised slightly to compensate
+          transform: 'translateY(145px)',
           zIndex: 30,
           position: 'relative'
         }}>
@@ -1867,7 +1897,7 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
             </ConsoleCentralFrame>
           </div>
 
-          {/* KEYBOARD PART (Now part of the same flow, overlapping slightly in front) */}
+          {/* KEYBOARD PART */}
           <div style={{ transform: 'perspective(1500px) rotateX(10deg)', marginTop: -15, zIndex: 5 }}>
             <SpaceKeyboard 
               onAlert={() => setAlertMode(!alertMode)}
@@ -1879,7 +1909,7 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
               onPreparacao={() => config?.preparacaoLink && window.open(config.preparacaoLink, '_blank')}
               onIncidencias={() => config?.incidenciasLink ? window.open(config.incidenciasLink, '_blank') : window.open('https://forms.gle/AF44FUbJZbrhKHoQA', '_blank')}
               states={{ alertMode, hudHidden, dimLights }}
-              isIntegrated={true} // New prop to handle internal styling
+              isIntegrated={true}
             />
           </div>
         </div>
@@ -1896,35 +1926,28 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
         </ConsoleSideFrame>
       </div>
 
-      <div style={{ height: '80px', background: alertMode ? '#4A0618' : '#E8E7F2', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 40px', borderTop: alertMode ? '1px solid #ff0000' : 'none', transition: 'all 0.5s ease' }}>
+      <div style={{ height: '80px', background: 'transparent', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 40px', borderTop: '1px solid rgba(27,0,136,0.1)', transition: 'all 0.5s ease' }}>
         <div style={{ transform: 'translateY(4px)' }}>
-          <img src="/por_logo.png" alt="Capacitación Logo" style={{ height: '60px', width: 'auto', opacity: 1, filter: 'brightness(1.2)' }} />
+          <img src="/por_logo.png" alt="Capacitación Logo" style={{ height: '60px', width: 'auto', opacity: 1, filter: 'brightness(0.9)' }} />
         </div>
         <div style={{ transform: 'translateY(4px)' }}>
-          <img src="/guardianes_logo.png" alt="Guardianes Logo" style={{ height: '60px', width: 'auto', opacity: 1, filter: 'brightness(1.1)' }} />
+          <img src="/guardianes_logo.png" alt="Guardianes Logo" style={{ height: '60px', width: 'auto', opacity: 1, filter: 'brightness(0.9)' }} />
         </div>
       </div>
       {/* Global SVG Filters and Masks for Holograms */}
       <div style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden', pointerEvents: 'none' }}>
         <svg width="0" height="0">
           <defs>
-            {/* LUMA-TO-ALPHA FILTER: The 'Pro' industry standard for web holograms. 
-                Takes RGB brightness and maps it directly to the Alpha channel. 
-                Black parts (0,0,0) result in Alpha 0 (Transparent).
-                Bright parts result in Alpha 1 (Opaque). */}
             <filter id="luma-transparency" colorInterpolationFilters="sRGB">
               <feColorMatrix type="matrix" values="
                 1 0 0 0 0
                 0 1 0 0 0
                 0 0 1 0 0
                 0.8 0.8 0.8 0 -0.2" /> 
-                {/* Note: Increased multiplier (0.8) and offset (-0.2) to aggressively remove dark noise */}
             </filter>
-
-            {/* GLITCH FILTER */}
             <filter id="hologram-glitch">
               <feTurbulence type="fractalNoise" baseFrequency="0.00001 0.1" numOctaves="1" result="noise">
-                <animate attributeName="baseFrequency" values="0.00001 0.1; 0.00001 0.5; 0.00001 0.1" dur="2s" repeatCount="indefinity" />
+                <animate attributeName="baseFrequency" values="0.00001 0.1; 0.00001 0.5; 0.00001 0.1" dur="2s" repeatCount="indefinite" />
               </feTurbulence>
               <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
             </filter>

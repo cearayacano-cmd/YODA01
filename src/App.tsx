@@ -45,6 +45,7 @@ import { LinksView } from './components/Views4';
 import { LaboratorioView, IngenieriaView, SuministrosView, OperacionesView, RutaLiderView } from './components/Views5';
 import { PlanetContentView } from './components/Views6';
 import { ActivityLogView } from './components/ActivityLogView';
+import { InstructorDashboard } from './components/InstructorDashboard';
 
 /* ── SIMPLE BUTTONS ─────────────────────────────────────────────────── */
 const Btn = ({ onClick, children, style={} }: any) => (
@@ -311,7 +312,12 @@ export default function App() {
             onRutaLider={(st: string)=>{setAdminStation(st);go('admin-ruta-lider')}}
             onSave={saveConfigToDisk}
             onActivityLog={()=>go('activity-log')}
+            onInstructorDashboard={()=>go('instructor-dashboard')}
           />
+        );
+      case 'instructor-dashboard':
+        return (
+          <InstructorDashboard logs={activityLogs} onBack={()=>go('admin')} />
         );
       case 'admin-exploracion':
         return (
