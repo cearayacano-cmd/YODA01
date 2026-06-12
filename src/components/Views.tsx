@@ -183,7 +183,7 @@ export const Landing = ({ onNavigate, onAdmin, onActivityLog, activeUser, change
             opacity: { duration: 1 },
             y: { duration: 6, repeat: Infinity, ease: "easeInOut" }
           }}
-          style={{ position: 'relative', width: 400, height: 460, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+          style={{ position: 'relative', width: 400, height: 460, display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: -40 }}
         >
           <AnimatePresence mode="popLayout">
             <motion.img 
@@ -434,7 +434,7 @@ const FloatingSpaceship = () => {
       style={{
         position: 'absolute',
         top: '18%',
-        left: '28%',
+        left: '20%',
         width: '260px',
         zIndex: 2,
         pointerEvents: 'none',

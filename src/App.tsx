@@ -138,7 +138,7 @@ export default function App() {
   
   // Profile and Activity Tracking
   const [activeUser, setActiveUser] = useState('carlose.araya@latam.com');
-  const [activityLogs, setActivityLogs] = useState<{time: string, user: string, action: string, details: string}[]>([]);
+  const [activityLogs, setActivityLogs] = useState<{time: string, user: string, action: string, details: string, partidaId?: string}[]>([]);
 
   useEffect(() => {
     // Load persisted state
@@ -148,6 +148,11 @@ export default function App() {
     }
     const savedUser = localStorage.getItem('yoda_active_user');
     if (savedUser) setActiveUser(savedUser);
+    
+    // Ensure an active partida exists
+    if (!localStorage.getItem('yoda_active_partida')) {
+        localStorage.setItem('yoda_active_partida', 'MISION-INICIAL');
+    }
   }, []);
 
   const changeUser = (email: string) => {
@@ -158,8 +163,9 @@ export default function App() {
 
   const addLog = (action: string, details: string, explicitUser?: string) => {
     const user = explicitUser || activeUser;
+    const partidaId = localStorage.getItem('yoda_active_partida') || 'MISION-INICIAL';
     setActivityLogs(prev => {
-      const next = [{ time: new Date().toISOString(), user, action, details }, ...prev].slice(0, 1000); // keep last 1000 logs
+      const next = [{ time: new Date().toISOString(), user, action, details, partidaId }, ...prev].slice(0, 1000); // keep last 1000 logs
       localStorage.setItem('yoda_activity_logs', JSON.stringify(next));
       return next;
     });
@@ -317,7 +323,7 @@ export default function App() {
         );
       case 'instructor-dashboard':
         return (
-          <InstructorDashboard logs={activityLogs} onBack={()=>go('admin')} />
+          <InstructorDashboard logs={activityLogs} config={activeConfig} onBack={()=>go('admin')} />
         );
       case 'admin-exploracion':
         return (

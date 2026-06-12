@@ -5,7 +5,7 @@ import { MacroTemaTable } from './Views2';
 import { 
   Moon, Star, Map, ChevronRight, Binary, Orbit, Shield, Zap, Target, 
   Activity, Radio, Compass, Cpu, Crosshair, Anchor, Rocket, ArrowLeft,
-  LayoutGrid, Share2, Award, Terminal, Lock
+  LayoutGrid, Share2, Award, Terminal, Lock, Eye
 } from 'lucide-react';
 import { PlanetContentView, ClassicMissionBlock } from './Views6';
 import { TacticalSatelliteIcon, HyperProPlanetVisual } from './Shared';
@@ -201,6 +201,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
   const sectorData = config.exploracion[sectorId] || [];
   const satelites = config.satelites || {};
   const [activeMap, setActiveMap] = useState<string | null>(null);
+  const [selectedPlanetForModal, setSelectedPlanetForModal] = useState<number | null>(null);
   
   const contentKey = sectorId === 'fieldSupport' ? 'fsc' : sectorId === 'soporte' ? 'soporteContent' : 'frontLineContent';
   const advData = config[contentKey] || [];
@@ -338,23 +339,135 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                 {/* PLANETS */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '80px 40px' }}>
                     {sectorData.map((course: any, i: number) => {
-                        const DEFAULT_COLORS = [
-                          '#1b0088', '#7000ab', '#7da81a', '#2ec9ed', 
-                          '#ffe017', '#ed1650', '#00d6cc', '#858585'
-                        ];
+                        const DEFAULT_COLORS = ['#3B82F6', '#9D00FF', '#00D6CC', '#ED1650'];
                         const color = course.color || DEFAULT_COLORS[i % DEFAULT_COLORS.length];
                         const type = TYPES[i % TYPES.length];
                         return (
                             <TacticalPlanetCard 
                                 key={i} index={i} course={course} color={color} type={type}
                                 contentData={advData[i]}
-                                onClick={() => onNavigate('mission', sectorId, i)}
+                                onClick={() => setSelectedPlanetForModal(i)}
                             />
                         );
                     })}
                 </div>
            </div>
        </div>
+
+       {/* MODAL MODO EXPLORACIÓN */}
+       <AnimatePresence>
+           {selectedPlanetForModal !== null && (
+               <motion.div 
+                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                   style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(4, 1, 20, 0.6)', backdropFilter: 'blur(20px)' }}
+               >
+                   <motion.div 
+                       initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
+                       style={{ 
+                           background: 'rgba(15, 0, 79, 0.65)', 
+                           border: '1px solid rgba(0, 214, 204, 0.3)', 
+                           borderRadius: 24, 
+                           padding: 40, 
+                           maxWidth: 500, 
+                           width: '90%', 
+                           position: 'relative', 
+                           boxShadow: '0 30px 60px rgba(0,0,0,0.6), inset 0 0 30px rgba(0, 214, 204, 0.1)',
+                           backdropFilter: 'blur(30px)' 
+                       }}
+                   >
+                       <div style={{ position: 'absolute', top: 20, right: 20, cursor: 'pointer', color: '#fff', opacity: 0.5, transition: '0.2s', padding: 10 }} onMouseEnter={e => e.currentTarget.style.opacity='1'} onMouseLeave={e => e.currentTarget.style.opacity='0.5'} onClick={() => setSelectedPlanetForModal(null)}>✕</div>
+                       <div style={{ textAlign: 'center', marginBottom: 30 }}>
+                           <div style={{ display: 'inline-flex', padding: 15, borderRadius: '50%', background: 'rgba(0, 214, 204, 0.1)', marginBottom: 15, boxShadow: 'inset 0 0 20px rgba(0, 214, 204, 0.2)' }}>
+                               <Compass size={40} color="#00D6CC" />
+                           </div>
+                           <div style={{ fontSize: 12, color: '#00D6CC', letterSpacing: '4px', textTransform: 'uppercase', fontWeight: 900, marginBottom: 10 }}>Seleccione Modo de Ingreso</div>
+                           <div style={{ fontSize: 28, fontWeight: 900, color: '#fff', letterSpacing: '2px', textShadow: '0 4px 10px rgba(0,0,0,0.5)' }}>{sectorData[selectedPlanetForModal]?.label}</div>
+                       </div>
+
+                       <div style={{ display: 'flex', flexDirection: 'column', gap: 15 }}>
+                           {(() => {
+                               const planetLabel = sectorData[selectedPlanetForModal]?.label;
+                               let hasProgress = false;
+                               if (typeof localStorage !== 'undefined' && planetLabel) {
+                                   for (let i = 0; i < localStorage.length; i++) {
+                                       const key = localStorage.key(i);
+                                       if (key && key.startsWith(`resolved_${planetLabel}_`) && localStorage.getItem(key) === 'true') {
+                                           hasProgress = true;
+                                           break;
+                                       }
+                                   }
+                               }
+                               return hasProgress ? (
+                                   <button 
+                                       onClick={() => {
+                                           localStorage.setItem('yoda_read_only_mode', 'false');
+                                           onNavigate('mission', sectorId, selectedPlanetForModal);
+                                       }}
+                                       style={{ background: 'rgba(27, 0, 136, 0.6)', border: '1px solid rgba(255,255,255,0.2)', padding: '15px 20px', borderRadius: 12, color: '#fff', display: 'flex', alignItems: 'center', gap: 15, cursor: 'pointer', transition: '0.3s cubic-bezier(0.4, 0, 0.2, 1)', textAlign: 'left', backdropFilter: 'blur(10px)' }}
+                                       onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.borderColor = '#fff'; e.currentTarget.style.transform = 'scale(1.02)'; }}
+                                       onMouseLeave={e => { e.currentTarget.style.background = 'rgba(27, 0, 136, 0.6)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; e.currentTarget.style.transform = 'scale(1)'; }}
+                                   >
+                                       <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 10px rgba(255,255,255,0.2)' }}><Rocket size={20} /></div>
+                                       <div>
+                                           <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px' }}>Continuar Expedición</div>
+                                           <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>El progreso se guardará en tu partida actual.</div>
+                                       </div>
+                                   </button>
+                               ) : null;
+                           })()}
+
+                           <button 
+                               onClick={() => {
+                                   if (window.confirm('¿Seguro que deseas iniciar una NUEVA PARTIDA? Esto creará una clase en blanco.')) {
+                                       const newPartida = 'MISION-' + Math.random().toString(36).substring(2, 6).toUpperCase();
+                                       localStorage.setItem('yoda_active_partida', newPartida);
+                                       
+                                       Object.keys(localStorage).forEach(key => {
+                                           if (key.startsWith('resolved_') || key.startsWith('congrats_shown_')) {
+                                               localStorage.removeItem(key);
+                                           }
+                                       });
+
+                                       const savedLogs = localStorage.getItem('yoda_activity_logs');
+                                       let logs = savedLogs ? JSON.parse(savedLogs) : [];
+                                       logs = [{ time: new Date().toISOString(), user: localStorage.getItem('yoda_active_user') || 'carlose.araya@latam.com', action: 'NUEVA_PARTIDA', details: `Partida Generada: ${newPartida}`, partidaId: newPartida }, ...logs].slice(0, 1000);
+                                       localStorage.setItem('yoda_activity_logs', JSON.stringify(logs));
+
+                                       localStorage.setItem('yoda_read_only_mode', 'false');
+                                       onNavigate('mission', sectorId, selectedPlanetForModal);
+                                   }
+                               }}
+                               style={{ background: 'rgba(237, 22, 80, 0.1)', border: '1px solid rgba(237, 22, 80, 0.4)', padding: '15px 20px', borderRadius: 12, color: '#fff', display: 'flex', alignItems: 'center', gap: 15, cursor: 'pointer', transition: '0.3s cubic-bezier(0.4, 0, 0.2, 1)', textAlign: 'left', backdropFilter: 'blur(10px)' }}
+                               onMouseEnter={e => { e.currentTarget.style.background = 'rgba(237, 22, 80, 0.25)'; e.currentTarget.style.borderColor = '#ED1650'; e.currentTarget.style.transform = 'scale(1.02)'; }}
+                               onMouseLeave={e => { e.currentTarget.style.background = 'rgba(237, 22, 80, 0.1)'; e.currentTarget.style.borderColor = 'rgba(237, 22, 80, 0.4)'; e.currentTarget.style.transform = 'scale(1)'; }}
+                           >
+                               <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(237, 22, 80, 0.2)', color: '#ED1650', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 10px rgba(237, 22, 80, 0.2)' }}><Star size={20} /></div>
+                               <div>
+                                   <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', color: '#FF4D79' }}>Nueva Partida</div>
+                                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>Inicia desde cero con un nuevo código.</div>
+                               </div>
+                           </button>
+
+                           <button 
+                               onClick={() => {
+                                   localStorage.setItem('yoda_read_only_mode', 'true');
+                                   onNavigate('mission', sectorId, selectedPlanetForModal);
+                               }}
+                               style={{ background: 'rgba(0, 214, 204, 0.05)', border: '1px solid rgba(0, 214, 204, 0.3)', padding: '15px 20px', borderRadius: 12, color: '#fff', display: 'flex', alignItems: 'center', gap: 15, cursor: 'pointer', transition: '0.3s cubic-bezier(0.4, 0, 0.2, 1)', textAlign: 'left', backdropFilter: 'blur(10px)' }}
+                               onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0, 214, 204, 0.15)'; e.currentTarget.style.borderColor = '#00D6CC'; e.currentTarget.style.transform = 'scale(1.02)'; }}
+                               onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0, 214, 204, 0.05)'; e.currentTarget.style.borderColor = 'rgba(0, 214, 204, 0.3)'; e.currentTarget.style.transform = 'scale(1)'; }}
+                           >
+                               <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(0, 214, 204, 0.1)', color: '#00D6CC', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 10px rgba(0, 214, 204, 0.2)' }}><Eye size={20} /></div>
+                               <div>
+                                   <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', color: '#00D6CC' }}>Modo Exploración</div>
+                                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>Solo lectura. El progreso no se guardará.</div>
+                               </div>
+                           </button>
+                       </div>
+                   </motion.div>
+               </motion.div>
+           )}
+       </AnimatePresence>
     </div>
   );
 };

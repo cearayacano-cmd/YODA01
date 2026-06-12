@@ -4,7 +4,7 @@ import {
   ChevronRight, ArrowLeft, ExternalLink, Clock, Target, Rocket, 
   Anchor, Activity, Cpu, Shield, Globe, Zap, Radio, Terminal, Map as MapIcon,
   Navigation, Hexagon, Crosshair, Lightbulb, BadgeCheck, FileText, Satellite, Gem, CheckCircle2, Check,
-  ChevronUp, ChevronDown, GraduationCap, Star, RotateCcw, Calendar
+  ChevronUp, ChevronDown, GraduationCap, Star, RotateCcw, Calendar, Eye
 } from 'lucide-react';
 import { TacticalSatelliteIcon, HyperProPlanetVisual } from './Shared';
 
@@ -27,7 +27,16 @@ const typeIcons: any = {
 };
 
 const typeColors: any = {
-    mision1: '#3B82F6', // Blue
+    mision1: '#00AEEF',
+    mision2: '#00AEEF',
+    mision3: '#00AEEF',
+    mision4: '#00AEEF',
+    mision5: '#00AEEF',
+    mision6: '#00AEEF',
+    mision7: '#00AEEF',
+    mision8: '#00AEEF',
+    mision9: '#00AEEF',
+    mision10: '#00AEEF',
     landing: '#FFC800', // Yellow
     ojt:     '#ED1650', // LATAM Coral
     imersao: '#D400FF', // Purple
@@ -206,7 +215,7 @@ const MissionHeaderHUD = ({ sectorLabel, planetLabel, planetColor, onBack }: any
   <div style={{ 
     position: 'absolute', top: 0, left: 0, right: 0, zIndex: 100, 
     background: 'transparent', 
-    borderBottom: 'none', padding: '30px 60px', 
+    borderBottom: 'none', padding: '15px 60px', 
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
   }}>
     <button 
@@ -1047,9 +1056,12 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, onTrackEve
 
                 {/* Completion Check */}
                 <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => {
+                        const isReadOnly = localStorage.getItem('yoda_read_only_mode') === 'true';
+                        if (isReadOnly) return; // NO-OP in read-only mode
+                        
                         const storageKey = `resolved_${planetLabel}_${node.tema}_${index}`;
                         const isDone = localStorage.getItem(storageKey) === 'true';
                         localStorage.setItem(storageKey, isDone ? 'false' : 'true');
@@ -1061,24 +1073,28 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, onTrackEve
                         }
                     }}
                     style={{
-                        height: 32,
-                        background: isResolved ? '#99CC33' : 'transparent',
-                        color: isResolved ? '#fff' : '#CBD5E1',
-                        border: `2px solid ${isResolved ? '#99CC33' : '#E2E8F0'}`,
-                        borderRadius: 8,
-                        cursor: 'pointer',
+                        height: 36,
+                        background: (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? 'transparent' : isResolved ? '#99CC33' : planetColor,
+                        color: (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? planetColor : '#fff',
+                        borderRadius: 10,
+                        cursor: (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? 'not-allowed' : 'pointer',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         alignSelf: 'center',
                         padding: '0 20px',
-                        fontSize: 9,
+                        fontSize: 10,
                         fontWeight: 900,
+                        letterSpacing: '0.5px',
                         gap: 8,
-                        transition: 'all 0.2s ease'
+                        boxShadow: (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? 'none' : `0 4px 12px ${isResolved ? 'rgba(153, 204, 51, 0.4)' : planetColor + '44'}`,
+                        border: (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? `1px dashed ${planetColor}` : 'none',
+                        transition: 'all 0.2s ease',
+                        textTransform: 'uppercase'
                     }}
                 >
-                    <Check size={16} strokeWidth={4} /> {isResolved ? 'FINALIZADO' : 'MARCAR COMO VISTO'}
+                    {(typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? <Eye size={16} strokeWidth={2.5} /> : isResolved ? <Check size={16} strokeWidth={4} /> : <CheckCircle2 size={16} strokeWidth={2.5} />} 
+                    {(typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? 'MODO LECTURA' : isResolved ? 'FINALIZADO' : 'MARCAR COMO VISTO'}
                 </motion.div>
             </div>
         </motion.div>
@@ -1525,7 +1541,15 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                             planetColor={planetColor} 
                             onBack={onBack} 
                         />
-                        <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '24px 60px 0 60px', position: 'relative', zIndex: 110, gap: 20, pointerEvents: 'none' }}>
+                        
+                        {(typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') && (
+                            <div style={{ background: 'rgba(237, 22, 80, 0.2)', border: '1px solid #ED1650', color: '#fff', padding: '10px 20px', borderRadius: 8, margin: '20px auto 0', width: 'fit-content', display: 'flex', alignItems: 'center', gap: 10, fontSize: 12, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', boxShadow: '0 0 20px rgba(237, 22, 80, 0.4)' }}>
+                                <Eye size={18} color="#ED1650" />
+                                <span>MODO EXPLORACIÓN ACTIVO: Tu progreso no será guardado ni reportado.</span>
+                            </div>
+                        )}
+
+                        <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '75px 60px 0 60px', position: 'absolute', top: 0, left: 0, right: 0, zIndex: 110, gap: 20, pointerEvents: 'none', alignItems: 'flex-start' }}>
                              <div style={{ pointerEvents: 'auto' }}>
                                 <TacticalSatelliteWidget 
                                     title="MATERIAIS" 
@@ -1547,8 +1571,9 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                     ].filter(g => g.links.length > 0)}
                                 />
                              </div>
+
                         </div>
-                        <div style={{ padding: '0 60px', maxWidth: 1200, margin: '0 auto' }}>
+                        <div style={{ padding: '0 60px', maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 10 }}>
                             <AnimatePresence mode="wait">
                                 <motion.div
                                     key="map"
@@ -1557,7 +1582,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                     exit={{ opacity: 0, scale: 1.1, filter: 'blur(20px)' }}
                                     transition={{ duration: 0.6 }}
                                 >
-                                    <div style={{ textAlign: 'center', marginTop: 100, marginBottom: 40 }}>
+                                    <div style={{ textAlign: 'center', marginTop: 40, marginBottom: 40 }}>
                                         <div style={{ display: 'inline-block', background: 'rgba(27, 0, 136, 0.4)', backdropFilter: 'blur(10px)', border: `1px solid ${planetColor === '#1b0088' ? '#99CC33' : planetColor}`, borderRadius: 30, padding: '8px 20px', marginBottom: 16, boxShadow: `0 0 15px ${planetColor === '#1b0088' ? 'rgba(153, 204, 51, 0.3)' : planetColor + '44'}` }}>
                                             <span style={{ fontSize: 10, color: planetColor === '#1b0088' ? '#99CC33' : '#ffffff', fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase' }}>MAPA TÁTICO DE EXPLORAÇÃO</span>
                                         </div>

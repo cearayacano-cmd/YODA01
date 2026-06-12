@@ -58,6 +58,9 @@ export default defineConfig(({mode}) => {
     server: {
       allowedHosts: ['yoda.sergihno.cl'],
       hmr: process.env.DISABLE_HMR !== 'true',
+      watch: {
+        usePolling: true,
+      },
     },
   };
 });
