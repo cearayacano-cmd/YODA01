@@ -1,6 +1,66 @@
 import React, { useState, useMemo } from 'react';
-import { ChevronLeft, Users, Navigation, CheckCircle, Clock, CalendarDays, Activity, Target, ExternalLink, BookOpen, Rocket } from 'lucide-react';
+import { ChevronLeft, Users, Navigation, CheckCircle, Clock, CalendarDays, Activity, Target, ExternalLink, BookOpen, Rocket, LayoutDashboard } from 'lucide-react';
 import { motion } from 'framer-motion';
+
+const getPartidasInfo = (userLogs: any[], config: any) => {
+    const groupedByPartida: Record<string, any[]> = {};
+    userLogs.forEach((l: any) => {
+        const pid = l.partidaId || 'MISION-INICIAL';
+        if (!groupedByPartida[pid]) groupedByPartida[pid] = [];
+        groupedByPartida[pid].push(l);
+    });
+
+    return Object.keys(groupedByPartida).map(pid => {
+        const pLogs = [...groupedByPartida[pid]].sort((a: any, b: any) => new Date(a.time).getTime() - new Date(b.time).getTime());
+        
+        const planetNav = pLogs.find((l: any) => l.action === 'NAVIGATE' && l.details.includes('Planeta Index:'));
+        let planetName = 'Base de Operaciones';
+        let totalNodes = 0;
+        let planetStructure: any[] = [];
+        
+        if (planetNav) {
+            planetName = planetNav.details.replace('Navegación a: ', '').split('|')[0].trim();
+            const sectorMatch = planetNav.details.match(/Sector: (\w+)/);
+            const planetIdxMatch = planetNav.details.match(/Planeta Index: (\d+)/);
+            if (sectorMatch && planetIdxMatch && config) {
+                const sector = sectorMatch[1];
+                const planetIdx = parseInt(planetIdxMatch[1]);
+                const sectorData = sector === 'fieldSupport' ? config.fsc : sector === 'soporte' ? config.soporteContent : config.frontLineContent;
+                if (sectorData) {
+                    const planetObj = Array.isArray(sectorData) ? sectorData[planetIdx] : null;
+                    if (planetObj) {
+                        let secciones = [];
+                        if (planetObj.secciones) secciones = planetObj.secciones;
+                        else if (Array.isArray(planetObj)) secciones = (planetObj.length > 0 && (planetObj[0].tipo || planetObj[0].rows)) ? planetObj : [{ rows: planetObj }];
+                        else if (planetObj.rows) secciones = [{ rows: planetObj.rows }];
+                        
+                        planetStructure = secciones;
+                        let total = 0;
+                        secciones.forEach((s: any) => { if (s.rows) total += s.rows.length; });
+                        totalNodes = total;
+                    }
+                }
+            }
+        }
+
+        const navIndex = planetNav ? pLogs.findIndex((l: any) => l === planetNav) : -1;
+        const logsAfterNav = navIndex >= 0 ? pLogs.slice(navIndex) : pLogs;
+        
+        const completedNodes = logsAfterNav.filter((l: any) => l.action === 'COMPLETION' && l.details.includes('Finalizado:')).length;
+        const completedNodeTitles = logsAfterNav
+            .filter((l: any) => l.action === 'COMPLETION' && l.details.includes('Finalizado:'))
+            .map((l: any) => l.details.split('Finalizado: ')[1]?.trim())
+            .filter(Boolean);
+        
+        pLogs.sort((a: any, b: any) => new Date(b.time).getTime() - new Date(a.time).getTime());
+        const lastActivity = pLogs[0]?.time;
+        const firstActivity = pLogs[pLogs.length - 1]?.time;
+
+        const isCompleted = totalNodes > 0 && completedNodes >= totalNodes;
+
+        return { id: pid, planetName, totalNodes, completedNodes: Math.min(completedNodes, totalNodes || 999), isCompleted, lastActivity, firstActivity, logs: pLogs, planetStructure, completedNodeTitles };
+    });
+};
 
 export const InstructorDashboard = ({ logs, config, onBack }: any) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -8,9 +68,18 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
   // Filter out admin user
   const relevantLogs = useMemo(() => logs.filter((l: any) => l.user !== 'carlose.araya@latam.com'), [logs]);
   
-  // Get unique users
+  // Get unique users active THIS MONTH
   const uniqueUsers = useMemo(() => {
-    const users = Array.from(new Set(relevantLogs.map((l: any) => l.user))) as string[];
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+    
+    // Users with any log in the current month
+    const activeLogs = relevantLogs.filter((l: any) => {
+        const logDate = new Date(l.time);
+        return logDate.getMonth() === currentMonth && logDate.getFullYear() === currentYear;
+    });
+    
+    const users = Array.from(new Set(activeLogs.map((l: any) => l.user))) as string[];
     return users.sort((a, b) => a.localeCompare(b));
   }, [relevantLogs]);
   
@@ -18,148 +87,74 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
   
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
   const [selectedPartida, setSelectedPartida] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'reporte' | 'historial'>('reporte');
 
-  // Auto-select first user if none selected
-  React.useEffect(() => {
-    if (!selectedUser && filteredUsers.length > 0) {
-      setSelectedUser(filteredUsers[0]);
-    }
-  }, [filteredUsers, selectedUser]);
-
-  // Get unique partidas for the selected user
-  const userPartidas = useMemo(() => {
+  // Group logs by partidaId and calculate progress
+  const userPartidasData = useMemo(() => {
     if (!selectedUser) return [];
     const userLogs = relevantLogs.filter((l: any) => l.user === selectedUser);
-    const partidas = Array.from(new Set(userLogs.map((l: any) => l.partidaId || 'MISION-INICIAL'))) as string[];
-    // Sort reverse alphabetically so newer MISION-XXX are likely first
-    return partidas.sort((a, b) => b.localeCompare(a));
-  }, [relevantLogs, selectedUser]);
+    const partidasInfo = getPartidasInfo(userLogs, config);
+    return partidasInfo.sort((a, b) => new Date(b.lastActivity).getTime() - new Date(a.lastActivity).getTime());
+  }, [relevantLogs, selectedUser, config]);
 
-  // Auto-select first partida when user changes
-  React.useEffect(() => {
-    if (userPartidas.length > 0 && (!selectedPartida || !userPartidas.includes(selectedPartida))) {
-      setSelectedPartida(userPartidas[0]);
-    }
-  }, [userPartidas, selectedUser, selectedPartida]);
+  // Global stats for ALL active users
+  const globalUsersData = useMemo(() => {
+    return filteredUsers.map(u => {
+      const uLogs = relevantLogs.filter((l: any) => l.user === u);
+      
+      const operaciones = uLogs.filter((l: any) => l.action === 'NAVIGATE' && l.details === 'Navegación a: operaciones').length;
+      const suministros = uLogs.filter((l: any) => l.action === 'NAVIGATE' && l.details === 'Navegación a: suministros').length;
+      const laboratorio = uLogs.filter((l: any) => l.action === 'NAVIGATE' && l.details === 'Navegación a: laboratorio').length;
+      const ingenieria = uLogs.filter((l: any) => l.action === 'NAVIGATE' && l.details === 'Navegación a: ingenieria').length;
 
-  // Filter logs by both user and selected partida
-  const filteredUserLogs = useMemo(() => {
+      const pInfo = getPartidasInfo(uLogs, config);
+      const partidasGeneradas = pInfo.length;
+      const partidasCompletadas = pInfo.filter(p => p.isCompleted).length;
+      const isDictando = pInfo.some(p => !p.isCompleted && p.totalNodes > 0);
+      
+      const sortedLogs = [...uLogs].sort((a: any, b: any) => new Date(b.time).getTime() - new Date(a.time).getTime());
+      const lastActivity = sortedLogs[0]?.time;
+
+      return {
+          user: u,
+          partidasGeneradas,
+          partidasCompletadas,
+          isDictando,
+          operaciones,
+          suministros,
+          laboratorio,
+          ingenieria,
+          lastActivity
+      };
+    }).sort((a: any, b: any) => new Date(b.lastActivity).getTime() - new Date(a.lastActivity).getTime());
+  }, [filteredUsers, relevantLogs, config]);
+
+  // Filtered logs for selected user (only main module accesses)
+  const allUserLogs = useMemo(() => {
     if (!selectedUser) return [];
-    return relevantLogs.filter((l: any) => 
-      l.user === selectedUser && 
-      (l.partidaId === selectedPartida || (!l.partidaId && selectedPartida === 'MISION-INICIAL'))
-    );
-  }, [relevantLogs, selectedUser, selectedPartida]);
-
-  // Group logs for selected user by day
-  const groupedLogs = useMemo(() => {
-    if (!selectedUser) return {};
-    const userLogs = [...filteredUserLogs];
     
-    // Sort user logs by time (newest first)
-    userLogs.sort((a: any, b: any) => new Date(b.time).getTime() - new Date(a.time).getTime());
+    const validNavigations = [
+        'Navegación a: operaciones',
+        'Navegación a: suministros',
+        'Navegación a: laboratorio',
+        'Navegación a: ingenieria'
+    ];
 
-    const groups: { [date: string]: any[] } = {};
-    userLogs.forEach((log: any) => {
-      const date = new Date(log.time).toLocaleDateString();
-      if (!groups[date]) groups[date] = [];
-      groups[date].push(log);
-    });
-    return groups;
-  }, [filteredUserLogs, selectedUser]);
-
-  // Calculate Metrics
-  const userMetrics = useMemo(() => {
-    if (!selectedUser) return null;
-    const userLogs = [...filteredUserLogs];
-    
-    const sortedUserLogs = [...userLogs].sort((a: any, b: any) => new Date(b.time).getTime() - new Date(a.time).getTime());
-    
-    // Última ubicación general
-    const lastNav = sortedUserLogs.find((l: any) => l.action === 'NAVIGATE' && l.details.includes('a:'));
-    let lastLocation = 'Base de Operaciones';
-    if (lastNav) {
-        lastLocation = lastNav.details.replace('Navegación a: ', '');
-        if (lastLocation.includes('|')) {
-            lastLocation = lastLocation.split('|').map((s: string) => s.trim()).join(' - ');
-        }
-    }
-
-    // Último planeta visitado (para ver dónde se quedó y su progreso)
-    const lastPlanetNav = sortedUserLogs.find((l: any) => l.action === 'NAVIGATE' && l.details.includes('Planeta Index:'));
-    let lastPlanetLocation = '';
-    let currentPlanetTotalNodes = 0;
-    let currentPlanetCompletedNodes = 0;
-    let hasVisitedPlanet = false;
-
-    if (lastPlanetNav) {
-        hasVisitedPlanet = true;
-        lastPlanetLocation = lastPlanetNav.details.replace('Navegación a: ', '');
-        if (lastPlanetLocation.includes('|')) {
-            lastPlanetLocation = lastPlanetLocation.split('|').map((s: string) => s.trim()).join(' - ');
-        }
-        
-        const sectorMatch = lastPlanetNav.details.match(/Sector: (\w+)/);
-        const planetIdxMatch = lastPlanetNav.details.match(/Planeta Index: (\d+)/);
-        
-        if (sectorMatch && planetIdxMatch && config) {
-            const sector = sectorMatch[1];
-            const planetIdx = parseInt(planetIdxMatch[1]);
-            
-            // Get total nodes for this planet
-            const sectorData = sector === 'fieldSupport' ? config.fsc : 
-                               sector === 'soporte' ? config.soporteContent : 
-                               config.frontLineContent;
-            
-            if (sectorData) {
-                const planetObj = Array.isArray(sectorData) ? sectorData[planetIdx] : null;
-                if (planetObj) {
-                    let secciones = [];
-                    if (planetObj.secciones) {
-                        secciones = planetObj.secciones;
-                    } else if (Array.isArray(planetObj)) { 
-                        secciones = (planetObj.length > 0 && (planetObj[0].tipo || planetObj[0].rows)) ? planetObj : [{ rows: planetObj }];
-                    } else if (planetObj.rows) {
-                        secciones = [{ rows: planetObj.rows }];
-                    }
-                    
-                    let total = 0;
-                    secciones.forEach((s: any) => {
-                        if (s.rows) total += s.rows.length;
-                    });
-                    currentPlanetTotalNodes = total;
-                }
-            }
-        }
-
-        // Calcular completados DENTRO de este planeta (es decir, desde el último NAVIGATE a ese planeta)
-        const navIndex = sortedUserLogs.findIndex((l: any) => l === lastPlanetNav);
-        const logsSinceNav = sortedUserLogs.slice(0, navIndex);
-        const completedSinceNav = logsSinceNav.filter((l: any) => l.action === 'COMPLETION' && l.details.includes('Finalizado')).length;
-        
-        currentPlanetCompletedNodes = Math.min(completedSinceNav, currentPlanetTotalNodes);
-    }
-
-    // Nodos completados totales
-    const completedNodes = userLogs.filter((l: any) => l.action === 'COMPLETION' && l.details.includes('Finalizado')).length;
-
-    // Recursos abiertos
-    const openedResources = userLogs.filter((l: any) => l.action === 'OPEN_LINK').length;
-
-    // Interacciones totales
-    const totalInteractions = userLogs.length;
-
-    return {
-        lastLocation,
-        completedNodes,
-        openedResources,
-        totalInteractions,
-        hasVisitedPlanet,
-        lastPlanetLocation,
-        currentPlanetTotalNodes,
-        currentPlanetCompletedNodes
+    const labelMap: Record<string, string> = {
+        'Navegación a: operaciones': 'Visitó: Portal Instrutor',
+        'Navegación a: suministros': 'Visitó: Formulários',
+        'Navegación a: laboratorio': 'Visitó: Portal de Líderes',
+        'Navegación a: ingenieria': 'Visitó: Workshops'
     };
-  }, [filteredUserLogs, selectedUser, config]);
+
+    return relevantLogs
+        .filter((l: any) => l.user === selectedUser && l.action === 'NAVIGATE' && validNavigations.includes(l.details))
+        .map((l: any) => ({
+            ...l,
+            displayDetails: labelMap[l.details]
+        }))
+        .sort((a: any, b: any) => new Date(b.time).getTime() - new Date(a.time).getTime());
+  }, [relevantLogs, selectedUser]);
 
   // Colors
   const primaryBrand = '#0f004f'; // The requested very dark blue
@@ -200,7 +195,7 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
           boxShadow: '2px 0 10px rgba(0,0,0,0.1)'
         }}>
           <div style={{ padding: '24px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-            <div style={{ fontSize: '12px', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '8px', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Instructores</div>
+            <div style={{ fontSize: '12px', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '8px', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Instructores Activos del Mes</div>
             <input 
               type="text" 
               placeholder="Buscar instructor..." 
@@ -221,6 +216,40 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
           </div>
           
           <div style={{ flex: 1, overflowY: 'auto', padding: '12px' }}>
+            {/* VISTA GLOBAL BUTTON */}
+            <button
+              onClick={() => setSelectedUser(null)}
+              style={{
+                width: '100%',
+                textAlign: 'left',
+                padding: '16px',
+                background: selectedUser === null ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)',
+                border: selectedUser === null ? '1px solid rgba(255,255,255,0.4)' : '1px solid transparent',
+                borderRadius: '8px',
+                color: '#ffffff',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                transition: 'all 0.2s',
+                marginBottom: '16px',
+                boxShadow: selectedUser === null ? '0 4px 10px rgba(0,0,0,0.2)' : 'none'
+              }}
+              onMouseEnter={e => { if (selectedUser !== null) e.currentTarget.style.background = 'rgba(0,0,0,0.3)' }}
+              onMouseLeave={e => { if (selectedUser !== null) e.currentTarget.style.background = 'rgba(0,0,0,0.2)' }}
+            >
+              <div style={{ 
+                width: '36px', height: '36px', borderRadius: '50%', background: '#ffffff', color: primaryBrand,
+                display: 'flex', alignItems: 'center', justifyContent: 'center'
+              }}>
+                <LayoutDashboard size={20} />
+              </div>
+              <div style={{ flex: 1, overflow: 'hidden' }}>
+                <div style={{ fontWeight: 800, fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1px' }}>VISTA GLOBAL</div>
+                <div style={{ fontSize: '11px', opacity: 0.7 }}>Tabla Estratégica</div>
+              </div>
+            </button>
+
             {filteredUsers.length === 0 ? (
               <div style={{ textAlign: 'center', color: 'rgba(255,255,255,0.5)', padding: '20px', fontSize: '14px' }}>
                 No se encontraron instructores
@@ -274,7 +303,101 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
 
         {/* Main Content Area */}
         <div style={{ flex: 1, overflowY: 'auto', padding: '40px', background: '#F8F7FF' }}>
-          {selectedUser && userMetrics ? (
+          
+          {selectedUser === null ? (
+            /* GLOBAL OVERVIEW */
+            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+              <div style={{ marginBottom: '30px' }}>
+                <div style={{ fontSize: '14px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Visión Estratégica</div>
+                <div style={{ fontSize: '32px', fontWeight: 900, color: primaryBrand }}>Consolidado del Mes</div>
+              </div>
+
+              {/* Global KPIs */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '40px' }}>
+                <div style={{ background: '#fff', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div>
+                    <div style={{ fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '1px', marginBottom: '4px' }}>Instructores Activos</div>
+                    <div style={{ fontSize: '42px', fontWeight: 900, color: primaryBrand, lineHeight: '1' }}>{globalUsersData.length}</div>
+                  </div>
+                  <div style={{ width: '56px', height: '56px', borderRadius: '16px', background: 'rgba(15, 0, 79, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: primaryBrand }}><Users size={28} /></div>
+                </div>
+                <div style={{ background: '#fff', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div>
+                    <div style={{ fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '1px', marginBottom: '4px' }}>Total Partidas Generadas</div>
+                    <div style={{ fontSize: '42px', fontWeight: 900, color: '#EAB308', lineHeight: '1' }}>{globalUsersData.reduce((acc, u) => acc + u.partidasGeneradas, 0)}</div>
+                  </div>
+                  <div style={{ width: '56px', height: '56px', borderRadius: '16px', background: 'rgba(234, 179, 8, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#EAB308' }}><Target size={28} /></div>
+                </div>
+                <div style={{ background: '#fff', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div>
+                    <div style={{ fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '1px', marginBottom: '4px' }}>Partidas Completadas</div>
+                    <div style={{ fontSize: '42px', fontWeight: 900, color: secondaryBrand, lineHeight: '1' }}>{globalUsersData.reduce((acc, u) => acc + u.partidasCompletadas, 0)}</div>
+                  </div>
+                  <div style={{ width: '56px', height: '56px', borderRadius: '16px', background: 'rgba(22, 163, 74, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: secondaryBrand }}><CheckCircle size={28} /></div>
+                </div>
+              </div>
+
+              {/* Master Grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '20px' }}>
+                {globalUsersData.map(u => (
+                  <div 
+                    key={u.user}
+                    onClick={() => { setSelectedUser(u.user); setActiveTab('reporte'); }}
+                    style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px', cursor: 'pointer', transition: 'all 0.2s', position: 'relative', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)' }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0,0,0,0.1)' }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.05)' }}
+                  >
+                    {/* Active Badge */}
+                    <div style={{ position: 'absolute', top: '24px', right: '24px', display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(22, 163, 74, 0.1)', color: secondaryBrand, padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 800 }}>
+                      <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: secondaryBrand }} /> ACTIVO
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
+                      <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(15,0,79,0.1)', color: primaryBrand, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '20px' }}>
+                        {u.user.charAt(0).toUpperCase()}
+                      </div>
+                      <div style={{ flex: 1, overflow: 'hidden' }}>
+                        <div style={{ fontSize: '16px', fontWeight: 800, color: '#111827', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: '4px' }}>{u.user}</div>
+                        
+                        {u.isDictando ? (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 700, color: '#F59E0B' }}>
+                            <BookOpen size={12} /> Dictando Curso
+                          </div>
+                        ) : (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 600, color: '#9CA3AF' }}>
+                            <CheckCircle size={12} /> Sin curso activo
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div style={{ borderTop: '1px solid #E5E7EB', paddingTop: '20px' }}>
+                      <div style={{ fontSize: '11px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 800, marginBottom: '16px' }}>Accesos a Módulos (Este Mes)</div>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
+                        <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}>
+                          <div style={{ fontSize: '18px', fontWeight: 900, color: '#EAB308' }}>{u.operaciones}</div>
+                          <div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Instrutor</div>
+                        </div>
+                        <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}>
+                          <div style={{ fontSize: '18px', fontWeight: 900, color: '#06B6D4' }}>{u.suministros}</div>
+                          <div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Forms</div>
+                        </div>
+                        <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}>
+                          <div style={{ fontSize: '18px', fontWeight: 900, color: '#84CC16' }}>{u.laboratorio}</div>
+                          <div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Líderes</div>
+                        </div>
+                        <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}>
+                          <div style={{ fontSize: '18px', fontWeight: 900, color: '#A855F7' }}>{u.ingenieria}</div>
+                          <div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Workshops</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            /* DETAILED USER VIEW */
             <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
               
               {/* User Identity Header */}
@@ -296,244 +419,236 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
                     {selectedUser.charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <div style={{ fontSize: '14px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Resumen del Instructor</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div style={{ fontSize: '14px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Resumen del Instructor</div>
+                      <button 
+                        onClick={() => setSelectedUser(null)}
+                        style={{ background: 'transparent', border: '1px solid #D1D5DB', borderRadius: '4px', padding: '2px 8px', fontSize: '10px', fontWeight: 800, color: '#6B7280', cursor: 'pointer' }}
+                      >
+                        VOLVER A GLOBAL
+                      </button>
+                    </div>
                     <div style={{ fontSize: '32px', fontWeight: 900, color: primaryBrand }}>{selectedUser}</div>
                   </div>
                 </div>
 
-                {/* Partida Selector */}
-                {userPartidas.length > 0 && (
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                    <div style={{ fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: '8px' }}>Sesión / Partida</div>
-                    <select
-                      value={selectedPartida || ''}
-                      onChange={(e) => setSelectedPartida(e.target.value)}
-                      style={{
-                        padding: '10px 16px',
-                        borderRadius: '8px',
-                        border: '1px solid #D1D5DB',
-                        background: '#FFFFFF',
-                        color: primaryBrand,
-                        fontSize: '14px',
-                        fontWeight: 700,
-                        outline: 'none',
-                        cursor: 'pointer',
-                        boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
-                      }}
-                    >
-                      {userPartidas.map(p => (
-                        <option key={p} value={p}>{p === 'MISION-INICIAL' ? 'Partida Base Inicial' : p}</option>
-                      ))}
-                    </select>
-                  </div>
-                )}
+                {/* Tabs */}
+                <div style={{ display: 'flex', gap: '8px', background: '#E5E7EB', padding: '4px', borderRadius: '12px' }}>
+                  <button 
+                    onClick={() => setActiveTab('reporte')}
+                    style={{ padding: '8px 24px', borderRadius: '8px', border: 'none', background: activeTab === 'reporte' ? '#fff' : 'transparent', color: activeTab === 'reporte' ? primaryBrand : '#6B7280', fontWeight: 800, fontSize: '13px', cursor: 'pointer', transition: 'all 0.2s', boxShadow: activeTab === 'reporte' ? '0 2px 4px rgba(0,0,0,0.05)' : 'none' }}
+                  >
+                    Reporte del Mes / Avance
+                  </button>
+                  <button 
+                    onClick={() => setActiveTab('historial')}
+                    style={{ padding: '8px 24px', borderRadius: '8px', border: 'none', background: activeTab === 'historial' ? '#fff' : 'transparent', color: activeTab === 'historial' ? primaryBrand : '#6B7280', fontWeight: 800, fontSize: '13px', cursor: 'pointer', transition: 'all 0.2s', boxShadow: activeTab === 'historial' ? '0 2px 4px rgba(0,0,0,0.05)' : 'none' }}
+                  >
+                    Historial (Tipo Excel)
+                  </button>
+                </div>
               </div>
 
-              {/* Stats Panel */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginBottom: '40px' }}>
-                {/* Enseñando Actualmente */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                  style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)', position: 'relative', overflow: 'hidden' }}
-                >
-                  <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: primaryBrand }} />
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                    <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(15, 0, 79, 0.1)', color: primaryBrand, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Rocket size={20} />
+              {activeTab === 'reporte' ? (
+                <>
+                  {/* Overall Summary Stats */}
+                  <div style={{ display: 'flex', gap: '20px', marginBottom: '30px' }}>
+                    <div style={{ flex: 1, background: '#fff', padding: '20px', borderRadius: '16px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div>
+                        <div style={{ fontSize: '11px', color: '#6B7280', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '1px', marginBottom: '4px' }}>Partidas Generadas</div>
+                        <div style={{ fontSize: '36px', fontWeight: 900, color: primaryBrand, lineHeight: '1' }}>{userPartidasData.length}</div>
+                      </div>
+                      <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(15, 0, 79, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: primaryBrand }}>
+                        <Target size={24} />
+                      </div>
                     </div>
-                    <div style={{ fontSize: '12px', fontWeight: 800, color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px' }}>Ubicación Actual</div>
+                    <div style={{ flex: 1, background: '#fff', padding: '20px', borderRadius: '16px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div>
+                        <div style={{ fontSize: '11px', color: '#6B7280', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '1px', marginBottom: '4px' }}>Partidas Completadas</div>
+                        <div style={{ fontSize: '36px', fontWeight: 900, color: secondaryBrand, lineHeight: '1' }}>{userPartidasData.filter(p => p.isCompleted).length}</div>
+                      </div>
+                      <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(22, 163, 74, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: secondaryBrand }}>
+                        <CheckCircle size={24} />
+                      </div>
+                    </div>
                   </div>
-                  <div style={{ fontSize: '18px', fontWeight: 800, color: '#111827', lineHeight: '1.4', marginBottom: '16px' }}>
-                    {userMetrics.lastLocation}
+
+                  {/* Module Access Counts */}
+                  <div style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)', marginBottom: '40px' }}>
+                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#111827', marginBottom: '20px', textTransform: 'uppercase', letterSpacing: '1px' }}>Accesos a Módulos (Este Mes)</div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+                      <div style={{ padding: '16px', background: '#F8F9FA', borderRadius: '12px', border: '1px solid #E5E7EB', textAlign: 'center' }}>
+                        <div style={{ fontSize: '12px', fontWeight: 700, color: '#4B5563', marginBottom: '8px' }}>Portal Instrutor</div>
+                        <div style={{ fontSize: '28px', fontWeight: 900, color: '#EAB308' }}>
+                            {globalUsersData.find(u => u.user === selectedUser)?.operaciones || 0}
+                        </div>
+                        <div style={{ fontSize: '10px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 700, marginTop: '4px' }}>visitas</div>
+                      </div>
+                      <div style={{ padding: '16px', background: '#F8F9FA', borderRadius: '12px', border: '1px solid #E5E7EB', textAlign: 'center' }}>
+                        <div style={{ fontSize: '12px', fontWeight: 700, color: '#4B5563', marginBottom: '8px' }}>Formulários</div>
+                        <div style={{ fontSize: '28px', fontWeight: 900, color: '#06B6D4' }}>
+                            {globalUsersData.find(u => u.user === selectedUser)?.suministros || 0}
+                        </div>
+                        <div style={{ fontSize: '10px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 700, marginTop: '4px' }}>visitas</div>
+                      </div>
+                      <div style={{ padding: '16px', background: '#F8F9FA', borderRadius: '12px', border: '1px solid #E5E7EB', textAlign: 'center' }}>
+                        <div style={{ fontSize: '12px', fontWeight: 700, color: '#4B5563', marginBottom: '8px' }}>Portal de Líderes</div>
+                        <div style={{ fontSize: '28px', fontWeight: 900, color: '#84CC16' }}>
+                            {globalUsersData.find(u => u.user === selectedUser)?.laboratorio || 0}
+                        </div>
+                        <div style={{ fontSize: '10px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 700, marginTop: '4px' }}>visitas</div>
+                      </div>
+                      <div style={{ padding: '16px', background: '#F8F9FA', borderRadius: '12px', border: '1px solid #E5E7EB', textAlign: 'center' }}>
+                        <div style={{ fontSize: '12px', fontWeight: 700, color: '#4B5563', marginBottom: '8px' }}>Workshops</div>
+                        <div style={{ fontSize: '28px', fontWeight: 900, color: '#A855F7' }}>
+                            {globalUsersData.find(u => u.user === selectedUser)?.ingenieria || 0}
+                        </div>
+                        <div style={{ fontSize: '10px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 700, marginTop: '4px' }}>visitas</div>
+                      </div>
+                    </div>
                   </div>
-                  
-                  {/* Last Planet Progress Bar */}
-                  {userMetrics.hasVisitedPlanet && userMetrics.currentPlanetTotalNodes > 0 && (
-                    <div style={{ background: '#f1f5f9', borderRadius: '8px', padding: '12px', border: '1px solid #e2e8f0' }}>
-                      <div style={{ fontSize: '11px', fontWeight: 800, color: '#111827', marginBottom: '8px', textTransform: 'uppercase' }}>
-                        Última Misión: {userMetrics.lastPlanetLocation.split('-')[0]}
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', fontWeight: 700, color: '#64748b', marginBottom: '6px' }}>
-                        <span>AVANCE</span>
-                        <span style={{ color: primaryBrand }}>{userMetrics.currentPlanetCompletedNodes} / {userMetrics.currentPlanetTotalNodes} NODOS</span>
-                      </div>
-                      <div style={{ height: '6px', background: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
-                        <div style={{ 
-                          height: '100%', 
-                          background: secondaryBrand, 
-                          width: `${Math.min(100, (userMetrics.currentPlanetCompletedNodes / userMetrics.currentPlanetTotalNodes) * 100)}%`,
-                          transition: 'width 0.5s ease-out'
-                        }} />
-                      </div>
-                      <div style={{ fontSize: '10px', color: '#64748b', marginTop: '6px', textAlign: 'right', fontWeight: 700 }}>
-                        FALTAN: {Math.max(0, userMetrics.currentPlanetTotalNodes - userMetrics.currentPlanetCompletedNodes)}
-                      </div>
+
+              {/* Partidas Table */}
+              <div style={{ background: '#FFFFFF', borderRadius: '16px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)', overflow: 'hidden', marginBottom: '40px' }}>
+                <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(0,0,0,0.05)', background: 'rgba(15, 0, 79, 0.02)' }}>
+                  <h2 style={{ margin: 0, fontSize: '18px', fontWeight: 800, color: '#111827' }}>Registro de Partidas</h2>
+                </div>
+                
+                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr style={{ borderBottom: '2px solid rgba(0,0,0,0.05)', textAlign: 'left' }}>
+                      <th style={{ padding: '16px 24px', fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px' }}>Código</th>
+                      <th style={{ padding: '16px 24px', fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px' }}>Módulo / Curso</th>
+                      <th style={{ padding: '16px 24px', fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px' }}>Progreso</th>
+                      <th style={{ padding: '16px 24px', fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px' }}>Estado</th>
+                      <th style={{ padding: '16px 24px', fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px' }}>Última Actividad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {userPartidasData.map(partida => (
+                      <tr 
+                        key={partida.id}
+                        style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}
+                      >
+                        <td style={{ padding: '16px 24px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            {selectedPartida === partida.id && <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: highlightBrand }} />}
+                            <span style={{ fontFamily: 'monospace', fontSize: '14px', fontWeight: 700, color: primaryBrand }}>{partida.id}</span>
+                          </div>
+                        </td>
+                        <td style={{ padding: '16px 24px', fontSize: '14px', fontWeight: 600, color: '#111827' }}>
+                          {partida.planetName}
+                        </td>
+                        <td style={{ padding: '16px 24px' }}>
+                          {partida.totalNodes > 0 ? (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              <div style={{ width: '60px', height: '6px', background: '#E5E7EB', borderRadius: '3px', overflow: 'hidden' }}>
+                                <div style={{ height: '100%', background: partida.isCompleted ? secondaryBrand : primaryBrand, width: `${(partida.completedNodes / partida.totalNodes) * 100}%` }} />
+                              </div>
+                              <span style={{ fontSize: '13px', fontWeight: 700, color: '#6B7280' }}>
+                                {partida.completedNodes} / {partida.totalNodes}
+                              </span>
+                            </div>
+                          ) : (
+                            <span style={{ fontSize: '13px', color: '#9CA3AF' }}>Sin datos</span>
+                          )}
+                        </td>
+                        <td style={{ padding: '16px 24px' }}>
+                          {partida.isCompleted ? (
+                            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(22, 163, 74, 0.1)', color: secondaryBrand, padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 800 }}>
+                              <CheckCircle size={12} /> TERMINADA
+                            </div>
+                          ) : (
+                            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(245, 158, 11, 0.1)', color: '#F59E0B', padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 800 }}>
+                              <Clock size={12} /> EN PROGRESO
+                            </div>
+                          )}
+                        </td>
+                        <td style={{ padding: '16px 24px', fontSize: '13px', color: '#6B7280' }}>
+                          {new Date(partida.lastActivity).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              </>
+              ) : (
+              <>
+              {/* EXCEL LIKE TIMELINE */}
+              <div style={{ background: '#FFFFFF', borderRadius: '16px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)', overflow: 'hidden' }}>
+                <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(0,0,0,0.05)', background: 'rgba(15, 0, 79, 0.02)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <h2 style={{ margin: 0, fontSize: '18px', fontWeight: 800, color: '#111827' }}>Historial General (Tipo Excel)</h2>
+                  <div style={{ fontSize: '13px', fontWeight: 700, color: '#6B7280', background: '#F3F4F6', padding: '4px 12px', borderRadius: '12px' }}>
+                    {allUserLogs.length} Registros
+                  </div>
+                </div>
+
+                <div style={{ overflowX: 'auto', maxHeight: '600px' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '800px' }}>
+                    <thead style={{ position: 'sticky', top: 0, background: '#F9FAFB', zIndex: 1, boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
+                      <tr style={{ textAlign: 'left' }}>
+                        <th style={{ padding: '12px 24px', fontSize: '11px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px', borderBottom: '1px solid #E5E7EB' }}>Fecha</th>
+                        <th style={{ padding: '12px 24px', fontSize: '11px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px', borderBottom: '1px solid #E5E7EB' }}>Hora</th>
+                        <th style={{ padding: '12px 24px', fontSize: '11px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px', borderBottom: '1px solid #E5E7EB' }}>Partida</th>
+                        <th style={{ padding: '12px 24px', fontSize: '11px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px', borderBottom: '1px solid #E5E7EB' }}>Acción</th>
+                        <th style={{ padding: '12px 24px', fontSize: '11px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px', borderBottom: '1px solid #E5E7EB' }}>Detalle</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {allUserLogs.map((log: any, i: number) => {
+                        const dateObj = new Date(log.time);
+                        const isCompletion = log.action === 'COMPLETION';
+                        const isNav = log.action === 'NAVIGATE';
+                        const isLogin = log.action === 'LOGIN';
+                        
+                        let actionColor = '#6B7280';
+                        if (isCompletion) actionColor = secondaryBrand;
+                        else if (isNav) actionColor = primaryBrand;
+                        else if (isLogin) actionColor = highlightBrand;
+
+                        return (
+                          <tr key={i} style={{ borderBottom: '1px solid #E5E7EB', background: i % 2 === 0 ? '#ffffff' : '#F9FAFB' }}>
+                            <td style={{ padding: '12px 24px', fontSize: '13px', color: '#4B5563', fontWeight: 600 }}>
+                              {dateObj.toLocaleDateString()}
+                            </td>
+                            <td style={{ padding: '12px 24px', fontSize: '13px', color: '#4B5563', fontFamily: 'monospace' }}>
+                              {dateObj.toLocaleTimeString()}
+                            </td>
+                            <td style={{ padding: '12px 24px', fontSize: '12px', color: '#9CA3AF', fontFamily: 'monospace' }}>
+                              {log.partidaId || 'N/A'}
+                            </td>
+                            <td style={{ padding: '12px 24px' }}>
+                              <span style={{ 
+                                display: 'inline-block',
+                                padding: '2px 8px',
+                                borderRadius: '4px',
+                                fontSize: '11px',
+                                fontWeight: 800,
+                                background: `${actionColor}15`,
+                                color: actionColor,
+                                border: `1px solid ${actionColor}30`
+                              }}>
+                                {log.action}
+                              </span>
+                            </td>
+                            <td style={{ padding: '12px 24px', fontSize: '13px', color: '#111827', lineHeight: '1.4', fontWeight: 700 }}>
+                              {log.displayDetails}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                  {allUserLogs.length === 0 && (
+                    <div style={{ textAlign: 'center', padding: '40px', color: '#6B7280', fontSize: '14px' }}>
+                      No hay registros para mostrar.
                     </div>
                   )}
-                </motion.div>
-
-                {/* Nodos Trabajados */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-                  style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)', position: 'relative', overflow: 'hidden' }}
-                >
-                  <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: secondaryBrand }} />
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                    <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(22, 163, 74, 0.1)', color: secondaryBrand, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <CheckCircle size={20} />
-                    </div>
-                    <div style={{ fontSize: '12px', fontWeight: 800, color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px' }}>Nodos Trabajados (Total)</div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px' }}>
-                    <div style={{ fontSize: '36px', fontWeight: 900, color: secondaryBrand, lineHeight: '1' }}>
-                      {userMetrics.completedNodes}
-                    </div>
-                    <div style={{ fontSize: '14px', color: '#6B7280', fontWeight: 600, marginBottom: '4px' }}>finalizados</div>
-                  </div>
-                </motion.div>
-
-                {/* Recursos Abiertos */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-                  style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)', position: 'relative', overflow: 'hidden' }}
-                >
-                  <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: highlightBrand }} />
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                    <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(0, 214, 204, 0.1)', color: '#00A9E0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <BookOpen size={20} />
-                    </div>
-                    <div style={{ fontSize: '12px', fontWeight: 800, color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px' }}>Recursos Abiertos</div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px' }}>
-                    <div style={{ fontSize: '36px', fontWeight: 900, color: '#00A9E0', lineHeight: '1' }}>
-                      {userMetrics.openedResources}
-                    </div>
-                    <div style={{ fontSize: '14px', color: '#6B7280', fontWeight: 600, marginBottom: '4px' }}>materiales</div>
-                  </div>
-                </motion.div>
-              </div>
-
-              {/* Title for Timeline */}
-              <div style={{ fontSize: '18px', fontWeight: 800, color: '#111827', marginBottom: '20px', paddingBottom: '10px', borderBottom: '2px solid rgba(0,0,0,0.05)' }}>
-                Historial Detallado de Actividad
-              </div>
-
-              {/* TIMELINE */}
-              {Object.keys(groupedLogs).length === 0 ? (
-                <div style={{ textAlign: 'center', padding: '60px', background: '#ffffff', borderRadius: '16px', border: '1px dashed #ccc' }}>
-                  <Activity size={48} color="#ccc" style={{ margin: '0 auto 16px' }} />
-                  <div style={{ fontSize: '18px', color: '#6B7280', fontWeight: 600 }}>No hay actividad registrada</div>
                 </div>
-              ) : (
-                Object.keys(groupedLogs).map((date, index) => (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    key={date} 
-                    style={{ marginBottom: '40px' }}
-                  >
-                    {/* Date Header */}
-                    <div style={{ 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      gap: '12px', 
-                      marginBottom: '20px',
-                      position: 'sticky',
-                      top: '-40px',
-                      background: '#F8F7FF',
-                      padding: '10px 0',
-                      zIndex: 5
-                    }}>
-                      <div style={{ background: primaryBrand, color: '#ffffff', padding: '8px 16px', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: 700, boxShadow: '0 2px 4px rgba(15, 0, 79, 0.2)' }}>
-                        <CalendarDays size={16} />
-                        {date}
-                      </div>
-                      <div style={{ height: '2px', flex: 1, background: 'linear-gradient(90deg, rgba(15,0,79,0.2) 0%, transparent 100%)' }} />
-                    </div>
-
-                    {/* Timeline */}
-                    <div style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.05)' }}>
-                      <div style={{ position: 'relative', paddingLeft: '24px' }}>
-                        {/* Vertical line */}
-                        <div style={{ position: 'absolute', left: '7px', top: '10px', bottom: '10px', width: '2px', background: '#E5E7EB' }} />
-                        
-                        {groupedLogs[date].map((log: any, i: number) => {
-                          const isCompletion = log.action === 'COMPLETION';
-                          const isLink = log.action === 'OPEN_LINK';
-                          
-                          let Icon = Navigation;
-                          let iconColor = primaryBrand;
-                          let bgColor = 'rgba(15, 0, 79, 0.1)';
-                          let label = 'NAVEGACIÓN';
-
-                          if (isCompletion) {
-                            Icon = CheckCircle;
-                            iconColor = secondaryBrand;
-                            bgColor = 'rgba(22, 163, 74, 0.1)';
-                            label = 'MARCÓ LISTO';
-                          } else if (isLink) {
-                            Icon = ExternalLink;
-                            iconColor = highlightBrand;
-                            bgColor = 'rgba(0, 214, 204, 0.1)';
-                            label = 'ABRIÓ RECURSO';
-                          }
-                          
-                          return (
-                            <div key={i} style={{ position: 'relative', marginBottom: i === groupedLogs[date].length - 1 ? 0 : '24px' }}>
-                              {/* Timeline Dot */}
-                              <div style={{ position: 'absolute', left: '-24px', top: '2px', width: '16px', height: '16px', borderRadius: '50%', background: '#ffffff', border: `2px solid ${iconColor}`, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2 }}>
-                                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: iconColor }} />
-                              </div>
-                              
-                              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
-                                <div style={{ 
-                                  fontSize: '12px', 
-                                  fontWeight: 700, 
-                                  color: '#6B7280',
-                                  width: '70px',
-                                  flexShrink: 0,
-                                  marginTop: '2px'
-                                }}>
-                                  {new Date(log.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                                </div>
-                                
-                                <div style={{ flex: 1 }}>
-                                  <div style={{ 
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    gap: '6px',
-                                    background: bgColor, 
-                                    color: iconColor, 
-                                    padding: '4px 10px', 
-                                    borderRadius: '12px', 
-                                    fontSize: '11px', 
-                                    fontWeight: 900, 
-                                    letterSpacing: '0.05em',
-                                    marginBottom: '8px'
-                                  }}>
-                                    <Icon size={12} />
-                                    {label}
-                                  </div>
-                                  <div style={{ fontSize: '15px', color: '#111827', fontWeight: 500, lineHeight: '1.5' }}>
-                                    {log.details}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </motion.div>
-                ))
+              </div>
+              </>
               )}
-            </div>
-          ) : (
-            <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#6B7280' }}>
-              <Users size={64} style={{ marginBottom: '24px', opacity: 0.2 }} />
-              <div style={{ fontSize: '24px', fontWeight: 600, marginBottom: '8px' }}>Selecciona un Instructor</div>
-              <div style={{ fontSize: '15px' }}>Elige un usuario del panel izquierdo para ver su actividad detallada.</div>
             </div>
           )}
         </div>
