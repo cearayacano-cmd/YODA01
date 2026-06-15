@@ -7915,7 +7915,7 @@
                 "macroTema": "LANDING",
                 "dia": 10,
                 "tema": "Palestra QM",
-                "detalhe": "Equipe QM fábrica apresenta palestra ",
+                "detalhe": "Equipe QM fábrica apresenta palestra - Instrutor passa vídeo sobre indicadores. Ao final faz perguntas estratégicas para resgatar os principais conceitos., utilizando quiz  NotebookLM\nAprenta conceito PCA + Copilot  através do PPT",
                 "tiempo": "1:00:00",
                 "herramientas": [
                   {
@@ -7944,7 +7944,7 @@
                 ],
                 "iaPic": [
                   {
-                    "label": "PIC",
+                    "label": "NOVA FUNCIONALIDADE - COPILOT EN AGENTE 360",
                     "url": "https://pic-latam.zendesk.com/hc/pt-br/articles/44241470823827-NOVA-FUNCIONALIDADE-COPILOT-EN-AGENTE-360"
                   }
                 ],
@@ -12841,7 +12841,7 @@
                 "dia": 1
               },
               {
-                "macroTema": "Reclamações\nCasos LAE",
+                "macroTema": "Reclamações Casos LAE",
                 "tiempo": "0:20:00",
                 "tema": "Casos Sensíveis",
                 "detalhe": "- Instrutor enfatizar o cuidado de como recepcionar nossos Clientes em situações delicadas (casos sensíveis).\n- Instrutor mostra na tabela os casos sensíveis linkando com as tratativas feitas por LUA e \"Quando transferir a LAE com Macro Interna de Escalamento\"",
@@ -12856,7 +12856,7 @@
                 "dia": 1
               },
               {
-                "macroTema": "Política:\nReclamações\npor agente 360",
+                "macroTema": "Política: Reclamações por agente 360",
                 "tiempo": "0:05:00",
                 "tema": "Política:\nReclamações\npor agente 360",
                 "detalhe": "- Instrutor explica a diferença entre os conceitos e aplicação de: Compensação, Ressarcimento ou Reembolso;",
@@ -12871,7 +12871,7 @@
                 "dia": 1
               },
               {
-                "macroTema": "Política:\nReclamações\npor agente 360",
+                "macroTema": "Política: Reclamações por agente 360",
                 "tiempo": "0:30:00",
                 "tema": "Política:\nReclamações\npor agente 360",
                 "detalhe": "- Instrutor em Reclamações por Agente 360, dá alguns exemplos da tabela.\n\"Tipos de quebras e motivos disponíveis no Agente 360\"\n- Instrutor coloca exemplos de casos mais recorrentes na operação, abordando não somente as opções de compensações mas também a resolução com Waiver para cenários onde se faz necessário como erros de emissão de bilhetes, ancillaries, erros de remarcação etc.",
@@ -12886,7 +12886,7 @@
                 "dia": 1
               },
               {
-                "macroTema": "Pol��tica:\nReclamações\npor agente 360",
+                "macroTema": "Política: Reclamaçõespor agente 360",
                 "tiempo": "0:20:00",
                 "tema": "Atividade\n\"Relatório de Exploração\"\nReclamações A360",
                 "detalhe": "- No PPT temos algumas descrições de demandas da (Matriz de Processos).\n- Intrutor de forma aleatoria convida os agentes para lerem e buscarem na Matriz, de qual demanda se trata.\n- Após localizar explicar qual o fluxo correto se deve seguir para tal demanda.",
@@ -12901,7 +12901,7 @@
                 "dia": 1
               },
               {
-                "macroTema": "Política:\nReclamações\npor agente 360",
+                "macroTema": "Política: Reclamaçõespor agente 360",
                 "tiempo": "0:50:00",
                 "tema": "Atividade\n\"Controle de voo e lançamento\"\nCompensações A360",
                 "detalhe": "- Instrutor pede para cada um crirar 1 reserva com 4 PAX e fazer a emissão no A360 Training. Após emissão, dividir a reserva e anotar os localizadores.\n- Criar 1 caso no Zendesk Training, para que possam analisar e documentar a tratativa que entregará aos PAX.\n- No PPT temos casos com situações de reclamações. Para cada caso, peça ao Agente que aplique a exceção correspondente. Tempo para finalizar: 30 Minutos.\n- Após conclusão, instrutor de forma aleatória chama 4 agentes e solicita que cada explique como realizou a tratativa do caso. e - Instrutor mostra o caso criado automaticamente e fechado após solução aplicada. Tempo para finalizar: 15 Minutos.\n- Em seguida, instrutor também de forma aleatória, convida agentes para responder às situações no PPT. Chama outro agente para realizar a correção da resposta, caso seja necessário.",
@@ -12916,7 +12916,7 @@
                 "dia": 1
               },
               {
-                "macroTema": "Reclamações\nErro do Agente",
+                "macroTema": "Reclamações Erro do Agente",
                 "tiempo": "0:05:00",
                 "tema": "Video 5\n\"Erro do Agente\"",
                 "detalhe": "- Instrutor mostra Vídeo introdutório do fluxo de erros operacionais.",
@@ -12931,7 +12931,7 @@
                 "dia": 1
               },
               {
-                "macroTema": "Reclamações\nErro do Agente",
+                "macroTema": "Reclamações Erro do Agente",
                 "tiempo": "0:20:00",
                 "tema": "Fluxo\nErro de Executivo",
                 "detalhe": "- Instrutor mostra onde localizar o fluxo no PIC.\n- Reforça os passos com exemplos reais para melhor assimilação do tema para os agentes;\nDestaca que o agente deve analisar de forma cuidadosa e identificar se o caso já foi resolvido na primeira linha ou se ainda é necessário realizara a tratativa. Se reclamação já foi atendida, apenas salvar o ticket como resolvido, mas se ainda não foi, seguir com análise e condução;\n- Dicas sobre atenção e cuidado ao analisar e identificar um erro operacional;\n- Reforçar necessidade de registrar as evidências do erro e de quem errou na nota interna do Zendesk;",
@@ -12946,7 +12946,7 @@
                 "dia": 1
               },
               {
-                "macroTema": "Resumo do\ndia anterior",
+                "macroTema": "Resumo do dia anterior",
                 "tiempo": "0:05:00",
                 "tema": "Resumo do\ndia anterior",
                 "detalhe": "- Instrutor atividade de chuva de idéias para resgatar com os alunos os temas relevantes vistos no dia anterior.",
@@ -12976,7 +12976,7 @@
                 "dia": 2
               },
               {
-                "macroTema": "Política:\nDeclaração itens de valor - Bagagem",
+                "macroTema": "Política: Declaração itens de valor - Bagagem",
                 "tiempo": "0:10:00",
                 "tema": "Política:\nDeclaração itens de valor - Bagagem",
                 "detalhe": "- Instrutor explica brevemente o procedimento para Declaração de itens de valor na bagagem despachada (Voos dentro e saindo do Brasil).",
@@ -12989,6 +12989,21 @@
                 ],
                 "consejo": "",
                 "dia": 2
+              },
+              {
+                "macroTema": "Atividade",
+                "dia": "2",
+                "tema": "Atividade\nBriefing de Missão\nConceitos",
+                "detalhe": "\"- Instrutor pede para os alunos se dividirem em 4 grupos e cada grupo realiza um resumo de cada tema visto, sendo:\nGrupo 1: Generalidades e Guia de Gestão de Reclamações\nGrupo 2: Reclamações por agente 360 - Tipos de quebras e motivos disponíveis no agente 360\nGrupo 3: Declaração de itens de valor na bagagem despachada (Voos dentro e saindo do Brasil)\nGrupo 4: Fluxo Erro do Agente \n10 min para fazer o resumo e 5 min para cada grupo apresentar.\"",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": "https://docs.google.com/presentation/d/1u0pLXPrFaYtewaYnB_TLnl21YtGRxIU_7OL4N3h0B78/edit?slide=id.g3e5b6260fda_0_3073#slide=id.g3e5b6260fda_0_3073"
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": "0:30:00"
               },
               {
                 "macroTema": "Matriz Atenção aos Passageiros da Agência",
@@ -14008,6 +14023,36 @@
                 ],
                 "iaPic": [],
                 "tiempo": "0:10:00"
+              },
+              {
+                "macroTema": "Pesquisa de Reação",
+                "dia": "5",
+                "tema": "NPS",
+                "detalhe": "- Instrutor pede para que os alunos respondam a pesquisa NPS.",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "📝 Form",
+                    "url": "https://forms.gle/UUvxkcb6Biyf6SSh7"
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": "0:10:00"
+              },
+              {
+                "macroTema": " PTA",
+                "dia": "5",
+                "tema": "Introdução ao PTA",
+                "detalhe": "- Instrutor apresenta capacitação PTA ",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": "https://docs.google.com/presentation/d/1Ef4T0SrBdnV-jzpaarHXnbNzApYU1bPuEqFJu-4Khbs/edit?slide=id.g39552d23dd7_0_13949#slide=id.g39552d23dd7_0_13949"
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": "1:00:00"
               }
             ],
             "dbOjtLabel": "Diário de Bordo · Grupo 01",
@@ -14017,6 +14062,67 @@
             "ajusteRotaUrlKon": "",
             "ajusteRotaUrlAec": "",
             "ajusteRotaCh": "0:30:00"
+          },
+          {
+            "tipo": "ojt",
+            "label": "DESAFIO OJT",
+            "rows": [
+              {
+                "macroTema": "Desafio OJT",
+                "dia": "5,6",
+                "tema": "OJT",
+                "detalhe": "\"Instrutor entra no Genesys e faz escuta de 1 chamada com a turma dentro da sala. \nApós finalizada a chamada, comenta sobre os pontos positivos / negativos da chamada e principais indicadores.\"",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": "2:25:00"
+              },
+              {
+                "macroTema": "Desafio OJT",
+                "dia": "5,6",
+                "tema": "OJT",
+                "detalhe": "Instrutor leva agentes até a operação para atendimento de chamadas.",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": "5:00:00"
+              },
+              {
+                "macroTema": "Desafio OJT",
+                "dia": "5,6",
+                "tema": "OJT",
+                "detalhe": "Instrutor  tira dúvidas referentes ao atendimento do dia.",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": "0:40:00"
+              }
+            ],
+            "dbOjtLabel": "Diário de Bordo · Grupo 01",
+            "dbOjtUrl": "",
+            "totalCh": "5:40:00",
+            "ajusteRota": "Os alumnos que não atingirem a média final de 80%...",
+            "ajusteRotaUrlKon": "",
+            "ajusteRotaUrlAec": "",
+            "ajusteRotaCh": "0:30:00",
+            "ojtExtraDesc": "Lembre de reservar um tempo para preencher o Diário de Bordo OJT\t\t\t\t",
+            "ojtExtraTitle": "Atenção:",
+            "ojtExtraLink": "https://drive.google.com/drive/folders/1kI5OIv7HNapNLbS8hnmTGWGoWXu6u8cy"
           }
         ],
         "materiais": [],
@@ -14030,7 +14136,14 @@
         "evalMsg": "Ajuste de rotas para reprovados \nOs alunos que não atingirem a média final de 80% devem realizar o \"\"Ajuste de Rota\"\" - Avaliação de recuperação e somente após a aprovação realizar os testes de acessos.\nDuração: 30 min",
         "evalTime": "0:30:00"
       },
-      [],
+      {
+        "secciones": [],
+        "materiais": [],
+        "evalKon": [],
+        "evalAec": [],
+        "evalMsg": "",
+        "evalTime": ""
+      },
       [],
       [],
       []
@@ -20251,7 +20364,7 @@
               "rows": [
                 {
                   "macroTema": "Exceções",
-                  "tema": "Video Exceções e Autorizações",
+                  "tema": "Video Exceções e Autoriza��ões",
                   "detalhe": "- Instrutor apresenta vídeo sobre casos de exceção (Doença, Ã“bito, Erro de Emissão).",
                   "tiempo": "0:05:00",
                   "herramientas": [

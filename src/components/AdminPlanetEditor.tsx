@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 
 const TIPO_INFO: any = {
-  mision1: { label: 'MISSÃO', emoji: <Rocket size={20} />, accent: '#1B0088' },
+  mision1: { label: 'MISSÃO', emoji: <Rocket size={20} />, accent: '#00AEEF' },
   landing: { label: 'LANDING', emoji: <Anchor size={20} />, accent: '#FFC800' },
   ojt:     { label: 'DESAFIO OJT', emoji: <Target size={20} />, accent: '#ED1650' },
   imersao: { label: 'IMERSÃO',     emoji: <Cpu size={20} />,    accent: '#D400FF' },

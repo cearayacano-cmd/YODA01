@@ -565,9 +565,42 @@ const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATE
       onClick={onClick}
     >
       <div style={{ position: 'relative', width: '200px', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <HyperProPlanetVisual color={isCompleted ? '#99CC33' : nodeColor} index={index} texture={texture} size={120}>
-            {isCompleted ? <Star size={40} /> : (CustomIcon ? <CustomIcon size={40} /> : (typeIcons[section.tipo] || typeIcons['mision1']))}
-          </HyperProPlanetVisual>
+          {/* Holographic Portal Design */}
+          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 140, height: 140, background: isCompleted ? '#99CC33' : nodeColor, filter: 'blur(40px)', opacity: 0.6, zIndex: 1, borderRadius: '50%', pointerEvents: 'none' }} />
+          
+          <motion.div 
+            whileHover={{ scale: 1.05, filter: 'brightness(1.2)' }}
+            style={{ 
+              width: 120, height: 120, 
+              borderRadius: '50%',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              position: 'relative', zIndex: 2,
+              background: `radial-gradient(circle at center, ${isCompleted ? '#99CC33' : nodeColor}66 0%, ${isCompleted ? '#99CC33' : nodeColor}22 60%, transparent 100%)`,
+              border: `2px solid ${isCompleted ? '#99CC33' : nodeColor}`,
+              boxShadow: `inset 0 0 30px ${isCompleted ? '#99CC33' : nodeColor}, 0 0 20px ${isCompleted ? '#99CC33' : nodeColor}88`,
+              backdropFilter: 'blur(5px)'
+            }}
+          >
+             {/* Outer spinning rings */}
+             <motion.div animate={{ rotate: 360 }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ position: 'absolute', inset: -15, border: `2px dashed ${isCompleted ? '#99CC33' : nodeColor}`, borderRadius: '50%', opacity: 0.6 }} />
+             <motion.div animate={{ rotate: -360 }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} style={{ position: 'absolute', inset: -8, border: `1px dotted ${isCompleted ? '#99CC33' : nodeColor}`, borderRadius: '50%', opacity: 0.8 }} />
+             
+             {/* Inner glowing core */}
+             <div style={{
+                 position: 'absolute', inset: 15,
+                 borderRadius: '50%',
+                 background: `radial-gradient(circle at center, ${isCompleted ? '#99CC33' : nodeColor}aa 0%, transparent 80%)`,
+                 display: 'flex', alignItems: 'center', justifyContent: 'center',
+                 border: `1px solid ${isCompleted ? '#99CC33' : nodeColor}aa`
+             }}>
+                 <div style={{ position: 'absolute', width: '100%', height: '1px', background: `${isCompleted ? '#99CC33' : nodeColor}`, top: '50%', opacity: 0.5 }} />
+                 <div style={{ position: 'absolute', height: '100%', width: '1px', background: `${isCompleted ? '#99CC33' : nodeColor}`, left: '50%', opacity: 0.5 }} />
+                 
+                 <div style={{ position: 'relative', zIndex: 2, color: '#fff', filter: `drop-shadow(0 0 10px ${isCompleted ? '#99CC33' : nodeColor})` }}>
+                    {isCompleted ? <Star size={45} /> : (CustomIcon ? <CustomIcon size={45} /> : (typeIcons[section.tipo] || typeIcons['mision1']))}
+                 </div>
+             </div>
+          </motion.div>
           
           <div style={{ position: 'absolute', top: 20, right: 20, width: 32, height: 32, borderRadius: '50%', background: '#fff', color: '#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 900, boxShadow: '0 4px 10px rgba(0,0,0,0.3)', border: `2px solid ${isCompleted ? '#99CC33' : nodeColor}`, zIndex: 30 }}>
               {index + 1}
