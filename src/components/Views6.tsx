@@ -85,6 +85,36 @@ export const JourneyStartShip = ({ onboardingData, onClick }: any) => {
           onClick={onClick}
           style={{ position: 'relative', zIndex: 10, cursor: onClick ? 'pointer' : 'default' }}
         >
+          {onClick && (
+            <motion.div
+              animate={{ y: [-5, 5, -5], opacity: [0.8, 1, 0.8] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+              style={{
+                position: 'absolute',
+                top: '-45px',
+                left: '50%',
+                x: '-50%',
+                background: 'linear-gradient(90deg, #99CC33, #00D6CC)',
+                color: '#0F004F',
+                padding: '8px 24px',
+                borderRadius: '24px',
+                fontWeight: 900,
+                fontSize: '13px',
+                letterSpacing: '2px',
+                boxShadow: '0 0 25px rgba(153,204,51,0.8)',
+                zIndex: 20,
+                pointerEvents: 'none',
+                whiteSpace: 'nowrap',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                border: '2px solid rgba(255,255,255,0.4)'
+              }}
+            >
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#0F004F', animation: 'pulse 1.5s infinite' }} />
+              CLICK AQUÍ PARA ENTRAR
+            </motion.div>
+          )}
           <img 
             src="./nava_exploracion_2.png" 
             alt="Nava Exploracion" 
@@ -918,7 +948,7 @@ const secondsToTime = (secs: number) => {
     return `${m}m ${s}s`;
 };
 
-const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, onTrackEvent }: any) => {
+const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, onTrackEvent, themeKey }: any) => {
     const storageKey = `resolved_${planetLabel}_${node.tema}_${index}`;
     const isResolved = localStorage.getItem(storageKey) === 'true';
     const recs = Array.isArray(node.herramientas) ? node.herramientas : 
@@ -1097,6 +1127,38 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, onTrackEve
                         
                         const storageKey = `resolved_${planetLabel}_${node.tema}_${index}`;
                         const isDone = localStorage.getItem(storageKey) === 'true';
+                        
+                        if (!isDone) {
+                            const timeKey = `yoda_time_start_${planetLabel}_${themeKey}`;
+                            const startStr = localStorage.getItem(timeKey);
+                            if (startStr) {
+                                const startTime = parseInt(startStr, 10);
+                                const elapsedMs = Date.now() - startTime;
+                                const elapsedSecs = Math.floor(elapsedMs / 1000);
+                                
+                                const m = Math.floor(elapsedSecs / 60);
+                                const s = elapsedSecs % 60;
+                                const timeFormatted = `${m}m ${s}s`;
+                                
+                                const savedLogs = localStorage.getItem('yoda_activity_logs');
+                                let logs = savedLogs ? JSON.parse(savedLogs) : [];
+                                logs = [{ 
+                                    time: new Date().toISOString(), 
+                                    user: localStorage.getItem('yoda_active_user') || 'carlose.araya@latam.com', 
+                                    action: 'TRACK_TIEMPO', 
+                                    details: `Resolvió nodo ${index + 1} en ${timeFormatted}. Planeado: ${node.tiempo || node.ch || '?'}`,
+                                    partidaId: localStorage.getItem('yoda_active_partida') || 'N/A',
+                                    planetLabel,
+                                    nodeTema: node.tema,
+                                    elapsedSecs
+                                }, ...logs].slice(0, 1000);
+                                localStorage.setItem('yoda_activity_logs', JSON.stringify(logs));
+                                
+                                // Reset the timer so the next node counts from now
+                                localStorage.setItem(timeKey, Date.now().toString());
+                            }
+                        }
+
                         localStorage.setItem(storageKey, isDone ? 'false' : 'true');
                         onTrackEvent && onTrackEvent('COMPLETION', `Marcó nodo como ${isDone ? 'Pendiente' : 'Finalizado'}: ${node.tema}`);
                         if (typeof window !== 'undefined' && (window as any).refreshOnboarding) {
@@ -1154,8 +1216,27 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     }, [allSecciones]);
 
     const [collapsedThemes, setCollapsedThemes] = useState<string[]>(initialThemes);
+    const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+    const [feedbackText, setFeedbackText] = useState("");
 
     const handleMarkAllAsComplete = () => {
+        setShowFeedbackModal(true);
+    };
+
+    const confirmCompletion = () => {
+        if (feedbackText.trim()) {
+            const savedLogs = localStorage.getItem('yoda_activity_logs');
+            let logs = savedLogs ? JSON.parse(savedLogs) : [];
+            logs = [{ 
+                time: new Date().toISOString(), 
+                user: localStorage.getItem('yoda_active_user') || 'carlose.araya@latam.com', 
+                action: 'BITACORA', 
+                details: `Bitácora en ${planetLabel}: ${feedbackText}`,
+                partidaId: localStorage.getItem('yoda_active_partida') || 'N/A'
+            }, ...logs].slice(0, 1000);
+            localStorage.setItem('yoda_activity_logs', JSON.stringify(logs));
+        }
+
         allSecciones.forEach(sec => {
             (sec.rows || []).forEach((r: any, i: number) => {
                 localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'true');
@@ -1196,9 +1277,18 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     }, [allSecciones, tick, planetLabel]);
     
     const toggleTheme = (theme: string) => {
-        setCollapsedThemes(prev => 
-            prev.includes(theme) ? prev.filter(t => t !== theme) : [...prev, theme]
-        );
+        setCollapsedThemes(prev => {
+            const isCollapsed = prev.includes(theme);
+            if (isCollapsed) {
+                const timeKey = `yoda_time_start_${planetLabel}_${theme}`;
+                if (!localStorage.getItem(timeKey)) {
+                    localStorage.setItem(timeKey, Date.now().toString());
+                }
+                return prev.filter(t => t !== theme);
+            } else {
+                return [...prev, theme];
+            }
+        });
     };
 
     const firstSec = allSecciones[0] || { rows: [], tipo: 'mision1' };
@@ -1379,6 +1469,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                                                         planetColor={planetColor} 
                                                                         planetLabel={planetLabel}
                                                                         onTrackEvent={onTrackEvent}
+                                                                        themeKey={themeKey}
                                                                     />
                                                                 ))}
                                                             </motion.div>
@@ -1502,9 +1593,65 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                             )}
                         </div>
                     )}
-
                 </div>
             </div>
+            
+            {/* Feedback / Logbook Modal */}
+            <AnimatePresence>
+                {showFeedbackModal && (
+                    <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={{ position: 'fixed', inset: 0, zIndex: 100000, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(15,0,79,0.9)', backdropFilter: 'blur(10px)' }}
+                    >
+                        <motion.div 
+                            initial={{ scale: 0.9, y: 20 }}
+                            animate={{ scale: 1, y: 0 }}
+                            exit={{ scale: 0.9, y: 20 }}
+                            style={{ background: '#fff', borderRadius: 24, padding: 40, width: 500, maxWidth: '90%', boxShadow: '0 20px 50px rgba(0,0,0,0.3)', border: `4px solid ${planetColor}` }}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 15, marginBottom: 20 }}>
+                                <div style={{ background: `${planetColor}22`, color: planetColor, padding: 12, borderRadius: '50%' }}>
+                                    <FileText size={24} />
+                                </div>
+                                <div>
+                                    <h2 style={{ margin: 0, fontSize: 20, color: '#1B0088', fontWeight: 900 }}>Bitácora de Vuelo</h2>
+                                    <p style={{ margin: 0, fontSize: 12, color: '#64748B' }}>¿Hubo algún problema o algo a destacar en esta misión?</p>
+                                </div>
+                            </div>
+
+                            <textarea 
+                                value={feedbackText}
+                                onChange={e => setFeedbackText(e.target.value)}
+                                placeholder="Ej: El PDF de la dinámica 2 no abría, nos demoramos 10 min extra..."
+                                style={{ width: '100%', height: 120, padding: 15, borderRadius: 12, border: '2px solid #E2E8F0', fontSize: 14, fontFamily: 'inherit', resize: 'none', marginBottom: 25, outline: 'none', boxSizing: 'border-box' }}
+                                onFocus={e => e.target.style.borderColor = planetColor}
+                                onBlur={e => e.target.style.borderColor = '#E2E8F0'}
+                            />
+
+                            <div style={{ display: 'flex', gap: 15, justifyContent: 'flex-end' }}>
+                                <button 
+                                    onClick={() => setShowFeedbackModal(false)}
+                                    style={{ padding: '12px 24px', background: '#F1F5F9', color: '#64748B', border: 'none', borderRadius: 12, fontWeight: 800, cursor: 'pointer' }}
+                                >
+                                    Cancelar
+                                </button>
+                                <button 
+                                    onClick={() => {
+                                        onTrackEvent?.('mission_feedback', { text: feedbackText });
+                                        confirmCompletion();
+                                    }}
+                                    style={{ padding: '12px 24px', background: '#99CC33', color: '#fff', border: 'none', borderRadius: 12, fontWeight: 900, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, boxShadow: '0 4px 15px rgba(153,204,51,0.3)' }}
+                                >
+                                    <Check size={18} /> Finalizar Misión
+                                </button>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            
         </motion.div>
     );
 };
