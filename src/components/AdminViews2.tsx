@@ -32,12 +32,14 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
   };
   
   const removeCourse = (idx: any) => {
-    const next = {...exploracion};
-    next[activeSector] = next[activeSector].filter((_: any,i: any)=>i!==idx);
-    updateStationConfig('exploracion', next);
-    const advDataKey = activeSector === 'soporte' ? 'soporteContent' : activeSector === 'frontLine' ? 'frontLineContent' : 'fsc';
-    const advData = Array.isArray(currentStationConfig[advDataKey]) ? currentStationConfig[advDataKey].filter((_: any,i: any)=>i!==idx) : [];
-    updateStationConfig(advDataKey, advData);
+    if (window.confirm("¿Seguro que deseas eliminar este PLANETA por completo?")) {
+      const next = {...exploracion};
+      next[activeSector] = next[activeSector].filter((_: any,i: any)=>i!==idx);
+      updateStationConfig('exploracion', next);
+      const advDataKey = activeSector === 'soporte' ? 'soporteContent' : activeSector === 'frontLine' ? 'frontLineContent' : 'fsc';
+      const advData = Array.isArray(currentStationConfig[advDataKey]) ? currentStationConfig[advDataKey].filter((_: any,i: any)=>i!==idx) : [];
+      updateStationConfig(advDataKey, advData);
+    }
   };
   
   const inp = (extra={}) => ({

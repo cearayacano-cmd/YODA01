@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
     ArrowLeft, Save, CheckCircle2, Plus, Trash2, Database, Layers, Satellite, Globe, Shield, Zap,
@@ -29,6 +29,18 @@ const secondsToTime = (secs: number) => {
   const m = Math.floor((secs % 3600) / 60);
   const s = secs % 60;
   return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+};
+
+const SmartInput = ({ value, onChange, ...props }: any) => {
+  const [val, setVal] = useState(value);
+  useEffect(() => { setVal(value); }, [value]);
+  return <input value={val} onChange={e => { setVal(e.target.value); onChange(e); }} {...props} />;
+};
+
+const SmartTextarea = ({ value, onChange, ...props }: any) => {
+  const [val, setVal] = useState(value);
+  useEffect(() => { setVal(value); }, [value]);
+  return <textarea value={val} onChange={e => { setVal(e.target.value); onChange(e); }} {...props} />;
 };
 
 export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, initialPlanet, title = "EDITOR", isOnboarding, onSave }: any) => {
@@ -100,7 +112,11 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
     saveFlash();
   };
 
-  const deleteSec = (idx: number) => { updateSections(currentSections.filter((_, i) => i !== idx)); };
+  const deleteSec = (idx: number) => { 
+    if (window.confirm("¿Seguro que deseas eliminar esta MISIÓN entera?")) {
+      updateSections(currentSections.filter((_, i) => i !== idx)); 
+    }
+  };
 
   const updateSecField = (idx: number, field: string, val: any) => {
     const next = [...currentSections];
@@ -116,8 +132,10 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
   };
 
   const removeGlobalLink = (field: string, idx: number) => {
-    const prev = Array.isArray(planetObj[field]) ? planetObj[field] : [];
-    updateGlobalField(field, prev.filter((_: any, i: number) => i !== idx));
+    if (window.confirm("¿Seguro que deseas eliminar este elemento?")) {
+      const prev = Array.isArray(planetObj[field]) ? planetObj[field] : [];
+      updateGlobalField(field, prev.filter((_: any, i: number) => i !== idx));
+    }
   };
 
   const updateGlobalLink = (field: string, idx: number, sub: string, val: any) => {
@@ -170,9 +188,11 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
   };
 
   const deleteRow = (secIdx: number, rowIdx: number) => {
-    const next = [...currentSections];
-    next[secIdx] = { ...next[secIdx], rows: next[secIdx].rows.filter((_: any, i: number) => i !== rowIdx) };
-    updateSections(next);
+    if (window.confirm("¿Seguro que deseas eliminar este NODO?")) {
+      const next = [...currentSections];
+      next[secIdx] = { ...next[secIdx], rows: next[secIdx].rows.filter((_: any, i: number) => i !== rowIdx) };
+      updateSections(next);
+    }
   };
 
   const moveMacroTema = (secIdx: number, blockIdx: number, dir: number) => {
@@ -368,7 +388,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
                   <div style={{ width: 44, height: 44, borderRadius: 12, background: secInfo.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>{secInfo.emoji}</div>
                   <div>
-                    <input value={sec.label} onChange={e => updateSecField(si, 'label', e.target.value)} style={{ background: 'transparent', border: 'none', fontSize: '20px', fontWeight: 900, color: '#1B0088', outline: 'none', padding: '4px 8px', letterSpacing: '-0.02em', borderBottom: '2px solid transparent' }} onFocus={e => e.target.style.borderBottom = `2px solid ${secInfo.accent}`} onBlur={e => e.target.style.borderBottom = 'none'} />
+                    <SmartInput value={sec.label} onChange={(e: any) => updateSecField(si, 'label', e.target.value)} style={{ background: 'transparent', border: 'none', fontSize: '20px', fontWeight: 900, color: '#1B0088', outline: 'none', padding: '4px 8px', letterSpacing: '-0.02em', borderBottom: '2px solid transparent' }} onFocus={(e: any) => e.target.style.borderBottom = `2px solid ${secInfo.accent}`} onBlur={(e: any) => e.target.style.borderBottom = 'none'} />
                     <div style={{ fontSize: '11px', color: '#64748b', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', paddingLeft: 8, display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '4px 0' }}>
                         <span>{(sec.rows||[]).length} NODOS CONFIGURADOS</span>
                         <span style={{ margin: '0 8px', color: '#cbd5e1' }}>•</span>
@@ -551,7 +571,6 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                         <tr 
                                           key={oi} 
                                           style={{ background: ri % 2 === 0 ? '#ffffff' : '#f8fafc', borderBottom: '1px solid #e2e8f0', transition: 'all 0.2s ease' }}
-                                          draggable
                                           onDragStart={e => { e.dataTransfer.setData('text/row', String(oi)); e.currentTarget.style.opacity = '0.5'; }}
                                           onDragEnd={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.borderTop = 'none'; e.currentTarget.style.borderBottom = '1px solid #e2e8f0'; }}
                                           onDragOver={e => { e.preventDefault(); e.currentTarget.style.borderTop = '3px solid #1B0088'; }}
@@ -571,33 +590,33 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                             updateSections(next);
                                           }}
                                         >
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center', cursor: 'grab', color: '#cbd5e1' }} onMouseEnter={e => e.currentTarget.style.color = '#1B0088'} onMouseLeave={e => e.currentTarget.style.color = '#cbd5e1'}>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center', cursor: 'grab', color: '#cbd5e1' }} onMouseEnter={e => e.currentTarget.parentElement?.setAttribute('draggable', 'true')} onMouseLeave={e => e.currentTarget.parentElement?.removeAttribute('draggable')}>
                                             <GripVertical size={16} />
                                           </td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.tema} onChange={e => updateRow(si, oi, 'tema', e.target.value)} onInput={e => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={e => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(27,0,136,0.2)'; e.currentTarget.style.background = '#fff'; }} onBlur={e => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = 'transparent'; }} placeholder="Título..." style={{ background: 'transparent', border: '1px solid transparent', borderRadius: '8px', padding: '12px', color: '#1B0088', fontSize: '13px', fontWeight: 700, width: '100%', outline: 'none', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box' }} /></td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.detalhe} onChange={e => updateRow(si, oi, 'detalhe', e.target.value)} onInput={e => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={e => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(27,0,136,0.2)'; e.currentTarget.style.background = '#fff'; }} onBlur={e => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = 'transparent'; }} placeholder="Detalle..." style={{ background: 'transparent', border: '1px solid transparent', borderRadius: '8px', padding: '12px', color: '#334155', fontSize: '12px', width: '100%', outline: 'none', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box', lineHeight: '1.5' }} /></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><SmartTextarea value={row.tema} onChange={(e: any) => updateRow(si, oi, 'tema', e.target.value)} onInput={(e: any) => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={(e: any) => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(27,0,136,0.2)'; e.currentTarget.style.background = '#fff'; }} onBlur={(e: any) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = 'transparent'; }} placeholder="Título..." style={{ background: 'transparent', border: '1px solid transparent', borderRadius: '8px', padding: '12px', color: '#1B0088', fontSize: '13px', fontWeight: 700, width: '100%', outline: 'none', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box' }} /></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><SmartTextarea value={row.detalhe} onChange={(e: any) => updateRow(si, oi, 'detalhe', e.target.value)} onInput={(e: any) => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={(e: any) => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(27,0,136,0.2)'; e.currentTarget.style.background = '#fff'; }} onBlur={(e: any) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = 'transparent'; }} placeholder="Detalle..." style={{ background: 'transparent', border: '1px solid transparent', borderRadius: '8px', padding: '12px', color: '#334155', fontSize: '12px', width: '100%', outline: 'none', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box', lineHeight: '1.5' }} /></td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
                                             {(Array.isArray(row.herramientas) ? row.herramientas : row.herramientas ? [row.herramientas] : []).map((h: any, hi: number) => (
                                               <div key={hi} style={{ marginBottom: 8, paddingBottom: 8, borderBottom: '1px dashed #e2e8f0', position: 'relative' }}>
                                                 <select value={h.tipo || 'PPT'} onChange={e => { const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : [row.herramientas || {}]; newH[hi] = { ...newH[hi], tipo: e.target.value }; updateRow(si, oi, 'herramientas', newH); }} style={{ background: '#fff', border: '1px solid #ccc', fontSize: '10px', padding: '2px', width: '100%', marginBottom: 4 }}>{['🖼️ Slide','📄 Docs','📊 Sheets','📕 PDF','🎬 Video','📝 Form','📋 Form AeC','📋 Form Kon BR','➖ NA','🌟 Genially','Notebook LM','🎮 Educaplay','✈️ Latam.com','▶️ Youtube','🔗 Link','🎯 Actividad','🖥️ Painel','🔄 Fluxo','🌐 Plataforma','🗂️ PIC','📂 CDA','⏱️ WTD'].map(t => <option key={t} value={t}>{t}</option>)}</select>
-                                                <input value={h.url || ''} onChange={e => { const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : [row.herramientas || {}]; newH[hi] = { ...newH[hi], url: e.target.value }; updateRow(si, oi, 'herramientas', newH); }} placeholder="URL" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid #eee', color: '#1a56db', fontSize: '9px', width: '100%' }} />
+                                                <SmartInput value={h.url || ''} onChange={(e: any) => { const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : [row.herramientas || {}]; newH[hi] = { ...newH[hi], url: e.target.value }; updateRow(si, oi, 'herramientas', newH); }} placeholder="URL" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid #eee', color: '#1a56db', fontSize: '9px', width: '100%' }} />
                                                 <button onClick={() => { const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : [row.herramientas || {}]; newH.splice(hi, 1); updateRow(si, oi, 'herramientas', newH); }} style={{ position: 'absolute', top: 2, right: -4, background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '10px' }}>x</button>
                                               </div>
                                             ))}
                                             <button onClick={() => { const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : (row.herramientas ? [row.herramientas] : []); newH.push({ tipo: 'PPT', url: '' }); updateRow(si, oi, 'herramientas', newH); }} style={{ background: '#f1f5f9', border: '1px dashed #cbd5e1', width: '100%', padding: '4px', fontSize: '9px', cursor: 'pointer', borderRadius: 4, color: '#64748b' }}>+ AÑADIR RECURSO</button>
                                           </td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><textarea value={row.consejo} onChange={e => updateRow(si, oi, 'consejo', e.target.value)} onInput={e => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={e => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(153,204,51,0.4)'; e.currentTarget.style.background = '#fff'; }} onBlur={e => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = 'transparent'; }} placeholder="Consejo..." style={{ background: 'transparent', border: '1px solid transparent', borderRadius: '8px', padding: '12px', fontSize: '11px', color: '#333', width: '100%', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box', lineHeight: '1.5' }} /></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><SmartTextarea value={row.consejo} onChange={(e: any) => updateRow(si, oi, 'consejo', e.target.value)} onInput={(e: any) => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={(e: any) => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(153,204,51,0.4)'; e.currentTarget.style.background = '#fff'; }} onBlur={(e: any) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = 'transparent'; }} placeholder="Consejo..." style={{ background: 'transparent', border: '1px solid transparent', borderRadius: '8px', padding: '12px', fontSize: '11px', color: '#333', width: '100%', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box', lineHeight: '1.5' }} /></td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
                                             {(Array.isArray(row.iaPic) ? row.iaPic : row.iaPic ? [{ label: 'PIC LINK', url: row.iaPic }] : []).map((link: any, li: number) => (
                                               <div key={li} style={{ marginBottom: 6, paddingBottom: 6, borderBottom: '1px dashed #e2e8f0', position: 'relative' }}>
-                                                <input value={link.url || ''} onChange={e => { const nextIA = [...(Array.isArray(row.iaPic) ? row.iaPic : [{ label: 'PIC', url: row.iaPic }])]; nextIA[li] = { ...nextIA[li], url: e.target.value }; updateRow(si, oi, 'iaPic', nextIA); }} placeholder="https://pic-latam..." style={{ background: '#f8fafc', border: '1px solid #e2e8f0', fontSize: '9px', padding: '4px', width: '100%', marginBottom: 4, fontWeight: 500 }} />
-                                                <input value={link.label || ''} onChange={e => { const nextIA = [...(Array.isArray(row.iaPic) ? row.iaPic : [{ label: 'PIC', url: row.iaPic }])]; nextIA[li] = { ...nextIA[li], label: e.target.value }; updateRow(si, oi, 'iaPic', nextIA); }} placeholder="Nombre (ej. PIC)" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid #eee', color: '#1a56db', fontSize: '9px', width: '100%' }} />
+                                                <SmartInput value={link.url || ''} onChange={(e: any) => { const nextIA = [...(Array.isArray(row.iaPic) ? row.iaPic : [{ label: 'PIC', url: row.iaPic }])]; nextIA[li] = { ...nextIA[li], url: e.target.value }; updateRow(si, oi, 'iaPic', nextIA); }} placeholder="https://pic-latam..." style={{ background: '#f8fafc', border: '1px solid #e2e8f0', fontSize: '9px', padding: '4px', width: '100%', marginBottom: 4, fontWeight: 500 }} />
+                                                <SmartInput value={link.label || ''} onChange={(e: any) => { const nextIA = [...(Array.isArray(row.iaPic) ? row.iaPic : [{ label: 'PIC', url: row.iaPic }])]; nextIA[li] = { ...nextIA[li], label: e.target.value }; updateRow(si, oi, 'iaPic', nextIA); }} placeholder="Nombre (ej. PIC)" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid #eee', color: '#1a56db', fontSize: '9px', width: '100%' }} />
                                                 <button onClick={() => { const nextIA = [...(Array.isArray(row.iaPic) ? row.iaPic : [])]; nextIA.splice(li, 1); updateRow(si, oi, 'iaPic', nextIA); }} style={{ position: 'absolute', top: 2, right: -4, background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '10px' }}>x</button>
                                               </div>
                                             ))}
                                             <button onClick={() => { const nextIA = Array.isArray(row.iaPic) ? [...row.iaPic] : (row.iaPic ? [{ label: 'PIC LINK', url: row.iaPic }] : []); nextIA.push({ label: 'PIC LINK', url: '' }); updateRow(si, oi, 'iaPic', nextIA); }} style={{ background: '#f0f9ff', border: '1px dashed #bae6fd', width: '100%', padding: '4px', fontSize: '9px', cursor: 'pointer', borderRadius: 4, color: '#0369a1', fontWeight: 700 }}>+ ADD PIC</button>
                                           </td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}><input value={row.tiempo || row.ch} onChange={e => updateRow(si, oi, 'tiempo', e.target.value)} style={{ background: 'transparent', border: 'none', color: '#111', fontSize: '12px', fontWeight: 800, textAlign: 'center', width: '100%' }} /></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}><SmartInput value={row.tiempo || row.ch} onChange={(e: any) => updateRow(si, oi, 'tiempo', e.target.value)} style={{ background: 'transparent', border: 'none', color: '#111', fontSize: '12px', fontWeight: 800, textAlign: 'center', width: '100%' }} /></td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center' }}>
                                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, flexWrap: 'wrap', width: 40 }}>
                                               <div style={{ display: 'flex', gap: 4 }}>
