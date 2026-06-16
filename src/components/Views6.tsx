@@ -42,6 +42,36 @@ const typeColors: any = {
     imersao: '#D400FF', // Purple
     avaliacao: '#00D6CC' // Teal/Cyan
 };
+
+const AnimatedIaraOverlay = () => {
+    const [frame, setFrame] = React.useState(1);
+    const dirRef = React.useRef(1);
+    const totalFrames = 19;
+
+    React.useEffect(() => {
+        const interval = setInterval(() => {
+            setFrame((prev) => {
+                let next = prev + dirRef.current;
+                if (next >= totalFrames) { dirRef.current = -1; return totalFrames; }
+                if (next <= 1) { dirRef.current = 1; return 1; }
+                return next;
+            });
+        }, 180);
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <img 
+            src={`/iara-frames/frame_${frame}.png`} 
+            alt="IARA Overlay"
+            style={{ 
+                width: '100%', height: 'auto', 
+                objectFit: 'contain', background: 'transparent'
+            }} 
+        />
+    );
+};
+
 export const JourneyStartShip = ({ onboardingData, onClick }: any) => {
     return (
     <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '350px', marginBottom: '40px' }}>
@@ -1853,14 +1883,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                             >
                                 <div style={{ position: 'relative', width: '100%', maxWidth: '420px' }}>
                                     <div style={{ position: 'absolute', inset: -60, borderRadius: '50%', background: `radial-gradient(circle, ${planetColor}11 0%, transparent 70%)`, filter: 'blur(50px)' }} />
-                                    <video 
-                                        src="/IARA2.mp4" 
-                                        autoPlay muted loop playsInline
-                                        style={{ 
-                                            width: '100%', height: 'auto', 
-                                            objectFit: 'contain', background: 'transparent'
-                                        }} 
-                                    />
+                                    <AnimatedIaraOverlay />
                                     {/* Scanline overlay for tactical feel */}
                                     <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03))', backgroundSize: '100% 4px, 3px 100%', pointerEvents: 'none' }} />
                                 </div>

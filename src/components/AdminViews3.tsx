@@ -17,7 +17,7 @@ export const AdminRutaLider = ({ rutaData, setRutaData, onBack, title, onSave }:
     padding:'10px 14px', 
     fontFamily:'inherit', 
     fontSize:13, 
-    color:'#1B0088', 
+    color:'#0F004F', 
     outline:'none', 
     borderRadius:10, 
     transition: 'all 0.2s ease',
@@ -50,21 +50,21 @@ export const AdminRutaLider = ({ rutaData, setRutaData, onBack, title, onSave }:
   const poderes = [...new Set((rutaData || []).map((d: any) => d.poder))];
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F8F7FF', display: 'flex', flexDirection: 'column', fontFamily: '"Inter", sans-serif' }}>
+    <div style={{ minHeight: '100vh', background: '#F8F7FF', display: 'flex', flexDirection: 'column', fontFamily: '"Trebuchet MS", sans-serif' }}>
       {/* Corporate Header */}
       <div style={{
-        background: '#1B0088', padding: '18px 40px', display: 'flex', alignItems: 'center', gap: 32,
-        borderBottom: '4px solid #99CC33', boxShadow: '0 8px 32px rgba(27,0,136,0.15)', zIndex: 100
+        background: '#0F004F', padding: '18px 40px', display: 'flex', alignItems: 'center', gap: 32,
+        borderBottom: '4px solid #ED1650', boxShadow: '0 8px 32px rgba(27,0,136,0.15)', zIndex: 100
       }}>
         <button onClick={onBack} style={{
           background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#ffffff', padding: '10px 24px',
           borderRadius: 8, cursor: 'pointer', fontSize: 13, fontWeight: 800, textTransform: 'uppercase',
           display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s'
-        }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}>
+        }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#0F004F' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}>
           <ArrowLeft size={16} /> VOLVER
         </button>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <GraduationCap size={22} color="#99CC33" />
+          <GraduationCap size={22} color="#ED1650" />
           <span style={{ color: '#ffffff', fontSize: 18, fontWeight: 900, letterSpacing: '0.05em' }}>{title || 'EDITOR: RUTA DEL LÍDER'}</span>
         </div>
         <motion.button
@@ -72,9 +72,9 @@ export const AdminRutaLider = ({ rutaData, setRutaData, onBack, title, onSave }:
           whileTap={{ scale: 0.98 }}
           onClick={saveFlash}
           style={{
-            marginLeft: 'auto', background: saved ? '#22c55e' : '#99CC33', color: '#ffffff', border: 'none', padding: '12px 32px',
+            marginLeft: 'auto', background: saved ? '#22c55e' : '#ED1650', color: '#ffffff', border: 'none', padding: '12px 32px',
             cursor: 'pointer', fontSize: 13, fontWeight: 800, borderRadius: 8, display: 'flex', alignItems: 'center', gap: 10,
-            boxShadow: `0 10px 20px ${saved ? '#22c55e' : '#99CC33'}40`, transition: 'all 0.3s ease'
+            boxShadow: `0 10px 20px ${saved ? '#22c55e' : '#ED1650'}40`, transition: 'all 0.3s ease'
           }}
         >
           {saved ? <><CheckCircle2 size={18} /> GUARDADO PROFESIONAL</> : <><Save size={18} /> GUARDAR ESTRUCTURA</>}
@@ -84,18 +84,18 @@ export const AdminRutaLider = ({ rutaData, setRutaData, onBack, title, onSave }:
       <div style={{ padding: '40px 60px', flex: 1, overflowY: 'auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 40 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <div style={{ background: 'rgba(27,0,136,0.05)', color: '#1B0088', padding: '14px', borderRadius: 16 }}>
+            <div style={{ background: 'rgba(27,0,136,0.05)', color: '#0F004F', padding: '14px', borderRadius: 16 }}>
               <Shield size={24} />
             </div>
             <div>
-              <div style={{ fontSize: 20, fontWeight: 900, color: '#1B0088', letterSpacing: '-0.01em' }}>ESTRUCTURA DE FORMACIÓN</div>
+              <div style={{ fontSize: 20, fontWeight: 900, color: '#0F004F', letterSpacing: '-0.01em' }}>ESTRUCTURA DE FORMACIÓN</div>
               <div style={{ fontSize: 14, color: '#64748b' }}>Gestión de Poderes y Nodos de Entrenamiento. {poderes.length} Mundos activos.</div>
             </div>
           </div>
           <button
             onClick={addPlanet}
             style={{
-              background: '#1B0088', color: '#ffffff', border: 'none', padding: '14px 28px', cursor: 'pointer', fontSize: 13, fontWeight: 900,
+              background: '#0F004F', color: '#ffffff', border: 'none', padding: '14px 28px', cursor: 'pointer', fontSize: 13, fontWeight: 900,
               borderRadius: 12, display: 'flex', alignItems: 'center', gap: 10, boxShadow: '0 8px 25px rgba(27,0,136,0.2)'
             }}
           >
@@ -107,7 +107,7 @@ export const AdminRutaLider = ({ rutaData, setRutaData, onBack, title, onSave }:
           const pNameStr = pName as string;
           const pNodes = (rutaData || []).filter((r: any) => r.poder === pName);
           const pTime = pNodes[0]?.tiempo || '';
-          const pColor = ['#99CC33', '#FF00FF', '#1B0088', '#ED1650', '#99CC33'][pIdx % 5];
+          const pColor = ['#ED1650', '#FF00FF', '#0F004F', '#ED1650', '#ED1650'][pIdx % 5];
 
           return (
             <div key={`planet-${pIdx}`} style={{ 
@@ -121,7 +121,7 @@ export const AdminRutaLider = ({ rutaData, setRutaData, onBack, title, onSave }:
             }}>
               {/* Premium Group Header */}
               <div style={{ 
-                background: '#1B0088', 
+                background: '#0F004F', 
                 padding: '24px 32px', 
                 borderLeft: `8px solid ${pColor}`, 
                 display: 'flex', 
@@ -182,7 +182,7 @@ export const AdminRutaLider = ({ rutaData, setRutaData, onBack, title, onSave }:
                 <div style={{ background: '#F8FAFC', borderRadius: 16, overflow: 'hidden', border: '1px solid #E2E8F0' }}>
                   <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                     <thead>
-                      <tr style={{ textAlign: 'left', background: '#1B0088' }}>
+                      <tr style={{ textAlign: 'left', background: '#0F004F' }}>
                         <th style={{ padding: '16px 20px', fontSize: 10, color: '#fff', fontWeight: 900, letterSpacing: '0.1em', textTransform: 'uppercase' }}>TEMA / OBJETIVO</th>
                         <th style={{ padding: '16px 20px', fontSize: 10, color: '#fff', fontWeight: 900, letterSpacing: '0.1em', textTransform: 'uppercase' }}>DESCRIPCIÓN DEL CONTENIDO</th>
                         <th style={{ padding: '16px 20px', fontSize: 10, color: '#fff', fontWeight: 900, letterSpacing: '0.1em', textTransform: 'uppercase' }}>CONSEJO / TIP</th>
@@ -206,8 +206,8 @@ export const AdminRutaLider = ({ rutaData, setRutaData, onBack, title, onSave }:
                             </td>
                             <td style={{ padding: 16 }}>
                               <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: '#fff', padding: '10px 14px', borderRadius: 10, border: '1px solid #E2E8F0' }}>
-                                <LinkIcon size={14} color="#1B0088" />
-                                <input value={row.adjunto} onChange={e => updateField(absoluteIdx, 'adjunto', e.target.value)} style={{ background: 'transparent', border: 'none', fontSize: 12, width: '100%', outline: 'none', color: '#1B0088', fontWeight: 600 }} placeholder="URL" />
+                                <LinkIcon size={14} color="#0F004F" />
+                                <input value={row.adjunto} onChange={e => updateField(absoluteIdx, 'adjunto', e.target.value)} style={{ background: 'transparent', border: 'none', fontSize: 12, width: '100%', outline: 'none', color: '#0F004F', fontWeight: 600 }} placeholder="URL" />
                               </div>
                             </td>
                             <td style={{ padding: 16 }}>

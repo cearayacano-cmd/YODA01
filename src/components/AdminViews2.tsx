@@ -23,7 +23,7 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
   
   const addCourse = () => {
     const next = {...exploracion};
-    next[activeSector] = [...(next[activeSector]||[]), {label:'NUEVO PLANETA', color: '#1b0088', texture: 'CRATERS'}];
+    next[activeSector] = [...(next[activeSector]||[]), {label:'NUEVO PLANETA', color: '#0F004F', texture: 'CRATERS'}];
     updateStationConfig('exploracion', next);
     const advDataKey = activeSector === 'soporte' ? 'soporteContent' : activeSector === 'frontLine' ? 'frontLineContent' : 'fsc';
     const advData = Array.isArray(currentStationConfig[advDataKey]) ? [...currentStationConfig[advDataKey]] : [];
@@ -48,7 +48,7 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
     padding:'10px 14px', 
     fontFamily:'inherit', 
     fontSize:14, 
-    color:'#1B0088', 
+    color:'#0F004F', 
     outline:'none', 
     borderRadius:10, 
     transition: 'all 0.2s ease',
@@ -59,15 +59,15 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
   const advData = currentStationConfig[advDataKey] || [];
   
   return (
-    <div style={{minHeight:'100vh', background:'#F8F7FF', display:'flex', flexDirection:'column', fontFamily: '"Inter", sans-serif'}}>
+    <div style={{minHeight:'100vh', background:'#F8F7FF', display:'flex', flexDirection:'column', fontFamily: '"Trebuchet MS", sans-serif'}}>
       {/* Corporate Header */}
       <div style={{
-        background:'#1B0088', 
+        background:'#0F004F', 
         padding:'18px 40px', 
         display:'flex', 
         alignItems:'center', 
         justifyContent:'space-between',
-        borderBottom: '4px solid #99CC33',
+        borderBottom: '4px solid #ED1650',
         boxShadow: '0 8px 32px rgba(27,0,136,0.15)',
         zIndex: 100
       }}>
@@ -76,11 +76,11 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
             background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#ffffff', padding: '10px 24px', 
             borderRadius: 8, cursor: 'pointer', fontSize: 13, fontWeight: 800, textTransform: 'uppercase',
             display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s'
-          }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}>
+          }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#0F004F' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}>
             <ArrowLeft size={16} /> VOLVER
           </button>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <Database size={22} color="#99CC33" />
+            <Database size={22} color="#ED1650" />
             <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>EDITOR DE BASE DE DATOS <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> EXPLORACIÓN</span>
           </div>
         </div>
@@ -88,7 +88,7 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
           whileHover={{ scale: 1.05 }} 
           whileTap={{ scale: 0.95 }} 
           onClick={saveFlash} 
-          style={{ background: saved ? '#00D6CC' : '#99CC33', border: 'none', padding: '10px 28px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, color: '#ffffff', display: 'flex', alignItems: 'center', gap: 8, boxShadow: `0 8px 20px ${saved ? '#00D6CC' : '#99CC33'}40` }}
+          style={{ background: saved ? '#00D6CC' : '#ED1650', border: 'none', padding: '10px 28px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, color: '#ffffff', display: 'flex', alignItems: 'center', gap: 8, boxShadow: `0 8px 20px ${saved ? '#00D6CC' : '#ED1650'}40` }}
         >
           {saved ? <CheckCircle2 size={18}/> : <Save size={18}/>} {saved ? 'GUARDADO' : 'GUARDAR'}
         </motion.button>
@@ -98,7 +98,7 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
         {/* Sidebar Sectors */}
         <div style={{
           width:260, 
-          background:'#1B0088', 
+          background:'#0F004F', 
           padding: '32px 16px', 
           flexShrink:0,
           display: 'flex',
@@ -114,23 +114,22 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
           {['frontLine','soporte','fieldSupport'].map(s => (
             <motion.div 
               key={s} 
-              whileHover={{ x: 6, background: 'rgba(255,255,255,0.05)' }}
+              whileHover={{ x: 6, background: activeSector===s ? '#EAE8F9' : 'rgba(255,255,255,0.05)' }}
               onClick={()=>{setActiveSector(s);}}
               style={{
                 padding:'14px 20px', 
                 cursor:'pointer', 
-                borderRadius: 10, 
+                borderRadius: 30, 
                 fontWeight: activeSector===s ? 800 : 500, 
-                background: activeSector===s ? 'rgba(153,204,51,0.15)' : 'transparent', 
-                color: activeSector===s ? '#99CC33' : 'rgba(255,255,255,0.6)',
-                borderLeft: `4px solid ${activeSector===s ? '#99CC33' : 'transparent'}`,
+                background: activeSector===s ? '#EAE8F9' : 'transparent', 
+                color: activeSector===s ? '#0F004F' : 'rgba(255,255,255,0.6)',
                 display: 'flex',
                 alignItems: 'center',
                 gap: 14,
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
               }}
             >
-              <Layers size={20} color={activeSector===s ? '#99CC33' : 'rgba(255,255,255,0.4)'} />
+              <Layers size={20} color={activeSector===s ? '#0F004F' : 'rgba(255,255,255,0.4)'} />
               <span style={{ fontSize: 13, letterSpacing: '0.05em' }}>{s==='frontLine'?'Front Line':s==='soporte'?'Suporte':'Field Support'}</span>
             </motion.div>
           ))}
@@ -145,12 +144,12 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
               borderRadius: 24,
               padding: 32,
               marginBottom: 48,
-              boxShadow: '0 10px 40px rgba(27,0,136,0.04)',
+              boxShadow: '0 8px 20px rgba(237,22,80,0.25)',
               border: '1px solid rgba(27,0,136,0.08)',
               position: 'relative',
               overflow: 'hidden'
             }}>
-              <div style={{ position: 'absolute', top: 0, left: 0, width: '6px', height: '100%', background: '#1B0088' }} />
+              <div style={{ position: 'absolute', top: 0, left: 0, width: '6px', height: '100%', background: '#0F004F' }} />
 
               {/* ONBOARDING BLOCK - SUPPORTS MULTIPLE NAVES */}
               <div style={{ paddingTop: 8 }}>
@@ -188,7 +187,7 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
                           }}
                           style={{
                             background: 'transparent', border: 'none', borderBottom: '1px solid transparent',
-                            fontSize: 16, color: '#1B0088', fontWeight: 900, outline: 'none', width: '100%',
+                            fontSize: 16, color: '#0F004F', fontWeight: 900, outline: 'none', width: '100%',
                             padding: '4px 0'
                           }}
                           onFocus={(e) => e.target.style.borderBottomColor = '#FFB800'}
@@ -200,11 +199,11 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
                           const nodeCount = (onb.data?.secciones || []).reduce((acc: number, s: any) => acc + (s.rows || []).length, 0);
                           return (
                             <div style={{ fontSize: '11px', color: '#64748b', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 12 }}>
-                              <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#1B0088' }}>
+                              <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#0F004F' }}>
                                 ⏱ {nodeCount} NODOS CONFIGURADOS
                               </span>
                               {lastDay && (
-                                <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#1B0088', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                                <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#0F004F', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
                                   <Calendar size={12} /> ACUMULADO DÍAS: {lastDay}
                                 </span>
                               )}
@@ -234,8 +233,8 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
           
           <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:32}}>
             <div style={{display: 'flex', alignItems: 'center', gap: 14}}>
-              <Globe size={22} color="#1B0088" />
-              <div style={{fontSize:18, fontWeight:900, textTransform:'uppercase', color: '#1B0088', letterSpacing: '-0.02em'}}>
+              <Globe size={22} color="#0F004F" />
+              <div style={{fontSize:18, fontWeight:900, textTransform:'uppercase', color: '#0F004F', letterSpacing: '-0.02em'}}>
                 PLANETAS DEL SECTOR 
                 <span style={{ color: '#94a3b8', marginLeft: 12, fontWeight: 500 }}>— {galaxyConfig.length} expedições</span>
               </div>
@@ -243,10 +242,10 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
             <button 
               onClick={addCourse} 
               style={{
-                background:'#99CC33', color:'#ffffff', border:'none', 
+                background:'#ED1650', color:'#ffffff', border:'none', 
                 padding:'14px 32px', cursor:'pointer', fontSize:13, fontWeight:900, 
                 borderRadius:10, display: 'flex', alignItems: 'center', gap: 10,
-                boxShadow: '0 8px 20px rgba(153,204,51,0.25)',
+                boxShadow: '0 8px 20px rgba(237,22,80,0.25)',
                 transition: 'all 0.2s ease'
               }}
               onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; }}
@@ -275,14 +274,14 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
                 onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 15px 40px rgba(27,0,136,0.08)'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.03)'; }}
                 >
-                  <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '60px', height: '4px', background: '#99CC33', borderRadius: '0 0 4px 4px' }} />
+                  <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '60px', height: '4px', background: '#ED1650', borderRadius: '0 0 4px 4px' }} />
                   <div>
                     <div style={{fontSize:10, color:'#64748b', textTransform:'uppercase', marginBottom:10, fontWeight: 800, letterSpacing: '0.1em'}}>NOMBRE DEL PLANETA</div>
                     <input 
                       value={course.label} 
                       onChange={e=>updateCourseField(i,'label',e.target.value)} 
-                      style={{...inp({ background: '#F8FAFC', padding: '12px 16px', fontSize: 16, fontWeight: 900, color: '#1B0088' }), width:'100%'}}
-                      onFocus={(e) => { e.target.style.borderColor = '#1B0088'; e.target.style.background = '#ffffff'; }}
+                      style={{...inp({ background: '#F8FAFC', padding: '12px 16px', fontSize: 16, fontWeight: 900, color: '#0F004F' }), width:'100%'}}
+                      onFocus={(e) => { e.target.style.borderColor = '#0F004F'; e.target.style.background = '#ffffff'; }}
                       onBlur={(e) => { e.target.style.borderColor = '#E2E8F0'; e.target.style.background = '#F8FAFC'; }}
                     />
                   </div>
@@ -290,7 +289,7 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
                     <div style={{fontSize:10, color:'#64748b', textTransform:'uppercase', marginBottom:12, fontWeight: 800, letterSpacing: '0.1em'}}>COLOR DEL PLANETA</div>
                     <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                       {[
-                        '#1b0088', '#7000ab', '#7da81a', '#2ec9ed', 
+                        '#0F004F', '#7000ab', '#7da81a', '#2ec9ed', 
                         '#ffe017', '#ed1650', '#00d6cc', '#858585'
                       ].map(c => (
                         <motion.div
@@ -298,14 +297,14 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
                           whileHover={{ scale: 1.2 }}
                           onClick={() => updateCourseField(i, 'color', c)}
                           style={{
-                            width: 28, height: 28, borderRadius: '50%', background: c, border: `2px solid ${course.color === c ? '#1B0088' : 'rgba(0,0,0,0.1)'}`,
+                            width: 28, height: 28, borderRadius: '50%', background: c, border: `2px solid ${course.color === c ? '#0F004F' : 'rgba(0,0,0,0.1)'}`,
                             cursor: 'pointer', boxShadow: course.color === c ? `0 0 10px ${c}` : 'none'
                           }}
                         />
                       ))}
                       <input 
                         type="color" 
-                        value={course.color || '#1b0088'} 
+                        value={course.color || '#0F004F'} 
                         onChange={e => updateCourseField(i, 'color', e.target.value)}
                         style={{ width: 28, height: 28, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
                       />
@@ -322,7 +321,7 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
                           onClick={() => updateCourseField(i, 'texture', t)}
                           style={{
                             padding: '8px 12px', fontSize: 10, fontWeight: 900, borderRadius: 8, cursor: 'pointer',
-                            background: (course.texture || 'CRATERS') === t ? '#1B0088' : '#F1F5F9',
+                            background: (course.texture || 'CRATERS') === t ? '#0F004F' : '#F1F5F9',
                             color: (course.texture || 'CRATERS') === t ? '#ffffff' : '#64748B',
                             border: 'none',
                             transition: '0.2s',
@@ -341,11 +340,11 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
                       style={{
                         flex:1, background:'rgba(27,0,136,0.05)', border:'1.5px solid rgba(27,0,136,0.1)', 
                         padding:'14px 16px', cursor:'pointer', fontSize:12, fontWeight: 900,
-                        borderRadius:10, color:'#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                        borderRadius:10, color:'#0F004F', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                         transition: 'all 0.2s'
                       }}
-                      onMouseEnter={(e) => { e.currentTarget.style.background = '#1B0088'; e.currentTarget.style.color = '#ffffff'; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(27,0,136,0.05)'; e.currentTarget.style.color = '#1B0088'; }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = '#0F004F'; e.currentTarget.style.color = '#ffffff'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(27,0,136,0.05)'; e.currentTarget.style.color = '#0F004F'; }}
                     >
                       <Edit3 size={16} /> MISSÕES ({getAdvCount(advData?.[i])})
                     </button>

@@ -503,7 +503,6 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                         )}
                         </AnimatePresence>
                         
-                    </div>
                    </motion.div>
                </motion.div>
            )}

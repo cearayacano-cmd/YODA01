@@ -248,22 +248,22 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
   };
 
   const inp = (extra={}) => ({
-    background:'#ffffff', border:'1px solid #E2E8F0', padding:'10px 14px', fontFamily:'inherit', fontSize:13, color:'#1B0088', outline:'none', borderRadius:10, transition: 'all 0.2s ease', ...extra
+    background:'#ffffff', border:'1px solid #E2E8F0', padding:'10px 14px', fontFamily:'inherit', fontSize:13, color:'#0F004F', outline:'none', borderRadius:10, transition: 'all 0.2s ease', ...extra
   });
 
   return (
-    <div style={{ display: 'flex', height: '100vh', background: '#F8F7FF', fontFamily: '"Inter", sans-serif' }}>
-      <div style={{ width: '280px', background: '#1B0088', borderRight: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', boxShadow: '10px 0 30px rgba(0,0,0,0.05)', zIndex: 50 }}>
+    <div style={{ display: 'flex', height: '100vh', background: '#F8F7FF', fontFamily: '"Trebuchet MS", sans-serif' }}>
+      <div style={{ width: '280px', background: '#0F004F', borderRight: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', boxShadow: '10px 0 30px rgba(0,0,0,0.05)', zIndex: 50 }}>
         <div style={{ padding: '32px 24px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-          <button onClick={onBack} style={{ background: 'rgba(255,255,255,0.1)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.2)', padding: '12px 24px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s', width: '100%', justifyContent: 'center' }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}><ArrowLeft size={16} /> VOLVER</button>
+          <button onClick={onBack} style={{ background: 'rgba(255,255,255,0.1)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.2)', padding: '12px 24px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s', width: '100%', justifyContent: 'center' }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#0F004F' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}><ArrowLeft size={16} /> VOLVER</button>
           <div style={{ marginTop: '32px', fontSize: '10px', fontWeight: 900, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.25em', paddingLeft: 8 }}>EXPEDIÇÃO LUNAR</div>
         </div>
         <div style={{ flex: 1, overflowY: 'auto', padding: '20px 16px' }}>
           {planets.map((p: any, i: number) => {
             const isAct = activePlanet === i;
             return (
-                <motion.div key={i} whileHover={{ x: 6, background: 'rgba(255,255,255,0.05)' }} onClick={() => { setActivePlanet(i); setEditingSecIdx(null); }} style={{ padding: '16px 20px', marginBottom: '8px', borderRadius: '12px', cursor: 'pointer', background: isAct ? 'rgba(153,204,51,0.15)' : 'transparent', borderLeft: `4px solid ${isAct ? '#99CC33' : 'transparent'}`, transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', color: isAct ? '#99CC33' : 'rgba(255,255,255,0.6)' }}>
-                    <div style={{ fontSize: '9px', fontWeight: 900, marginBottom: 4, color: isAct ? '#99CC33' : 'rgba(255,255,255,0.3)' }}>PLANETA {String(i+1).padStart(2,'0')}</div>
+                <motion.div key={i} whileHover={{ x: 6, background: isAct ? '#EAE8F9' : 'rgba(255,255,255,0.05)' }} onClick={() => { setActivePlanet(i); setEditingSecIdx(null); }} style={{ padding: '16px 20px', marginBottom: '8px', borderRadius: '30px', cursor: 'pointer', background: isAct ? '#EAE8F9' : 'transparent', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', color: isAct ? '#0F004F' : 'rgba(255,255,255,0.6)' }}>
+                    <div style={{ fontSize: '9px', fontWeight: 900, marginBottom: 4, color: isAct ? '#0F004F' : 'rgba(255,255,255,0.3)' }}>PLANETA {String(i+1).padStart(2,'0')}</div>
                     <div style={{ fontSize: '14px', fontWeight: 800, letterSpacing: '0.02em' }}>{p.label || `Sector ${i + 1}`}</div>
                 </motion.div>
             );
@@ -272,9 +272,9 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
       </div>
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-        <div style={{ padding: '20px 48px', background: '#1B0088', borderBottom: '4px solid #99CC33', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 8px 32px rgba(27,0,136,0.15)', zIndex: 40 }}>
+        <div style={{ padding: '20px 48px', background: '#0F004F', borderBottom: '4px solid #ED1650', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 8px 32px rgba(27,0,136,0.15)', zIndex: 40 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-            <div style={{ width: 44, height: 44, background: 'rgba(153,204,51,0.2)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#99CC33' }}><Satellite size={24} /></div>
+            <div style={{ width: 44, height: 44, background: 'rgba(237,22,80,0.2)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1650' }}><Satellite size={24} /></div>
             <div>
                 <div style={{ fontSize: 10, fontWeight: 900, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 2 }}>{title}</div>
                 <div style={{ fontSize: 20, fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em' }}>{planets[activePlanet]?.label}</div>
@@ -286,7 +286,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                 return (
                 <button key={t} onClick={() => addSection(t)} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', padding: '10px 20px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, color: '#ffffff', display: 'flex', alignItems: 'center', gap: 8, transition: 'all 0.2s' }} onMouseEnter={e => e.currentTarget.style.background = TIPO_INFO[t].accent} onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}>{TIPO_INFO[t].emoji} {TIPO_INFO[t].label} {totalTypeTime > 0 && <span style={{ background: 'rgba(0,0,0,0.2)', padding: '2px 6px', borderRadius: 6, fontSize: 10 }}>{secondsToTime(totalTypeTime)}</span>}</button>
             )})}
-            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={saveFlash} style={{ background: saved ? '#00D6CC' : '#99CC33', border: 'none', padding: '10px 28px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, color: '#ffffff', marginLeft: 16, display: 'flex', alignItems: 'center', gap: 8, boxShadow: `0 8px 20px ${saved ? '#00D6CC' : '#99CC33'}40` }}>{saved ? <CheckCircle2 size={18}/> : <Save size={18}/>} {saved ? 'GUARDADO' : 'GUARDAR'}</motion.button>
+            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={saveFlash} style={{ background: saved ? '#00D6CC' : '#ED1650', border: 'none', padding: '10px 28px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, color: '#ffffff', marginLeft: 16, display: 'flex', alignItems: 'center', gap: 8, boxShadow: `0 8px 20px ${saved ? '#00D6CC' : '#ED1650'}40` }}>{saved ? <CheckCircle2 size={18}/> : <Save size={18}/>} {saved ? 'GUARDADO' : 'GUARDAR'}</motion.button>
           </div>
         </div>
 
@@ -294,17 +294,17 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
           {!isOnboarding && (
             <div style={{ background: '#ffffff', borderRadius: '24px', padding: '32px', marginBottom: '48px', border: '1px solid rgba(27,0,136,0.1)', boxShadow: '0 10px 40px rgba(0,0,0,0.02)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32, borderBottom: '1px solid #f1f5f9', paddingBottom: 20 }}>
-                  <div style={{ background: 'rgba(27,0,136,0.05)', padding: 12, borderRadius: 12 }}><Globe size={24} color="#1B0088" /></div>
+                  <div style={{ background: 'rgba(27,0,136,0.05)', padding: 12, borderRadius: 12 }}><Globe size={24} color="#0F004F" /></div>
                   <div>
                       <div style={{ fontSize: 10, fontWeight: 900, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.15em' }}>CONFIGURACIÓN SECTORIAL</div>
-                      <div style={{ fontSize: 18, fontWeight: 900, color: '#1B0088' }}>Recursos Globales del Planeta</div>
+                      <div style={{ fontSize: 18, fontWeight: 900, color: '#0F004F' }}>Recursos Globales del Planeta</div>
                   </div>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                          <div style={{ fontSize: 11, fontWeight: 900, color: '#1B0088', display: 'flex', alignItems: 'center', gap: 8 }}><FileText size={16} /> 📚 MATERIAIS</div>
-                          <button onClick={() => addGlobalLink('materiais')} style={{ background: '#1B0088', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: 6, fontSize: 10, fontWeight: 800, cursor: 'pointer' }}>+ AÑADIR</button>
+                          <div style={{ fontSize: 11, fontWeight: 900, color: '#0F004F', display: 'flex', alignItems: 'center', gap: 8 }}><FileText size={16} /> 📚 MATERIAIS</div>
+                          <button onClick={() => addGlobalLink('materiais')} style={{ background: '#0F004F', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: 6, fontSize: 10, fontWeight: 800, cursor: 'pointer' }}>+ AÑADIR</button>
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                           {(planetObj.materiais || []).map((link: any, i: number) => (
@@ -339,8 +339,8 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                               />
                           </div>
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                              <div style={{ fontSize: 11, fontWeight: 900, color: '#99CC33', display: 'flex', alignItems: 'center', gap: 8 }}><Shield size={16} /> 🛡️ AVALIAÇÕES: KON BR</div>
-                              <button onClick={() => addGlobalLink('evalKon')} style={{ background: '#99CC33', color: '#fff', border: 'none', padding: '4px 10px', borderRadius: 6, fontSize: 9, fontWeight: 800, cursor: 'pointer' }}>+ LINK</button>
+                              <div style={{ fontSize: 11, fontWeight: 900, color: '#ED1650', display: 'flex', alignItems: 'center', gap: 8 }}><Shield size={16} /> 🛡️ AVALIAÇÕES: KON BR</div>
+                              <button onClick={() => addGlobalLink('evalKon')} style={{ background: '#ED1650', color: '#fff', border: 'none', padding: '4px 10px', borderRadius: 6, fontSize: 9, fontWeight: 800, cursor: 'pointer' }}>+ LINK</button>
                           </div>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                               {(planetObj.evalKon || []).map((link: any, i: number) => (
@@ -374,7 +374,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
 
           {currentSections.length === 0 ? (
             <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ textAlign: 'center', padding: '80px', color: '#1B0088', background: '#fff', borderRadius: '32px', border: '2px dashed rgba(27,0,136,0.1)', boxShadow: '0 20px 60px rgba(0,0,0,0.03)' }}>
+                <div style={{ textAlign: 'center', padding: '80px', color: '#0F004F', background: '#fff', borderRadius: '32px', border: '2px dashed rgba(27,0,136,0.1)', boxShadow: '0 20px 60px rgba(0,0,0,0.03)' }}>
                     <Layers size={64} style={{ opacity: 0.05, marginBottom: 24 }} />
                     <div style={{ fontSize: 18, fontWeight: 900 }}>Sin secciones operativas</div>
                     <div style={{ fontSize: 14, color: '#64748b', marginTop: 8 }}>Inicia la construcción agregando una missão desde el panel superior.</div>
@@ -388,18 +388,18 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
                   <div style={{ width: 44, height: 44, borderRadius: 12, background: secInfo.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>{secInfo.emoji}</div>
                   <div>
-                    <SmartInput value={sec.label} onChange={(e: any) => updateSecField(si, 'label', e.target.value)} style={{ background: 'transparent', border: 'none', fontSize: '20px', fontWeight: 900, color: '#1B0088', outline: 'none', padding: '4px 8px', letterSpacing: '-0.02em', borderBottom: '2px solid transparent' }} onFocus={(e: any) => e.target.style.borderBottom = `2px solid ${secInfo.accent}`} onBlur={(e: any) => e.target.style.borderBottom = 'none'} />
+                    <SmartInput value={sec.label} onChange={(e: any) => updateSecField(si, 'label', e.target.value)} style={{ background: 'transparent', border: 'none', fontSize: '20px', fontWeight: 900, color: '#0F004F', outline: 'none', padding: '4px 8px', letterSpacing: '-0.02em', borderBottom: '2px solid transparent' }} onFocus={(e: any) => e.target.style.borderBottom = `2px solid ${secInfo.accent}`} onBlur={(e: any) => e.target.style.borderBottom = 'none'} />
                     <div style={{ fontSize: '11px', color: '#64748b', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', paddingLeft: 8, display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '4px 0' }}>
                         <span>{(sec.rows||[]).length} NODOS CONFIGURADOS</span>
                         <span style={{ margin: '0 8px', color: '#cbd5e1' }}>•</span>
-                        <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#1B0088' }}>⏱ TIEMPO TOTAL: {secondsToTime((sec.rows||[]).reduce((a:any, r:any) => a + timeToSeconds(r.tiempo || r.ch || ''), 0))}</span>
+                        <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#0F004F' }}>⏱ TIEMPO TOTAL: {secondsToTime((sec.rows||[]).reduce((a:any, r:any) => a + timeToSeconds(r.tiempo || r.ch || ''), 0))}</span>
                         {(() => {
                           const allDays = (sec.rows || []).map((r: any) => r.dia).filter(Boolean);
                           const lastDay = allDays.length > 0 ? allDays[allDays.length - 1] : '';
                           return lastDay ? (
                             <>
                               <span style={{ margin: '0 8px', color: '#cbd5e1' }}>•</span>
-                              <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#1B0088', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                              <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#0F004F', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
                                 <Calendar size={12} /> ACUMULADO: {lastDay}
                               </span>
                             </>
@@ -410,11 +410,11 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                 </div>
                 <div style={{ display: 'flex', gap: '12px' }}>
                   {sec.tipo === 'ojt' && (
-                    <button onClick={() => setEditingExtraIdx(si)} style={{ background: '#f8fafc', border: '2px solid #E2E8F0', color: '#1B0088', padding: '10px 20px', borderRadius: '12px', cursor: 'pointer', fontSize: '11px', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 8 }}><Layers size={16}/> TARJETA EXTRA</button>
+                    <button onClick={() => setEditingExtraIdx(si)} style={{ background: '#f8fafc', border: '2px solid #E2E8F0', color: '#0F004F', padding: '10px 20px', borderRadius: '12px', cursor: 'pointer', fontSize: '11px', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 8 }}><Layers size={16}/> TARJETA EXTRA</button>
                   )}
-                  <button onClick={() => addRow(si)} style={{ background: '#1B0088', color: '#fff', border: 'none', padding: '12px 24px', borderRadius: '12px', cursor: 'pointer', fontSize: '11px', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 8, boxShadow: '0 8px 25px rgba(27,0,136,0.2)' }}><Plus size={16}/> AGREGAR NODO</button>
+                  <button onClick={() => addRow(si)} style={{ background: '#0F004F', color: '#fff', border: 'none', padding: '12px 24px', borderRadius: '12px', cursor: 'pointer', fontSize: '11px', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 8, boxShadow: '0 8px 25px rgba(27,0,136,0.2)' }}><Plus size={16}/> AGREGAR NODO</button>
                   {(sec.tipo === 'ojt' || sec.tipo === 'avaliacao') && (
-                    <button onClick={() => setEditingSecIdx(editingSecIdx === si ? null : si)} style={{ background: '#ffffff', border: '1px solid #E2E8F0', padding: '12px 20px', borderRadius: '12px', cursor: 'pointer', fontSize: '11px', fontWeight: 900, color: '#1B0088', display: 'flex', alignItems: 'center', gap: 8 }}>{editingSecIdx === si ? <CheckCircle2 size={16}/> : <Edit3 size={16}/>} {editingSecIdx === si ? 'FINALIZAR' : 'RECONFIGURAR'}</button>
+                    <button onClick={() => setEditingSecIdx(editingSecIdx === si ? null : si)} style={{ background: '#ffffff', border: '1px solid #E2E8F0', padding: '12px 20px', borderRadius: '12px', cursor: 'pointer', fontSize: '11px', fontWeight: 900, color: '#0F004F', display: 'flex', alignItems: 'center', gap: 8 }}>{editingSecIdx === si ? <CheckCircle2 size={16}/> : <Edit3 size={16}/>} {editingSecIdx === si ? 'FINALIZAR' : 'RECONFIGURAR'}</button>
                   )}
                   
                   <button 
@@ -470,11 +470,11 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                   draggable
                                   onDragStart={e => { e.dataTransfer.setData('text/macro', String(gi)); e.currentTarget.style.opacity = '0.5'; }}
                                   onDragEnd={e => { e.currentTarget.style.opacity = '1'; }}
-                                  onDragOver={e => { e.preventDefault(); e.currentTarget.style.border = '2px dashed #99CC33'; }}
-                                  onDragLeave={e => { e.currentTarget.style.border = '2px solid #1B0088'; }}
+                                  onDragOver={e => { e.preventDefault(); e.currentTarget.style.border = '2px dashed #ED1650'; }}
+                                  onDragLeave={e => { e.currentTarget.style.border = '2px solid #0F004F'; }}
                                   onDrop={e => {
                                     e.preventDefault();
-                                    e.currentTarget.style.border = '2px solid #1B0088';
+                                    e.currentTarget.style.border = '2px solid #0F004F';
                                     const fromGi = parseInt(e.dataTransfer.getData('text/macro'), 10);
                                     if (!isNaN(fromGi) && fromGi !== gi) {
                                       const dir = gi - fromGi;
@@ -484,13 +484,13 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                   onClick={() => toggleTheme(themeKey)}
                                   style={{ 
                                     display: 'flex', alignItems: 'center', justifyContent: 'space-between', 
-                                    background: isCollapsed ? '#f8fafc' : '#ffffff', border: '2px solid #1B0088', 
+                                    background: isCollapsed ? '#f8fafc' : '#ffffff', border: '2px solid #0F004F', 
                                     padding: '12px 24px', borderRadius: '8px', marginBottom: isCollapsed ? 0 : '16px',
                                     cursor: 'pointer', transition: '0.3s'
                                   }}
                                 >
                                   <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                                    <div style={{ width: 24, height: 24, borderRadius: 6, background: '#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
+                                    <div style={{ width: 24, height: 24, borderRadius: 6, background: '#0F004F', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
                                         {isCollapsed ? <ChevronDown size={14}/> : <ChevronUp size={14}/>}
                                     </div>
                                     
@@ -500,7 +500,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                         onClick={() => moveMacroTema(si, gi, -1)}
                                         style={{ 
                                           background: 'transparent', border: 'none', padding: 0, cursor: gi === 0 ? 'default' : 'pointer', 
-                                          color: gi === 0 ? '#cbd5e1' : '#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                          color: gi === 0 ? '#cbd5e1' : '#0F004F', display: 'flex', alignItems: 'center', justifyContent: 'center',
                                           height: 12
                                         }}
                                         title="Subir Macrotema"
@@ -512,7 +512,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                         onClick={() => moveMacroTema(si, gi, 1)}
                                         style={{ 
                                           background: 'transparent', border: 'none', padding: 0, cursor: gi === groupedRows.length - 1 ? 'default' : 'pointer', 
-                                          color: gi === groupedRows.length - 1 ? '#cbd5e1' : '#1B0088', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                          color: gi === groupedRows.length - 1 ? '#cbd5e1' : '#0F004F', display: 'flex', alignItems: 'center', justifyContent: 'center',
                                           height: 12
                                         }}
                                         title="Bajar Macrotema"
@@ -521,26 +521,26 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                       </button>
                                     </div>
 
-                                    <span style={{ fontSize: '11px', fontWeight: 900, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '0.1em' }}>MACROTEMA:</span>
+                                    <span style={{ fontSize: '11px', fontWeight: 900, color: '#0F004F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>MACROTEMA:</span>
                                     <input 
                                         value={mt === 'SIN MACROTEMA' ? '' : mt} 
                                         onClick={e => e.stopPropagation()}
                                         onChange={e => { const newVal = e.target.value; updateMultipleRows(si, rows.map(r => r.originalIndex), 'macroTema', newVal); }} 
-                                        style={{ background: 'transparent', border: 'none', color: '#1B0088', fontSize: '16px', fontWeight: 900, outline: 'none', width: '400px' }} 
+                                        style={{ background: 'transparent', border: 'none', color: '#0F004F', fontSize: '16px', fontWeight: 900, outline: 'none', width: '400px' }} 
                                         placeholder="DEFINA MACRO TEMA..." 
                                     />
                                   </div>
                                   <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }} onClick={e => e.stopPropagation()}>
-                                      <span style={{ fontSize: '11px', fontWeight: 900, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '0.1em' }}>DÍA:</span>
+                                      <span style={{ fontSize: '11px', fontWeight: 900, color: '#0F004F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>DÍA:</span>
                                       <input 
                                         value={rows[0]?.dia || ''} 
                                         onChange={e => updateMultipleRows(si, rows.map(r => r.originalIndex), 'dia', e.target.value)} 
-                                        style={{ background: '#f1f5f9', border: '1px solid #1B0088', borderRadius: '6px', padding: '6px 12px', color: '#1B0088', fontSize: '12px', fontWeight: 900, outline: 'none', width: '90px', textAlign: 'center' }} 
+                                        style={{ background: '#f1f5f9', border: '1px solid #0F004F', borderRadius: '6px', padding: '6px 12px', color: '#0F004F', fontSize: '12px', fontWeight: 900, outline: 'none', width: '90px', textAlign: 'center' }} 
                                         placeholder="Ex: Dia 1" 
                                       />
                                     </div>
-                                    <div style={{ background: '#1B0088', color: '#fff', padding: '6px 14px', borderRadius: '20px', fontSize: '11px', fontWeight: 900 }}>⏱ TOTAL BLOQUE: {secondsToTime(totalSecs)}</div>
+                                    <div style={{ background: '#0F004F', color: '#fff', padding: '6px 14px', borderRadius: '20px', fontSize: '11px', fontWeight: 900 }}>⏱ TOTAL BLOQUE: {secondsToTime(totalSecs)}</div>
                                   </div>
                                 </div>
                                 <AnimatePresence initial={false}>
@@ -573,7 +573,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                           style={{ background: ri % 2 === 0 ? '#ffffff' : '#f8fafc', borderBottom: '1px solid #e2e8f0', transition: 'all 0.2s ease' }}
                                           onDragStart={e => { e.dataTransfer.setData('text/row', String(oi)); e.currentTarget.style.opacity = '0.5'; }}
                                           onDragEnd={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.borderTop = 'none'; e.currentTarget.style.borderBottom = '1px solid #e2e8f0'; }}
-                                          onDragOver={e => { e.preventDefault(); e.currentTarget.style.borderTop = '3px solid #1B0088'; }}
+                                          onDragOver={e => { e.preventDefault(); e.currentTarget.style.borderTop = '3px solid #0F004F'; }}
                                           onDragLeave={e => { e.currentTarget.style.borderTop = 'none'; e.currentTarget.style.borderBottom = '1px solid #e2e8f0'; }}
                                           onDrop={e => {
                                             e.preventDefault();
@@ -593,7 +593,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center', cursor: 'grab', color: '#cbd5e1' }} onMouseEnter={e => e.currentTarget.parentElement?.setAttribute('draggable', 'true')} onMouseLeave={e => e.currentTarget.parentElement?.removeAttribute('draggable')}>
                                             <GripVertical size={16} />
                                           </td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><SmartTextarea value={row.tema} onChange={(e: any) => updateRow(si, oi, 'tema', e.target.value)} onInput={(e: any) => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={(e: any) => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(27,0,136,0.2)'; e.currentTarget.style.background = '#fff'; }} onBlur={(e: any) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = 'transparent'; }} placeholder="Título..." style={{ background: 'transparent', border: '1px solid transparent', borderRadius: '8px', padding: '12px', color: '#1B0088', fontSize: '13px', fontWeight: 700, width: '100%', outline: 'none', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box' }} /></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><SmartTextarea value={row.tema} onChange={(e: any) => updateRow(si, oi, 'tema', e.target.value)} onInput={(e: any) => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={(e: any) => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(27,0,136,0.2)'; e.currentTarget.style.background = '#fff'; }} onBlur={(e: any) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = 'transparent'; }} placeholder="Título..." style={{ background: 'transparent', border: '1px solid transparent', borderRadius: '8px', padding: '12px', color: '#0F004F', fontSize: '13px', fontWeight: 700, width: '100%', outline: 'none', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box' }} /></td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><SmartTextarea value={row.detalhe} onChange={(e: any) => updateRow(si, oi, 'detalhe', e.target.value)} onInput={(e: any) => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={(e: any) => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(27,0,136,0.2)'; e.currentTarget.style.background = '#fff'; }} onBlur={(e: any) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = 'transparent'; }} placeholder="Detalle..." style={{ background: 'transparent', border: '1px solid transparent', borderRadius: '8px', padding: '12px', color: '#334155', fontSize: '12px', width: '100%', outline: 'none', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box', lineHeight: '1.5' }} /></td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
                                             {(Array.isArray(row.herramientas) ? row.herramientas : row.herramientas ? [row.herramientas] : []).map((h: any, hi: number) => (
@@ -605,7 +605,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                             ))}
                                             <button onClick={() => { const newH = Array.isArray(row.herramientas) ? [...row.herramientas] : (row.herramientas ? [row.herramientas] : []); newH.push({ tipo: 'PPT', url: '' }); updateRow(si, oi, 'herramientas', newH); }} style={{ background: '#f1f5f9', border: '1px dashed #cbd5e1', width: '100%', padding: '4px', fontSize: '9px', cursor: 'pointer', borderRadius: 4, color: '#64748b' }}>+ AÑADIR RECURSO</button>
                                           </td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><SmartTextarea value={row.consejo} onChange={(e: any) => updateRow(si, oi, 'consejo', e.target.value)} onInput={(e: any) => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={(e: any) => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(153,204,51,0.4)'; e.currentTarget.style.background = '#fff'; }} onBlur={(e: any) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = 'transparent'; }} placeholder="Consejo..." style={{ background: 'transparent', border: '1px solid transparent', borderRadius: '8px', padding: '12px', fontSize: '11px', color: '#333', width: '100%', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box', lineHeight: '1.5' }} /></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><SmartTextarea value={row.consejo} onChange={(e: any) => updateRow(si, oi, 'consejo', e.target.value)} onInput={(e: any) => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={(e: any) => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(237,22,80,0.4)'; e.currentTarget.style.background = '#fff'; }} onBlur={(e: any) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = 'transparent'; }} placeholder="Consejo..." style={{ background: 'transparent', border: '1px solid transparent', borderRadius: '8px', padding: '12px', fontSize: '11px', color: '#333', width: '100%', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box', lineHeight: '1.5' }} /></td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
                                             {(Array.isArray(row.iaPic) ? row.iaPic : row.iaPic ? [{ label: 'PIC LINK', url: row.iaPic }] : []).map((link: any, li: number) => (
                                               <div key={li} style={{ marginBottom: 6, paddingBottom: 6, borderBottom: '1px dashed #e2e8f0', position: 'relative' }}>
@@ -624,7 +624,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                                   disabled={ri === 0}
                                                   onClick={() => moveRowWithinMacroTema(si, oi, -1)}
                                                   style={{ 
-                                                    background: 'transparent', border: 'none', color: ri === 0 ? '#cbd5e1' : '#1B0088', 
+                                                    background: 'transparent', border: 'none', color: ri === 0 ? '#cbd5e1' : '#0F004F', 
                                                     cursor: ri === 0 ? 'default' : 'pointer', opacity: ri === 0 ? 0.4 : 0.7, padding: 0,
                                                     display: 'flex', alignItems: 'center'
                                                   }}
@@ -638,7 +638,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                                   disabled={ri === rows.length - 1}
                                                   onClick={() => moveRowWithinMacroTema(si, oi, 1)}
                                                   style={{ 
-                                                    background: 'transparent', border: 'none', color: ri === rows.length - 1 ? '#cbd5e1' : '#1B0088', 
+                                                    background: 'transparent', border: 'none', color: ri === rows.length - 1 ? '#cbd5e1' : '#0F004F', 
                                                     cursor: ri === rows.length - 1 ? 'default' : 'pointer', opacity: ri === rows.length - 1 ? 0.4 : 0.7, padding: 0,
                                                     display: 'flex', alignItems: 'center'
                                                   }}
@@ -683,8 +683,8 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                         const dia = rows.length > 0 ? rows[rows.length - 1].dia : '';
                                         insertRowAfter(si, lastRowIdx, mt === 'SIN MACROTEMA' ? '' : mt, dia);
                                       }}
-                                      style={{ width: '100%', padding: '12px', background: '#f8fafc', border: '2px dashed #cbd5e1', borderRadius: '8px', color: '#1B0088', fontWeight: 900, fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, transition: 'all 0.2s ease' }}
-                                      onMouseEnter={e => { e.currentTarget.style.background = '#f1f5f9'; e.currentTarget.style.borderColor = '#1B0088'; e.currentTarget.style.transform = 'scale(1.01)'; }}
+                                      style={{ width: '100%', padding: '12px', background: '#f8fafc', border: '2px dashed #cbd5e1', borderRadius: '8px', color: '#0F004F', fontWeight: 900, fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, transition: 'all 0.2s ease' }}
+                                      onMouseEnter={e => { e.currentTarget.style.background = '#f1f5f9'; e.currentTarget.style.borderColor = '#0F004F'; e.currentTarget.style.transform = 'scale(1.01)'; }}
                                       onMouseLeave={e => { e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.borderColor = '#cbd5e1'; e.currentTarget.style.transform = 'scale(1)'; }}
                                     >
                                       <Plus size={16} /> AÑADIR NUEVA ACTIVIDAD AL MACROTEMA
@@ -705,19 +705,19 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                   <div style={{ fontSize: '14px', fontWeight: 900, marginBottom: '32px', display: 'flex', alignItems: 'center', gap: 12, color: '#00D6CC', letterSpacing: '0.1em' }}><AlertTriangle size={24}/> PARÁMETROS OPERATIVOS OJT <span style={{ fontWeight: 700, fontSize: '11px', color: '#64748b', letterSpacing: 0, textTransform: 'uppercase' }}>· Configuración Avanzada</span></div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', marginBottom: '32px', borderBottom: '1px solid #E2E8F0', paddingBottom: '32px' }}>
                     <div style={{ background: '#F8FAFC', padding: 24, borderRadius: 20, border: '1px solid #E2E8F0' }}>
-                      <div style={{ fontSize: '11px', fontWeight: 900, marginBottom: 20, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 8 }}><Monitor size={16}/> DIARIO DE BORDO OJT</div>
+                      <div style={{ fontSize: '11px', fontWeight: 900, marginBottom: 20, color: '#0F004F', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 8 }}><Monitor size={16}/> DIARIO DE BORDO OJT</div>
                       <div style={{ marginBottom: '20px' }}>
                         <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Etiqueta del Botón</label>
                         <input value={sec.dbOjtLabel} onChange={e => updateSecField(si, 'dbOjtLabel', e.target.value)} placeholder="ej: Diário de Bordo OJT" style={{ ...inp({ fontWeight: 800 }), width: '100%' }} />
                       </div>
                       <div>
                         <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Enlace de Destino (URL)</label>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: '#fff', border: '1px solid #E2E8F0', borderRadius: 10, padding: '0 16px' }}><LinkIcon size={16} color="#1B0088" /><input value={sec.dbOjtUrl} onChange={e => updateSecField(si, 'dbOjtUrl', e.target.value)} placeholder="https://docs.google.com/..." style={{ border: 'none', background: 'transparent', padding: '14px 0', outline: 'none', color: '#1a56db', fontWeight: 700, width: '100%', fontSize: 13 }} /></div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: '#fff', border: '1px solid #E2E8F0', borderRadius: 10, padding: '0 16px' }}><LinkIcon size={16} color="#0F004F" /><input value={sec.dbOjtUrl} onChange={e => updateSecField(si, 'dbOjtUrl', e.target.value)} placeholder="https://docs.google.com/..." style={{ border: 'none', background: 'transparent', padding: '14px 0', outline: 'none', color: '#1a56db', fontWeight: 700, width: '100%', fontSize: 13 }} /></div>
                       </div>
                     </div>
                     <div style={{ background: '#F8FAFC', padding: 24, borderRadius: 20, border: '1px solid #E2E8F0', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                      <div style={{ fontSize: '11px', fontWeight: 900, marginBottom: 20, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 8 }}><Clock size={16}/> CARGA HORARIA TOTAL</div>
-                      <input value={sec.totalCh} onChange={e => updateSecField(si, 'totalCh', e.target.value)} placeholder="HH:MM:SS" style={{ ...inp({ fontSize: 28, fontWeight: 900, textAlign: 'center', color: '#1B0088' }), width: '200px' }} />
+                      <div style={{ fontSize: '11px', fontWeight: 900, marginBottom: 20, color: '#0F004F', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 8 }}><Clock size={16}/> CARGA HORARIA TOTAL</div>
+                      <input value={sec.totalCh} onChange={e => updateSecField(si, 'totalCh', e.target.value)} placeholder="HH:MM:SS" style={{ ...inp({ fontSize: 28, fontWeight: 900, textAlign: 'center', color: '#0F004F' }), width: '200px' }} />
                       <div style={{ fontSize: 13, color: '#94a3b8', marginTop: 16 }}>Formato: <span style={{ fontWeight: 800 }}>HH:MM:SS</span></div>
                     </div>
                   </div>
@@ -757,7 +757,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                 style={{ background: '#fff', borderRadius: '24px', padding: '40px', width: '100%', maxWidth: '600px', boxShadow: '0 20px 60px rgba(0,0,0,0.1)' }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
-                  <div style={{ fontSize: '18px', fontWeight: 900, color: '#1B0088', display: 'flex', alignItems: 'center', gap: 12 }}><Layers size={24}/> TARJETA EXTRA OJT</div>
+                  <div style={{ fontSize: '18px', fontWeight: 900, color: '#0F004F', display: 'flex', alignItems: 'center', gap: 12 }}><Layers size={24}/> TARJETA EXTRA OJT</div>
                   <button onClick={() => setEditingExtraIdx(null)} style={{ background: '#f1f5f9', border: 'none', width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#64748b' }}><X size={18}/></button>
                 </div>
                 
@@ -777,7 +777,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                 </div>
 
                 <div style={{ marginTop: '32px', display: 'flex', justifyContent: 'flex-end' }}>
-                  <button onClick={() => setEditingExtraIdx(null)} style={{ background: '#1B0088', color: '#fff', border: 'none', padding: '14px 32px', borderRadius: '12px', fontSize: '12px', fontWeight: 900, cursor: 'pointer' }}>LISTO</button>
+                  <button onClick={() => setEditingExtraIdx(null)} style={{ background: '#0F004F', color: '#fff', border: 'none', padding: '14px 32px', borderRadius: '12px', fontSize: '12px', fontWeight: 900, cursor: 'pointer' }}>LISTO</button>
                 </div>
               </motion.div>
             </motion.div>

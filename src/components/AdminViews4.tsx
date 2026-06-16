@@ -15,7 +15,7 @@ export const AdminSatelites = (props) => {
     padding:'10px 14px', 
     fontFamily:'inherit', 
     fontSize:13, 
-    color:'#1B0088', 
+    color:'#0F004F', 
     outline:'none', 
     borderRadius:10, 
     transition: 'all 0.2s ease',
@@ -42,15 +42,15 @@ export const AdminSatelites = (props) => {
   };
 
   return (
-    <div style={{minHeight:'100vh', background:'#F8F7FF', fontFamily: '"Inter", sans-serif'}}>
+    <div style={{minHeight:'100vh', background:'#F8F7FF', fontFamily: '"Trebuchet MS", sans-serif'}}>
       {/* Corporate Header */}
       <div style={{
-        background:'#1B0088', 
+        background:'#0F004F', 
         padding:'18px 40px', 
         display:'flex', 
         alignItems:'center', 
         gap:32,
-        borderBottom: '4px solid #99CC33',
+        borderBottom: '4px solid #ED1650',
         boxShadow: '0 8px 32px rgba(27,0,136,0.15)',
         zIndex: 100
       }}>
@@ -58,28 +58,28 @@ export const AdminSatelites = (props) => {
           background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#ffffff', padding: '10px 24px', 
           borderRadius: 8, cursor: 'pointer', fontSize: 13, fontWeight: 800, textTransform: 'uppercase',
           display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s'
-        }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}>
+        }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#0F004F' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}>
           <ArrowLeft size={16} /> VOLVER
         </button>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <Satellite size={22} color="#99CC33" />
-          <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>EDITOR SATÉLITE <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> <span style={{ color: '#99CC33' }}>{pk.toUpperCase()}</span></span>
+          <Satellite size={22} color="#ED1650" />
+          <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>EDITOR SATÉLITE <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> <span style={{ color: '#ED1650' }}>{pk.toUpperCase()}</span></span>
         </div>
       </div>
 
       <div style={{padding:'40px 60px'}}>
         <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:32}}>
           <div style={{display: 'flex', alignItems: 'center', gap: 12}}>
-            <div style={{ background: 'rgba(27,0,136,0.05)', color: '#1B0088', padding: '12px', borderRadius: 12 }}>
+            <div style={{ background: 'rgba(27,0,136,0.05)', color: '#0F004F', padding: '12px', borderRadius: 12 }}>
               <Layers size={20} />
             </div>
             <div>
-              <div style={{fontSize:16, fontWeight:900, color:'#1B0088'}}>NODOS DEL SATÉLITE</div>
+              <div style={{fontSize:16, fontWeight:900, color:'#0F004F'}}>NODOS DEL SATÉLITE</div>
               <div style={{fontSize:12, color:'#64748b'}}>{data.length} elementos configurados</div>
             </div>
           </div>
           <button onClick={addRow} style={{
-            background:'#1B0088', color:'#ffffff', border:'none', padding:'14px 28px', 
+            background:'#0F004F', color:'#ffffff', border:'none', padding:'14px 28px', 
             cursor:'pointer', fontSize:13, fontWeight:900, borderRadius:12, letterSpacing:'0.02em',
             boxShadow: '0 8px 25px rgba(27,0,136,0.2)', transition: 'all 0.2s ease',
             display: 'flex', alignItems: 'center', gap: 10
@@ -98,7 +98,7 @@ export const AdminSatelites = (props) => {
           background:'#ffffff',
           boxShadow: '0 10px 40px rgba(0,0,0,0.04)'
         }}>
-          <div style={{display:'grid', gridTemplateColumns:'140px 80px 180px 1fr 140px 100px 60px', gap:16, padding:'16px 24px', background:'#1B0088'}}>
+          <div style={{display:'grid', gridTemplateColumns:'140px 80px 180px 1fr 140px 100px 60px', gap:16, padding:'16px 24px', background:'#0F004F'}}>
             {['MACRO TEMA','DÍA','TEMA','DETALLES DEL CURSO','HERRAMIENTAS','TIEMPO',''].map((h,i)=>(
               <div key={i} style={{fontSize:10, color:'#ffffff', textTransform:'uppercase', fontWeight:900, letterSpacing:'0.1em'}}>{h}</div>
             ))}
@@ -146,7 +146,7 @@ export const AdminAdvancedContent = ({ sectorId, courseIdx, config, updateConfig
     padding:'10px 14px', 
     fontFamily:'inherit', 
     fontSize:13, 
-    color:'#1B0088', 
+    color:'#0F004F', 
     outline:'none', 
     borderRadius:10, 
     transition: 'all 0.2s ease',
@@ -174,15 +174,15 @@ export const AdminAdvancedContent = ({ sectorId, courseIdx, config, updateConfig
       updateF(next);
     };
     return (
-      <div style={{minHeight:'100vh', background:'#F8F7FF', fontFamily: '"Inter", sans-serif'}}>
+      <div style={{minHeight:'100vh', background:'#F8F7FF', fontFamily: '"Trebuchet MS", sans-serif'}}>
         {/* Corporate Header */}
         <div style={{
-          background:'#1B0088', 
+          background:'#0F004F', 
           padding:'18px 40px', 
           display:'flex', 
           alignItems:'center', 
           gap:32,
-          borderBottom: '4px solid #99CC33',
+          borderBottom: '4px solid #ED1650',
           boxShadow: '0 8px 32px rgba(27,0,136,0.15)',
           zIndex: 100
         }}>
@@ -190,17 +190,17 @@ export const AdminAdvancedContent = ({ sectorId, courseIdx, config, updateConfig
             background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#ffffff', padding: '10px 24px', 
             borderRadius: 8, cursor: 'pointer', fontSize: 13, fontWeight: 800, textTransform: 'uppercase',
             display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s'
-          }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}>
+          }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#0F004F' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}>
             <ArrowLeft size={16} /> VOLVER
           </button>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <Briefcase size={22} color="#99CC33" />
-            <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>EDITOR CONTENIDO FSC <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> <span style={{ color: '#99CC33' }}>PLANETA {courseIdx}</span></span>
+            <Briefcase size={22} color="#ED1650" />
+            <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>EDITOR CONTENIDO FSC <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> <span style={{ color: '#ED1650' }}>PLANETA {courseIdx}</span></span>
           </div>
           <button onClick={addSection} style={{
-            marginLeft:'auto', background:'#99CC33', color:'#ffffff', border:'none', padding:'14px 28px', 
+            marginLeft:'auto', background:'#ED1650', color:'#ffffff', border:'none', padding:'14px 28px', 
             cursor:'pointer', fontSize:13, fontWeight:900, borderRadius:10, letterSpacing:'0.02em',
-            boxShadow: '0 8px 20px rgba(153,204,51,0.2)', transition: 'all 0.2s ease',
+            boxShadow: '0 8px 20px rgba(237,22,80,0.2)', transition: 'all 0.2s ease',
             display: 'flex', alignItems: 'center', gap: 10
           }}
           onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
@@ -221,16 +221,16 @@ export const AdminAdvancedContent = ({ sectorId, courseIdx, config, updateConfig
               boxShadow: '0 10px 40px rgba(0,0,0,0.04)'
             }}>
               <div style={{
-                background:'#1B0088', 
+                background:'#0F004F', 
                 padding:'20px 32px', 
                 display:'flex', 
                 justifyContent:'space-between', 
                 alignItems:'center',
-                borderBottom: '4px solid #99CC33'
+                borderBottom: '4px solid #ED1650'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16, flex: 1 }}>
                   <div style={{ background: 'rgba(255,255,255,0.1)', padding: 10, borderRadius: 10 }}>
-                    <Edit3 size={18} color="#99CC33" />
+                    <Edit3 size={18} color="#ED1650" />
                   </div>
                   <input 
                     value={sec.label} 
@@ -254,7 +254,7 @@ export const AdminAdvancedContent = ({ sectorId, courseIdx, config, updateConfig
                 <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid #E2E8F0', background: '#F8FAFC' }}>
                   <table style={{width:'100%', borderCollapse:'collapse'}}>
                     <thead>
-                      <tr style={{background:'#1B0088'}}>
+                      <tr style={{background:'#0F004F'}}>
                         {['TEMA / ACTIVIDAD','DETALLES DEL PROCESO','TIEMPO CH',''].map(h=>(
                           <th key={h} style={{padding:'16px 20px',fontSize:10,textAlign:'left', color:'#ffffff', textTransform:'uppercase', fontWeight:900, letterSpacing:'0.1em'}}>
                             {h}
@@ -285,12 +285,12 @@ export const AdminAdvancedContent = ({ sectorId, courseIdx, config, updateConfig
                   </table>
                 </div>
                 <button onClick={()=>addRow(si)} style={{
-                  marginTop:24, background:'#ffffff', border:'2px solid #1B0088', padding:'14px 28px', 
-                  cursor:'pointer', fontSize:13, fontWeight:900, borderRadius:12, color:'#1B0088',
+                  marginTop:24, background:'#ffffff', border:'2px solid #0F004F', padding:'14px 28px', 
+                  cursor:'pointer', fontSize:13, fontWeight:900, borderRadius:12, color:'#0F004F',
                   transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: 10
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = '#1B0088'; e.currentTarget.style.color = '#ffffff'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.color = '#1B0088'; }}
+                onMouseEnter={e => { e.currentTarget.style.background = '#0F004F'; e.currentTarget.style.color = '#ffffff'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.color = '#0F004F'; }}
                 >
                   <Plus size={18} /> AGREGAR NUEVA FILA
                 </button>
@@ -304,15 +304,15 @@ export const AdminAdvancedContent = ({ sectorId, courseIdx, config, updateConfig
   }
 
   return (
-    <div style={{minHeight:'100vh', background:'#F8F7FF', fontFamily: '"Inter", sans-serif'}}>
+    <div style={{minHeight:'100vh', background:'#F8F7FF', fontFamily: '"Trebuchet MS", sans-serif'}}>
       {/* Corporate Header */}
       <div style={{
-        background:'#1B0088', 
+        background:'#0F004F', 
         padding:'18px 40px', 
         display:'flex', 
         alignItems:'center', 
         gap:32,
-        borderBottom: '4px solid #99CC33',
+        borderBottom: '4px solid #ED1650',
         boxShadow: '0 8px 32px rgba(27,0,136,0.15)',
         zIndex: 100
       }}>
@@ -320,21 +320,21 @@ export const AdminAdvancedContent = ({ sectorId, courseIdx, config, updateConfig
           background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#ffffff', padding: '10px 24px', 
           borderRadius: 8, cursor: 'pointer', fontSize: 13, fontWeight: 800, textTransform: 'uppercase',
           display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s'
-        }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}>
+        }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#0F004F' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}>
           <ArrowLeft size={16} /> VOLVER
         </button>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <Edit3 size={22} color="#99CC33" />
-          <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>EDITOR CONTENIDO: <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> <span style={{ color: '#99CC33' }}>{sectorId} - {courseIdx}</span></span>
+          <Edit3 size={22} color="#ED1650" />
+          <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>EDITOR CONTENIDO: <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> <span style={{ color: '#ED1650' }}>{sectorId} - {courseIdx}</span></span>
         </div>
       </div>
-      <div style={{padding:80, textAlign:'center', color:'#1B0088', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24}}>
+      <div style={{padding:80, textAlign:'center', color:'#0F004F', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24}}>
         <div style={{ background: 'rgba(27,0,136,0.05)', padding: 32, borderRadius: '50%' }}>
           <Settings size={64} className="animate-spin-slow" />
         </div>
         <div style={{fontSize:20, fontWeight: 900}}>Módulo de edición detallada para este sector en desarrollo.</div>
         <div style={{fontSize:15, color: '#64748b', maxWidth: 500}}>Esta vista está siendo actualizada para cumplir con el estándar corporativo de alta fidelidad.</div>
-        <button onClick={onBack} style={{ marginTop: 20, background: '#1B0088', color: '#fff', border: 'none', padding: '14px 40px', borderRadius: 12, fontWeight: 900, cursor: 'pointer' }}>VOLVER AL EDITOR DE BASE DE DATOS</button>
+        <button onClick={onBack} style={{ marginTop: 20, background: '#0F004F', color: '#fff', border: 'none', padding: '14px 40px', borderRadius: 12, fontWeight: 900, cursor: 'pointer' }}>VOLVER AL EDITOR DE BASE DE DATOS</button>
       </div>
     </div>
   );

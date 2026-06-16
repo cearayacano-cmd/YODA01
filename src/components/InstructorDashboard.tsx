@@ -62,8 +62,40 @@ const getPartidasInfo = (userLogs: any[], config: any) => {
     });
 };
 
+// --- MOCK SUPERVISOR DATA ---
+// Replace this with actual data once provided.
+export const SUPERVISOR_DATA = [
+  {
+    id: "sup_br1@konectabr.com",
+    name: "Carlos Silva",
+    region: "BR",
+    instructors: ["instructor@konectabr.com", "inst2_br@konectabr.com", "inst3_br@konectabr.com"]
+  },
+  {
+    id: "sup_br2@konectabr.com",
+    name: "Ana Santos",
+    region: "BR",
+    instructors: ["inst4_br@konectabr.com", "inst5_br@konectabr.com"]
+  },
+  {
+    id: "sup_es1@latam.com",
+    name: "Jorge Perez",
+    region: "ES",
+    instructors: ["inst1_es@latam.com", "inst2_es@latam.com"]
+  },
+  {
+    id: "sup_es2@latam.com",
+    name: "Maria Lopez",
+    region: "ES",
+    instructors: ["inst3_es@latam.com", "inst4_es@latam.com"]
+  }
+];
+
 export const InstructorDashboard = ({ logs, config, onBack }: any) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedRegion, setSelectedRegion] = useState<string>('ALL'); // 'ALL', 'BR', 'ES'
+  const [selectedSupervisor, setSelectedSupervisor] = useState<string | null>(null);
+
   
   // Filter out admin user
   const relevantLogs = useMemo(() => logs.filter((l: any) => l.user !== 'carlose.araya@latam.com'), [logs]);
@@ -83,7 +115,29 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
     return users.sort((a, b) => a.localeCompare(b));
   }, [relevantLogs]);
   
-  const filteredUsers = uniqueUsers.filter(u => u.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredUsers = useMemo(() => {
+    let users = uniqueUsers;
+
+    // Filter by Region
+    if (selectedRegion !== 'ALL') {
+      const validInstructors = new Set(SUPERVISOR_DATA.filter(s => s.region === selectedRegion).flatMap(s => s.instructors));
+      // In a real app, you might want to show instructors even if they haven't logged in yet, 
+      // but for now we filter the active uniqueUsers. 
+      // If we want to show all assigned instructors regardless of activity:
+      // users = Array.from(validInstructors);
+      users = users.filter(u => validInstructors.has(u));
+    }
+
+    // Filter by Supervisor
+    if (selectedSupervisor) {
+      const supervisor = SUPERVISOR_DATA.find(s => s.id === selectedSupervisor);
+      if (supervisor) {
+        users = users.filter(u => supervisor.instructors.includes(u));
+      }
+    }
+
+    return users.filter(u => u.toLowerCase().includes(searchTerm.toLowerCase()));
+  }, [uniqueUsers, selectedRegion, selectedSupervisor, searchTerm]);
   
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
   const [selectedPartida, setSelectedPartida] = useState<string | null>(null);
@@ -128,6 +182,29 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
       };
     }).sort((a: any, b: any) => new Date(b.lastActivity).getTime() - new Date(a.lastActivity).getTime());
   }, [filteredUsers, relevantLogs, config]);
+
+  const supervisorSummaryData = useMemo(() => {
+    if (selectedSupervisor) return [];
+    
+    const relevantSupervisors = SUPERVISOR_DATA.filter(s => selectedRegion === 'ALL' || s.region === selectedRegion);
+    
+    return relevantSupervisors.map(sup => {
+      const supInstructors = globalUsersData.filter(u => sup.instructors.includes(u.user));
+      const totalInstructors = supInstructors.length;
+      const partidasGeneradas = supInstructors.reduce((acc, u) => acc + u.partidasGeneradas, 0);
+      const partidasCompletadas = supInstructors.reduce((acc, u) => acc + u.partidasCompletadas, 0);
+      const activeInstructors = supInstructors.filter(u => u.isDictando).length;
+      
+      return {
+        ...sup,
+        totalInstructors,
+        activeInstructors,
+        partidasGeneradas,
+        partidasCompletadas,
+        completionRate: partidasGeneradas > 0 ? (partidasCompletadas / partidasGeneradas) * 100 : 0
+      };
+    }).filter(s => s.totalInstructors > 0); // Only show supervisors with active instructors
+  }, [globalUsersData, selectedSupervisor, selectedRegion]);
 
   // Filtered logs for selected user (only main module accesses)
   const allUserLogs = useMemo(() => {
@@ -195,7 +272,34 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
           boxShadow: '2px 0 10px rgba(0,0,0,0.1)'
         }}>
           <div style={{ padding: '24px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-            <div style={{ fontSize: '12px', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '8px', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Instructores Activos del Mes</div>
+            <div style={{ fontSize: '12px', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '16px', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Filtros de Red</div>
+            
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+              <select 
+                value={selectedRegion}
+                onChange={(e) => { setSelectedRegion(e.target.value); setSelectedSupervisor(null); }}
+                style={{ flex: 1, background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', padding: '8px', borderRadius: '8px', color: '#fff', fontSize: '12px', outline: 'none' }}
+              >
+                <option value="ALL" style={{ color: '#000' }}>Todas las Regiones</option>
+                <option value="BR" style={{ color: '#000' }}>Brasil (BR)</option>
+                <option value="ES" style={{ color: '#000' }}>Hispano (ES)</option>
+              </select>
+            </div>
+
+            <div style={{ marginBottom: '16px' }}>
+              <select 
+                value={selectedSupervisor || ''}
+                onChange={(e) => setSelectedSupervisor(e.target.value || null)}
+                style={{ width: '100%', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', padding: '8px', borderRadius: '8px', color: '#fff', fontSize: '12px', outline: 'none' }}
+              >
+                <option value="" style={{ color: '#000' }}>Todos los Supervisores</option>
+                {SUPERVISOR_DATA.filter(s => selectedRegion === 'ALL' || s.region === selectedRegion).map(sup => (
+                  <option key={sup.id} value={sup.id} style={{ color: '#000' }}>{sup.name} ({sup.region})</option>
+                ))}
+              </select>
+            </div>
+
+            <div style={{ fontSize: '12px', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '8px', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Instructores Activos</div>
             <input 
               type="text" 
               placeholder="Buscar instructor..." 
@@ -339,61 +443,107 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
 
               {/* Master Grid */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '20px' }}>
-                {globalUsersData.map(u => (
-                  <div 
-                    key={u.user}
-                    onClick={() => { setSelectedUser(u.user); setActiveTab('reporte'); }}
-                    style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px', cursor: 'pointer', transition: 'all 0.2s', position: 'relative', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)' }}
-                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0,0,0,0.1)' }}
-                    onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.05)' }}
-                  >
-                    {/* Active Badge */}
-                    <div style={{ position: 'absolute', top: '24px', right: '24px', display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(22, 163, 74, 0.1)', color: secondaryBrand, padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 800 }}>
-                      <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: secondaryBrand }} /> ACTIVO
-                    </div>
+                {!selectedSupervisor && supervisorSummaryData.length > 0 ? (
+                  // --- SHOW SUPERVISOR TEAMS ---
+                  supervisorSummaryData.map(sup => (
+                    <div 
+                      key={sup.id}
+                      onClick={() => setSelectedSupervisor(sup.id)}
+                      style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px', cursor: 'pointer', transition: 'all 0.2s', position: 'relative', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)' }}
+                      onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0,0,0,0.1)' }}
+                      onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.05)' }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
+                        <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(15,0,79,0.1)', color: primaryBrand, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '20px' }}>
+                          <Users size={24} />
+                        </div>
+                        <div style={{ flex: 1, overflow: 'hidden' }}>
+                          <div style={{ fontSize: '11px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 800 }}>EQUIPO {sup.region}</div>
+                          <div style={{ fontSize: '18px', fontWeight: 900, color: '#111827', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: '4px' }}>{sup.name}</div>
+                          <div style={{ fontSize: '12px', color: '#6B7280', fontWeight: 600 }}>{sup.totalInstructors} instructores asignados</div>
+                        </div>
+                      </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
-                      <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(15,0,79,0.1)', color: primaryBrand, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '20px' }}>
-                        {u.user.charAt(0).toUpperCase()}
-                      </div>
-                      <div style={{ flex: 1, overflow: 'hidden' }}>
-                        <div style={{ fontSize: '16px', fontWeight: 800, color: '#111827', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: '4px' }}>{u.user}</div>
-                        
-                        {u.isDictando ? (
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 700, color: '#F59E0B' }}>
-                            <BookOpen size={12} /> Dictando Curso
-                          </div>
-                        ) : (
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 600, color: '#9CA3AF' }}>
-                            <CheckCircle size={12} /> Sin curso activo
-                          </div>
-                        )}
-                      </div>
-                    </div>
+                      <div style={{ borderTop: '1px solid #E5E7EB', paddingTop: '20px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                          <span style={{ fontSize: '12px', fontWeight: 700, color: '#4B5563' }}>Módulos Completados</span>
+                          <span style={{ fontSize: '12px', fontWeight: 900, color: primaryBrand }}>{Math.round(sup.completionRate)}%</span>
+                        </div>
+                        <div style={{ width: '100%', height: '8px', background: '#F3F4F6', borderRadius: '4px', overflow: 'hidden', marginBottom: '16px' }}>
+                          <div style={{ height: '100%', background: secondaryBrand, width: `${sup.completionRate}%`, borderRadius: '4px' }} />
+                        </div>
 
-                    <div style={{ borderTop: '1px solid #E5E7EB', paddingTop: '20px' }}>
-                      <div style={{ fontSize: '11px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 800, marginBottom: '16px' }}>Accesos a Módulos (Este Mes)</div>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
-                        <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}>
-                          <div style={{ fontSize: '18px', fontWeight: 900, color: '#EAB308' }}>{u.operaciones}</div>
-                          <div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Instrutor</div>
-                        </div>
-                        <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}>
-                          <div style={{ fontSize: '18px', fontWeight: 900, color: '#06B6D4' }}>{u.suministros}</div>
-                          <div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Forms</div>
-                        </div>
-                        <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}>
-                          <div style={{ fontSize: '18px', fontWeight: 900, color: '#84CC16' }}>{u.laboratorio}</div>
-                          <div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Líderes</div>
-                        </div>
-                        <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}>
-                          <div style={{ fontSize: '18px', fontWeight: 900, color: '#A855F7' }}>{u.ingenieria}</div>
-                          <div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Workshops</div>
+                        <div style={{ display: 'flex', gap: '16px' }}>
+                          <div>
+                            <div style={{ fontSize: '18px', fontWeight: 900, color: primaryBrand }}>{sup.partidasGeneradas}</div>
+                            <div style={{ fontSize: '10px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 700 }}>Iniciados</div>
+                          </div>
+                          <div>
+                            <div style={{ fontSize: '18px', fontWeight: 900, color: secondaryBrand }}>{sup.partidasCompletadas}</div>
+                            <div style={{ fontSize: '10px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 700 }}>Completados</div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  // --- SHOW INDIVIDUAL INSTRUCTORS ---
+                  globalUsersData.map(u => (
+                    <div 
+                      key={u.user}
+                      onClick={() => { setSelectedUser(u.user); setActiveTab('reporte'); }}
+                      style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px', cursor: 'pointer', transition: 'all 0.2s', position: 'relative', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)' }}
+                      onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0,0,0,0.1)' }}
+                      onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.05)' }}
+                    >
+                      {/* Active Badge */}
+                      <div style={{ position: 'absolute', top: '24px', right: '24px', display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(22, 163, 74, 0.1)', color: secondaryBrand, padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 800 }}>
+                        <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: secondaryBrand }} /> ACTIVO
+                      </div>
+
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
+                        <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(15,0,79,0.1)', color: primaryBrand, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '20px' }}>
+                          {u.user.charAt(0).toUpperCase()}
+                        </div>
+                        <div style={{ flex: 1, overflow: 'hidden' }}>
+                          <div style={{ fontSize: '16px', fontWeight: 800, color: '#111827', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: '4px' }}>{u.user}</div>
+                          
+                          {u.isDictando ? (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 700, color: '#F59E0B' }}>
+                              <BookOpen size={12} /> Dictando Curso
+                            </div>
+                          ) : (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 600, color: '#9CA3AF' }}>
+                              <CheckCircle size={12} /> Sin curso activo
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div style={{ borderTop: '1px solid #E5E7EB', paddingTop: '20px' }}>
+                        <div style={{ fontSize: '11px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 800, marginBottom: '16px' }}>Accesos a Módulos (Este Mes)</div>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
+                          <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}>
+                            <div style={{ fontSize: '18px', fontWeight: 900, color: '#EAB308' }}>{u.operaciones}</div>
+                            <div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Instrutor</div>
+                          </div>
+                          <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}>
+                            <div style={{ fontSize: '18px', fontWeight: 900, color: '#06B6D4' }}>{u.suministros}</div>
+                            <div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Forms</div>
+                          </div>
+                          <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}>
+                            <div style={{ fontSize: '18px', fontWeight: 900, color: '#84CC16' }}>{u.laboratorio}</div>
+                            <div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Líderes</div>
+                          </div>
+                          <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}>
+                            <div style={{ fontSize: '18px', fontWeight: 900, color: '#A855F7' }}>{u.ingenieria}</div>
+                            <div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Workshops</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           ) : (
@@ -519,7 +669,8 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
                     <tr style={{ borderBottom: '2px solid rgba(0,0,0,0.05)', textAlign: 'left' }}>
                       <th style={{ padding: '16px 24px', fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px' }}>Código</th>
                       <th style={{ padding: '16px 24px', fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px' }}>Módulo / Curso</th>
-                      <th style={{ padding: '16px 24px', fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px' }}>Progreso</th>
+                      <th style={{ padding: '16px 24px', fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px', width: '200px' }}>Progreso General</th>
+                      <th style={{ padding: '16px 24px', fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px' }}>Riesgo / Status</th>
                       <th style={{ padding: '16px 24px', fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px' }}>Estado</th>
                       <th style={{ padding: '16px 24px', fontSize: '12px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px' }}>Última Actividad</th>
                     </tr>
@@ -541,17 +692,37 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
                         </td>
                         <td style={{ padding: '16px 24px' }}>
                           {partida.totalNodes > 0 ? (
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                              <div style={{ width: '60px', height: '6px', background: '#E5E7EB', borderRadius: '3px', overflow: 'hidden' }}>
+                            <div style={{ width: '100%' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                                <span style={{ fontSize: '11px', fontWeight: 800, color: '#6B7280' }}>Avance Módulo</span>
+                                <span style={{ fontSize: '12px', fontWeight: 900, color: primaryBrand }}>{Math.round((partida.completedNodes / partida.totalNodes) * 100)}%</span>
+                              </div>
+                              <div style={{ width: '100%', height: '8px', background: '#E5E7EB', borderRadius: '4px', overflow: 'hidden' }}>
                                 <div style={{ height: '100%', background: partida.isCompleted ? secondaryBrand : primaryBrand, width: `${(partida.completedNodes / partida.totalNodes) * 100}%` }} />
                               </div>
-                              <span style={{ fontSize: '13px', fontWeight: 700, color: '#6B7280' }}>
-                                {partida.completedNodes} / {partida.totalNodes}
-                              </span>
+                              <div style={{ fontSize: '10px', color: '#9CA3AF', marginTop: '4px', textAlign: 'right' }}>{partida.completedNodes} / {partida.totalNodes} Actividades</div>
                             </div>
                           ) : (
                             <span style={{ fontSize: '13px', color: '#9CA3AF' }}>Sin datos</span>
                           )}
+                        </td>
+                        <td style={{ padding: '16px 24px' }}>
+                          {(() => {
+                            const daysSinceActivity = Math.floor((new Date().getTime() - new Date(partida.lastActivity).getTime()) / (1000 * 3600 * 24));
+                            let riskColor = secondaryBrand; // Green
+                            let riskText = 'Al Día';
+                            if (!partida.isCompleted) {
+                              if (daysSinceActivity > 5) { riskColor = '#EF4444'; riskText = 'En Riesgo (Inactivo)'; }
+                              else if (daysSinceActivity > 2) { riskColor = '#F59E0B'; riskText = 'Atención Requerida'; }
+                            }
+                            
+                            return (
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: riskColor, boxShadow: `0 0 8px ${riskColor}80` }} />
+                                <span style={{ fontSize: '12px', fontWeight: 800, color: riskColor }}>{riskText}</span>
+                              </div>
+                            );
+                          })()}
                         </td>
                         <td style={{ padding: '16px 24px' }}>
                           {partida.isCompleted ? (

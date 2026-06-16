@@ -27,7 +27,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
     const next=[...((tempConfig[sk] || tempConfig.br || {})[f] || [])]; next[i]={...next[i],[sub]:v}; updateF(f,next);
   };
   const MODULE_FIELDS = [
-    { field:'laboratorio', key:'lab',  defaultTitle:'Portal de Lideres',   defaultSub:'Portal de Lideres', color: '#99CC33' },
+    { field:'laboratorio', key:'lab',  defaultTitle:'Portal de Lideres',   defaultSub:'Portal de Lideres', color: '#ED1650' },
     { field:'ingenieria',  key:'eng',  defaultTitle:'Workshops',   defaultSub:'Talleres', color: '#B200FF' },
     { field:'suministros', key:'sup',  defaultTitle:'Formulários',  defaultSub:'Formulários', color: '#00D6CC' },
     { field:'operaciones', key:'ops',  defaultTitle:'Portal Instrutor',  defaultSub:'Portal Instrutor', color: '#FFE017' },
@@ -52,21 +52,21 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
   });
   
   return (
-    <div style={{minHeight:'100vh', background:'#F8F7FF', display:'flex', flexDirection:'column', fontFamily: '"Inter", sans-serif'}}>
+    <div style={{minHeight:'100vh', background:'#F8F7FF', display:'flex', flexDirection:'column', fontFamily: '"Trebuchet MS", sans-serif'}}>
       {/* Premium Corporate Header */}
       <div style={{
-        background:'#1B0088', 
+        background:'#0F004F', 
         padding:'18px 40px', 
         display:'flex', 
         alignItems:'center', 
         gap:32,
-        borderBottom: '4px solid #99CC33',
+        borderBottom: '4px solid #ED1650',
         boxShadow: '0 8px 32px rgba(27,0,136,0.15)',
         zIndex: 100
       }}>
         <BackBtn onClick={onBack} label="CERRAR PORTAL" />
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <Settings size={22} color="#99CC33" />
+          <Settings size={22} color="#ED1650" />
           <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>ADMIN CENTER <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> {activeStation} STATION</span>
         </div>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 12 }}>
@@ -89,7 +89,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
               transition: 'all 0.3s ease'
             }}
           >
-            <Globe size={18} color="#99CC33" /> VER ESTACIÓN
+            <Globe size={18} color="#ED1650" /> VER ESTACIÓN
           </motion.button>
 
           <motion.button 
@@ -97,7 +97,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
             whileTap={{ scale: 0.98 }}
             onClick={handleSave} 
             style={{
-              background: saved ? '#00D6CC' : '#99CC33', 
+              background: saved ? '#00D6CC' : '#ED1650', 
               color: '#ffffff', 
               border: 'none', 
               padding: '12px 32px', 
@@ -108,7 +108,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
               display: 'flex',
               alignItems: 'center',
               gap: 10,
-              boxShadow: `0 10px 20px ${saved ? '#00D6CC' : '#99CC33'}40`,
+              boxShadow: `0 10px 20px ${saved ? '#00D6CC' : '#ED1650'}40`,
               transition: 'all 0.3s ease'
             }}
           >
@@ -121,7 +121,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
         {/* Professional Deep Blue Sidebar */}
         <div style={{
           width:260, 
-          background:'#1B0088', 
+          background:'#0F004F', 
           padding: '32px 16px', 
           flexShrink:0,
           display: 'flex',
@@ -137,23 +137,22 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
           {['BR','SSC'].map(st=>(
             <motion.div 
               key={st} 
-              whileHover={{ x: 6, background: 'rgba(255,255,255,0.05)' }}
+              whileHover={{ x: 6, background: activeStation===st ? '#EAE8F9' : 'rgba(255,255,255,0.05)' }}
               onClick={()=>setActiveStation(st)} 
               style={{
                 padding:'14px 20px', 
                 cursor:'pointer', 
-                borderRadius: 10, 
+                borderRadius: 30, 
                 fontWeight: activeStation===st ? 800 : 500, 
-                background: activeStation===st ? 'rgba(153,204,51,0.15)' : 'transparent', 
-                color: activeStation===st ? '#99CC33' : 'rgba(255,255,255,0.6)',
-                borderLeft: `4px solid ${activeStation===st ? '#99CC33' : 'transparent'}`,
+                background: activeStation===st ? '#EAE8F9' : 'transparent', 
+                color: activeStation===st ? '#0F004F' : 'rgba(255,255,255,0.6)',
                 display: 'flex',
                 alignItems: 'center',
                 gap: 14,
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
               }}
             >
-              <Rocket size={20} color={activeStation===st ? '#99CC33' : 'rgba(255,255,255,0.4)'} />
+              <Rocket size={20} color={activeStation===st ? '#0F004F' : 'rgba(255,255,255,0.4)'} />
               <span style={{ fontSize: 13, letterSpacing: '0.05em' }}>{st} STATION</span>
             </motion.div>
           ))}
@@ -161,7 +160,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
           <div style={{ margin: '16px 16px 8px 16px', height: 1, background: 'rgba(255,255,255,0.1)' }} />
           
           <motion.button 
-            whileHover={{ scale: 1.02, background: 'rgba(255,255,255,0.1)' }}
+            whileHover={{ scale: 1.02, background: '#D60D44' }}
             whileTap={{ scale: 0.98 }}
             onClick={onInstructorDashboard} 
             style={{
@@ -169,15 +168,15 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
               padding:'12px 20px', 
               cursor:'pointer', 
               borderRadius: 30, 
-              border: '1px solid rgba(255,255,255,0.2)',
+              border: 'none',
               fontWeight: 900, 
-              background: 'rgba(255,255,255,0.05)', 
+              background: '#ED1650', 
               color: '#ffffff',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: 10,
-              backdropFilter: 'blur(10px)',
+              boxShadow: '0 4px 15px rgba(237,22,80,0.3)',
               transition: 'all 0.3s ease'
             }}
           >
@@ -225,8 +224,8 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
         <div style={{flex:1, padding: '40px 60px', overflowY:'auto', background: '#F8F7FF'}}>
           
           <div style={{display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24}}>
-            <Database size={22} color="#1B0088" />
-            <div style={{fontSize:15, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
+            <Database size={22} color="#0F004F" />
+            <div style={{fontSize:15, color:'#0F004F', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
               DATABASE: ENTRENAMIENTO
             </div>
           </div>
@@ -244,20 +243,20 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
             overflow: 'hidden',
             marginBottom: 48
           }}>
-            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '4px', background: '#99CC33' }} />
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '4px', background: '#ED1650' }} />
             <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
               <div style={{ background: 'rgba(27,0,136,0.05)', padding: 16, borderRadius: 16 }}>
-                <Globe size={32} color="#1B0088" />
+                <Globe size={32} color="#0F004F" />
               </div>
               <div>
-                <div style={{fontSize:18, fontWeight:900, color: '#1B0088', marginBottom:6, letterSpacing: '-0.01em'}}>Rutas, Planetas y Desafíos</div>
+                <div style={{fontSize:18, fontWeight:900, color: '#0F004F', marginBottom:6, letterSpacing: '-0.01em'}}>Rutas, Planetas y Desafíos</div>
                  <div style={{fontSize:14, color: '#64748b', maxWidth: 400}}>Módulo avanzado para gestionar la topología de la red, missões por niveles y contenido multimedia.</div>
               </div>
             </div>
             <button 
               onClick={()=>onExploracion(activeStation)} 
               style={{
-                background:'#1B0088', color:'#ffffff', border:'none', 
+                background:'#0F004F', color:'#ffffff', border:'none', 
                 padding:'16px 36px', cursor:'pointer', fontSize:13, fontWeight:900, 
                 borderRadius:12, display: 'flex', alignItems: 'center', gap: 12,
                 boxShadow: '0 8px 25px rgba(27,0,136,0.25)', transition: 'all 0.3s ease'
@@ -280,12 +279,12 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
             position: 'relative',
             overflow: 'hidden'
           }}>
-            <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: '#99CC33' }} />
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: '#ED1650' }} />
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
               <div>
                 <div style={{display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20}}>
-                  <Activity size={20} color="#1B0088" />
-                  <div style={{fontSize:14, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
+                  <Activity size={20} color="#0F004F" />
+                  <div style={{fontSize:14, color:'#0F004F', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
                     LIVE TELEMETRY · MONITORING URL
                   </div>
                 </div>
@@ -294,15 +293,15 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                   onChange={e=>updateF('monitoringUrl',e.target.value)}
                   style={{...inp({ padding: '14px 20px', border: '1px solid #E2E8F0', fontSize: 14, background: '#F8FAFC' }), width:'100%'}} 
                   placeholder="https://lookerstudio.google.com/..."
-                  onFocus={e => { e.currentTarget.style.borderColor = '#1B0088'; e.currentTarget.style.background = '#fff'; }}
+                  onFocus={e => { e.currentTarget.style.borderColor = '#0F004F'; e.currentTarget.style.background = '#fff'; }}
                   onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#F8FAFC'; }}
                 />
               </div>
 
               <div>
                 <div style={{display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20}}>
-                  <Globe size={20} color="#1B0088" />
-                  <div style={{fontSize:14, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
+                  <Globe size={20} color="#0F004F" />
+                  <div style={{fontSize:14, color:'#0F004F', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
                     IARA LINK · ASISTENTE
                   </div>
                 </div>
@@ -311,7 +310,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                   onChange={e=>updateF('iaraLink',e.target.value)}
                   style={{...inp({ padding: '14px 20px', border: '1px solid #E2E8F0', fontSize: 14, background: '#F8FAFC' }), width:'100%'}} 
                   placeholder="https://amelia.appslatam.com/..."
-                  onFocus={e => { e.currentTarget.style.borderColor = '#1B0088'; e.currentTarget.style.background = '#fff'; }}
+                  onFocus={e => { e.currentTarget.style.borderColor = '#0F004F'; e.currentTarget.style.background = '#fff'; }}
                   onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#F8FAFC'; }}
                 />
               </div>
@@ -322,7 +321,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
               <div>
                 <div style={{display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12}}>
                   <Database size={20} color="#00D6CC" />
-                  <div style={{fontSize:14, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
+                  <div style={{fontSize:14, color:'#0F004F', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
                     MIGRAÇÃO · REQUISITOS
                   </div>
                   <span style={{ fontSize:11, color:'#00D6CC', fontWeight:700, background:'rgba(0,214,204,0.08)', border:'1px solid rgba(0,214,204,0.3)', borderRadius:6, padding:'2px 10px' }}>Matriz Migrações</span>
@@ -340,7 +339,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
               <div>
                 <div style={{display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12}}>
                   <Database size={20} color="#FF8C00" />
-                  <div style={{fontSize:14, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
+                  <div style={{fontSize:14, color:'#0F004F', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
                     INCIDÊNCIAS · LINK
                   </div>
                   <span style={{ fontSize:11, color:'#FF8C00', fontWeight:700, background:'rgba(255,140,0,0.08)', border:'1px solid rgba(255,140,0,0.3)', borderRadius:6, padding:'2px 10px' }}>Incidências</span>
@@ -358,8 +357,8 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
           </div>
 
           <div style={{display: 'flex', alignItems: 'center', gap: 14, marginBottom: 28}}>
-            <LayoutGrid size={22} color="#1B0088" />
-            <div style={{fontSize:15, color:'#1B0088', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
+            <LayoutGrid size={22} color="#0F004F" />
+            <div style={{fontSize:15, color:'#0F004F', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:900}}>
               MÓDULOS ACTIVOS DE LA ESTACIÓN
             </div>
           </div>
@@ -383,7 +382,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                 onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
                 >
                     <div style={{
-                      background:'#1B0088', 
+                      background:'#0F004F', 
                       padding:'20px 24px',
                       borderBottom: `4px solid ${color}`,
                       display: 'flex',
@@ -403,7 +402,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                         <input 
                           value={meta.title||defaultTitle} 
                           onChange={e=>updateModuleMeta(key,'title',e.target.value)} 
-                          style={{...inp({ background: '#F8FAFC', padding: '12px 16px' }),width:'100%', fontWeight:800, color: '#1B0088'}}
+                          style={{...inp({ background: '#F8FAFC', padding: '12px 16px' }),width:'100%', fontWeight:800, color: '#0F004F'}}
                         />
                       </div>
                       <div>
@@ -417,7 +416,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                     </div>
                     
                     <div>
-                      <div style={{fontSize:11, color:'#1B0088', textTransform:'uppercase', marginBottom:14, fontWeight: 900, letterSpacing: '0.08em', display: 'flex', alignItems: 'center', gap: 8}}>
+                      <div style={{fontSize:11, color:'#0F004F', textTransform:'uppercase', marginBottom:14, fontWeight: 900, letterSpacing: '0.08em', display: 'flex', alignItems: 'center', gap: 8}}>
                         <LinkIcon size={14} /> ENLACES DINÁMICOS
                       </div>
                       
@@ -434,7 +433,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                               <input 
                                 value={item.url} 
                                 onChange={e=>updateLink(field,i,'url',e.target.value)} 
-                                style={{...inp({ padding: '8px 12px', fontSize: 12, color: '#1B0088', background: '#fff' }), flex:2}}
+                                style={{...inp({ padding: '8px 12px', fontSize: 12, color: '#0F004F', background: '#fff' }), flex:2}}
                                 placeholder="https://..."
                               />
                               <button 
@@ -458,13 +457,13 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                       <button 
                         onClick={()=>addItem(field)} 
                         style={{
-                          width: '100%', background:'#f8fafc', color:'#1B0088', border:'2px dashed rgba(27,0,136,0.1)', 
+                          width: '100%', background:'#f8fafc', color:'#0F004F', border:'2px dashed rgba(27,0,136,0.1)', 
                           padding:'14px', cursor:'pointer', fontSize:12, fontWeight:800, 
                           borderRadius:12, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
                           transition: 'all 0.2s ease'
                         }}
-                        onMouseEnter={e => { e.currentTarget.style.background = '#1B0088'; e.currentTarget.style.color = '#fff' }}
-                        onMouseLeave={e => { e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.color = '#1B0088' }}
+                        onMouseEnter={e => { e.currentTarget.style.background = '#0F004F'; e.currentTarget.style.color = '#fff' }}
+                        onMouseLeave={e => { e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.color = '#0F004F' }}
                       >
                         <Plus size={18} /> AÑADIR NUEVO RECURSO
                       </button>
@@ -473,18 +472,18 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
                     {field==='laboratorio' && (
                       <div style={{marginTop:'auto', paddingTop:24, borderTop:'1px solid #E2E8F0', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
                         <div style={{display: 'flex', alignItems: 'center', gap: 12}}>
-                          <div style={{ background: 'rgba(153,204,51,0.1)', padding: 10, borderRadius: 10 }}>
-                            <GraduationCap size={20} color="#99CC33" />
+                          <div style={{ background: 'rgba(237,22,80,0.1)', padding: 10, borderRadius: 10 }}>
+                            <GraduationCap size={20} color="#ED1650" />
                           </div>
                           <div>
-                            <div style={{fontSize:13, color:'#1B0088', fontWeight: 900}}>Rota do Lider Guardião</div>
+                            <div style={{fontSize:13, color:'#0F004F', fontWeight: 900}}>Rota do Lider Guardião</div>
                             <div style={{fontSize:11, color:'#64748b'}}>Gestão de aprendizagem</div>
                           </div>
                         </div>
                         <button 
                           onClick={()=>onRutaLider(activeStation)} 
                           style={{
-                            background:'#1B0088', color:'#ffffff', border:'none', 
+                            background:'#0F004F', color:'#ffffff', border:'none', 
                             padding:'10px 20px', cursor:'pointer', fontSize:12, fontWeight:800, 
                             borderRadius:8, display: 'flex', alignItems: 'center', gap: 8,
                             boxShadow: '0 4px 12px rgba(27,0,136,0.2)'
