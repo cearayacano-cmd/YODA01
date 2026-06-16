@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { BackBtn } from './Shared';
 import { motion } from 'framer-motion';
-import { Save, Rocket, Settings, Database, Edit3, Trash2, Plus, Link as LinkIcon, CheckCircle2, Activity, LayoutGrid, GraduationCap, ArrowUpRight, Globe, ArrowLeft, User } from 'lucide-react';
+import { Save, Rocket, Settings, Database, Edit3, Trash2, Plus, Link as LinkIcon, CheckCircle2, Activity, LayoutGrid, GraduationCap, ArrowUpRight, Globe, ArrowLeft, User, Target, BarChart3, Layout } from 'lucide-react';
 
-export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLider, onViewStation, onSave, onActivityLog, onInstructorDashboard }: any) => {
+export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLider, onViewStation, onSave, onActivityLog, onInstructorDashboard, onMissionTracking, onPortalTracking }: any) => {
   const [activeStation, setActiveStation] = useState('BR');
   const [saved, setSaved] = useState(false);
   const handleSave = () => { 
@@ -64,34 +64,13 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
         boxShadow: '0 8px 32px rgba(27,0,136,0.15)',
         zIndex: 100
       }}>
+        <img src="/logo-blanco-1.png" alt="Capacitacion" style={{ height: 35, objectFit: 'contain' }} />
         <BackBtn onClick={onBack} label="CERRAR PORTAL" />
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <Settings size={22} color="#ED1650" />
           <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>ADMIN CENTER <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> {activeStation} STATION</span>
         </div>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 12 }}>
-          <motion.button 
-            whileHover={{ scale: 1.02, translateY: -1 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => onViewStation(activeStation)} 
-            style={{
-              background: 'rgba(255,255,255,0.1)', 
-              color: '#ffffff', 
-              border: '1px solid rgba(255,255,255,0.3)', 
-              padding: '12px 24px', 
-              cursor: 'pointer', 
-              fontSize: 13, 
-              fontWeight: 800, 
-              borderRadius: 8,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 10,
-              transition: 'all 0.3s ease'
-            }}
-          >
-            <Globe size={18} color="#ED1650" /> VER ESTACIÓN
-          </motion.button>
-
           <motion.button 
             whileHover={{ scale: 1.02, translateY: -1 }}
             whileTap={{ scale: 0.98 }}
@@ -160,28 +139,28 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
           <div style={{ margin: '16px 16px 8px 16px', height: 1, background: 'rgba(255,255,255,0.1)' }} />
           
           <motion.button 
-            whileHover={{ scale: 1.02, background: '#D60D44' }}
+            whileHover={{ scale: 1.02, background: '#00BDB4' }}
             whileTap={{ scale: 0.98 }}
-            onClick={onInstructorDashboard} 
+            onClick={onMissionTracking} 
             style={{
               margin: '0 16px',
               padding:'12px 20px', 
               cursor:'pointer', 
-              borderRadius: 30, 
+              borderRadius: 30,
               border: 'none',
               fontWeight: 900, 
-              background: '#ED1650', 
-              color: '#ffffff',
+              background: '#00D6CC', 
+              color: '#0F004F',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: 10,
-              boxShadow: '0 4px 15px rgba(237,22,80,0.3)',
+              boxShadow: '0 4px 15px rgba(0,214,204,0.3)',
               transition: 'all 0.3s ease'
             }}
           >
-            <User size={16} />
-            <span style={{ fontSize: 11, letterSpacing: '0.15em' }}>MONITOREO INSTRUCTORES</span>
+            <Target size={16} />
+            <span style={{ fontSize: 11, letterSpacing: '0.15em' }}>MONITOREO</span>
           </motion.button>
           
           <div style={{ marginTop: 'auto', padding: '0 8px' }}>

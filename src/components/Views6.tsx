@@ -6,7 +6,8 @@ import {
   Navigation, Hexagon, Crosshair, Lightbulb, BadgeCheck, FileText, Satellite, Gem, CheckCircle2, Check,
   ChevronUp, ChevronDown, GraduationCap, Star, RotateCcw, Calendar, Eye
 } from 'lucide-react';
-import { TacticalSatelliteIcon, HyperProPlanetVisual } from './Shared';
+import { TacticalSatelliteIcon, HyperProPlanetVisual, BackBtn } from './Shared';
+import { updateMissionTracking } from '../lib/tracking';
 
 /* ── CONFIGURATIONS & CONSTANTS ─────────────────────────────────────── */
 const typeIcons: any = {
@@ -27,6 +28,9 @@ const typeIcons: any = {
 };
 
 const typeColors: any = {
+    mision: '#00AEEF',
+    missao: '#00AEEF',
+    mission: '#00AEEF',
     mision1: '#00AEEF',
     mision2: '#00AEEF',
     mision3: '#00AEEF',
@@ -44,29 +48,17 @@ const typeColors: any = {
 };
 
 const AnimatedIaraOverlay = () => {
-    const [frame, setFrame] = React.useState(1);
-    const dirRef = React.useRef(1);
-    const totalFrames = 19;
-
-    React.useEffect(() => {
-        const interval = setInterval(() => {
-            setFrame((prev) => {
-                let next = prev + dirRef.current;
-                if (next >= totalFrames) { dirRef.current = -1; return totalFrames; }
-                if (next <= 1) { dirRef.current = 1; return 1; }
-                return next;
-            });
-        }, 180);
-        return () => clearInterval(interval);
-    }, []);
-
     return (
-        <img 
-            src={`/iara-frames/frame_${frame}.png`} 
-            alt="IARA Overlay"
+        <video 
+            src="/IARA2.mp4" 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
             style={{ 
                 width: '100%', height: 'auto', 
-                objectFit: 'contain', background: 'transparent'
+                objectFit: 'contain', background: 'transparent',
+                mixBlendMode: 'screen' // Helps blend black backgrounds if needed
             }} 
         />
     );
@@ -142,7 +134,7 @@ export const JourneyStartShip = ({ onboardingData, onClick }: any) => {
               }}
             >
               <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#0F004F', animation: 'pulse 1.5s infinite' }} />
-              CLICK AQUÍ PARA ENTRAR
+              CLIQUE AQUI PARA ENTRAR
             </motion.div>
           )}
           <img 
@@ -156,54 +148,122 @@ export const JourneyStartShip = ({ onboardingData, onClick }: any) => {
   );
 };
 
-const JourneyEndStation = ({ planetColor, onClick }: any) => (
+const JourneyEndStation = ({ planetColor, onClick }: any) => {
+    return (
     <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '400px', marginTop: '60px' }}>
       <motion.div 
-        whileHover={{ scale: 1.1, cursor: 'pointer' }}
+        whileHover={{ scale: 1.05, cursor: 'pointer' }}
         whileTap={{ scale: 0.95 }}
         onClick={onClick}
-        animate={{ y: [-10, 10, -10] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        animate={{ y: [-15, 15, -15] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
-        {/* Holographic Signal Beam (End Goal) */}
+        {/* Grand Holographic Beam Base */}
         <motion.div 
-          animate={{ opacity: [0.4, 0.8, 0.4], height: ['200px', '250px', '200px'] }}
-          transition={{ duration: 3, repeat: Infinity }}
+          animate={{ opacity: [0.3, 0.7, 0.3], height: ['250px', '320px', '250px'], width: ['80px', '120px', '80px'] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
           style={{ 
-            width: '4px', background: `linear-gradient(to top, ${planetColor}, transparent)`, 
-            position: 'absolute', bottom: '80px', filter: 'blur(4px)', zIndex: 1 
+            background: `radial-gradient(ellipse at bottom, ${planetColor}88 0%, transparent 70%)`, 
+            position: 'absolute', bottom: '100px', filter: 'blur(20px)', zIndex: 1 
           }}
         />
-        
-        {/* Space Station Icon (Goal) */}
+
+        {/* Central Complex Structure */}
         <div style={{ 
-          width: '140px', height: '140px', background: `radial-gradient(circle, ${planetColor}44 0%, transparent 70%)`,
+          width: '180px', height: '180px', 
           display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 10
         }}>
+          {/* Outer Aura */}
           <motion.div
-            animate={{ rotate: [0, 90, 180, 270, 360] }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-            style={{ position: 'absolute', inset: 0, border: `2.5px dashed ${planetColor}66`, borderRadius: '50%' }}
+            animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.5, 0.2] }}
+            transition={{ duration: 3, repeat: Infinity }}
+            style={{ position: 'absolute', inset: -20, background: `radial-gradient(circle, ${planetColor} 0%, transparent 60%)`, borderRadius: '50%', filter: 'blur(15px)' }}
           />
+
+          {/* Rotating Rings */}
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+            style={{ position: 'absolute', inset: 0, border: `2px dashed ${planetColor}88`, borderRadius: '50%', opacity: 0.8 }}
+          />
+          <motion.div
+            animate={{ rotate: -360 }}
+            transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
+            style={{ position: 'absolute', inset: 15, border: `1px dotted #fff`, borderRadius: '50%', opacity: 0.5 }}
+          />
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+            style={{ position: 'absolute', inset: -10, border: `3px solid transparent`, borderTopColor: planetColor, borderBottomColor: planetColor, borderRadius: '50%', opacity: 0.6 }}
+          />
+
+          {/* Floating Data Particles */}
+          {[...Array(6)].map((_, i) => (
+             <motion.div
+               key={`particle-${i}`}
+               animate={{ 
+                 y: [0, -30, 0], 
+                 opacity: [0, 1, 0],
+                 scale: [0.5, 1, 0.5]
+               }}
+               transition={{ duration: 2 + Math.random() * 2, repeat: Infinity, delay: Math.random() * 2 }}
+               style={{ 
+                 position: 'absolute', width: 4, height: 4, background: '#fff', borderRadius: '50%',
+                 left: `${20 + Math.random() * 60}%`, top: `${20 + Math.random() * 60}%`,
+                 boxShadow: `0 0 10px ${planetColor}`
+               }}
+             />
+          ))}
+
+          {/* The Core */}
           <div style={{ 
-            width: '80px', height: '80px', borderRadius: '50%', background: '#0F004F',
-            border: `3px solid ${planetColor}`, display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: `0 0 40px ${planetColor}60`
+            width: '90px', height: '90px', borderRadius: '50%', background: '#0F004F',
+            border: `4px solid ${planetColor}`, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: `0 0 40px ${planetColor}, inset 0 0 20px ${planetColor}`,
+            position: 'relative', overflow: 'hidden'
           }}>
-            <Target size={40} color="#fff" />
+            <motion.div 
+               animate={{ scale: [1, 1.1, 1], opacity: [0.5, 1, 0.5] }}
+               transition={{ duration: 2, repeat: Infinity }}
+               style={{ position: 'absolute', inset: 0, background: `radial-gradient(circle, ${planetColor}44 0%, transparent 70%)` }}
+            />
+            <div style={{ position: 'relative', zIndex: 2 }}>
+               <Target size={45} color="#fff" strokeWidth={2.5} style={{ filter: `drop-shadow(0 0 10px #fff)` }} />
+            </div>
           </div>
         </div>
 
-        {/* Completion Text */}
-        <div style={{ marginTop: '20px', textAlign: 'center' }}>
-          <div style={{ fontSize: '10px', color: planetColor, fontWeight: 900, letterSpacing: '5px', textTransform: 'uppercase' }}>MISSÃO CUMPRIDA</div>
-          <div style={{ fontSize: '24px', fontWeight: 900, color: '#fff', letterSpacing: '2px' }}>DESTINO FINAL</div>
-          <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)', fontWeight: 700, marginTop: '8px', letterSpacing: '2px' }}>VOLTAR AO MAPA ESTELAR</div>
+        {/* Completion Text (Elevated Style) */}
+        <div style={{ marginTop: '30px', textAlign: 'center', position: 'relative', zIndex: 10 }}>
+          <div style={{ 
+            fontSize: '11px', color: planetColor, fontWeight: 900, letterSpacing: '6px', 
+            textTransform: 'uppercase', marginBottom: '8px',
+            textShadow: `0 0 15px ${planetColor}` 
+          }}>
+            MISSÃO CUMPRIDA
+          </div>
+          <div style={{ 
+            fontSize: '32px', fontWeight: 900, color: '#fff', letterSpacing: '4px',
+            textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 15px rgba(255,255,255,0.4)',
+            marginBottom: '12px'
+          }}>
+            DESTINO FINAL
+          </div>
+          <div style={{ 
+            fontSize: '11px', color: '#fff', fontWeight: 800, letterSpacing: '3px',
+            background: 'rgba(255,255,255,0.1)', padding: '8px 24px', borderRadius: '20px',
+            border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(5px)',
+            display: 'inline-flex', alignItems: 'center', gap: 8, transition: '0.3s'
+          }}>
+            <div style={{ width: 6, height: 6, borderRadius: '50%', background: planetColor, boxShadow: `0 0 10px ${planetColor}` }} />
+            VOLTAR AO MAPA ESTELAR
+          </div>
         </div>
       </motion.div>
     </div>
-);
+    );
+};
 
 const MissionMapBackground = ({ color }: { color: string }) => (
   <div style={{ position: 'fixed', inset: 0, background: 'radial-gradient(circle at 50% 40%, #1B0088 0%, #0F004F 100%)', zIndex: 0, overflow: 'hidden' }}>
@@ -278,20 +338,7 @@ const MissionHeaderHUD = ({ sectorLabel, planetLabel, planetColor, onBack }: any
     borderBottom: 'none', padding: '15px 60px', 
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
   }}>
-    <button 
-      onClick={onBack}
-      style={{ 
-        background: planetColor, border: 'none', color: '#fff', 
-        padding: '10px 24px', borderRadius: 8, cursor: 'pointer', fontSize: 11, fontWeight: 900, 
-        letterSpacing: '2px', textTransform: 'uppercase', transition: '0.3s',
-        boxShadow: `0 0 20px ${planetColor}44`,
-        display: 'flex', alignItems: 'center', gap: 10
-      }}
-      onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = `0 0 30px ${planetColor}` }}
-      onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = `0 0 20px ${planetColor}44` }}
-    >
-      ← VOLTAR AO MAPA ESTELAR
-    </button>
+    <BackBtn onClick={onBack} label="VOLTAR" />
 
     <div style={{ width: 220 }}>
         <div style={{ fontSize: 9, color: '#fff', fontWeight: 900, opacity: 0.6, marginBottom: 8, letterSpacing: '1px', textAlign: 'right' }}>PROGRESSO DE MISSÃO / 0 XP</div>
@@ -978,7 +1025,7 @@ const secondsToTime = (secs: number) => {
     return `${m}m ${s}s`;
 };
 
-const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, onTrackEvent, themeKey }: any) => {
+const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, sectorLabel, missaoName, onTrackEvent, themeKey }: any) => {
     const storageKey = `resolved_${planetLabel}_${node.tema}_${index}`;
     const isResolved = localStorage.getItem(storageKey) === 'true';
     const recs = Array.isArray(node.herramientas) ? node.herramientas : 
@@ -1159,6 +1206,8 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, onTrackEve
                         const isDone = localStorage.getItem(storageKey) === 'true';
                         
                         if (!isDone) {
+                            const email = localStorage.getItem('yoda_active_user') || 'instructor@example.com';
+                            updateMissionTracking(email, sectorLabel || 'Sector', planetLabel || 'Planeta', missaoName, node.macroTema || 'GENERAL', node.tema, node.tiempo || node.ch || '-', 'VISTO');
                             const timeKey = `yoda_time_start_${planetLabel}_${themeKey}`;
                             const startStr = localStorage.getItem(timeKey);
                             if (startStr) {
@@ -1267,9 +1316,12 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
             localStorage.setItem('yoda_activity_logs', JSON.stringify(logs));
         }
 
-        allSecciones.forEach(sec => {
+        const missaoName = titleOverride || seccion?.nombre?.toUpperCase() || seccion?.label?.toUpperCase() || 'EXPLORAÇÃO TÁTICA';
+        allSecciones.forEach((sec: any) => {
             (sec.rows || []).forEach((r: any, i: number) => {
                 localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'true');
+                const email = localStorage.getItem('yoda_active_user') || 'instructor@example.com';
+                updateMissionTracking(email, sectorLabel || 'Sector', planetLabel || 'Planeta', missaoName, r.macroTema || 'GENERAL', r.tema, r.tiempo || r.ch || '-', 'FINALIZADO');
             });
         });
         if (onTrackEvent) onTrackEvent('COMPLETION', `Marcó toda la expedición como finalizada: ${planetLabel}`);
@@ -1313,6 +1365,22 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                 const timeKey = `yoda_time_start_${planetLabel}_${theme}`;
                 if (!localStorage.getItem(timeKey)) {
                     localStorage.setItem(timeKey, Date.now().toString());
+                }
+                const themeParts = theme.split('-');
+                const sidx = parseInt(themeParts[0]);
+                const macroTemaName = themeParts.slice(2).join('-');
+                const email = localStorage.getItem('yoda_active_user') || 'instructor@example.com';
+                const missaoName = titleOverride || seccion?.nombre?.toUpperCase() || seccion?.label?.toUpperCase() || 'EXPLORAÇÃO TÁTICA';
+                
+                const sec = allSecciones[sidx];
+                const rowsForMacroTema = (sec?.rows || []).filter((r: any) => (r.macroTema || 'GENERAL') === macroTemaName);
+                
+                if (rowsForMacroTema.length > 0) {
+                    rowsForMacroTema.forEach((r: any) => {
+                        updateMissionTracking(email, sectorLabel || 'Sector', planetLabel || 'Planeta', missaoName, macroTemaName, r.tema, r.tiempo || r.ch || '-', 'APERTURA');
+                    });
+                } else {
+                    updateMissionTracking(email, sectorLabel || 'Sector', planetLabel || 'Planeta', missaoName, macroTemaName, '-', '-', 'APERTURA');
                 }
                 return prev.filter(t => t !== theme);
             } else {
@@ -1498,6 +1566,8 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                                                         index={row.originalIndex} 
                                                                         planetColor={planetColor} 
                                                                         planetLabel={planetLabel}
+                                                                        sectorLabel={sectorLabel}
+                                                                        missaoName={titleOverride || seccion?.nombre?.toUpperCase() || seccion?.label?.toUpperCase() || 'EXPLORAÇÃO TÁTICA'}
                                                                         onTrackEvent={onTrackEvent}
                                                                         themeKey={themeKey}
                                                                     />
@@ -1565,28 +1635,59 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                             />
                         </div>
 
-                        <button 
-                            onClick={isAllComplete ? handleResetProgress : handleMarkAllAsComplete}
-                            style={{ 
-                                width: '100%', background: isAllComplete ? '#ED1650' : '#99CC33', color: '#fff', border: 'none', padding: '18px', borderRadius: 12, 
-                                fontWeight: 900, fontSize: 14, cursor: 'pointer', boxShadow: `0 10px 25px ${isAllComplete ? '#ED1650' : '#99CC33'}33`,
-                                transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10
-                            }}
-                            onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
-                            onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
-                        >
-                            {isAllComplete ? (
-                                <><RotateCcw size={18} /> Reiniciar Missão</>
-                            ) : (
-                                <><CheckCircle2 size={18} /> Marcar como Finalizado</>
-                            )}
-                        </button>
 
-                        {isAllComplete && (
-                            <div style={{ marginTop: 15, textAlign: 'center', fontSize: 10, color: '#858585', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>
-                                Missão finalizada com sucesso
-                            </div>
-                        )}
+                        <AnimatePresence>
+                            {isAllComplete && (
+                                <motion.div 
+                                    initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                    exit={{ opacity: 0, y: -15, scale: 0.95 }}
+                                    style={{ 
+                                        marginTop: 24, 
+                                        padding: '24px 20px', 
+                                        background: 'linear-gradient(135deg, rgba(153,204,51,0.15), rgba(153,204,51,0.02))',
+                                        border: '1px solid rgba(153,204,51,0.4)',
+                                        borderRadius: 16,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        gap: 12,
+                                        boxShadow: '0 8px 30px rgba(153,204,51,0.15)',
+                                        position: 'relative',
+                                        overflow: 'hidden'
+                                    }}
+                                >
+                                    <div style={{ position: 'absolute', top: -20, right: -20, opacity: 0.1 }}>
+                                        <Star size={100} color="#99CC33" />
+                                    </div>
+                                    <motion.div 
+                                        animate={{ rotate: [0, 10, -10, 0] }}
+                                        transition={{ repeat: Infinity, duration: 2, repeatDelay: 1 }}
+                                        style={{ background: '#99CC33', color: '#fff', borderRadius: '50%', padding: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 15px rgba(153,204,51,0.4)' }}
+                                    >
+                                        <BadgeCheck size={28} />
+                                    </motion.div>
+                                    <div style={{ fontSize: 16, color: '#1B0088', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', textAlign: 'center' }}>
+                                        Missão Concluída!
+                                    </div>
+                                    <div style={{ fontSize: 12, color: '#64748B', fontWeight: 600, textAlign: 'center', lineHeight: 1.5, zIndex: 1, marginBottom: 8 }}>
+                                        Excelente trabalho. Todos os objetivos desta missão foram alcançados com sucesso.
+                                    </div>
+                                    <button
+                                        onClick={onBack}
+                                        style={{
+                                            background: '#1B0088', color: '#fff', border: 'none', padding: '12px 20px', borderRadius: 8,
+                                            fontWeight: 800, fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8,
+                                            boxShadow: '0 4px 15px rgba(27,0,136,0.3)', zIndex: 1, width: '100%', justifyContent: 'center', transition: 'all 0.2s ease', marginTop: 4
+                                        }}
+                                        onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+                                        onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+                                    >
+                                        <ArrowLeft size={16} /> Retornar ao Mapa
+                                    </button>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
 
                     {/* Extra OJT Card */}

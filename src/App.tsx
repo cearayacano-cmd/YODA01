@@ -46,6 +46,7 @@ import { LaboratorioView, IngenieriaView, SuministrosView, OperacionesView, Ruta
 import { PlanetContentView } from './components/Views6';
 import { ActivityLogView } from './components/ActivityLogView';
 import { InstructorDashboard } from './components/InstructorDashboard';
+import { UnifiedTrackingDashboard } from './components/UnifiedTrackingDashboard';
 
 /* ── SIMPLE BUTTONS ─────────────────────────────────────────────────── */
 const Btn = ({ onClick, children, style={} }: any) => (
@@ -319,11 +320,16 @@ export default function App() {
             onSave={saveConfigToDisk}
             onActivityLog={()=>go('activity-log')}
             onInstructorDashboard={()=>go('instructor-dashboard')}
+            onMissionTracking={()=>go('admin-activity-tracking')}
           />
         );
       case 'instructor-dashboard':
         return (
           <InstructorDashboard logs={activityLogs} config={activeConfig} onBack={()=>go('admin')} />
+        );
+      case 'admin-activity-tracking':
+        return (
+          <UnifiedTrackingDashboard onBack={()=>go('admin')} />
         );
       case 'admin-exploracion':
         return (

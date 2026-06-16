@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Wrench, BookOpen, Settings, Hexagon, Network, Microscope, Package, Box, Radar, Activity, Cpu, ArrowLeft, Zap, Target, Info, ExternalLink, X, CheckCircle2, Lightbulb, Rocket, Shield, Award, Star, GraduationCap, LayoutGrid, FileText, Lock } from 'lucide-react';
+import { BackBtn } from './Shared';
+import { updatePortalTracking } from '../lib/portalTracking';
 
 const Stars = () => (
   <div className="stars-container" style={{ position: 'fixed', inset: 0, pointerEvents: 'none' }}>
@@ -62,9 +64,7 @@ const MapBackground = () => (
 
 const HUD = ({ level, xp, totalXp, activePowers, onBack }: any) => (
   <div style={{ position: 'sticky', top: 0, background: 'rgba(15, 0, 79, 0.95)', backdropFilter: 'blur(20px)', borderBottom: '2px solid #99CC33', padding: '14px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 100, boxShadow: '0 4px 30px rgba(0,0,0,0.3)' }}>
-    <button onClick={onBack} style={{ background: 'transparent', border: '1.5px solid rgba(153, 204, 51, 0.4)', color: '#99CC33', padding: '8px 18px', borderRadius: '4px', cursor: 'pointer', fontSize: '10px', fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase', transition: '0.3s' }} onMouseEnter={e => { e.currentTarget.style.background = '#99CC33'; e.currentTarget.style.color = '#0F004F'; }}>
-      ← Sair ao espaço
-    </button>
+    <BackBtn onClick={onBack} label="SAIR" />
     
     <div style={{ textAlign: 'center' }}>
       <div style={{ fontSize: '8px', color: '#ED1650', letterSpacing: '4px', fontWeight: 900, textTransform: 'none', marginBottom: '2px' }}>Terminal de Exploração Estratégica</div>
@@ -261,7 +261,10 @@ const PowerDiscoveryTerminal = ({ p, nodes, onBack, onComplete }: any) => {
             >
               {/* Check Validator */}
               <div 
-                onClick={() => toggleCheck(idx)}
+                onClick={() => {
+                  toggleCheck(idx);
+                  updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', node.tema, 'COMPLETAR MÓDULO', 'CLICK');
+                }}
                 style={{ 
                   position: 'absolute', top: 20, right: 20, cursor: 'pointer',
                   color: checked.has(idx) ? '#99CC33' : '#E2E8F0',
@@ -307,11 +310,16 @@ const PowerDiscoveryTerminal = ({ p, nodes, onBack, onComplete }: any) => {
               {/* Action Column */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 {node.adjunto && node.adjunto !== '#' && node.adjunto !== '-' && node.adjunto.trim() !== '' ? (
-                  <a href={node.adjunto} target="_blank" rel="noopener noreferrer" style={{
-                    background: '#1B0088', color: '#fff', border: 'none', padding: '12px 20px', borderRadius: 8, fontWeight: 900, fontSize: 11,
-                    textDecoration: 'none', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, 
-                    boxShadow: '0 4px 12px rgba(27,0,136,0.2)', transition: '0.2s'
-                  }} onMouseEnter={e => e.currentTarget.style.background = '#0F004F'} onMouseLeave={e => e.currentTarget.style.background = '#1B0088'}>
+                  <a 
+                    href={node.adjunto} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    onClick={() => updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', node.tema, 'ABRIR RECURSO', 'CLICK')}
+                    style={{
+                      background: '#1B0088', color: '#fff', border: 'none', padding: '12px 20px', borderRadius: 8, fontWeight: 900, fontSize: 11,
+                      textDecoration: 'none', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, 
+                      boxShadow: '0 4px 12px rgba(27,0,136,0.2)', transition: '0.2s'
+                    }} onMouseEnter={e => e.currentTarget.style.background = '#0F004F'} onMouseLeave={e => e.currentTarget.style.background = '#1B0088'}>
                     ABRIR RECURSO <ExternalLink size={14} />
                   </a>
                 ) : (
@@ -407,6 +415,7 @@ export const RutaLiderView = ({ links, rutaData, onBack }: any) => {
   });
 
   const handleOpenPower = (name: string) => {
+    updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', name, 'ABRIR PODER', 'CLICK');
     const p = mapConfig.find(p => p.name === name);
     if(p) setSelectedPower(p);
   };
@@ -865,7 +874,13 @@ export const TechBaseView = ({
                 boxShadow: `0 10px 30px rgba(0,0,0,0.2)`,
                 borderRadius: '0 8px 8px 0'
               }} 
-              onClick={() => link.url !== '#' && window.open(link.url, '_blank')}
+              onClick={() => {
+                if (link.url !== '#') {
+                  const email = localStorage.getItem('yoda_active_user') || 'instructor@example.com';
+                  updatePortalTracking(email, footerTitle || title, link.label, 'CLICK_LINK');
+                  window.open(link.url, '_blank');
+                }
+              }}
             >
               <div style={{ zIndex: 2 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 0 }}>

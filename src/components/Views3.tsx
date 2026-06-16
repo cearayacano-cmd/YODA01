@@ -381,7 +381,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                            <div style={{ display: 'inline-flex', padding: 15, borderRadius: '50%', background: 'rgba(0, 214, 204, 0.1)', marginBottom: 15, boxShadow: 'inset 0 0 20px rgba(0, 214, 204, 0.2)' }}>
                                <Compass size={40} color="#00D6CC" />
                            </div>
-                           <div style={{ fontSize: 12, color: '#00D6CC', letterSpacing: '4px', textTransform: 'uppercase', fontWeight: 900, marginBottom: 10 }}>Seleccione Modo de Ingreso</div>
+                           <div style={{ fontSize: 12, color: '#00D6CC', letterSpacing: '4px', textTransform: 'uppercase', fontWeight: 900, marginBottom: 10 }}>Selecione Modo de Entrada</div>
                            <div style={{ fontSize: 28, fontWeight: 900, color: '#fff', letterSpacing: '2px', textShadow: '0 4px 10px rgba(0,0,0,0.5)' }}>{sectorData[selectedPlanetForModal]?.label}</div>
                        </div>
 
@@ -410,8 +410,8 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                                    >
                                        <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 10px rgba(255,255,255,0.2)' }}><Rocket size={20} /></div>
                                        <div>
-                                           <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px' }}>Continuar Expedición</div>
-                                           <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>El progreso se guardará en tu partida actual.</div>
+                                           <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px' }}>Continuar Expedição</div>
+                                           <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>O progresso será salvo na sua partida atual.</div>
                                        </div>
                                    </button>
                                ) : null;
@@ -425,8 +425,8 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                            >
                                <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(237, 22, 80, 0.2)', color: '#ED1650', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 10px rgba(237, 22, 80, 0.2)' }}><Star size={20} /></div>
                                <div>
-                                   <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', color: '#FF4D79' }}>Nueva Partida</div>
-                                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>Inicia desde cero con un nuevo código.</div>
+                                   <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', color: '#FF4D79' }}>Nova Partida</div>
+                                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>Inicie do zero com um novo código.</div>
                                </div>
                            </button>
 
@@ -441,8 +441,8 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                            >
                                <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(0, 214, 204, 0.1)', color: '#00D6CC', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 10px rgba(0, 214, 204, 0.2)' }}><Eye size={20} /></div>
                                <div>
-                                   <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', color: '#00D6CC' }}>Modo Exploración</div>
-                                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>Solo lectura. El progreso no se guardará.</div>
+                                   <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', color: '#00D6CC' }}>Modo Exploração</div>
+                                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>Apenas leitura. O progresso não será salvo.</div>
                                </div>
                            </button>
                         </div>
@@ -459,8 +459,8 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                                     <div style={{ display: 'inline-flex', padding: 15, borderRadius: '50%', background: 'rgba(237, 22, 80, 0.1)', marginBottom: 20, boxShadow: 'inset 0 0 20px rgba(237, 22, 80, 0.2)' }}>
                                         <Star size={40} color="#ED1650" />
                                     </div>
-                                    <div style={{ fontSize: 22, fontWeight: 900, color: '#fff', letterSpacing: '2px', textShadow: '0 4px 10px rgba(0,0,0,0.5)', marginBottom: 10 }}>¿INICIAR NUEVA PARTIDA?</div>
-                                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', marginBottom: 40, maxWidth: 300, margin: '0 auto 40px', lineHeight: 1.5 }}>Esto creará una clase en blanco y <strong style={{color:'#ED1650'}}>borrará todo el progreso actual</strong> de este equipo en el navegador.</div>
+                                    <div style={{ fontSize: 22, fontWeight: 900, color: '#fff', letterSpacing: '2px', textShadow: '0 4px 10px rgba(0,0,0,0.5)', marginBottom: 10 }}>INICIAR NOVA PARTIDA?</div>
+                                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', marginBottom: 40, maxWidth: 300, margin: '0 auto 40px', lineHeight: 1.5 }}>Isso criará uma classe em branco e <strong style={{color:'#ED1650'}}>apagará todo o progresso atual</strong> desta equipe no navegador.</div>
                                     
                                     <div style={{ display: 'flex', gap: 15, justifyContent: 'center' }}>
                                         <button 
@@ -495,7 +495,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                                             onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
                                             onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
                                         >
-                                            SÍ, EMPEZAR DE CERO
+                                            SIM, COMEÇAR DO ZERO
                                         </button>
                                     </div>
                                 </div>

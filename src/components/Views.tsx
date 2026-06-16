@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Lock, ChevronLeft, Beaker, Settings, Package, Webcam, Rocket, Radar, Microscope, Cpu, Box, Activity, Monitor, Eye, Sun, Layers, GraduationCap } from 'lucide-react';
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { Btn, BackBtn, TacticalSatelliteIcon } from './Shared';
+import { updatePortalTracking } from '../lib/portalTracking';
 
 const MissionIcon = ({ color, alertMode }: any) => (
   <motion.div
@@ -1211,7 +1212,10 @@ const CentralMonitorCard = ({ onNavigate }: any) => {
         <motion.button 
           whileHover={{ scale: 1.02, backgroundColor: '#d11246' }}
           whileTap={{ scale: 0.98 }}
-          onClick={() => onNavigate('galaxies')} 
+          onClick={() => {
+            updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Acessar Treinamentos', 'CLICK_LINK');
+            onNavigate('galaxies');
+          }} 
           style={{ 
             background: color, 
             color: '#fff', 
@@ -1458,7 +1462,10 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
           transition={{ duration: 2.5, repeat: Infinity }}
           whileHover={{ backgroundColor: 'rgba(153,204,51,0.22)', boxShadow: '0 0 18px rgba(153,204,51,0.8), 0 0 36px rgba(153,204,51,0.35)' }}
           whileTap={{ scale: 0.97, backgroundColor: 'rgba(153,204,51,0.4)' }}
-          onClick={onMonitoring}
+          onClick={() => {
+            updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'PAINÉIS', 'CLICK_LINK');
+            onMonitoring();
+          }}
           style={{
             height: '36px', padding: '0 10px',
             background: 'transparent', border: '1.5px solid rgba(153,204,51,0.55)',
@@ -1480,7 +1487,10 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
           transition={{ duration: 2, repeat: Infinity }}
           whileHover={{ backgroundColor: iaraActive ? 'rgba(160,80,255,0.45)' : 'rgba(100,20,220,0.3)', boxShadow: '0 0 18px rgba(130,60,255,0.8)' }}
           whileTap={{ scale: 0.97 }}
-          onClick={onIara}
+          onClick={() => {
+            updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'IARA', 'CLICK_LINK');
+            onIara();
+          }}
           style={{
             height: '36px', padding: '0 10px',
             background: iaraActive ? 'rgba(100,32,200,0.45)' : 'transparent',
@@ -1499,7 +1509,10 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
           transition={{ duration: 2.8, repeat: Infinity }}
           whileHover={{ backgroundColor: 'rgba(0,214,204,0.22)', boxShadow: '0 0 18px rgba(0,214,204,0.8)' }}
           whileTap={{ scale: 0.97, backgroundColor: 'rgba(0,214,204,0.4)' }}
-          onClick={onPreparacao}
+          onClick={() => {
+            updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'MATRIZ MIGRAÇÕES', 'CLICK_LINK');
+            onPreparacao();
+          }}
           style={{
             height: '36px', padding: '0 10px',
             background: 'transparent', border: '1.5px solid rgba(0,214,204,0.55)',
@@ -1519,7 +1532,10 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
           transition={{ duration: 2.8, repeat: Infinity }}
           whileHover={{ backgroundColor: 'rgba(255,140,0,0.22)', boxShadow: '0 0 18px rgba(255,140,0,0.8)' }}
           whileTap={{ scale: 0.97, backgroundColor: 'rgba(255,140,0,0.4)' }}
-          onClick={onIncidencias}
+          onClick={() => {
+            updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'INCIDÊNCIAS', 'CLICK_LINK');
+            onIncidencias();
+          }}
           style={{
             height: '36px', padding: '0 10px',
             background: 'transparent', border: '1.5px solid rgba(255,140,0,0.55)',
@@ -1863,11 +1879,11 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
         <ConsoleSideFrame side="left">
           <ModuleCard 
             sec="SEC-A1" title="Portal Instrutor" subtitle="" color="#FFE017" side="left"
-            icon={<GraduationCap />} stats={[{label: 'MÓDULOS', val: config?.operaciones?.length || 0}, {label: 'ATUALIZADO', val: config?.lastUpdate || '---'}]} onClick={() => onNavigate('operaciones')} 
+            icon={<GraduationCap />} stats={[{label: 'MÓDULOS', val: config?.operaciones?.length || 0}, {label: 'ATUALIZADO', val: config?.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Portal Instrutor', 'CLICK_LINK'); onNavigate('operaciones'); }} 
           />
           <ModuleCard 
             sec="SEC-A2" title="Formulários" subtitle="" color="#00FFF2" side="left"
-            icon={<Package />} stats={[{label: 'MÓDULOS', val: config?.suministros?.length || 0}, {label: 'ATUALIZADO', val: config?.lastUpdate || '---'}]} onClick={() => onNavigate('suministros')} 
+            icon={<Package />} stats={[{label: 'MÓDULOS', val: config?.suministros?.length || 0}, {label: 'ATUALIZADO', val: config?.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Formulários', 'CLICK_LINK'); onNavigate('suministros'); }} 
           />
         </ConsoleSideFrame>
         
@@ -1907,11 +1923,11 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
         <ConsoleSideFrame side="right">
           <ModuleCard 
             sec="SEC-B1" title="Portal de Líderes" subtitle="" color="#A4FF00" side="right"
-            icon={<Microscope />} stats={[{label: 'MÓDULOS', val: config.laboratorio?.length || 0}, {label: 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('laboratorio')} 
+            icon={<Microscope />} stats={[{label: 'MÓDULOS', val: config.laboratorio?.length || 0}, {label: 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Portal de Líderes', 'CLICK_LINK'); onNavigate('laboratorio'); }} 
           />
           <ModuleCard 
             sec="SEC-B2" title="Workshops" subtitle="" color="#D400FF" side="right"
-            icon={<Cpu />} stats={[{label: 'MÓDULOS', val: config.ingenieria?.length || 0}, {label: 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => onNavigate('ingenieria')} 
+            icon={<Cpu />} stats={[{label: 'MÓDULOS', val: config.ingenieria?.length || 0}, {label: 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Workshops', 'CLICK_LINK'); onNavigate('ingenieria'); }} 
           />
         </ConsoleSideFrame>
       </div>
