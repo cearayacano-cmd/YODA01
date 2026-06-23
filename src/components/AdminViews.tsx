@@ -60,15 +60,17 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
         display:'flex', 
         alignItems:'center', 
         gap:32,
-        borderBottom: '4px solid #ED1650',
+        borderBottom: `4px solid ${activeStation === 'BR' ? '#7da81a' : '#7000ab'}`,
         boxShadow: '0 8px 32px rgba(27,0,136,0.15)',
         zIndex: 100
       }}>
         <img src="/logo-blanco-1.png" alt="Capacitacion" style={{ height: 35, objectFit: 'contain' }} />
         <BackBtn onClick={onBack} label="CERRAR PORTAL" />
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <Settings size={22} color="#ED1650" />
-          <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>ADMIN CENTER <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> {activeStation} STATION</span>
+          <Settings size={22} color={activeStation === 'BR' ? '#7da81a' : '#7000ab'} />
+          <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>
+            ADMIN CENTER <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> {activeStation === 'BR' ? '🇧🇷 BR' : '🇪🇸 SSC'} STATION
+          </span>
         </div>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 12 }}>
           <motion.button 

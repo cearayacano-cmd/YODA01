@@ -125,7 +125,7 @@ const GalaxyVisual = ({ color }: { color: string }) => {
   );
 };
 
-const TacticalSectorCard = ({ color, id, label, desc, onClick, tag }: any) => {
+const TacticalSectorCard = ({ color, id, label, desc, onClick, tag, isEs }: any) => {
   return (
     <motion.div
       whileHover={{ y: -10, scale: 1.02 }}
@@ -190,7 +190,7 @@ const TacticalSectorCard = ({ color, id, label, desc, onClick, tag }: any) => {
         borderTop: `1px solid rgba(255,255,255,0.08)`,
         textAlign: 'center'
       }}>
-          EXPEDIÇÃO
+          {isEs ? 'EXPEDICIÓN' : 'EXPEDIÇÃO'}
         <div style={{ 
           fontSize: 36, 
           fontWeight: 900, 
@@ -229,7 +229,7 @@ const TacticalSectorCard = ({ color, id, label, desc, onClick, tag }: any) => {
             transition: 'all 0.3s'
           }}
         >
-          ACESSAR
+          {isEs ? 'ACCEDER' : 'ACESSAR'}
         </motion.div>
       </div>
     </motion.div>
@@ -242,7 +242,7 @@ const idxLabel = (id: string) => {
     return 'GAMMA';
 }
 
-export const GalaxySelection = ({ onNavigate, onBack }: any) => {
+export const GalaxySelection = ({ onNavigate, onBack, isEs = false }: any) => {
   const sectors = [
     { 
       id: 'frontLine', 
@@ -253,7 +253,7 @@ export const GalaxySelection = ({ onNavigate, onBack }: any) => {
     },
     { 
       id: 'soporte',   
-      label: 'SUPORTE',    
+      label: isEs ? 'SOPORTE' : 'SUPORTE',    
       desc: '', 
       color: '#D400FF', 
       tag: 'GLX-002'
@@ -319,7 +319,7 @@ export const GalaxySelection = ({ onNavigate, onBack }: any) => {
           textAlign: 'center',
           textShadow: '0 0 20px rgba(0,0,0,0.5)' 
         }}>
-          SELECIONE A EXPEDIÇÃO
+          {isEs ? 'SELECCIONE LA EXPEDICIÓN' : 'SELECIONE A EXPEDIÇÃO'}
         </span>
       </div>
 
@@ -351,6 +351,7 @@ export const GalaxySelection = ({ onNavigate, onBack }: any) => {
               <TacticalSectorCard 
                 {...s}
                 onClick={() => onNavigate('planets', s.id)} 
+                isEs={isEs}
               />
             </motion.div>
           ))}

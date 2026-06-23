@@ -784,9 +784,9 @@ export const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onbo
       alignItems: 'center'
     }}>
        {/* Expedition Ship at Start */}
-       <div style={{ zIndex: 20 }}>
-         <JourneyStartShip onboardingData={onboardingData} onClick={isFirstPlanet ? onSelectOnboarding : undefined} />
-       </div>
+         <div style={{ zIndex: 20 }}>
+           <JourneyStartShip onboardingData={onboardingData} onClick={isFirstPlanet ? onSelectOnboarding : undefined} />
+         </div>
 
        {/* Background Connection Path */}
        <div style={{ position: 'relative', width: '100%', marginTop: '-200px', minHeight: `${svgHeight}px` }}>
@@ -803,12 +803,12 @@ export const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onbo
             </defs>
 
             {/* Start Path: Adjusted to emerge from ship's thrusters */}
-            <motion.path 
-                d={`M 500 0 C 500 100, 200 100, 200 210`} stroke="#3B82F6" strokeWidth="8" fill="none" 
-                strokeDasharray="20 20" filter="url(#missionPathGlow)" 
-                animate={{ strokeDashoffset: [100, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-            />
+              <motion.path 
+                  d={`M 500 0 C 500 100, 200 100, 200 210`} stroke="#3B82F6" strokeWidth="8" fill="none" 
+                  strokeDasharray="20 20" filter="url(#missionPathGlow)" 
+                  animate={{ strokeDashoffset: [100, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+              />
 
             {secciones.map((sec: any, i: number) => {
               const yStart = i * nodeSpacing + 210;
@@ -1787,7 +1787,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     );
 };
 
-export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sectorLabel="SECTOR", onboardingData, onTrackEvent }: any) => {
+export const PlanetContentView = ({ planetIdx, onBack, data, planetMeta, planetLabel, sectorLabel="SECTOR", onboardingData, onTrackEvent }: any) => {
     const [viewMode, setViewMode] = React.useState<'map' | 'detail' | 'onboarding'>('map');
     const [selectedIdx, setSelectedIdx] = React.useState(0);
     const [tick, setTick] = React.useState(0);
@@ -1802,7 +1802,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
     if (!data) return null;
 
     const planetObj = (Array.isArray(data) && data[planetIdx]) ? data[planetIdx] : null;
-    const planetColor = planetObj?.color || '#ED1650';
+    const planetColor = planetMeta?.color || planetObj?.color || '#ED1650';
 
     let secciones = [];
     if (planetObj) {
@@ -1905,13 +1905,13 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                                     <MissionSectorMap 
                                         secciones={secciones} 
                                         planetColor={planetColor} 
-                                        texture={planetObj?.texture}
+                                        texture={planetMeta?.texture || planetObj?.texture}
                                         tick={tick}
                                         onSelectSection={handleSelectSection} 
                                         onboardingData={onboardingData}
-                                        activeOnboardingIdx={planetObj?.onboardingIdx || 0}
+                                        activeOnboardingIdx={planetMeta?.onboardingIdx ?? planetObj?.onboardingIdx}
                                         onSelectOnboarding={() => setViewMode('onboarding')}
-                                        isFirstPlanet={(planetIdx === 0 || planetObj?.onboardingIdx !== undefined) && sectorLabel === 'FRONT LINE'}
+                                        isFirstPlanet={(planetIdx === 0 && sectorLabel === 'FRONT LINE') || (planetMeta?.onboardingIdx ?? planetObj?.onboardingIdx) != null}
                                         onBackToPlanets={onBack}
                                         planetLabel={planetLabel}
                                     />
@@ -1932,14 +1932,14 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetLabel, sector
                 />
             ) : (
                 <FscDetailedTerminal 
-                    secciones={onboardingData?.[planetObj?.onboardingIdx || 0]?.data?.secciones || []} 
-                    planetColor="#FFB800" 
-                    subtitleOverride="PROTOCOLO DE PREPARACIÓN"
-                    titleOverride={onboardingData?.[planetObj?.onboardingIdx || 0]?.label || "NAVE DE ONBOARDING"}
+                    secciones={onboardingData?.[(planetMeta?.onboardingIdx ?? planetObj?.onboardingIdx) || 0]?.data?.secciones || []} 
+                    planetColor={planetColor} 
                     onBack={() => setViewMode('map')} 
                     tick={tick}
                     planetLabel="NAVE DE ONBOARDING"
                     sectorLabel="PROTOCOLO DE PREPARACIÓN"
+                    subtitleOverride="PROTOCOLO DE PREPARACIÓN"
+                    titleOverride={onboardingData?.[(planetMeta?.onboardingIdx ?? planetObj?.onboardingIdx) || 0]?.label || "NAVE DE ONBOARDING"}
                     onTrackEvent={onTrackEvent}
                 />
             )}

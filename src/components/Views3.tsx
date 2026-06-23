@@ -92,7 +92,7 @@ const CornerHUD = () => (
 
 
 /* ── TACTICAL PLANET CARD ────────────────────────────────────────────── */
-const TacticalPlanetCard = ({ course, index, color, type, contentData, onClick }: any) => {
+const TacticalPlanetCard = ({ course, index, color, type, contentData, onClick, isEs }: any) => {
   const planetLabel = course.label;
   
   let allSecciones: any[] = [];
@@ -163,7 +163,7 @@ const TacticalPlanetCard = ({ course, index, color, type, contentData, onClick }
                   {totalRows > 0 ? (
                     <>
                       <div style={{ border: `1px solid ${color}44`, padding: '4px 10px', borderRadius: 4, fontSize: 8, fontWeight: 900, color: '#fff', background: `${color}11`, boxShadow: `0 0 10px ${color}33`, textShadow: `0 0 5px ${color}` }}>
-                        Status: Ativo
+                        {isEs ? 'Estado: Activo' : 'Status: Ativo'}
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                           <motion.div 
@@ -171,17 +171,17 @@ const TacticalPlanetCard = ({ course, index, color, type, contentData, onClick }
                             transition={{ duration: 1.5, repeat: Infinity }}
                             style={{ width: 6, height: 6, borderRadius: '50%', background: isCompleted ? '#99CC33' : color, boxShadow: `0 0 10px ${isCompleted ? '#99CC33' : color}` }} 
                           />
-                          <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '1px' }}>{isCompleted ? 'Finalizado' : 'Em órbita'}</span>
+                          <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '1px' }}>{isEs ? (isCompleted ? 'Finalizado' : 'En órbita') : (isCompleted ? 'Finalizado' : 'Em órbita')}</span>
                       </div>
                     </>
                   ) : (
                     <>
                       <div style={{ border: `1px solid rgba(255,255,255,0.2)`, padding: '4px 10px', borderRadius: 4, fontSize: 8, fontWeight: 900, color: 'rgba(255,255,255,0.5)', background: `rgba(255,255,255,0.05)` }}>
-                        Status: Bloqueado
+                        {isEs ? 'Estado: Bloqueado' : 'Status: Bloqueado'}
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.5)' }}>
                           <Lock size={12} />
-                          <span style={{ fontSize: 9, fontWeight: 900, letterSpacing: '1px' }}>Sem dados</span>
+                          <span style={{ fontSize: 9, fontWeight: 900, letterSpacing: '1px' }}>{isEs ? 'Sin datos' : 'Sem dados'}</span>
                       </div>
                     </>
                   )}
@@ -197,7 +197,7 @@ const TacticalPlanetCard = ({ course, index, color, type, contentData, onClick }
 };
 
 /* ── MAIN SELECTION VIEW ─────────────────────────────────────────────── */
-export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) => {
+export const PlanetSelection = ({ sectorId, config, onNavigate, onBack, isEs }: any) => {
   const sectorData = config.exploracion[sectorId] || [];
   const satelites = config.satelites || {};
   const [activeMap, setActiveMap] = useState<string | null>(null);
@@ -239,7 +239,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                             boxShadow: '0 0 20px rgba(27,0,136,0.6)'
                         }}
                     >
-                        <ChevronRight style={{ transform: 'rotate(180deg)' }} size={16} /> VOLTAR
+                        <ChevronRight style={{ transform: 'rotate(180deg)' }} size={16} /> {isEs ? 'VOLVER' : 'VOLTAR'}
                     </button>
                </div>
 
@@ -250,7 +250,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                         background: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(8px)', padding: '6px 20px', borderRadius: '20px',
                         border: '1px solid rgba(0,214,204,0.1)', textShadow: '0 0 8px #00D6CC, 0 0 15px rgba(0,214,204,0.5)'
                     }}>
-                        <Compass size={12} /> MAPA ESTELAR · SETOR ATIVO <Compass size={12} />
+                        <Compass size={12} /> {isEs ? 'MAPA ESTELAR · SECTOR ACTIVO' : 'MAPA ESTELAR · SETOR ATIVO'} <Compass size={12} />
                     </div>
                     <div style={{ fontSize: 48, fontWeight: 900, letterSpacing: '8px', textTransform: 'uppercase', color: '#fff' }}>{sectorLabel}</div>
                     <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10 }}>
@@ -332,7 +332,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                         background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(10px)', padding: '8px 30px', borderRadius: '30px',
                         border: '1px solid rgba(237,22,80,0.1)', textShadow: '0 0 8px #ED1650, 0 0 15px rgba(237,22,80,0.5)'
                     }}>
-                        SELECIONE UM PLANETA
+                        {isEs ? 'SELECCIONE UN PLANETA' : 'SELECIONE UM PLANETA'}
                     </div>
                     <div style={{ height: 1.5, flex: 1, background: 'linear-gradient(-90deg, transparent, rgba(237,22,80,0.5))' }} />
                 </div>
@@ -344,11 +344,12 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                         const color = course.color || DEFAULT_COLORS[i % DEFAULT_COLORS.length];
                         const type = TYPES[i % TYPES.length];
                         return (
-                            <TacticalPlanetCard 
-                                key={i} index={i} course={course} color={color} type={type}
-                                contentData={advData[i]}
-                                onClick={() => setSelectedPlanetForModal(i)}
-                            />
+                                <TacticalPlanetCard 
+                                    key={i} index={i} course={course} color={color} type={type}
+                                    contentData={advData[i]}
+                                    onClick={() => setSelectedPlanetForModal(i)}
+                                    isEs={isEs}
+                                />
                         );
                     })}
                 </div>
@@ -381,7 +382,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                            <div style={{ display: 'inline-flex', padding: 15, borderRadius: '50%', background: 'rgba(0, 214, 204, 0.1)', marginBottom: 15, boxShadow: 'inset 0 0 20px rgba(0, 214, 204, 0.2)' }}>
                                <Compass size={40} color="#00D6CC" />
                            </div>
-                           <div style={{ fontSize: 12, color: '#00D6CC', letterSpacing: '4px', textTransform: 'uppercase', fontWeight: 900, marginBottom: 10 }}>Selecione Modo de Entrada</div>
+                           <div style={{ fontSize: 12, color: '#00D6CC', letterSpacing: '4px', textTransform: 'uppercase', fontWeight: 900, marginBottom: 10 }}>{isEs ? 'Seleccione Modo de Entrada' : 'Selecione Modo de Entrada'}</div>
                            <div style={{ fontSize: 28, fontWeight: 900, color: '#fff', letterSpacing: '2px', textShadow: '0 4px 10px rgba(0,0,0,0.5)' }}>{sectorData[selectedPlanetForModal]?.label}</div>
                        </div>
 
@@ -410,8 +411,8 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                                    >
                                        <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 10px rgba(255,255,255,0.2)' }}><Rocket size={20} /></div>
                                        <div>
-                                           <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px' }}>Continuar Expedição</div>
-                                           <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>O progresso será salvo na sua partida atual.</div>
+                                           <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px' }}>{isEs ? 'Continuar Expedición' : 'Continuar Expedição'}</div>
+                                           <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>{isEs ? 'El progreso se guardará en su partida actual.' : 'O progresso será salvo na sua partida atual.'}</div>
                                        </div>
                                    </button>
                                ) : null;
@@ -425,8 +426,8 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                            >
                                <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(237, 22, 80, 0.2)', color: '#ED1650', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 10px rgba(237, 22, 80, 0.2)' }}><Star size={20} /></div>
                                <div>
-                                   <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', color: '#FF4D79' }}>Nova Partida</div>
-                                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>Inicie do zero com um novo código.</div>
+                                   <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', color: '#FF4D79' }}>{isEs ? 'Nueva Partida' : 'Nova Partida'}</div>
+                                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>{isEs ? 'Inicie desde cero con un nuevo código.' : 'Inicie do zero com um novo código.'}</div>
                                </div>
                            </button>
 
@@ -441,8 +442,8 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                            >
                                <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(0, 214, 204, 0.1)', color: '#00D6CC', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 10px rgba(0, 214, 204, 0.2)' }}><Eye size={20} /></div>
                                <div>
-                                   <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', color: '#00D6CC' }}>Modo Exploração</div>
-                                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>Apenas leitura. O progresso não será salvo.</div>
+                                   <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', color: '#00D6CC' }}>{isEs ? 'Modo Exploración' : 'Modo Exploração'}</div>
+                                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>{isEs ? 'Solo lectura. El progreso no será guardado.' : 'Apenas leitura. O progresso não será salvo.'}</div>
                                </div>
                            </button>
                         </div>
@@ -459,8 +460,8 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                                     <div style={{ display: 'inline-flex', padding: 15, borderRadius: '50%', background: 'rgba(237, 22, 80, 0.1)', marginBottom: 20, boxShadow: 'inset 0 0 20px rgba(237, 22, 80, 0.2)' }}>
                                         <Star size={40} color="#ED1650" />
                                     </div>
-                                    <div style={{ fontSize: 22, fontWeight: 900, color: '#fff', letterSpacing: '2px', textShadow: '0 4px 10px rgba(0,0,0,0.5)', marginBottom: 10 }}>INICIAR NOVA PARTIDA?</div>
-                                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', marginBottom: 40, maxWidth: 300, margin: '0 auto 40px', lineHeight: 1.5 }}>Isso criará uma classe em branco e <strong style={{color:'#ED1650'}}>apagará todo o progresso atual</strong> desta equipe no navegador.</div>
+                                    <div style={{ fontSize: 22, fontWeight: 900, color: '#fff', letterSpacing: '2px', textShadow: '0 4px 10px rgba(0,0,0,0.5)', marginBottom: 10 }}>{isEs ? '¿INICIAR NUEVA PARTIDA?' : 'INICIAR NOVA PARTIDA?'}</div>
+                                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', marginBottom: 40, maxWidth: 300, margin: '0 auto 40px', lineHeight: 1.5 }}>{isEs ? <>Esto creará una clase en blanco y <strong style={{color:'#ED1650'}}>borrará todo el progreso actual</strong> de este equipo en el navegador.</> : <>Isso criará uma classe em branco e <strong style={{color:'#ED1650'}}>apagará todo o progresso atual</strong> desta equipe no navegador.</>}</div>
                                     
                                     <div style={{ display: 'flex', gap: 15, justifyContent: 'center' }}>
                                         <button 
@@ -495,7 +496,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack }: any) =
                                             onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
                                             onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
                                         >
-                                            SIM, COMEÇAR DO ZERO
+                                            {isEs ? 'SÍ, COMENZAR DESDE CERO' : 'SIM, COMEÇAR DO ZERO'}
                                         </button>
                                     </div>
                                 </div>

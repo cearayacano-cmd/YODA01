@@ -3,7 +3,7 @@ import { BackBtn } from './Shared';
 import { motion } from 'framer-motion';
 import { Globe, Layers, Plus, Trash2, Edit3, Settings, Database, ArrowLeft, CheckCircle2, Calendar, Save } from 'lucide-react';
 
-export const AdminExploracion = ({ currentStationConfig, updateStationConfig, onBack, onSatelites, onAdvancedContent, onSave }: any) => {
+export const AdminExploracion = ({ stationName = 'BR', currentStationConfig, updateStationConfig, onBack, onSatelites, onAdvancedContent, onSave }: any) => {
   const [activeSector, setActiveSector] = useState('frontLine');
   const [saved, setSaved] = useState(false);
   const saveFlash = () => { 
@@ -67,7 +67,7 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
         display:'flex', 
         alignItems:'center', 
         justifyContent:'space-between',
-        borderBottom: '4px solid #ED1650',
+        borderBottom: `4px solid ${stationName === 'BR' ? '#7da81a' : '#7000ab'}`,
         boxShadow: '0 8px 32px rgba(27,0,136,0.15)',
         zIndex: 100
       }}>
@@ -80,8 +80,10 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
             <ArrowLeft size={16} /> VOLVER
           </button>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <Database size={22} color="#ED1650" />
-            <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>EDITOR DE BASE DE DATOS <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> EXPLORACIÓN</span>
+            <Database size={22} color={stationName === 'BR' ? '#7da81a' : '#7000ab'} />
+            <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>
+              EDITOR DE BASE DE DATOS <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> EXPLORACIÓN <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>-</span> {stationName === 'BR' ? '🇧🇷 BR' : '🇪🇸 SSC'} STATION
+            </span>
           </div>
         </div>
         <motion.button 
@@ -160,6 +162,26 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
                       PROTOCOLO DE PREPARACIÓN
                     </div>
                   </div>
+                  <button 
+                    onClick={() => {
+                      const next = [...(currentStationConfig.onboarding || [])];
+                      next.push({
+                        label: `NAVE DE ONBOARDING ${next.length + 1}`,
+                        data: { secciones: [] }
+                      });
+                      updateStationConfig('onboarding', next);
+                    }}
+                    style={{
+                      background:'rgba(255, 140, 0, 0.1)', color:'#FF8C00', border:'none', 
+                      padding: '8px 16px', cursor:'pointer', fontSize: 12, fontWeight:900, 
+                      borderRadius:10, display: 'flex', alignItems: 'center', gap: 6,
+                      transition: 'all 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = '#FF8C00'; e.currentTarget.style.color = '#ffffff'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255, 140, 0, 0.1)'; e.currentTarget.style.color = '#FF8C00'; }}
+                  >
+                    <Plus size={16} /> AGREGAR NAVE
+                  </button>
                 </div>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -222,6 +244,24 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
                           }}
                         >
                           <Edit3 size={16} /> CONFIGURAR
+                        </button>
+                        <button 
+                          onClick={() => {
+                            if(window.confirm('¿Eliminar esta nave de onboarding?')) {
+                              const next = [...currentStationConfig.onboarding];
+                              next.splice(oidx, 1);
+                              updateStationConfig('onboarding', next);
+                            }
+                          }}
+                          style={{
+                            background:'rgba(237, 22, 80, 0.1)', color:'#ED1650', border:'none', 
+                            padding: '10px', cursor:'pointer', borderRadius:10, display: 'flex', alignItems: 'center',
+                            transition: 'all 0.2s ease'
+                          }}
+                          onMouseEnter={(e) => { e.currentTarget.style.background = '#ED1650'; e.currentTarget.style.color = '#ffffff'; }}
+                          onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(237, 22, 80, 0.1)'; e.currentTarget.style.color = '#ED1650'; }}
+                        >
+                          <Trash2 size={16} />
                         </button>
                       </div>
                     </div>
@@ -332,6 +372,23 @@ export const AdminExploracion = ({ currentStationConfig, updateStationConfig, on
                         </motion.button>
                       ))}
                     </div>
+                  </div>
+
+                  <div style={{ marginTop: 8 }}>
+                    <div style={{fontSize:10, color:'#64748b', textTransform:'uppercase', marginBottom:10, fontWeight: 800, letterSpacing: '0.1em'}}>NAVE DE ONBOARDING VINCULADA</div>
+                    <select
+                      value={course.onboardingIdx ?? -1}
+                      onChange={e => {
+                         const val = parseInt(e.target.value);
+                         updateCourseField(i, 'onboardingIdx', val === -1 ? null : val);
+                      }}
+                      style={{...inp({ background: '#F8FAFC', padding: '10px 14px', fontSize: 13, fontWeight: 800, color: '#0F004F' }), width:'100%', outline:'none', cursor:'pointer'}}
+                    >
+                      <option value={-1}>-- SIN ASIGNAR --</option>
+                      {(currentStationConfig.onboarding || []).map((onb: any, idx: number) => (
+                        <option key={idx} value={idx}>{onb.label || `NAVE DE ONBOARDING ${idx + 1}`}</option>
+                      ))}
+                    </select>
                   </div>
 
                   <div style={{display:'flex', gap:14}}>

@@ -263,7 +263,7 @@ export default function App() {
     switch(view) {
       case 'landing':
         return <Landing 
-          onNavigate={(st: string)=>{setCurrentStation(st.toUpperCase());go(st==='br'?'br':'ssc-pending')}} 
+          onNavigate={(st: string)=>{setCurrentStation(st.toUpperCase());go(st.toLowerCase())}} 
           onAdmin={()=>go('admin')}
           onActivityLog={()=>go('activity-log')}
           activeUser={activeUser}
@@ -273,16 +273,19 @@ export default function App() {
         return <ActivityLogView logs={activityLogs} activeUser={activeUser} onBack={()=>go('landing')} />;
       case 'br':
         return <BaseStation stationName="BR" config={appConfig?.br || appConfigJson.br} onBack={()=>go('landing')} onNavigate={go}/>;
+      case 'ssc':
+        return <BaseStation stationName="SSC" config={appConfig?.ssc || appConfigJson.ssc} onBack={()=>go('landing')} onNavigate={go}/>;
       case 'galaxies':
-        return <GalaxySelection onNavigate={go} onBack={()=>go('br')}/>;
+        return <GalaxySelection isEs={currentStation === 'SSC'} onNavigate={go} onBack={()=>go(currentStation.toLowerCase())}/>;
       case 'planets':
-        return <PlanetSelection sectorId={activeSector} config={activeConfig} onNavigate={go} onBack={()=>go('galaxies')}/>;
+        return <PlanetSelection isEs={currentStation === 'SSC'} sectorId={activeSector} config={activeConfig} onNavigate={go} onBack={()=>go('galaxies')}/>;
       case 'mission':
         {
           const sectorData = activeSector === 'fieldSupport' ? activeConfig.fsc : 
                              activeSector === 'soporte' ? activeConfig.soporteContent : 
                              activeConfig.frontLineContent;
-          const planetLabel = activeConfig.exploracion[activeSector]?.[activeCourseIdx]?.label || 'Planeta';
+          const planetMeta = activeConfig.exploracion[activeSector]?.[activeCourseIdx] || {};
+          const planetLabel = planetMeta.label || 'Planeta';
           const sectorLabel = activeSector === 'frontLine' ? 'FRONT LINE' : 
                               activeSector === 'soporte' ? 'SUPORTE' : 'FIELD SUPPORT';
           
@@ -291,6 +294,7 @@ export default function App() {
               planetIdx={activeCourseIdx} 
               onBack={() => go('planets')} 
               data={sectorData}
+              planetMeta={planetMeta}
               planetLabel={planetLabel}
               sectorLabel={sectorLabel}
               onboardingData={activeConfig.onboarding}
@@ -301,13 +305,13 @@ export default function App() {
       case 'ruta-lider':
         return <RutaLiderView links={activeConfig.laboratorio} rutaData={activeConfig.rutaLider} onBack={()=>go('laboratorio')}/>;
       case 'laboratorio':
-        return <LaboratorioView config={activeConfig} links={activeConfig.laboratorio} rutaData={activeConfig.rutaLider} onBack={()=>go('br')} onNavigate={go} onNavigateRuta={()=>go('ruta-lider')} title={activeConfig.moduleMeta?.lab?.title} subtitle={activeConfig.moduleMeta?.lab?.subtitle}/>;
+        return <LaboratorioView isEs={currentStation === 'SSC'} config={activeConfig} links={activeConfig.laboratorio} rutaData={activeConfig.rutaLider} onBack={()=>go(currentStation.toLowerCase())} onNavigate={go} onNavigateRuta={()=>go('ruta-lider')} title={activeConfig.moduleMeta?.lab?.title} subtitle={activeConfig.moduleMeta?.lab?.subtitle}/>;
       case 'ingenieria':
-        return <IngenieriaView config={activeConfig} title={activeConfig.moduleMeta?.eng?.title||'WORKSHOPS'} subtitle={activeConfig.moduleMeta?.eng?.subtitle} links={activeConfig.ingenieria} onBack={()=>go('br')} onNavigate={go}/>;
+        return <IngenieriaView isEs={currentStation === 'SSC'} config={activeConfig} title={activeConfig.moduleMeta?.eng?.title||'WORKSHOPS'} subtitle={activeConfig.moduleMeta?.eng?.subtitle} links={activeConfig.ingenieria} onBack={()=>go(currentStation.toLowerCase())} onNavigate={go}/>;
       case 'suministros':
-        return <SuministrosView config={activeConfig} title={activeConfig.moduleMeta?.sup?.title||'FORMULÁRIOS'} subtitle={activeConfig.moduleMeta?.sup?.subtitle} links={activeConfig.suministros} onBack={()=>go('br')} onNavigate={go}/>;
+        return <SuministrosView isEs={currentStation === 'SSC'} config={activeConfig} title={activeConfig.moduleMeta?.sup?.title||'FORMULÁRIOS'} subtitle={activeConfig.moduleMeta?.sup?.subtitle} links={activeConfig.suministros} onBack={()=>go(currentStation.toLowerCase())} onNavigate={go}/>;
       case 'operaciones':
-        return <OperacionesView config={activeConfig} title={activeConfig.moduleMeta?.ops?.title||'PORTAL INSTRUTOR'} subtitle={activeConfig.moduleMeta?.ops?.subtitle} links={activeConfig.operaciones} onBack={()=>go('br')} onNavigate={go}/>;
+        return <OperacionesView isEs={currentStation === 'SSC'} config={activeConfig} title={activeConfig.moduleMeta?.ops?.title||'PORTAL INSTRUTOR'} subtitle={activeConfig.moduleMeta?.ops?.subtitle} links={activeConfig.operaciones} onBack={()=>go(currentStation.toLowerCase())} onNavigate={go}/>;
       case 'admin':
         return (
           <AdminCenter 
@@ -334,6 +338,7 @@ export default function App() {
       case 'admin-exploracion':
         return (
           <AdminExploracion 
+            stationName={adminStation}
             currentStationConfig={adminStation==='BR' ? (appConfig?.br || appConfigJson.br) : (appConfig?.ssc || appConfig?.br || appConfigJson.br)}
             updateStationConfig={(f: string, v: any)=>{
               const sk = adminStation.toLowerCase();
@@ -361,6 +366,7 @@ export default function App() {
       case 'admin-satelites':
         return (
           <AdminSatelites 
+            stationName={adminStation}
             pk={adminSatellitePk}
             satelites={adminStation==='BR' ? (appConfig?.br?.satelites || appConfigJson.br.satelites) : (appConfig?.ssc?.satelites || appConfig?.br?.satelites || appConfigJson.br.satelites)}
             setSatelites={(v: any)=>{
@@ -391,6 +397,7 @@ export default function App() {
 
           return (
             <AdminPlanetEditor 
+              stationName={adminStation}
               dataArray={targetConfig[contentKey] || []}
               setDataArray={(v: any) => {
                 setAppConfig((prev: any) => ({
@@ -410,18 +417,9 @@ export default function App() {
             />
           );
         }
-      case 'ssc-pending':
-        return (
-          <div style={{minHeight:'100vh', background:'#ffffff', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:48}}>
-            <Lock size={48} color="#111111" style={{marginBottom:24}}/>
-            <div style={{fontSize:36, fontWeight:900, color:'#111111', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:12}}>Sector SSC</div>
-            <div style={{fontSize:12, color:'#555555', letterSpacing:'0.35em', textTransform:'uppercase', marginBottom:40}}>ACCESS DENIED - DOCKING INCOMPLETE</div>
-            <BackBtn onClick={()=>go('landing')} label="RETURN TO ORIGIN"/>
-          </div>
-        );
       default:
         return <Landing 
-          onNavigate={(st: string)=>{setCurrentStation(st.toUpperCase());go(st==='br'?'br':'ssc-pending')}} 
+          onNavigate={(st: string)=>{setCurrentStation(st.toUpperCase());go(st.toLowerCase())}} 
           onAdmin={()=>go('admin')}
           onActivityLog={()=>go('activity-log')}
           activeUser={activeUser}

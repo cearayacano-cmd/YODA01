@@ -536,7 +536,8 @@ export const TechBaseView = ({
   sideDecalRight = "Capacitación",
   footerLogo = null,
   description = "Accedé a manuales técnicos, guías de procedimientos y recursos de soporte para operaciones.",
-  onNavigate = () => {}
+  onNavigate = () => {},
+  isEs = false
 }: any) => {
   return (
     <div style={{ 
@@ -648,7 +649,7 @@ export const TechBaseView = ({
             transition={{ duration: 4, repeat: Infinity }}
           >
             <img 
-              src="/guardioes_capacitacion_pt.png" 
+              src={isEs ? "/guardioes_capacitacion_es.png" : "/guardioes_capacitacion_pt.png"} 
               alt="Main Logo" 
               style={{ width: '100%', height: 'auto', maxWidth: 110, filter: 'brightness(1.2)' }} 
             />
@@ -731,8 +732,8 @@ export const TechBaseView = ({
           zIndex: 5
         }}>
           {[
-            '/escudos/YODA - Konecta BR.png',
-            '/escudos/YODA - AeC.png'
+            isEs ? '/escudos/YODA - Konecta PE.png' : '/escudos/YODA - Konecta BR.png',
+            isEs ? '/escudos/YODA - AMC.png' : '/escudos/YODA - AeC.png'
           ].map((src, i) => (
             <img key={i} src={src} alt="Shield" style={{ width: '110px', height: 'auto', filter: 'brightness(1.1)', objectFit: 'contain' }} />
           ))}
@@ -839,9 +840,9 @@ export const TechBaseView = ({
         <div style={{ marginBottom: 24, display: 'flex', alignItems: 'center', gap: 20 }}>
           <div>
             <div style={{ fontSize: 11, color: '#ED1650', letterSpacing: '0.2em', marginBottom: 4, fontWeight: 900, textTransform: 'uppercase' }}>REGISTROS TÉCNICOS</div>
-            <div style={{ fontSize: 22, fontWeight: 900, letterSpacing: '0.05em', color: '#0B0033' }}>Recursos Disponíveis</div>
+            <div style={{ fontSize: 22, fontWeight: 900, letterSpacing: '0.05em', color: '#0B0033' }}>{isEs ? 'Recursos Disponibles' : 'Recursos Disponíveis'}</div>
             <div style={{ fontSize: 13, color: 'rgba(11,0,51,0.6)', marginTop: 4, fontWeight: 500, fontFamily: 'sans-serif' }}>
-              Acesse manuais técnicos, guias de procedimentos e recursos de suporte para operações.
+              {isEs ? 'Acceda a manuales técnicos, guías de procedimientos y recursos de soporte para operaciones.' : 'Acesse manuais técnicos, guias de procedimentos e recursos de suporte para operações.'}
             </div>
           </div>
           <div style={{ flex: 1 }} />
@@ -851,7 +852,7 @@ export const TechBaseView = ({
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
           {(!links || links.length === 0) ? (
             <div style={{ textAlign: 'center', padding: 60, color: '#888888', border: '2px dashed #cccccc', borderRadius: 8, background: 'rgba(255,255,255,0.5)' }}>
-              NO HAY RECURSOS CONFIGURADOS EN ESTA TERMINAL
+              {isEs ? 'NO HAY RECURSOS CONFIGURADOS EN ESTA TERMINAL' : 'NENHUM RECURSO CONFIGURADO NESTE TERMINAL'}
             </div>
           ) : links.map((link: any, i: number) => (
             <motion.div
@@ -904,7 +905,7 @@ export const TechBaseView = ({
                 letterSpacing: '1px',
                 transition: 'all 0.2s ease'
               }}>
-                {link.url && link.url !== '#' ? 'ACESSAR O MÓDULO' : 'SEM LINK'}
+                {link.url && link.url !== '#' ? (isEs ? 'ACCEDER AL MÓDULO' : 'ACESSAR O MÓDULO') : (isEs ? 'SIN ENLACE' : 'SEM LINK')}
               </div>
             </motion.div>
           ))}
@@ -953,7 +954,7 @@ export const TechBaseView = ({
   );
 };
 
-export const IngenieriaView = ({ config, links, onBack, onNavigate, title, subtitle }: any) => {
+export const IngenieriaView = ({ config, links, onBack, onNavigate, title, subtitle, isEs = false }: any) => {
   const themeColor = '#B200FF';
   const heroIcon = (
     <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -968,8 +969,8 @@ export const IngenieriaView = ({ config, links, onBack, onNavigate, title, subti
     <TechBaseView
       config={config}
       title={title || 'Workshops'}
-      subtitle={subtitle}
-      description="Acesse conteúdos que irão elevar seu conhecimento e levar nossa operação cada vez mais alto!"
+      subtitle={subtitle || (isEs ? '¡Acceda a contenidos que elevarán su conocimiento y llevarán nuestra operación cada vez más alto!' : 'Acesse conteúdos que irão elevar seu conhecimento e levar nossa operação cada vez mais alto!')}
+      description={isEs ? "¡Acceda a contenidos que elevarán su conocimiento y llevarán nuestra operación cada vez más alto!" : "Acesse conteúdos que irão elevar seu conhecimento e levar nossa operação cada vez mais alto!"}
       links={links}
       onBack={onBack}
       onNavigate={onNavigate}
@@ -978,11 +979,12 @@ export const IngenieriaView = ({ config, links, onBack, onNavigate, title, subti
       listIcon={<Cpu size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
       headerTitle="MANTENIMIENTO · PROTOCOLOS · SUPORTE"
       footerTitle="Workshops"
+      isEs={isEs}
     />
   );
 };
 
-export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, onNavigateRuta, title, subtitle }: any) => {
+export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, onNavigateRuta, title, subtitle, isEs = false }: any) => {
   const themeColor = '#99CC33';
   const heroIcon = (
     <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -998,8 +1000,8 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
   return (
     <TechBaseView
       config={config}
-      title={title || 'Portal de Lideres'}
-      subtitle={subtitle || 'Lab. de estratégia, missões de formação e análise de dados em tempo real.'}
+      title={title || (isEs ? 'Portal de Líderes' : 'Portal de Lideres')}
+      subtitle={subtitle || (isEs ? 'Laboratorio de estrategia, misiones de formación y análisis de datos en tiempo real.' : 'Lab. de estratégia, missões de formação e análise de dados em tempo real.')}
       links={links}
       onBack={onBack}
       onNavigate={onNavigate}
@@ -1013,6 +1015,7 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
       topDecalRight="LIDERAZGO"
       sideDecalLeft="ANÁLISIS"
       sideDecalRight="DATOS"
+      isEs={isEs}
     >
       {rutaData && rutaData.length > 0 && (
         <motion.div
@@ -1069,8 +1072,8 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
           </div>
 
           <div style={{ flex: 1, zIndex: 2 }}>
-            <div style={{ fontSize: 10, color: themeColor, letterSpacing: '0.2em', fontWeight: 900, marginBottom: 6 }}>PROGRAMA FORMATIVO · CAPA LIDERAZGO</div>
-            <div style={{ fontSize: 24, fontWeight: 900, letterSpacing: '0.02em', color: '#ffffff', marginBottom: 6 }}>Programa de Formação - Capa Liderança</div>
+            <div style={{ fontSize: 10, color: themeColor, letterSpacing: '0.2em', fontWeight: 900, marginBottom: 6 }}>{isEs ? 'PROGRAMA FORMATIVO · CAPA LIDERAZGO' : 'PROGRAMA FORMATIVO · CAPA LIDERANÇA'}</div>
+            <div style={{ fontSize: 24, fontWeight: 900, letterSpacing: '0.02em', color: '#ffffff', marginBottom: 6 }}>{isEs ? 'Programa de Formación - Capa Liderazgo' : 'Programa de Formação - Capa Liderança'}</div>
           </div>
 
           <div style={{
@@ -1093,7 +1096,7 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
   );
 };
 
-export const SuministrosView = ({ config, links, onBack, onNavigate, title, subtitle }: any) => {
+export const SuministrosView = ({ config, links, onBack, onNavigate, title, subtitle, isEs = false }: any) => {
   const themeColor = '#00D6CC';
   const heroIcon = (
     <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -1107,8 +1110,8 @@ export const SuministrosView = ({ config, links, onBack, onNavigate, title, subt
   return (
     <TechBaseView
       config={config}
-      title={title || 'Formulários'}
-      subtitle={subtitle || 'Gestão e controle de turmas e equipe de instrutores'}
+      title={title || (isEs ? 'Formularios' : 'Formulários')}
+      subtitle={subtitle || (isEs ? 'Gestión y control de clases y equipo de instructores' : 'Gestão e controle de turmas e equipe de instrutores')}
       links={links}
       onBack={onBack}
       onNavigate={onNavigate}
@@ -1116,13 +1119,14 @@ export const SuministrosView = ({ config, links, onBack, onNavigate, title, subt
       heroIcon={heroIcon}
       listIcon={<Box size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
       headerTitle="MANTENIMIENTO · PROTOCOLOS · SUPORTE"
-      footerTitle="Formulários"
-      description="Formularios de solicitud, inventario y recursos logísticos."
+      footerTitle={isEs ? "Formularios" : "Formulários"}
+      description={isEs ? "Formularios de solicitud, inventario y recursos logísticos." : "Formulários de solicitação, inventário e recursos logísticos."}
+      isEs={isEs}
     />
   );
 };
 
-export const OperacionesView = ({ config, links, onBack, onNavigate, title, subtitle }: any) => {
+export const OperacionesView = ({ config, links, onBack, onNavigate, title, subtitle, isEs = false }: any) => {
   const themeColor = '#FFE017';
   const heroIcon = (
     <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -1136,8 +1140,8 @@ export const OperacionesView = ({ config, links, onBack, onNavigate, title, subt
   return (
     <TechBaseView
       config={config}
-      title={title || 'Portal Instrutor'}
-      subtitle={subtitle || 'Monitoramento em tempo real, portal de instrutores e controle de missões.'}
+      title={title || (isEs ? 'Portal Instructor' : 'Portal Instrutor')}
+      subtitle={subtitle || (isEs ? 'Monitoreo en tiempo real, portal de instructores y control de misiones.' : 'Monitoramento em tempo real, portal de instrutores e controle de missões.')}
       links={links}
       onBack={onBack}
       onNavigate={onNavigate}
@@ -1145,8 +1149,9 @@ export const OperacionesView = ({ config, links, onBack, onNavigate, title, subt
       heroIcon={heroIcon}
       listIcon={<GraduationCap size={36} color="#ffffff" style={{ filter: `drop-shadow(0 0 8px ${themeColor})` }} strokeWidth={1.5} />}
       headerTitle="MANTENIMIENTO · PROTOCOLOS · SUPORTE"
-      footerTitle="Portal Instrutor"
-      description="Recursos de instrução, monitoramento e operações de voo."
+      footerTitle={isEs ? "Portal Instructor" : "Portal Instrutor"}
+      description={isEs ? "Recursos de instrucción, monitoreo y operaciones de vuelo." : "Recursos de instrução, monitoramento e operações de voo."}
+      isEs={isEs}
     />
   );
 };

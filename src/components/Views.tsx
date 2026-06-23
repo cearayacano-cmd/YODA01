@@ -435,7 +435,7 @@ const FloatingSpaceship = () => {
       style={{
         position: 'absolute',
         top: '18%',
-        left: '20%',
+        left: '12%', // Movido más a la izquierda desde 20% a 12%
         width: '260px',
         zIndex: 2,
         pointerEvents: 'none',
@@ -1142,7 +1142,7 @@ const SectorScanDisplay = ({ color }: any) => {
   );
 };
 
-const CentralMonitorCard = ({ onNavigate }: any) => {
+const CentralMonitorCard = ({ onNavigate, isEs = false }: any) => {
   const color = "#B20F3B"; 
   return (
     <motion.div
@@ -1189,8 +1189,8 @@ const CentralMonitorCard = ({ onNavigate }: any) => {
       <div style={{ position: 'absolute', bottom: 4, right: 4, width: 5, height: 5, background: color, borderRadius: '50%', boxShadow: `0 0 8px ${color}`, zIndex: 14 }} />
 
       <div style={{ zIndex: 2, position: 'relative', width: '100%', textAlign: 'center' }}>
-        <div style={{ fontSize: 9, color: '#FF7D9B', letterSpacing: '0.3em', fontWeight: 900, marginBottom: 4, textTransform: 'uppercase' }}>NAVE EXPLORAÇÃO</div>
-        <div style={{ fontSize: 24, fontWeight: 900, color: '#ffffff', marginBottom: 12, letterSpacing: '0.05em' }}>Treinamentos</div>
+        <div style={{ fontSize: 9, color: '#FF7D9B', letterSpacing: '0.3em', fontWeight: 900, marginBottom: 4, textTransform: 'uppercase' }}>{isEs ? 'NAVE EXPLORACIÓN' : 'NAVE EXPLORAÇÃO'}</div>
+        <div style={{ fontSize: 24, fontWeight: 900, color: '#ffffff', marginBottom: 12, letterSpacing: '0.05em' }}>{isEs ? 'Entrenamientos' : 'Treinamentos'}</div>
 
         {/* SECTOR SCAN AREA (Widescreen tactical display) */}
         <div style={{ 
@@ -1231,7 +1231,7 @@ const CentralMonitorCard = ({ onNavigate }: any) => {
             textTransform: 'none'
           }}
         >
-          Acessar
+          {isEs ? 'Acceder' : 'Acessar'}
         </motion.button>
       </div>
     </motion.div>
@@ -1336,7 +1336,7 @@ const TacticalKey = ({ label, color, active = false, onClick, large = false }: a
   </motion.div>
 );
 
-const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive, onPreparacao, onIncidencias, states, isIntegrated = false }: any) => {
+const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive, onPreparacao, onIncidencias, states, isIntegrated = false, isEs = false }: any) => {
   const { alertMode, hudHidden, dimLights } = states;
   const color = alertMode ? "#B20F3B" : "#99CC33";
 
@@ -1476,7 +1476,7 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
         >
           <motion.div animate={{ x: ['-100%', '200%'] }} transition={{ duration: 2.5, repeat: Infinity, ease: 'linear', repeatDelay: 2 }}
             style={{ position: 'absolute', top: 0, left: 0, width: '35%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(153,204,51,0.12), transparent)', pointerEvents: 'none' }} />
-          <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '0.08em', textShadow: '0 0 8px rgba(153,204,51,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>📊 PAINÉIS</span>
+          <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '0.08em', textShadow: '0 0 8px rgba(153,204,51,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>📊 {isEs ? 'PANELES' : 'PAINÉIS'}</span>
         </motion.div>
 
         {/* IARA */}
@@ -1523,7 +1523,7 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
         >
           <motion.div animate={{ x: ['-100%', '200%'] }} transition={{ duration: 2.8, repeat: Infinity, ease: 'linear', repeatDelay: 2 }}
             style={{ position: 'absolute', top: 0, left: 0, width: '35%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(0,214,204,0.12), transparent)', pointerEvents: 'none' }} />
-          <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '0.05em', textShadow: '0 0 8px rgba(0,214,204,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>📋 MATRIZ MIGRAÇÕES</span>
+          <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '0.05em', textShadow: '0 0 8px rgba(0,214,204,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>📋 {isEs ? 'MATRIZ MIGRACIONES' : 'MATRIZ MIGRAÇÕES'}</span>
         </motion.div>
 
         {/* INCIDÊNCIAS */}
@@ -1546,7 +1546,7 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
         >
           <motion.div animate={{ x: ['-100%', '200%'] }} transition={{ duration: 2.8, repeat: Infinity, ease: 'linear', repeatDelay: 2 }}
             style={{ position: 'absolute', top: 0, left: 0, width: '35%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(255,140,0,0.12), transparent)', pointerEvents: 'none' }} />
-          <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '0.05em', textShadow: '0 0 8px rgba(255,140,0,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>⚠️ INCIDÊNCIAS</span>
+          <span style={{ fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '0.05em', textShadow: '0 0 8px rgba(255,140,0,0.7)', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>⚠️ {isEs ? 'INCIDENCIAS' : 'INCIDÊNCIAS'}</span>
         </motion.div>
       </div>
     </div>
@@ -1785,11 +1785,11 @@ const IaraHologram = ({ isVisible, onClose, iaraLink }: any) => {
   );
 };
 
-const StationIcon = () => {
+const StationIcon = ({ isEs }: { isEs?: boolean }) => {
   return (
     <div style={{ position: 'relative', width: 70, height: 70, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <img 
-        src="/YODA_Escudo_PT1.png" 
+        src={isEs ? "/YODA_Escudo_ES1.png" : "/YODA_Escudo_PT1.png"} 
         alt="Shield Icon" 
         style={{ width: 70, height: 'auto', display: 'block' }} 
       />
@@ -1803,6 +1803,21 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
   const [hudHidden, setHudHidden] = useState(false);
   const [dimLights, setDimLights] = useState(false);
   const [showIara, setShowIara] = useState(false);
+  const isEs = stationName === 'SSC';
+  
+  // Responsive Scaling Logic
+  const [scale, setScale] = useState(1);
+  useEffect(() => {
+    const handleResize = () => {
+      // El diseño fluye naturalmente hasta los 1350px. Si es menor, aplicamos scale para evitar que se aplaste.
+      const width = window.innerWidth;
+      const newScale = width < 1350 ? (width / 1350) : 1;
+      setScale(newScale);
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial check
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Debug log para ver qué llega realmente
   if (typeof window !== 'undefined') {
@@ -1854,7 +1869,7 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
       <IaraHologram isVisible={showIara} onClose={() => setShowIara(false)} iaraLink={iaraLink} />
 
       <div style={{ height: '84px', background: '#FFFFFF', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 32px', transition: 'all 0.5s ease', borderBottom: '1px solid rgba(27,0,136,0.1)' }}>
-        <BackBtn onClick={onBack} label="SAIR" />
+        <BackBtn onClick={onBack} label={isEs ? "SALIR" : "SAIR"} />
         <div style={{ 
           position: 'absolute', 
           left: '50%', 
@@ -1865,9 +1880,9 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
           alignItems: 'center', 
           gap: '20px' 
         }}>
-          <StationIcon />
+          <StationIcon isEs={isEs} />
           <div>
-            <div style={{ fontSize: 11, letterSpacing: '0.4em', color: '#1B0088', opacity: 0.6, textTransform: 'uppercase', marginBottom: 2, fontWeight: 800 }}>ESTAÇÃO ESPACIAL</div>
+            <div style={{ fontSize: 11, letterSpacing: '0.4em', color: '#1B0088', opacity: 0.6, textTransform: 'uppercase', marginBottom: 2, fontWeight: 800 }}>{isEs ? 'ESTACIÓN ESPACIAL' : 'ESTAÇÃO ESPACIAL'}</div>
             <div style={{ fontSize: 24, fontWeight: 900, color: '#1B0088', letterSpacing: '0.1em' }}>{stationName} STATION</div>
           </div>
         </div>
@@ -1875,15 +1890,26 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
         </div>
       </div>
 
-      <div style={{ flex: 1, position: 'relative', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
-        <ConsoleSideFrame side="left">
+      <div style={{ flex: 1, position: 'relative', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', overflow: 'hidden' }}>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'space-between', 
+          width: '100%',
+          maxWidth: '2200px', // Aún más ancho, casi pantalla completa
+          padding: '0 40px', // Reducido el padding para que se acerquen más al borde
+          transform: `scale(${scale})`,
+          transformOrigin: 'center center',
+          transition: 'transform 0.1s ease-out'
+        }}>
+          <ConsoleSideFrame side="left">
           <ModuleCard 
-            sec="SEC-A1" title="Portal Instrutor" subtitle="" color="#FFE017" side="left"
-            icon={<GraduationCap />} stats={[{label: 'MÓDULOS', val: config?.operaciones?.length || 0}, {label: 'ATUALIZADO', val: config?.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Portal Instrutor', 'CLICK_LINK'); onNavigate('operaciones'); }} 
+            sec="SEC-A1" title={config?.moduleMeta?.ops?.title || (isEs ? "Portal Instructor" : "Portal Instrutor")} subtitle="" color="#FFE017" side="left"
+            icon={<GraduationCap />} stats={[{label: 'MÓDULOS', val: config?.operaciones?.length || 0}, {label: isEs ? 'ACTUALIZADO' : 'ATUALIZADO', val: config?.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Portal Instrutor', 'CLICK_LINK'); onNavigate('operaciones'); }} 
           />
           <ModuleCard 
-            sec="SEC-A2" title="Formulários" subtitle="" color="#00FFF2" side="left"
-            icon={<Package />} stats={[{label: 'MÓDULOS', val: config?.suministros?.length || 0}, {label: 'ATUALIZADO', val: config?.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Formulários', 'CLICK_LINK'); onNavigate('suministros'); }} 
+            sec="SEC-A2" title={config?.moduleMeta?.sup?.title || (isEs ? "Formularios" : "Formulários")} subtitle="" color="#00FFF2" side="left"
+            icon={<Package />} stats={[{label: 'MÓDULOS', val: config?.suministros?.length || 0}, {label: isEs ? 'ACTUALIZADO' : 'ATUALIZADO', val: config?.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Formulários', 'CLICK_LINK'); onNavigate('suministros'); }} 
           />
         </ConsoleSideFrame>
         
@@ -1899,7 +1925,7 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
           {/* MONITOR PART */}
           <div style={{ transform: 'perspective(1500px) rotateX(2deg)', zIndex: 2, marginBottom: 15 }}>
             <ConsoleCentralFrame>
-              <CentralMonitorCard onNavigate={onNavigate} />
+              <CentralMonitorCard onNavigate={onNavigate} isEs={isEs} />
             </ConsoleCentralFrame>
           </div>
 
@@ -1916,25 +1942,27 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
               onIncidencias={() => config?.incidenciasLink ? window.open(config.incidenciasLink, '_blank') : window.open('https://forms.gle/AF44FUbJZbrhKHoQA', '_blank')}
               states={{ alertMode, hudHidden, dimLights }}
               isIntegrated={true}
+              isEs={isEs}
             />
           </div>
         </div>
 
         <ConsoleSideFrame side="right">
           <ModuleCard 
-            sec="SEC-B1" title="Portal de Líderes" subtitle="" color="#A4FF00" side="right"
-            icon={<Microscope />} stats={[{label: 'MÓDULOS', val: config.laboratorio?.length || 0}, {label: 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Portal de Líderes', 'CLICK_LINK'); onNavigate('laboratorio'); }} 
+            sec="SEC-B1" title={config?.moduleMeta?.lab?.title || "Portal de Líderes"} subtitle="" color="#A4FF00" side="right"
+            icon={<Microscope />} stats={[{label: 'MÓDULOS', val: config.laboratorio?.length || 0}, {label: isEs ? 'ACTUALIZADO' : 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Portal de Líderes', 'CLICK_LINK'); onNavigate('laboratorio'); }} 
           />
           <ModuleCard 
-            sec="SEC-B2" title="Workshops" subtitle="" color="#D400FF" side="right"
-            icon={<Cpu />} stats={[{label: 'MÓDULOS', val: config.ingenieria?.length || 0}, {label: 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Workshops', 'CLICK_LINK'); onNavigate('ingenieria'); }} 
+            sec="SEC-B2" title={config?.moduleMeta?.eng?.title || "Workshops"} subtitle="" color="#D400FF" side="right"
+            icon={<Cpu />} stats={[{label: 'MÓDULOS', val: config.ingenieria?.length || 0}, {label: isEs ? 'ACTUALIZADO' : 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Workshops', 'CLICK_LINK'); onNavigate('ingenieria'); }} 
           />
         </ConsoleSideFrame>
+        </div>
       </div>
 
       <div style={{ height: '80px', background: '#FFFFFF', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 40px', borderTop: '1px solid rgba(27,0,136,0.1)', transition: 'all 0.5s ease' }}>
         <div style={{ transform: 'translateY(4px)' }}>
-          <img src="/por_logo.png" alt="Capacitación Logo" style={{ height: '60px', width: 'auto', opacity: 1, filter: 'brightness(0.9)' }} />
+          <img src={isEs ? "/ESP-Logo-Capacitación.png" : "/por_logo.png"} alt="Capacitación Logo" style={{ height: '60px', width: 'auto', opacity: 1, filter: 'brightness(0.9)' }} />
         </div>
         <div style={{ transform: 'translateY(4px)' }}>
           <img src="/guardianes_logo.png" alt="Guardianes Logo" style={{ height: '60px', width: 'auto', opacity: 1, filter: 'brightness(0.9)' }} />

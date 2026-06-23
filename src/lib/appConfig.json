@@ -24,7 +24,12 @@
         "desc": "Acesse conteúdos que irão elevar seu conhecimento e levar nossa operação cada vez mais alto!"
       }
     ],
-    "laboratorio": [],
+    "laboratorio": [
+      {
+        "label": "NUEVO_LINK",
+        "url": "https://sites.google.com/latam.com/elevar-el-conocimiento-siempre/untitled-page"
+      }
+    ],
     "operaciones": [
       {
         "label": "Usuários Treinamento",
@@ -43,7 +48,7 @@
         "url": "https://docs.google.com/forms/d/e/1FAIpQLSc6skAZ2tsMQx3b5uMjVzI_0kbafi11Bj7rsOJgVbrOzgLWtw/viewform"
       }
     ],
-    "lastUpdate": "30/04/2026",
+    "lastUpdate": "23/06/2026",
     "rutaLider": [
       {
         "poder": "Gestão de Equipe",
@@ -333,6 +338,41 @@
                   "consejo": ""
                 }
               ]
+            }
+          ]
+        }
+      },
+      {
+        "label": "NAVE DE ONBOARDING 3",
+        "data": {
+          "secciones": [
+            {
+              "tipo": "mision1",
+              "label": "MISSÃO 1:",
+              "rows": [
+                {
+                  "macroTema": "TEST",
+                  "dia": "",
+                  "tema": "TEST",
+                  "detalhe": "",
+                  "consejo": "",
+                  "herramientas": [
+                    {
+                      "tipo": "🖼️ Slide",
+                      "url": ""
+                    }
+                  ],
+                  "iaPic": [],
+                  "tiempo": ""
+                }
+              ],
+              "dbOjtLabel": "",
+              "dbOjtUrl": "",
+              "totalCh": "",
+              "ajusteRota": "",
+              "ajusteRotaUrlKon": "",
+              "ajusteRotaUrlAec": "",
+              "ajusteRotaCh": ""
             }
           ]
         }
@@ -6273,7 +6313,7 @@
                 "macroTema": "Alterações Voluntárias",
                 "dia": "3,4,5,6",
                 "tema": "Reemissão Sabre Interact",
-                "detalhe": "- Instrutor mostra através da ferramenta Sabre Training como finalizar reemissão através do Sabre  (somente por contingência caso Allegro não funcione)\n- Instrutor deve reforçar que este processo só será feito com autorização do supervisor e que ao final o agente deverá realizar o controle de aderência através do Allegro (conteúdo visto no Poder 1)",
+                "detalhe": "- Instrutor mostra através da ferramenta Sabre Training como finalizar reemissão através do Sabre  (somente por contingência caso Allegro n��o funcione)\n- Instrutor deve reforçar que este processo só será feito com autorização do supervisor e que ao final o agente deverá realizar o controle de aderência através do Allegro (conteúdo visto no Poder 1)",
                 "tiempo": "0:20:00",
                 "herramientas": [
                   {
@@ -19727,7 +19767,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "onboardingIdx": 2
         },
         {
           "texture": "CRATERS",
@@ -23860,19 +23901,126 @@
     }
   },
   "ssc": {
-    "monitoringUrl": "",
+    "monitoringUrl": "https://lookerstudio.google.com/u/0/reporting/9d1f44d6-e585-4a9c-af76-c0883ed691e2/page/p_wtg2od23vd",
     "iaraLink": "https://amelia.appslatam.com/#/assistants/chat/aa857c06-5a06-4450-8518-8568cdd28dfd",
-    "preparacaoLink": "",
-    "suministros": [],
-    "ingenieria": [],
-    "laboratorio": [],
-    "operaciones": [],
-    "lastUpdate": "---",
+    "preparacaoLink": "https://sites.google.com/latam.com/elevar-el-conocimiento-siempre/untitled-page",
+    "suministros": [
+      {
+        "label": "NUEVO_LINK",
+        "url": "https://lookerstudio.google.com/u/0/reporting/9d1f44d6-e585-4a9c-af76-c0883ed691e2/page/p_wtg2od23vd"
+      }
+    ],
+    "ingenieria": [
+      {
+        "label": "NUEVO_LINK",
+        "url": "https://lookerstudio.google.com/u/0/reporting/9d1f44d6-e585-4a9c-af76-c0883ed691e2/page/p_wtg2od23vd"
+      }
+    ],
+    "laboratorio": [
+      {
+        "label": "NUEVO_LINK",
+        "url": "https://sites.google.com/latam.com/elevar-el-conocimiento-siempre/untitled-page"
+      }
+    ],
+    "operaciones": [
+      {
+        "label": "NUEVO_LINK",
+        "url": "https://lookerstudio.google.com/u/0/reporting/9d1f44d6-e585-4a9c-af76-c0883ed691e2/page/p_wtg2od23vd"
+      }
+    ],
+    "lastUpdate": "23/06/2026",
     "rutaLider": [],
     "onboarding": [
-      []
+      {
+        "label": "NAVE DE ONBOARDING 1",
+        "data": {
+          "secciones": [
+            {
+              "tipo": "mision1",
+              "label": "MISSÃO 1:",
+              "rows": [
+                {
+                  "macroTema": "TEST",
+                  "dia": "",
+                  "tema": "",
+                  "detalhe": "",
+                  "consejo": "",
+                  "herramientas": [
+                    {
+                      "tipo": "🖼️ Slide",
+                      "url": ""
+                    }
+                  ],
+                  "iaPic": [],
+                  "tiempo": ""
+                }
+              ],
+              "dbOjtLabel": "",
+              "dbOjtUrl": "",
+              "totalCh": "",
+              "ajusteRota": "",
+              "ajusteRotaUrlKon": "",
+              "ajusteRotaUrlAec": "",
+              "ajusteRotaCh": ""
+            }
+          ]
+        }
+      }
     ],
-    "frontLineContent": [],
+    "frontLineContent": [
+      {
+        "secciones": [
+          {
+            "tipo": "imersao",
+            "label": "TEST",
+            "rows": [
+              {
+                "macroTema": "TEST",
+                "dia": "",
+                "tema": "",
+                "detalhe": "",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": ""
+              },
+              {
+                "macroTema": "TEST",
+                "dia": "",
+                "tema": "",
+                "detalhe": "",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": ""
+              }
+            ],
+            "dbOjtLabel": "",
+            "dbOjtUrl": "",
+            "totalCh": "",
+            "ajusteRota": "",
+            "ajusteRotaUrlKon": "",
+            "ajusteRotaUrlAec": "",
+            "ajusteRotaCh": ""
+          }
+        ],
+        "materiais": [],
+        "evalKon": [],
+        "evalAec": [],
+        "evalMsg": "",
+        "evalTime": ""
+      }
+    ],
     "soporteContent": [],
     "satelites": {
       "conhecendo": [],
@@ -23880,9 +24028,116 @@
     },
     "fsc": [],
     "exploracion": {
-      "frontLine": [],
-      "soporte": [],
-      "fieldSupport": []
+      "frontLine": [
+        {
+          "id": "ssc_fl_lua",
+          "texture": "CRATERS",
+          "color": "#1b0088",
+          "label": "LUA",
+          "onboardingIdx": 0,
+          "secciones": []
+        },
+        {
+          "id": "ssc_fl_hvc",
+          "texture": "CRATERS",
+          "color": "#2ec9ed",
+          "label": "HVC",
+          "onboardingIdx": null,
+          "secciones": []
+        },
+        {
+          "id": "ssc_fl_equipajes",
+          "texture": "CRATERS",
+          "color": "#7da81a",
+          "label": "Equipajes",
+          "onboardingIdx": null,
+          "secciones": []
+        },
+        {
+          "id": "ssc_fl_rrss",
+          "texture": "CRATERS",
+          "color": "#7000ab",
+          "label": "RRSS",
+          "onboardingIdx": null,
+          "secciones": []
+        },
+        {
+          "id": "ssc_fl_dt_devoluciones",
+          "texture": "CRATERS",
+          "color": "#2ec9ed",
+          "label": "DT Devoluciones",
+          "onboardingIdx": null,
+          "secciones": []
+        },
+        {
+          "id": "ssc_fl_dt_ffp",
+          "texture": "CRATERS",
+          "color": "#ff004b",
+          "label": "DT FFP",
+          "onboardingIdx": null,
+          "secciones": []
+        },
+        {
+          "id": "ssc_fl_lua_bo",
+          "texture": "CRATERS",
+          "color": "#1b0088",
+          "label": "LUA BO",
+          "onboardingIdx": null,
+          "secciones": []
+        },
+        {
+          "id": "ssc_fl_lae_pi",
+          "texture": "CRATERS",
+          "color": "#7000ab",
+          "label": "LAE PI",
+          "onboardingIdx": null,
+          "secciones": []
+        },
+        {
+          "id": "ssc_fl_latam_travel",
+          "texture": "CRATERS",
+          "color": "#1b0088",
+          "label": "LATAM Travel",
+          "onboardingIdx": null,
+          "secciones": []
+        },
+        {
+          "id": "ssc_fl_ventas",
+          "texture": "CRATERS",
+          "color": "#7000ab",
+          "label": "VENTAS",
+          "onboardingIdx": null,
+          "secciones": []
+        }
+      ],
+      "soporte": [
+        {
+          "id": "ssc_sup_hvc",
+          "texture": "CRATERS",
+          "color": "#ffe017",
+          "label": "Soporte HVC",
+          "onboardingIdx": 0,
+          "secciones": []
+        },
+        {
+          "id": "ssc_sup_lua",
+          "texture": "CRATERS",
+          "color": "#7da81a",
+          "label": "Soporte LUA",
+          "onboardingIdx": 0,
+          "secciones": []
+        }
+      ],
+      "fieldSupport": [
+        {
+          "id": "ssc_fs_fs",
+          "texture": "CRATERS",
+          "color": "#7da81a",
+          "label": "FS",
+          "onboardingIdx": 0,
+          "secciones": []
+        }
+      ]
     }
   }
 }
