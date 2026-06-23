@@ -276,7 +276,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
           <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             <div style={{ width: 44, height: 44, background: 'rgba(237,22,80,0.2)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1650' }}><Satellite size={24} /></div>
             <div>
-                <div style={{ fontSize: 10, fontWeight: 900, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 2 }}>{title}</div>
+                <div style={{ fontSize: 10, fontWeight: 900, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 2 }}>{title} <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>-</span> <span style={{ background: stationName === 'BR' ? '#99CC33' : '#682D88', padding: '2px 6px', borderRadius: 4, color: '#fff' }}>{stationName} STATION</span></div>
                 <div style={{ fontSize: 20, fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em' }}>{planets[activePlanet]?.label}</div>
             </div>
           </div>

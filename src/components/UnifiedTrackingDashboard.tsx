@@ -5,7 +5,7 @@ import { AdminVisualDashboard } from './AdminVisualDashboard';
 import { AdminUsersList } from './AdminUsersList';
 import { ArrowLeft, Users, LayoutDashboard, TableProperties, Compass } from 'lucide-react';
 
-export const UnifiedTrackingDashboard = ({ view, logs, config, onBack }: any) => {
+export const UnifiedTrackingDashboard = ({ view, logs, config, onBack, stationName }: any) => {
   const [activeTab, setActiveTab] = useState<'users' | 'visual' | 'missions' | 'portals'>('users');
   const [selectedInstructor, setSelectedInstructor] = useState<string | undefined>();
   const [selectedCode, setSelectedCode] = useState<string | undefined>();
@@ -31,6 +31,11 @@ export const UnifiedTrackingDashboard = ({ view, logs, config, onBack }: any) =>
         <div style={{ padding: '0 24px', marginBottom: 40, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <img src="/logo-blanco-1.png" alt="Capacitacion" style={{ height: 45, objectFit: 'contain', marginBottom: 16 }} />
           <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', letterSpacing: '3px', fontWeight: 900 }}>MONITOREO GLOBAL</div>
+          {stationName && (
+            <div style={{ marginTop: 12, display: 'inline-flex', alignItems: 'center', background: stationName === 'BR' ? '#99CC33' : '#682D88', padding: '4px 10px', borderRadius: 6, boxShadow: '0 4px 10px rgba(0,0,0,0.2)' }}>
+              <span style={{ fontSize: 10, fontWeight: 900, color: '#fff', letterSpacing: '1px' }}>{stationName} STATION</span>
+            </div>
+          )}
         </div>
 
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8, paddingRight: 16 }}>

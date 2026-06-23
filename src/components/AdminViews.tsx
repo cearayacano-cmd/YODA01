@@ -3,8 +3,8 @@ import { BackBtn } from './Shared';
 import { motion } from 'framer-motion';
 import { Save, Rocket, Settings, Database, Edit3, Trash2, Plus, Link as LinkIcon, CheckCircle2, Activity, LayoutGrid, GraduationCap, ArrowUpRight, Globe, ArrowLeft, User, Target, BarChart3, Layout } from 'lucide-react';
 
-export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLider, onViewStation, onSave, onActivityLog, onInstructorDashboard, onMissionTracking, onPortalTracking }: any) => {
-  const [activeStation, setActiveStation] = useState('BR');
+export const AdminCenter = ({ config, setConfig, onBack, adminStation, onExploracion, onRutaLider, onViewStation, onSave, onActivityLog, onInstructorDashboard, onMissionTracking, onPortalTracking }: any) => {
+  const [activeStation, setActiveStation] = useState(adminStation || 'BR');
   const [saved, setSaved] = useState(false);
   const handleSave = () => { 
     setSaved(true); 
@@ -69,7 +69,7 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <Settings size={22} color={activeStation === 'BR' ? '#7da81a' : '#7000ab'} />
           <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>
-            ADMIN CENTER <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> {activeStation === 'BR' ? '🇧🇷 BR' : '🇪🇸 SSC'} STATION
+            ADMIN CENTER <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> <span style={{ background: activeStation === 'BR' ? '#99CC33' : '#682D88', padding: '2px 8px', borderRadius: 4, color: '#fff' }}>{activeStation} STATION</span>
           </span>
         </div>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 12 }}>
@@ -116,54 +116,57 @@ export const AdminCenter = ({ config, setConfig, onBack, onExploracion, onRutaLi
             ESTACIONES BASE
           </div>
           {['BR','SSC'].map(st=>(
-            <motion.div 
-              key={st} 
-              whileHover={{ x: 6, background: activeStation===st ? '#EAE8F9' : 'rgba(255,255,255,0.05)' }}
-              onClick={()=>setActiveStation(st)} 
-              style={{
-                padding:'14px 20px', 
-                cursor:'pointer', 
-                borderRadius: 30, 
-                fontWeight: activeStation===st ? 800 : 500, 
-                background: activeStation===st ? '#EAE8F9' : 'transparent', 
-                color: activeStation===st ? '#0F004F' : 'rgba(255,255,255,0.6)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 14,
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-              }}
-            >
-              <Rocket size={20} color={activeStation===st ? '#0F004F' : 'rgba(255,255,255,0.4)'} />
-              <span style={{ fontSize: 13, letterSpacing: '0.05em' }}>{st} STATION</span>
-            </motion.div>
+            <div key={st} style={{ marginBottom: 12 }}>
+              <motion.div 
+                whileHover={{ x: 6, background: activeStation===st ? '#EAE8F9' : 'rgba(255,255,255,0.05)' }}
+                onClick={()=>setActiveStation(st)} 
+                style={{
+                  padding:'14px 20px', 
+                  cursor:'pointer', 
+                  borderRadius: 30, 
+                  fontWeight: activeStation===st ? 800 : 500, 
+                  background: activeStation===st ? '#EAE8F9' : 'transparent', 
+                  color: activeStation===st ? '#0F004F' : 'rgba(255,255,255,0.6)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 14,
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+              >
+                <Rocket size={20} color={activeStation===st ? '#0F004F' : 'rgba(255,255,255,0.4)'} />
+                <span style={{ fontSize: 13, letterSpacing: '0.05em' }}>{st} STATION</span>
+              </motion.div>
+              
+              {activeStation === st && (
+                <div style={{ paddingLeft: 30, marginTop: 8 }}>
+                  <motion.button 
+                    whileHover={{ scale: 1.02, background: '#00BDB4' }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => onMissionTracking(st)} 
+                    style={{
+                      padding:'10px 16px', 
+                      cursor:'pointer', 
+                      borderRadius: 20,
+                      border: 'none',
+                      fontWeight: 900, 
+                      background: '#00D6CC', 
+                      color: '#0F004F',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'flex-start',
+                      gap: 10,
+                      boxShadow: '0 4px 15px rgba(0,214,204,0.3)',
+                      transition: 'all 0.3s ease',
+                      width: '100%'
+                    }}
+                  >
+                    <Target size={14} />
+                    <span style={{ fontSize: 10, letterSpacing: '0.15em' }}>MONITOREO</span>
+                  </motion.button>
+                </div>
+              )}
+            </div>
           ))}
-          
-          <div style={{ margin: '16px 16px 8px 16px', height: 1, background: 'rgba(255,255,255,0.1)' }} />
-          
-          <motion.button 
-            whileHover={{ scale: 1.02, background: '#00BDB4' }}
-            whileTap={{ scale: 0.98 }}
-            onClick={onMissionTracking} 
-            style={{
-              margin: '0 16px',
-              padding:'12px 20px', 
-              cursor:'pointer', 
-              borderRadius: 30,
-              border: 'none',
-              fontWeight: 900, 
-              background: '#00D6CC', 
-              color: '#0F004F',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 10,
-              boxShadow: '0 4px 15px rgba(0,214,204,0.3)',
-              transition: 'all 0.3s ease'
-            }}
-          >
-            <Target size={16} />
-            <span style={{ fontSize: 11, letterSpacing: '0.15em' }}>MONITOREO</span>
-          </motion.button>
           
           <div style={{ marginTop: 'auto', padding: '0 8px' }}>
             <motion.button 

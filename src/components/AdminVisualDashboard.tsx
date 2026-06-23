@@ -47,14 +47,35 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
     if (!config || !config.onboarding) return { totalMissionsAvailable: 100, totalProgrammedMinutes: 0 };
     let count = 0;
     let mins = 0;
-    config.onboarding.forEach((planet: any) => {
-      (planet.secciones || []).forEach((sec: any) => {
-        (sec.rows || []).forEach((row: any) => {
+    const countNodes = (sections: any[]) => {
+      sections.forEach(sec => {
+        (sec.rows || []).forEach(row => {
           count++;
-          mins += parseTime(row.tiempo);
+          mins += parseTime(row.tiempo || row.ch || '0');
         });
       });
-    });
+    };
+
+    if (config.onboarding) {
+      config.onboarding.forEach((planet: any) => {
+        countNodes(planet.secciones || planet.data?.secciones || []);
+      });
+    }
+    if (config.frontLineContent) {
+      config.frontLineContent.forEach((planet: any) => {
+        countNodes(Array.isArray(planet) ? planet : (planet.secciones || []));
+      });
+    }
+    if (config.soporteContent) {
+      config.soporteContent.forEach((planet: any) => {
+        countNodes(Array.isArray(planet) ? planet : (planet.secciones || []));
+      });
+    }
+    if (config.fsc) {
+      config.fsc.forEach((planet: any) => {
+        countNodes(Array.isArray(planet) ? planet : (planet.secciones || []));
+      });
+    }
     return { totalMissionsAvailable: count === 0 ? 1 : count, totalProgrammedMinutes: mins };
   }, [config]);
 

@@ -315,6 +315,7 @@ export default function App() {
       case 'admin':
         return (
           <AdminCenter 
+            adminStation={adminStation}
             config={appConfig || appConfigJson} 
             setConfig={setAppConfig} 
             onBack={()=>go('landing')}
@@ -324,7 +325,7 @@ export default function App() {
             onSave={saveConfigToDisk}
             onActivityLog={()=>go('activity-log')}
             onInstructorDashboard={()=>go('instructor-dashboard')}
-            onMissionTracking={()=>go('admin-activity-tracking')}
+            onMissionTracking={(st: string)=>{setAdminStation(st);go('admin-activity-tracking')}}
           />
         );
       case 'instructor-dashboard':
@@ -333,7 +334,7 @@ export default function App() {
         );
       case 'admin-activity-tracking':
         return (
-          <UnifiedTrackingDashboard onBack={()=>go('admin')} />
+          <UnifiedTrackingDashboard stationName={adminStation} onBack={()=>go('admin')} />
         );
       case 'admin-exploracion':
         return (

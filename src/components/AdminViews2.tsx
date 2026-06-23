@@ -82,7 +82,7 @@ export const AdminExploracion = ({ stationName = 'BR', currentStationConfig, upd
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
             <Database size={22} color={stationName === 'BR' ? '#7da81a' : '#7000ab'} />
             <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>
-              EDITOR DE BASE DE DATOS <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> EXPLORACIÓN <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>-</span> {stationName === 'BR' ? '🇧🇷 BR' : '🇪🇸 SSC'} STATION
+              EDITOR DE BASE DE DATOS <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> EXPLORACIÓN <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>-</span> <span style={{ background: stationName === 'BR' ? '#99CC33' : '#682D88', padding: '2px 8px', borderRadius: 4, color: '#fff' }}>{stationName} STATION</span>
             </span>
           </div>
         </div>
