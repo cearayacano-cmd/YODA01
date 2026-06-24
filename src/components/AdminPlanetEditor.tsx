@@ -44,6 +44,7 @@ const SmartTextarea = ({ value, onChange, ...props }: any) => {
 };
 
 export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, initialPlanet, title = "EDITOR", isOnboarding, onSave }: any) => {
+  const stationName = typeof localStorage !== 'undefined' ? (localStorage.getItem('yoda_station') || 'BR') : 'BR';
   const [activePlanet, setActivePlanet] = useState(initialPlanet || 0);
   const [editingSecIdx, setEditingSecIdx] = useState<number | null>(null);
   const [editingExtraIdx, setEditingExtraIdx] = useState<number | null>(null);

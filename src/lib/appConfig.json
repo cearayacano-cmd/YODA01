@@ -341,41 +341,6 @@
             }
           ]
         }
-      },
-      {
-        "label": "NAVE DE ONBOARDING 3",
-        "data": {
-          "secciones": [
-            {
-              "tipo": "mision1",
-              "label": "MISSÃO 1:",
-              "rows": [
-                {
-                  "macroTema": "TEST",
-                  "dia": "",
-                  "tema": "TEST",
-                  "detalhe": "",
-                  "consejo": "",
-                  "herramientas": [
-                    {
-                      "tipo": "🖼️ Slide",
-                      "url": ""
-                    }
-                  ],
-                  "iaPic": [],
-                  "tiempo": ""
-                }
-              ],
-              "dbOjtLabel": "",
-              "dbOjtUrl": "",
-              "totalCh": "",
-              "ajusteRota": "",
-              "ajusteRotaUrlKon": "",
-              "ajusteRotaUrlAec": "",
-              "ajusteRotaCh": ""
-            }
-          ]
-        }
       }
     ],
     "frontLineContent": [
@@ -6313,7 +6278,7 @@
                 "macroTema": "Alterações Voluntárias",
                 "dia": "3,4,5,6",
                 "tema": "Reemissão Sabre Interact",
-                "detalhe": "- Instrutor mostra através da ferramenta Sabre Training como finalizar reemissão através do Sabre  (somente por contingência caso Allegro n��o funcione)\n- Instrutor deve reforçar que este processo só será feito com autorização do supervisor e que ao final o agente deverá realizar o controle de aderência através do Allegro (conteúdo visto no Poder 1)",
+                "detalhe": "- Instrutor mostra através da ferramenta Sabre Training como finalizar reemissão através do Sabre  (somente por contingência caso Allegro n����o funcione)\n- Instrutor deve reforçar que este processo só será feito com autorização do supervisor e que ao final o agente deverá realizar o controle de aderência através do Allegro (conteúdo visto no Poder 1)",
                 "tiempo": "0:20:00",
                 "herramientas": [
                   {
@@ -9791,7 +9756,7 @@
                 "consejo": ""
               },
               {
-                "macroTema": "Gestão de Reclamações SAB",
+                "macroTema": "Gest��o de Reclamações SAB",
                 "dia": 7,
                 "tema": "Gestão de Reclamações SAB",
                 "detalhe": "- O instrutor revisa as solicitações de ligações dos clientes no Brasil em caso de possíveis quebra de serviço , de acordo com o fluxo no PIC ",
@@ -17243,7 +17208,7 @@
                   "tiempo": "0:40:00",
                   "herramientas": [
                     {
-                      "tipo": "🖼️ PPT",
+                      "tipo": "���️ PPT",
                       "url": "https://drive.google.com/drive/folders/1qkss1xvAmuJ27dz47puVB_sjJDNBwv0r?usp=drive_link"
                     }
                   ],
@@ -23901,119 +23866,19 @@
     }
   },
   "ssc": {
-    "monitoringUrl": "https://lookerstudio.google.com/u/0/reporting/9d1f44d6-e585-4a9c-af76-c0883ed691e2/page/p_wtg2od23vd",
-    "iaraLink": "https://amelia.appslatam.com/#/assistants/chat/aa857c06-5a06-4450-8518-8568cdd28dfd",
-    "preparacaoLink": "https://sites.google.com/latam.com/elevar-el-conocimiento-siempre/untitled-page",
-    "suministros": [
-      {
-        "label": "NUEVO_LINK",
-        "url": "https://lookerstudio.google.com/u/0/reporting/9d1f44d6-e585-4a9c-af76-c0883ed691e2/page/p_wtg2od23vd"
-      }
-    ],
-    "ingenieria": [
-      {
-        "label": "NUEVO_LINK",
-        "url": "https://lookerstudio.google.com/u/0/reporting/9d1f44d6-e585-4a9c-af76-c0883ed691e2/page/p_wtg2od23vd"
-      }
-    ],
-    "laboratorio": [
-      {
-        "label": "NUEVO_LINK",
-        "url": "https://sites.google.com/latam.com/elevar-el-conocimiento-siempre/untitled-page"
-      }
-    ],
-    "operaciones": [
-      {
-        "label": "NUEVO_LINK",
-        "url": "https://lookerstudio.google.com/u/0/reporting/9d1f44d6-e585-4a9c-af76-c0883ed691e2/page/p_wtg2od23vd"
-      }
-    ],
-    "lastUpdate": "23/06/2026",
+    "monitoringUrl": "",
+    "iaraLink": "",
+    "preparacaoLink": "",
+    "suministros": [],
+    "ingenieria": [],
+    "laboratorio": [],
+    "operaciones": [],
+    "lastUpdate": "24/06/2026",
     "rutaLider": [],
-    "onboarding": [
-      {
-        "label": "NAVE DE ONBOARDING 1",
-        "data": {
-          "secciones": [
-            {
-              "tipo": "mision1",
-              "label": "MISSÃO 1:",
-              "rows": [
-                {
-                  "macroTema": "TEST",
-                  "dia": "",
-                  "tema": "",
-                  "detalhe": "",
-                  "consejo": "",
-                  "herramientas": [
-                    {
-                      "tipo": "🖼️ Slide",
-                      "url": ""
-                    }
-                  ],
-                  "iaPic": [],
-                  "tiempo": ""
-                }
-              ],
-              "dbOjtLabel": "",
-              "dbOjtUrl": "",
-              "totalCh": "",
-              "ajusteRota": "",
-              "ajusteRotaUrlKon": "",
-              "ajusteRotaUrlAec": "",
-              "ajusteRotaCh": ""
-            }
-          ]
-        }
-      }
-    ],
+    "onboarding": [],
     "frontLineContent": [
       {
-        "secciones": [
-          {
-            "tipo": "imersao",
-            "label": "TEST",
-            "rows": [
-              {
-                "macroTema": "TEST",
-                "dia": "",
-                "tema": "",
-                "detalhe": "",
-                "consejo": "",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ Slide",
-                    "url": ""
-                  }
-                ],
-                "iaPic": [],
-                "tiempo": ""
-              },
-              {
-                "macroTema": "TEST",
-                "dia": "",
-                "tema": "",
-                "detalhe": "",
-                "consejo": "",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ Slide",
-                    "url": ""
-                  }
-                ],
-                "iaPic": [],
-                "tiempo": ""
-              }
-            ],
-            "dbOjtLabel": "",
-            "dbOjtUrl": "",
-            "totalCh": "",
-            "ajusteRota": "",
-            "ajusteRotaUrlKon": "",
-            "ajusteRotaUrlAec": "",
-            "ajusteRotaCh": ""
-          }
-        ],
+        "secciones": [],
         "materiais": [],
         "evalKon": [],
         "evalAec": [],
@@ -24138,6 +24003,7 @@
           "secciones": []
         }
       ]
-    }
+    },
+    "incidenciasLink": ""
   }
 }

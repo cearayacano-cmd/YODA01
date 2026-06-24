@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
-import { ChevronLeft, Users, Navigation, CheckCircle, Clock, CalendarDays, Activity, Target, ExternalLink, BookOpen, Rocket, LayoutDashboard } from 'lucide-react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { ChevronLeft, Users, Navigation, CheckCircle, Clock, CalendarDays, Activity, Target, ExternalLink, BookOpen, Rocket, LayoutDashboard, Star } from 'lucide-react';
+import { getMissionTracking } from '../lib/tracking';
 import { motion } from 'framer-motion';
 
 const getPartidasInfo = (userLogs: any[], config: any) => {
@@ -91,10 +92,23 @@ export const SUPERVISOR_DATA = [
   }
 ];
 
-export const InstructorDashboard = ({ logs, config, onBack }: any) => {
+export const InstructorDashboard = ({ logs, config, onBack, initialUser, isEmbedded, stationName }: any) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRegion, setSelectedRegion] = useState<string>('ALL'); // 'ALL', 'BR', 'ES'
   const [selectedSupervisor, setSelectedSupervisor] = useState<string | null>(null);
+  const [selectedFabrica, setSelectedFabrica] = useState<string>('ALL');
+
+  const getFabrica = (email: string) => {
+    if (!email) return 'Otra';
+    const e = email.toLowerCase();
+    if (e.includes('carlose.araya')) return 'LATAM';
+    if (e.includes('konectabr.com')) return 'Konecta Brasil';
+    if (e.includes('aec.com')) return 'AeC';
+    if (e.includes('konectaperu.com')) return 'Konecta Perú';
+    if (e.includes('almacontact.com')) return 'Alma Contact';
+    const charCodeSum = email.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    return charCodeSum % 2 === 0 ? 'Konecta Brasil' : 'AeC';
+  };
 
   
   // Filter out admin user
@@ -138,8 +152,27 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
 
     return users.filter(u => u.toLowerCase().includes(searchTerm.toLowerCase()));
   }, [uniqueUsers, selectedRegion, selectedSupervisor, searchTerm]);
+
+  const filteredUsersByStation = useMemo(() => {
+    return filteredUsers.filter((u: string) => {
+      if (!stationName) return true;
+      const f = getFabrica(u);
+      if (stationName === 'BR') return f === 'Konecta Brasil' || f === 'AeC';
+      if (stationName === 'ES') return f !== 'Konecta Brasil' && f !== 'AeC';
+      return true;
+    });
+  }, [filteredUsers, stationName]);
+
+  const availableFabricas = useMemo(() => {
+    return Array.from(new Set(filteredUsersByStation.map(u => getFabrica(u))));
+  }, [filteredUsersByStation]);
+
+  const finalInstructorsList = useMemo(() => {
+    if (selectedFabrica === 'ALL') return filteredUsersByStation;
+    return filteredUsersByStation.filter(u => getFabrica(u) === selectedFabrica);
+  }, [filteredUsersByStation, selectedFabrica]);
   
-  const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const [selectedUser, setSelectedUser] = useState<string | null>(initialUser || null);
   const [selectedPartida, setSelectedPartida] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'reporte' | 'historial'>('reporte');
 
@@ -151,9 +184,70 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
     return partidasInfo.sort((a, b) => new Date(b.lastActivity).getTime() - new Date(a.lastActivity).getTime());
   }, [relevantLogs, selectedUser, config]);
 
+  // KPI & Gamification logic for the selected instructor
+  const instructorKPIs = useMemo(() => {
+    if (!selectedUser) return null;
+    
+    // REAL Gamification Engine based on completed missions time
+    const missionData = getMissionTracking().filter(m => m.instructor === selectedUser);
+    let totalMinutes = 0;
+    
+    const parseTime = (tStr: string) => {
+      if (!tStr) return 0;
+      const t = tStr.toLowerCase();
+      if (t.includes('h')) {
+        const h = parseFloat(t.replace('h', ''));
+        return isNaN(h) ? 0 : h * 60;
+      }
+      if (t.includes('m')) {
+        const m = parseFloat(t.replace('m', ''));
+        return isNaN(m) ? 0 : m;
+      }
+      if (t.includes(':')) {
+        const parts = t.split(':');
+        return (parseInt(parts[0]) || 0) * 60 + (parseInt(parts[1]) || 0);
+      }
+      return 0;
+    };
+
+    missionData.filter(m => !!m.marcarComoFinalizado).forEach(m => {
+      totalMinutes += parseTime(m.tiempoEstimado);
+    });
+
+    const totalHoras = Math.floor(totalMinutes / 60);
+    const completedCourses = userPartidasData.filter(p => p.isCompleted).length;
+
+    let level = "Instructor";
+    let nextLevelHours = 20;
+    let progress = (totalHoras / 20) * 100;
+    
+    if (totalHoras >= 100) {
+      level = "Instructor ⭐⭐⭐";
+      nextLevelHours = totalHoras;
+      progress = 100;
+    } else if (totalHoras >= 51) {
+      level = "Instructor ⭐⭐";
+      nextLevelHours = 100;
+      progress = ((totalHoras - 51) / (100 - 51)) * 100;
+    } else if (totalHoras >= 21) {
+      level = "Instructor ⭐";
+      nextLevelHours = 50;
+      progress = ((totalHoras - 21) / (50 - 21)) * 100;
+    }
+
+    const sellos = [
+      { id: 'primer_paso', title: 'Primer Salto', desc: 'Completaste tu primer módulo.', unlocked: completedCourses >= 1, icon: '🚀' },
+      { id: 'horas_20', title: 'Constancia Inicial', desc: 'Acumulaste 20 horas de instrucción.', unlocked: totalHoras >= 20, icon: '⏱️' },
+      { id: 'experto_5', title: 'Especialista', desc: 'Terminaste 5 cursos completos.', unlocked: completedCourses >= 5, icon: '📚' },
+      { id: 'master_100', title: 'Master Trainer', desc: 'Alcanzaste 100 horas de capacitación.', unlocked: totalHoras >= 100, icon: '🔥' }
+    ];
+
+    return { totalHoras, completedCourses, level, nextLevelHours, progress: Math.min(100, Math.max(0, progress)), sellos };
+  }, [selectedUser, userPartidasData]);
+
   // Global stats for ALL active users
   const globalUsersData = useMemo(() => {
-    return filteredUsers.map(u => {
+    return finalInstructorsList.map(u => {
       const uLogs = relevantLogs.filter((l: any) => l.user === u);
       
       const operaciones = uLogs.filter((l: any) => l.action === 'NAVIGATE' && l.details === 'Navegación a: operaciones').length;
@@ -203,10 +297,9 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
         partidasCompletadas,
         completionRate: partidasGeneradas > 0 ? (partidasCompletadas / partidasGeneradas) * 100 : 0
       };
-    }).filter(s => s.totalInstructors > 0); // Only show supervisors with active instructors
+    }).filter(s => s.totalInstructors > 0);
   }, [globalUsersData, selectedSupervisor, selectedRegion]);
 
-  // Filtered logs for selected user (only main module accesses)
   const allUserLogs = useMemo(() => {
     if (!selectedUser) return [];
     
@@ -233,44 +326,35 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
         .sort((a: any, b: any) => new Date(b.time).getTime() - new Date(a.time).getTime());
   }, [relevantLogs, selectedUser]);
 
-  // Colors
-  const primaryBrand = '#0f004f'; // The requested very dark blue
-  const secondaryBrand = '#16A34A'; // Green for completion
-  const highlightBrand = '#00D6CC'; // Teal for resources/active
+  const primaryBrand = '#0f004f';
+  const secondaryBrand = '#16A34A';
+  const highlightBrand = '#00D6CC';
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F8F7FF', display: 'flex', flexDirection: 'column', color: '#111827', fontFamily: '"Inter", Trebuchet MS, Arial, sans-serif' }}>
+    <div style={{ height: '100vh', background: isEmbedded ? '#f5f7f9' : '#F8F7FF', display: 'flex', flexDirection: 'column', color: '#111827', fontFamily: '"Inter", Trebuchet MS, Arial, sans-serif' }}>
       
-      {/* Header Full Width */}
-      <div style={{ background: '#FFFFFF', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(0,0,0,0.1)', boxShadow: '0 2px 4px rgba(0,0,0,0.02)', zIndex: 10 }}>
-        <button 
-          onClick={onBack} 
-          style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.2)', color: '#111827', padding: '8px 20px', borderRadius: '30px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, fontSize: '12px', fontWeight: 700, transition: 'all 0.2s' }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.05)' }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'transparent' }}
-        >
-          <ChevronLeft size={16} /> VOLVER
-        </button>
-        
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <Activity size={24} color={primaryBrand} />
-          <div style={{ fontSize: '20px', fontWeight: 900, letterSpacing: '0.1em', color: primaryBrand }}>MONITOREO DE INSTRUCTORES</div>
+      {!isEmbedded && (
+        <div style={{ background: '#FFFFFF', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(0,0,0,0.1)', boxShadow: '0 2px 4px rgba(0,0,0,0.02)', zIndex: 10 }}>
+          <button 
+            onClick={onBack} 
+            style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.2)', color: '#111827', padding: '8px 20px', borderRadius: '30px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, fontSize: '12px', fontWeight: 700, transition: 'all 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.05)' }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'transparent' }}
+          >
+            <ChevronLeft size={16} /> VOLVER
+          </button>
+          
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <Activity size={24} color={primaryBrand} />
+            <div style={{ fontSize: '20px', fontWeight: 900, letterSpacing: '0.1em', color: primaryBrand }}>MONITOREO DE INSTRUCTORES</div>
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Main layout: Sidebar + Content */}
       <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
         
-        {/* Sidebar */}
-        <div style={{ 
-          width: '320px', 
-          background: primaryBrand, 
-          color: '#ffffff', 
-          display: 'flex', 
-          flexDirection: 'column',
-          borderRight: '1px solid rgba(0,0,0,0.1)',
-          boxShadow: '2px 0 10px rgba(0,0,0,0.1)'
-        }}>
+        {!isEmbedded && (
+          <div style={{ width: '320px', background: primaryBrand, color: '#ffffff', display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(0,0,0,0.1)', boxShadow: '2px 0 10px rgba(0,0,0,0.1)' }}>
           <div style={{ padding: '24px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
             <div style={{ fontSize: '12px', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '16px', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Filtros de Red</div>
             
@@ -293,61 +377,30 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
                 style={{ width: '100%', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', padding: '8px', borderRadius: '8px', color: '#fff', fontSize: '12px', outline: 'none' }}
               >
                 <option value="" style={{ color: '#000' }}>Todos los Supervisores</option>
-                {SUPERVISOR_DATA.filter(s => selectedRegion === 'ALL' || s.region === selectedRegion).map(sup => (
-                  <option key={sup.id} value={sup.id} style={{ color: '#000' }}>{sup.name} ({sup.region})</option>
+                {SUPERVISOR_DATA.filter(s => selectedRegion === 'ALL' || s.region === selectedRegion).map(s => (
+                  <option key={s.id} value={s.id} style={{ color: '#000' }}>{s.name}</option>
                 ))}
               </select>
             </div>
-
-            <div style={{ fontSize: '12px', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '8px', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Instructores Activos</div>
+          </div>
+          
+          <div style={{ padding: '0 24px 16px' }}>
+            <div style={{ fontSize: 11, fontWeight: 900, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>INSTRUCTORES ACTIVOS</div>
             <input 
               type="text" 
               placeholder="Buscar instructor..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{
-                background: 'rgba(255,255,255,0.1)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                padding: '10px 16px',
-                borderRadius: '8px',
-                color: '#ffffff',
-                outline: 'none',
-                width: '100%',
-                fontSize: '14px',
-                boxSizing: 'border-box'
-              }}
+              style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', padding: '10px 16px', borderRadius: '8px', color: '#ffffff', outline: 'none', width: '100%', fontSize: '14px', boxSizing: 'border-box' }}
             />
           </div>
           
           <div style={{ flex: 1, overflowY: 'auto', padding: '12px' }}>
-            {/* VISTA GLOBAL BUTTON */}
             <button
               onClick={() => setSelectedUser(null)}
-              style={{
-                width: '100%',
-                textAlign: 'left',
-                padding: '16px',
-                background: selectedUser === null ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)',
-                border: selectedUser === null ? '1px solid rgba(255,255,255,0.4)' : '1px solid transparent',
-                borderRadius: '8px',
-                color: '#ffffff',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                transition: 'all 0.2s',
-                marginBottom: '16px',
-                boxShadow: selectedUser === null ? '0 4px 10px rgba(0,0,0,0.2)' : 'none'
-              }}
-              onMouseEnter={e => { if (selectedUser !== null) e.currentTarget.style.background = 'rgba(0,0,0,0.3)' }}
-              onMouseLeave={e => { if (selectedUser !== null) e.currentTarget.style.background = 'rgba(0,0,0,0.2)' }}
+              style={{ width: '100%', textAlign: 'left', padding: '16px', background: selectedUser === null ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)', border: selectedUser === null ? '1px solid rgba(255,255,255,0.4)' : '1px solid transparent', borderRadius: '8px', color: '#ffffff', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '12px', transition: 'all 0.2s', marginBottom: '16px' }}
             >
-              <div style={{ 
-                width: '36px', height: '36px', borderRadius: '50%', background: '#ffffff', color: primaryBrand,
-                display: 'flex', alignItems: 'center', justifyContent: 'center'
-              }}>
-                <LayoutDashboard size={20} />
-              </div>
+              <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#ffffff', color: primaryBrand, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><LayoutDashboard size={20} /></div>
               <div style={{ flex: 1, overflow: 'hidden' }}>
                 <div style={{ fontWeight: 800, fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1px' }}>VISTA GLOBAL</div>
                 <div style={{ fontSize: '11px', opacity: 0.7 }}>Tabla Estratégica</div>
@@ -355,68 +408,70 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
             </button>
 
             {filteredUsers.length === 0 ? (
-              <div style={{ textAlign: 'center', color: 'rgba(255,255,255,0.5)', padding: '20px', fontSize: '14px' }}>
-                No se encontraron instructores
-              </div>
+              <div style={{ textAlign: 'center', color: 'rgba(255,255,255,0.5)', padding: '20px', fontSize: '14px' }}>No se encontraron instructores</div>
             ) : (
               filteredUsers.map((user) => (
                 <button
                   key={user}
                   onClick={() => setSelectedUser(user)}
-                  style={{
-                    width: '100%',
-                    textAlign: 'left',
-                    padding: '16px',
-                    background: selectedUser === user ? 'rgba(255,255,255,0.15)' : 'transparent',
-                    border: 'none',
-                    borderRadius: '8px',
-                    color: '#ffffff',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px',
-                    transition: 'all 0.2s',
-                    marginBottom: '4px'
-                  }}
-                  onMouseEnter={e => { if (selectedUser !== user) e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
-                  onMouseLeave={e => { if (selectedUser !== user) e.currentTarget.style.background = 'transparent' }}
+                  style={{ width: '100%', textAlign: 'left', padding: '16px', background: selectedUser === user ? 'rgba(255,255,255,0.15)' : 'transparent', border: 'none', borderRadius: '8px', color: '#ffffff', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '12px', transition: 'all 0.2s', marginBottom: '4px' }}
                 >
-                  <div style={{ 
-                    width: '36px', 
-                    height: '36px', 
-                    borderRadius: '50%', 
-                    background: selectedUser === user ? '#ffffff' : 'rgba(255,255,255,0.2)', 
-                    color: selectedUser === user ? primaryBrand : '#ffffff',
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center',
-                    fontWeight: 'bold'
-                  }}>
-                    {user.charAt(0).toUpperCase()}
-                  </div>
-                  <div style={{ flex: 1, overflow: 'hidden' }}>
-                    <div style={{ fontWeight: 600, fontSize: '14px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      {user}
-                    </div>
-                  </div>
+                  <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: selectedUser === user ? '#ffffff' : 'rgba(255,255,255,0.2)', color: selectedUser === user ? primaryBrand : '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>{user.charAt(0).toUpperCase()}</div>
+                  <div style={{ flex: 1, overflow: 'hidden' }}><div style={{ fontWeight: 600, fontSize: '14px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user}</div></div>
                 </button>
               ))
             )}
           </div>
         </div>
+        )}
 
-        {/* Main Content Area */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '40px', background: '#F8F7FF' }}>
+        <div style={{ flex: 1, overflowY: 'auto', padding: isEmbedded ? '20px 40px' : '40px', background: isEmbedded ? '#f5f7f9' : '#F8F7FF' }}>
           
+          {isEmbedded && (
+            <div style={{ background: '#fff', borderRadius: '16px', padding: '16px 24px', marginBottom: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.05)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <div style={{ background: 'rgba(178, 0, 255, 0.1)', padding: '12px', borderRadius: '12px', color: '#B200FF' }}><Star size={24} /></div>
+                <div>
+                  <div style={{ fontSize: '18px', fontWeight: 900, color: primaryBrand }}>PERFIL INSTRUCTOR</div>
+                  <div style={{ fontSize: '12px', color: '#6B7280', fontWeight: 600 }}>Análisis gamificado del instructor</div>
+                </div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <select 
+                  value={selectedFabrica} 
+                  onChange={(e) => {
+                    const newFabrica = e.target.value;
+                    setSelectedFabrica(newFabrica);
+                    if (newFabrica !== 'ALL' && selectedUser && getFabrica(selectedUser) !== newFabrica) {
+                      const newAvailable = filteredUsersByStation.filter(u => getFabrica(u) === newFabrica);
+                      if (newAvailable.length > 0) {
+                        setSelectedUser(newAvailable[0]);
+                      } else {
+                        setSelectedUser(null);
+                      }
+                    }
+                  }} 
+                  style={{ padding: '12px 16px', borderRadius: '10px', border: '1px solid #E2E8F0', outline: 'none', fontSize: '14px', fontWeight: 800, color: '#6B7280', cursor: 'pointer', background: '#F8FAFC', minWidth: '180px' }}
+                >
+                  <option value="ALL">Todas las Fábricas</option>
+                  {availableFabricas.map(f => <option key={f} value={f}>{f}</option>)}
+                </select>
+
+                <select value={selectedUser || ''} onChange={(e) => setSelectedUser(e.target.value || null)} style={{ padding: '12px 20px', borderRadius: '10px', border: '1px solid #E2E8F0', outline: 'none', fontSize: '14px', fontWeight: 800, color: primaryBrand, cursor: 'pointer', background: '#F8FAFC', minWidth: '300px' }}>
+                  <option value="">-- Vista Global --</option>
+                  {finalInstructorsList.map((u: any) => <option key={u} value={u}>{u}</option>)}
+                </select>
+              </div>
+            </div>
+          )}
+
           {selectedUser === null ? (
-            /* GLOBAL OVERVIEW */
             <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
               <div style={{ marginBottom: '30px' }}>
                 <div style={{ fontSize: '14px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Visión Estratégica</div>
                 <div style={{ fontSize: '32px', fontWeight: 900, color: primaryBrand }}>Consolidado del Mes</div>
               </div>
 
-              {/* Global KPIs */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '40px' }}>
                 <div style={{ background: '#fff', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div>
@@ -441,29 +496,18 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
                 </div>
               </div>
 
-              {/* Master Grid */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '20px' }}>
                 {!selectedSupervisor && supervisorSummaryData.length > 0 ? (
-                  // --- SHOW SUPERVISOR TEAMS ---
                   supervisorSummaryData.map(sup => (
-                    <div 
-                      key={sup.id}
-                      onClick={() => setSelectedSupervisor(sup.id)}
-                      style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px', cursor: 'pointer', transition: 'all 0.2s', position: 'relative', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)' }}
-                      onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0,0,0,0.1)' }}
-                      onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.05)' }}
-                    >
+                    <div key={sup.id} onClick={() => setSelectedSupervisor(sup.id)} style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px', cursor: 'pointer', transition: 'all 0.2s', position: 'relative', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
-                        <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(15,0,79,0.1)', color: primaryBrand, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '20px' }}>
-                          <Users size={24} />
-                        </div>
+                        <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(15,0,79,0.1)', color: primaryBrand, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '20px' }}><Users size={24} /></div>
                         <div style={{ flex: 1, overflow: 'hidden' }}>
                           <div style={{ fontSize: '11px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 800 }}>EQUIPO {sup.region}</div>
                           <div style={{ fontSize: '18px', fontWeight: 900, color: '#111827', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: '4px' }}>{sup.name}</div>
                           <div style={{ fontSize: '12px', color: '#6B7280', fontWeight: 600 }}>{sup.totalInstructors} instructores asignados</div>
                         </div>
                       </div>
-
                       <div style={{ borderTop: '1px solid #E5E7EB', paddingTop: '20px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                           <span style={{ fontSize: '12px', fontWeight: 700, color: '#4B5563' }}>Módulos Completados</span>
@@ -472,7 +516,6 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
                         <div style={{ width: '100%', height: '8px', background: '#F3F4F6', borderRadius: '4px', overflow: 'hidden', marginBottom: '16px' }}>
                           <div style={{ height: '100%', background: secondaryBrand, width: `${sup.completionRate}%`, borderRadius: '4px' }} />
                         </div>
-
                         <div style={{ display: 'flex', gap: '16px' }}>
                           <div>
                             <div style={{ fontSize: '18px', fontWeight: 900, color: primaryBrand }}>{sup.partidasGeneradas}</div>
@@ -487,58 +530,23 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
                     </div>
                   ))
                 ) : (
-                  // --- SHOW INDIVIDUAL INSTRUCTORS ---
                   globalUsersData.map(u => (
-                    <div 
-                      key={u.user}
-                      onClick={() => { setSelectedUser(u.user); setActiveTab('reporte'); }}
-                      style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px', cursor: 'pointer', transition: 'all 0.2s', position: 'relative', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)' }}
-                      onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0,0,0,0.1)' }}
-                      onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.05)' }}
-                    >
-                      {/* Active Badge */}
-                      <div style={{ position: 'absolute', top: '24px', right: '24px', display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(22, 163, 74, 0.1)', color: secondaryBrand, padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 800 }}>
-                        <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: secondaryBrand }} /> ACTIVO
-                      </div>
-
+                    <div key={u.user} onClick={() => { setSelectedUser(u.user); setActiveTab('reporte'); }} style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px', cursor: 'pointer', transition: 'all 0.2s', position: 'relative', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)' }}>
+                      <div style={{ position: 'absolute', top: '24px', right: '24px', display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(22, 163, 74, 0.1)', color: secondaryBrand, padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 800 }}><div style={{ width: '6px', height: '6px', borderRadius: '50%', background: secondaryBrand }} /> ACTIVO</div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
-                        <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(15,0,79,0.1)', color: primaryBrand, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '20px' }}>
-                          {u.user.charAt(0).toUpperCase()}
-                        </div>
+                        <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(15,0,79,0.1)', color: primaryBrand, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '20px' }}>{u.user.charAt(0).toUpperCase()}</div>
                         <div style={{ flex: 1, overflow: 'hidden' }}>
                           <div style={{ fontSize: '16px', fontWeight: 800, color: '#111827', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: '4px' }}>{u.user}</div>
-                          
-                          {u.isDictando ? (
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 700, color: '#F59E0B' }}>
-                              <BookOpen size={12} /> Dictando Curso
-                            </div>
-                          ) : (
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 600, color: '#9CA3AF' }}>
-                              <CheckCircle size={12} /> Sin curso activo
-                            </div>
-                          )}
+                          {u.isDictando ? <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 700, color: '#F59E0B' }}><BookOpen size={12} /> Dictando Curso</div> : <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 600, color: '#9CA3AF' }}><CheckCircle size={12} /> Sin curso activo</div>}
                         </div>
                       </div>
-
                       <div style={{ borderTop: '1px solid #E5E7EB', paddingTop: '20px' }}>
                         <div style={{ fontSize: '11px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 800, marginBottom: '16px' }}>Accesos a Módulos (Este Mes)</div>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
-                          <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}>
-                            <div style={{ fontSize: '18px', fontWeight: 900, color: '#EAB308' }}>{u.operaciones}</div>
-                            <div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Instrutor</div>
-                          </div>
-                          <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}>
-                            <div style={{ fontSize: '18px', fontWeight: 900, color: '#06B6D4' }}>{u.suministros}</div>
-                            <div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Forms</div>
-                          </div>
-                          <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}>
-                            <div style={{ fontSize: '18px', fontWeight: 900, color: '#84CC16' }}>{u.laboratorio}</div>
-                            <div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Líderes</div>
-                          </div>
-                          <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}>
-                            <div style={{ fontSize: '18px', fontWeight: 900, color: '#A855F7' }}>{u.ingenieria}</div>
-                            <div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Workshops</div>
-                          </div>
+                          <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}><div style={{ fontSize: '18px', fontWeight: 900, color: '#EAB308' }}>{u.operaciones}</div><div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Instrutor</div></div>
+                          <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}><div style={{ fontSize: '18px', fontWeight: 900, color: '#06B6D4' }}>{u.suministros}</div><div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Forms</div></div>
+                          <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}><div style={{ fontSize: '18px', fontWeight: 900, color: '#84CC16' }}>{u.laboratorio}</div><div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Líderes</div></div>
+                          <div style={{ textAlign: 'center', padding: '8px', background: '#F9FAFB', borderRadius: '8px' }}><div style={{ fontSize: '18px', fontWeight: 900, color: '#A855F7' }}>{u.ingenieria}</div><div style={{ fontSize: '9px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 800, marginTop: '2px' }}>Workshops</div></div>
                         </div>
                       </div>
                     </div>
@@ -547,61 +555,72 @@ export const InstructorDashboard = ({ logs, config, onBack }: any) => {
               </div>
             </div>
           ) : (
-            /* DETAILED USER VIEW */
             <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
               
-              {/* User Identity Header */}
-              <div style={{ marginBottom: '30px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-                  <div style={{ 
-                    width: '64px', 
-                    height: '64px', 
-                    borderRadius: '16px', 
-                    background: primaryBrand, 
-                    color: '#ffffff',
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center',
-                    fontSize: '28px',
-                    fontWeight: 'bold',
-                    boxShadow: '0 4px 10px rgba(15, 0, 79, 0.2)'
-                  }}>
-                    {selectedUser.charAt(0).toUpperCase()}
-                  </div>
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                      <div style={{ fontSize: '14px', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Resumen del Instructor</div>
-                      <button 
-                        onClick={() => setSelectedUser(null)}
-                        style={{ background: 'transparent', border: '1px solid #D1D5DB', borderRadius: '4px', padding: '2px 8px', fontSize: '10px', fontWeight: 800, color: '#6B7280', cursor: 'pointer' }}
-                      >
-                        VOLVER A GLOBAL
-                      </button>
+              <div style={{ 
+                marginBottom: '30px', 
+                background: 'linear-gradient(135deg, #0F004F 0%, #1B0068 100%)', 
+                borderRadius: '24px', 
+                padding: '32px', 
+                boxShadow: '0 10px 30px rgba(15,0,79,0.3)', 
+                position: 'relative', 
+                overflow: 'hidden',
+                color: '#fff' 
+              }}>
+                <div style={{ position: 'absolute', top: -50, right: -50, width: 200, height: 200, background: 'radial-gradient(circle, rgba(237,22,80,0.2) 0%, rgba(0,0,0,0) 70%)', borderRadius: '50%' }} />
+                <div style={{ position: 'absolute', bottom: -50, left: -50, width: 200, height: 200, background: 'radial-gradient(circle, rgba(0,214,204,0.15) 0%, rgba(0,0,0,0) 70%)', borderRadius: '50%' }} />
+
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px', position: 'relative', zIndex: 1 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+                    <div style={{ width: '80px', height: '80px', borderRadius: '20px', background: 'rgba(255,255,255,0.1)', border: '2px solid rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px', fontWeight: 'bold', color: '#fff', boxShadow: '0 8px 20px rgba(0,0,0,0.2)' }}>{selectedUser.charAt(0).toUpperCase()}</div>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+                        <div style={{ background: 'rgba(0,214,204,0.2)', color: '#00D6CC', padding: '4px 12px', borderRadius: '12px', fontSize: '11px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', border: '1px solid rgba(0,214,204,0.3)' }}>{instructorKPIs?.level}</div>
+                      </div>
+                      <div style={{ fontSize: '28px', fontWeight: 900, color: '#fff', lineHeight: '1' }}>{selectedUser}</div>
+                      <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', marginTop: '6px' }}>Instructor Registrado</div>
                     </div>
-                    <div style={{ fontSize: '32px', fontWeight: 900, color: primaryBrand }}>{selectedUser}</div>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '8px', background: 'rgba(0,0,0,0.3)', padding: '6px', borderRadius: '14px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                    <button onClick={() => setActiveTab('reporte')} style={{ padding: '8px 20px', borderRadius: '10px', border: 'none', background: activeTab === 'reporte' ? '#ED1650' : 'transparent', color: '#fff', fontWeight: 800, fontSize: '12px', cursor: 'pointer', transition: 'all 0.2s' }}>Reporte / XP</button>
+                    <button onClick={() => setActiveTab('historial')} style={{ padding: '8px 20px', borderRadius: '10px', border: 'none', background: activeTab === 'historial' ? '#ED1650' : 'transparent', color: '#fff', fontWeight: 800, fontSize: '12px', cursor: 'pointer', transition: 'all 0.2s' }}>Historial</button>
                   </div>
                 </div>
 
-                {/* Tabs */}
-                <div style={{ display: 'flex', gap: '8px', background: '#E5E7EB', padding: '4px', borderRadius: '12px' }}>
-                  <button 
-                    onClick={() => setActiveTab('reporte')}
-                    style={{ padding: '8px 24px', borderRadius: '8px', border: 'none', background: activeTab === 'reporte' ? '#fff' : 'transparent', color: activeTab === 'reporte' ? primaryBrand : '#6B7280', fontWeight: 800, fontSize: '13px', cursor: 'pointer', transition: 'all 0.2s', boxShadow: activeTab === 'reporte' ? '0 2px 4px rgba(0,0,0,0.05)' : 'none' }}
-                  >
-                    Reporte del Mes / Avance
-                  </button>
-                  <button 
-                    onClick={() => setActiveTab('historial')}
-                    style={{ padding: '8px 24px', borderRadius: '8px', border: 'none', background: activeTab === 'historial' ? '#fff' : 'transparent', color: activeTab === 'historial' ? primaryBrand : '#6B7280', fontWeight: 800, fontSize: '13px', cursor: 'pointer', transition: 'all 0.2s', boxShadow: activeTab === 'historial' ? '0 2px 4px rgba(0,0,0,0.05)' : 'none' }}
-                  >
-                    Historial (Tipo Excel)
-                  </button>
-                </div>
+                {activeTab === 'reporte' && instructorKPIs && (
+                  <div style={{ position: 'relative', zIndex: 1, background: 'rgba(0,0,0,0.2)', padding: '24px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '12px' }}>
+                      <div>
+                        <span style={{ fontSize: '11px', fontWeight: 800, color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '1px' }}>Experiencia Acumulada</span>
+                        <div style={{ fontSize: '24px', fontWeight: 900, color: '#fff', marginTop: '4px' }}>{instructorKPIs.totalHoras} <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)' }}>/ {instructorKPIs.nextLevelHours} Horas</span></div>
+                      </div>
+                      <div style={{ fontSize: '16px', fontWeight: 900, color: '#00D6CC', textShadow: '0 0 10px rgba(0,214,204,0.5)' }}>{Math.round(instructorKPIs.progress)}% XP</div>
+                    </div>
+                    <div style={{ width: '100%', height: '12px', background: 'rgba(0,0,0,0.5)', borderRadius: '6px', overflow: 'hidden', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)' }}>
+                      <motion.div initial={{ width: 0 }} animate={{ width: `${instructorKPIs.progress}%` }} transition={{ duration: 1.5, ease: 'easeOut' }} style={{ height: '100%', background: `linear-gradient(90deg, #ED1650, #B200FF)`, borderRadius: '6px', boxShadow: '0 0 10px rgba(237,22,80,0.5)' }} />
+                    </div>
+
+                    <div style={{ marginTop: '24px' }}>
+                      <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '1px', marginBottom: '16px' }}>Logros Desbloqueados</div>
+                      <div style={{ display: 'flex', gap: '16px' }}>
+                        {instructorKPIs.sellos.map(sello => (
+                          <div key={sello.id} style={{ flex: 1, background: sello.unlocked ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.2)', border: sello.unlocked ? '1px solid rgba(0,214,204,0.3)' : '1px solid rgba(255,255,255,0.05)', borderRadius: '12px', padding: '16px', opacity: sello.unlocked ? 1 : 0.4, display: 'flex', gap: '12px', alignItems: 'center', transition: 'all 0.3s' }}>
+                            <div style={{ fontSize: '24px', filter: sello.unlocked ? 'drop-shadow(0 0 8px rgba(255,255,255,0.5))' : 'grayscale(100%)' }}>{sello.icon}</div>
+                            <div>
+                              <div style={{ fontSize: '12px', fontWeight: 900, color: sello.unlocked ? '#fff' : 'rgba(255,255,255,0.5)', marginBottom: '2px' }}>{sello.title}</div>
+                              <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.4)', lineHeight: '1.2' }}>{sello.desc}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {activeTab === 'reporte' ? (
                 <>
-                  {/* Overall Summary Stats */}
                   <div style={{ display: 'flex', gap: '20px', marginBottom: '30px' }}>
                     <div style={{ flex: 1, background: '#fff', padding: '20px', borderRadius: '16px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                       <div>

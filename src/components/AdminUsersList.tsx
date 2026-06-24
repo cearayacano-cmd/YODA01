@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Users, Search, ChevronRight, UserCircle2 } from 'lucide-react';
 import { getMissionTracking, MissionProgress } from '../lib/tracking';
 
-export const AdminUsersList = ({ onViewUser }: { onViewUser: (instructorId: string) => void }) => {
+export const AdminUsersList = ({ onViewUser, stationName, onViewInstructorDashboard }: { onViewUser: (instructorId: string) => void, stationName?: string, onViewInstructorDashboard?: (instructorId: string) => void }) => {
   const [data, setData] = useState<MissionProgress[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -35,6 +35,10 @@ export const AdminUsersList = ({ onViewUser }: { onViewUser: (instructorId: stri
             fabrica = 'Konecta Brasil';
           } else if (log.email.toLowerCase().includes('aec.com')) {
             fabrica = 'AeC';
+          } else if (log.email.toLowerCase().includes('konectaperu.com')) {
+            fabrica = 'Konecta Perú';
+          } else if (log.email.toLowerCase().includes('almacontact.com')) {
+            fabrica = 'Alma Contact';
           } else {
             const charCodeSum = log.email.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
             fabrica = charCodeSum % 2 === 0 ? 'Konecta Brasil' : 'AeC';
@@ -55,8 +59,10 @@ export const AdminUsersList = ({ onViewUser }: { onViewUser: (instructorId: stri
     // Añadir usuarios predefinidos si no existen en los logs
     const predefinedUsers = [
       { email: 'carlose.araya@latam.com', nombre: 'Carlos Araya', fabrica: 'LATAM', rango: 'Administrador' },
-      { email: 'instructor@konectabr.com', nombre: 'Instructor Konecta', fabrica: 'Konecta Brasil', rango: 'Instructor' },
-      { email: 'instructor@aec.com', nombre: 'Instructor AeC', fabrica: 'AeC', rango: 'Instructor' }
+      { email: 'instructor@konectabr.com', nombre: 'Instructor Konecta BR', fabrica: 'Konecta Brasil', rango: 'Instructor' },
+      { email: 'instructor@aec.com', nombre: 'Instructor AeC', fabrica: 'AeC', rango: 'Instructor' },
+      { email: 'instructor@konectaperu.com', nombre: 'Instructor Konecta PE', fabrica: 'Konecta Perú', rango: 'Instructor' },
+      { email: 'instructor@almacontact.com', nombre: 'Instructor Alma', fabrica: 'Alma Contact', rango: 'Instructor' }
     ];
 
     predefinedUsers.forEach(u => {
@@ -79,8 +85,19 @@ export const AdminUsersList = ({ onViewUser }: { onViewUser: (instructorId: stri
   const [filterFabrica, setFilterFabrica] = useState('ALL');
   const [filterRango, setFilterRango] = useState('ALL');
 
+  const baseUsers = useMemo(() => {
+    if (!stationName) return users;
+    if (stationName === 'BR') {
+      return users.filter(u => ['LATAM', 'Konecta Brasil', 'AeC'].includes(u.fabrica));
+    }
+    if (stationName === 'SSC') {
+      return users.filter(u => ['LATAM', 'Konecta Perú', 'Alma Contact'].includes(u.fabrica));
+    }
+    return users;
+  }, [users, stationName]);
+
   const filteredUsers = useMemo(() => {
-    let result = users;
+    let result = baseUsers;
     
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
@@ -99,10 +116,10 @@ export const AdminUsersList = ({ onViewUser }: { onViewUser: (instructorId: stri
     }
     
     return result;
-  }, [users, searchQuery, filterFabrica, filterRango]);
+  }, [baseUsers, searchQuery, filterFabrica, filterRango]);
 
-  const uniqueFabricas = useMemo(() => Array.from(new Set(users.map(u => u.fabrica))).sort(), [users]);
-  const uniqueRangos = useMemo(() => Array.from(new Set(users.map(u => u.rango))).sort(), [users]);
+  const uniqueFabricas = useMemo(() => Array.from(new Set(baseUsers.map(u => u.fabrica))).sort(), [baseUsers]);
+  const uniqueRangos = useMemo(() => Array.from(new Set(baseUsers.map(u => u.rango))).sort(), [baseUsers]);
 
   return (
     <div style={{ padding: '40px', background: '#F5F7F9', minHeight: '100%' }}>
@@ -192,8 +209,8 @@ export const AdminUsersList = ({ onViewUser }: { onViewUser: (instructorId: stri
                       borderRadius: 12, 
                       fontSize: 12, 
                       fontWeight: 800,
-                      background: user.fabrica === 'LATAM' ? '#ED165020' : user.fabrica === 'AeC' ? '#00D6CC20' : '#99CC3320',
-                      color: user.fabrica === 'LATAM' ? '#ED1650' : user.fabrica === 'AeC' ? '#00D6CC' : '#6b8f23'
+                      background: user.fabrica === 'LATAM' ? '#ED165020' : (user.fabrica === 'AeC' || user.fabrica === 'Alma Contact') ? '#00D6CC20' : '#99CC3320',
+                      color: user.fabrica === 'LATAM' ? '#ED1650' : (user.fabrica === 'AeC' || user.fabrica === 'Alma Contact') ? '#00D6CC' : '#6b8f23'
                     }}>
                       {user.fabrica}
                     </span>
@@ -202,7 +219,16 @@ export const AdminUsersList = ({ onViewUser }: { onViewUser: (instructorId: stri
                     {user.rango}
                   </td>
                   <td style={{ padding: '16px 24px', textAlign: 'right' }}>
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#00D6CC', fontWeight: 800, fontSize: 12 }}>
+                    <div 
+                      onClick={() => {
+                        if (onViewInstructorDashboard) {
+                          onViewInstructorDashboard(user.email);
+                        } else {
+                          onViewUser(user.email);
+                        }
+                      }}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#00D6CC', fontWeight: 800, fontSize: 12, cursor: 'pointer' }}
+                    >
                       VER DESEMPEÑO <ChevronRight size={16} />
                     </div>
                   </td>

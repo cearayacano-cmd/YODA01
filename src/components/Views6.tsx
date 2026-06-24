@@ -47,6 +47,40 @@ const typeColors: any = {
     avaliacao: '#00D6CC' // Teal/Cyan
 };
 
+export const getSafeMissionColor = (sec: any, planetColor: string) => {
+    if (sec?.color) return sec.color;
+    const t = (sec?.tipo || '').toLowerCase().trim();
+    const l = (sec?.nombre || sec?.label || '').toLowerCase().trim();
+    
+    if (t.includes('ojt') || l.includes('ojt')) return '#ED1650';
+    if (t.includes('imers') || l.includes('imers')) return '#D400FF';
+    if (t.includes('avalia') || l.includes('avalia')) return '#00D6CC';
+    if (t.includes('landing') || l.includes('landing')) return '#FFC800';
+    
+    if (t.includes('mision') || t.includes('missao') || t.includes('missão') || t.includes('mission') || l.includes('miss') || l.includes('mision')) {
+        return '#00AEEF';
+    }
+    
+    return typeColors[sec?.tipo] || planetColor;
+};
+
+export const getSafeMissionIcon = (sec: any) => {
+    if (sec?.icon && typeof sec.icon !== 'string') return sec.icon;
+    const t = (sec?.tipo || '').toLowerCase().trim();
+    const l = (sec?.nombre || sec?.label || '').toLowerCase().trim();
+    
+    if (t.includes('ojt') || l.includes('ojt')) return typeIcons['ojt'];
+    if (t.includes('imers') || l.includes('imers')) return typeIcons['imersao'];
+    if (t.includes('avalia') || l.includes('avalia')) return typeIcons['avaliacao'];
+    if (t.includes('landing') || l.includes('landing')) return typeIcons['landing'];
+    
+    if (t.includes('mision') || t.includes('missao') || t.includes('missão') || t.includes('mission') || l.includes('miss') || l.includes('mision')) {
+        return typeIcons['mision1'];
+    }
+    
+    return typeIcons[sec?.tipo] || typeIcons['mision1'];
+};
+
 const AnimatedIaraOverlay = () => {
     return (
         <video 
@@ -65,6 +99,7 @@ const AnimatedIaraOverlay = () => {
 };
 
 export const JourneyStartShip = ({ onboardingData, onClick }: any) => {
+    const isEs = (typeof window !== 'undefined' && (window as any).YODA_STATION === 'SSC') || (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_station_name') === 'SSC');
     return (
     <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '350px', marginBottom: '40px' }}>
       <motion.div 
@@ -134,7 +169,7 @@ export const JourneyStartShip = ({ onboardingData, onClick }: any) => {
               }}
             >
               <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#0F004F', animation: 'pulse 1.5s infinite' }} />
-              CLIQUE AQUI PARA ENTRAR
+              {isEs ? 'HAZ CLIC AQUÍ PARA ENTRAR' : 'CLIQUE AQUI PARA ENTRAR'}
             </motion.div>
           )}
           <img 
@@ -149,6 +184,7 @@ export const JourneyStartShip = ({ onboardingData, onClick }: any) => {
 };
 
 const JourneyEndStation = ({ planetColor, onClick }: any) => {
+  const isEs = (typeof window !== 'undefined' && (window as any).YODA_STATION === 'SSC') || (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_station_name') === 'SSC');
     return (
     <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '400px', marginTop: '60px' }}>
       <motion.div 
@@ -248,7 +284,7 @@ const JourneyEndStation = ({ planetColor, onClick }: any) => {
             textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 15px rgba(255,255,255,0.4)',
             marginBottom: '12px'
           }}>
-            DESTINO FINAL
+            {isEs ? 'DESTINO FINAL' : 'DESTINO FINAL'}
           </div>
           <div style={{ 
             fontSize: '11px', color: '#fff', fontWeight: 800, letterSpacing: '3px',
@@ -257,7 +293,7 @@ const JourneyEndStation = ({ planetColor, onClick }: any) => {
             display: 'inline-flex', alignItems: 'center', gap: 8, transition: '0.3s'
           }}>
             <div style={{ width: 6, height: 6, borderRadius: '50%', background: planetColor, boxShadow: `0 0 10px ${planetColor}` }} />
-            VOLTAR AO MAPA ESTELAR
+            {isEs ? 'VOLVER AL MAPA ESTELAR' : 'VOLTAR AO MAPA ESTELAR'}
           </div>
         </div>
       </motion.div>
@@ -331,23 +367,26 @@ const FERR_ICONS: any = {
     '➖  NA': <Activity size={14} />
 };
 
-const MissionHeaderHUD = ({ sectorLabel, planetLabel, planetColor, onBack }: any) => (
-  <div style={{ 
-    position: 'absolute', top: 0, left: 0, right: 0, zIndex: 100, 
-    background: 'transparent', 
-    borderBottom: 'none', padding: '15px 60px', 
-    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-  }}>
-    <BackBtn onClick={onBack} label="VOLTAR" />
+const MissionHeaderHUD = ({ sectorLabel, planetLabel, planetColor, onBack }: any) => {
+    const isEs = (typeof window !== 'undefined' && (window as any).YODA_STATION === 'SSC') || (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_station_name') === 'SSC');
+    return (
+      <div style={{ 
+        position: 'absolute', top: 0, left: 0, right: 0, zIndex: 100, 
+        background: 'transparent', 
+        borderBottom: 'none', padding: '15px 60px', 
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+      }}>
+        <BackBtn onClick={onBack} label={isEs ? 'VOLVER' : 'VOLTAR'} />
 
-    <div style={{ width: 220 }}>
-        <div style={{ fontSize: 9, color: '#fff', fontWeight: 900, opacity: 0.6, marginBottom: 8, letterSpacing: '1px', textAlign: 'right' }}>PROGRESSO DE MISSÃO / 0 XP</div>
-        <div style={{ height: 6, background: 'rgba(255,255,255,0.1)', borderRadius: 10, overflow: 'hidden' }}>
-            <motion.div initial={{ width: 0 }} animate={{ width: '15%' }} style={{ height: '100%', background: planetColor }} />
+        <div style={{ width: 220 }}>
+            <div style={{ fontSize: 9, color: '#fff', fontWeight: 900, opacity: 0.6, marginBottom: 8, letterSpacing: '1px', textAlign: 'right' }}>{isEs ? 'PROGRESO DE MISIÓN' : 'PROGRESSO DE MISSÃO'} / 0 XP</div>
+            <div style={{ height: 6, background: 'rgba(255,255,255,0.1)', borderRadius: 10, overflow: 'hidden' }}>
+                <motion.div initial={{ width: 0 }} animate={{ width: '15%' }} style={{ height: '100%', background: planetColor }} />
+            </div>
         </div>
-    </div>
-  </div>
-);
+      </div>
+    );
+};
 
 const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', directUrl = '', label = '', subGroups = [], evalMsg = '', evalTime = '' }: any) => {
     const [isOpen, setIsOpen] = React.useState(false);
@@ -648,7 +687,7 @@ const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATE
     return rows.every((r: any, i: number) => localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true');
   }, [section, tick, planetLabel]);
 
-  const nodeColor = section.color || typeColors[section.tipo] || planetColor;
+  const nodeColor = getSafeMissionColor(section, planetColor);
   
   const iconMap: any = {
     BadgeCheck, GraduationCap, FileText, CheckCircle2, Target, Rocket, Anchor, Activity, Cpu, Shield, Globe, Zap, Radio, Terminal, Navigation, Hexagon, Crosshair, Lightbulb, Satellite, Gem
@@ -704,7 +743,7 @@ const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATE
                  <div style={{ position: 'absolute', height: '100%', width: '1px', background: `${isCompleted ? '#99CC33' : nodeColor}`, left: '50%', opacity: 0.5 }} />
                  
                  <div style={{ position: 'relative', zIndex: 2, color: '#fff', filter: `drop-shadow(0 0 10px ${isCompleted ? '#99CC33' : nodeColor})` }}>
-                    {isCompleted ? <Star size={45} /> : (CustomIcon ? <CustomIcon size={45} /> : (typeIcons[section.tipo] || typeIcons['mision1']))}
+                    {isCompleted ? <Star size={45} /> : (CustomIcon ? <CustomIcon size={45} /> : getSafeMissionIcon(section))}
                  </div>
              </div>
           </motion.div>
@@ -818,19 +857,6 @@ export const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onbo
               if (i < secciones.length - 1) {
                 const yNext = (i + 1) * nodeSpacing + 210;
                 const endX = isP1Left ? 800 : 200;
-                // Cubic Bezier to swap sides naturally
-                const cpX1 = isP1Left ? 800 : 200; 
-                const cpX2 = isP1Left ? 200 : 800; // This was 1000/0 before, creating a huge "ear" or break
-                
-                // Let's use a smoother curve
-                const d = `M ${startX} ${yStart} C ${isP1Left ? 800 : 200} ${yStart}, ${isP1Left ? 200 : 800} ${yNext}, ${endX} ${yNext}`;
-                // Wait, if startX is 200 and endX is 800, a simple curve is M 200 y C 800 y, 800 yNext, 800 yNext is NOT quite right.
-                // Correct logic for zig-zag:
-                // M 200 y1 C 1000 y1, 1000 y2, 800 y2 (for left to right)
-                // M 800 y2 C 0 y2, 0 y3, 200 y3 (for right to left)
-                // The previous code had: const cpX = isP1Left ? 1000 : 0;
-                // M 200 y1 C 1000 y1, 1000 y2, 800 y2
-                // This curve is fine, but if isP1Left is true for i=0, then we go from 200 (left) to 800 (right).
                 
                 const controlX = isP1Left ? 1000 : 0;
                 const dZigZag = `M ${startX} ${yStart} C ${controlX} ${yStart}, ${controlX} ${yNext}, ${endX} ${yNext}`;
@@ -1276,6 +1302,7 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, sectorLabe
 };
 
 const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOverride, subtitleOverride, tick, planetLabel, sectorLabel, onTrackEvent }: any) => {
+    const isEs = (typeof window !== 'undefined' && (window as any).YODA_STATION === 'SSC') || (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_station_name') === 'SSC');
     const allSecciones = secciones || (seccion ? [seccion] : []);
     const initialThemes = useMemo(() => {
         const keys: string[] = [];
@@ -1330,8 +1357,6 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     };
 
     const handleResetProgress = () => {
-        // We remove the native confirm as it might be blocked in some environments
-        // or causing issues with the React event loop.
         allSecciones.forEach(sec => {
             (sec.rows || []).forEach((r: any, i: number) => {
                 localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'false');
@@ -1391,7 +1416,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
 
     const firstSec = allSecciones[0] || { rows: [], tipo: 'mision1' };
     const tipo = firstSec.tipo || 'mision1';
-    const nodeColor = typeColors[tipo] || planetColor;
+    const nodeColor = getSafeMissionColor(firstSec, planetColor);
 
 
     return (
@@ -1423,16 +1448,16 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                   onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }}
                   onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}
                 >
-                    <ArrowLeft size={16} /> Retornar ao mapa
+                    <ArrowLeft size={16} /> {isEs ? 'RETORNAR AL MAPA' : 'RETORNAR AO MAPA'}
                 </button>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
                     <div style={{ width: 56, height: 56, borderRadius: 14, background: nodeColor, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 10px 20px ${nodeColor}44`, color: '#fff' }}>
-                        {typeIcons[tipo]}
+                        {getSafeMissionIcon(firstSec)}
                     </div>
                     <div>
                         <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.6)', fontWeight: 900, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: 2 }}>
-                            {subtitleOverride || 'PROTOCOLO DE SEGMENTO'}
+                            {subtitleOverride || (isEs ? 'PROTOCOLO DE SEGMENTO' : 'PROTOCOLO DE SEGMENTO')}
                         </div>
                         <div style={{ fontSize: 26, fontWeight: 900, color: '#FFF' }}>{titleOverride || seccion.nombre?.toUpperCase() || seccion.label?.toUpperCase() || 'EXPLORAÇÃO TÁTICA'}</div>
                     </div>
@@ -1442,7 +1467,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                     {planetLabel && (
                         <>
                             <div style={{ textAlign: 'right' }}>
-                                <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>PLANETA</div>
+                                <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>{isEs ? 'PLANETA' : 'PLANETA'}</div>
                                 <div style={{ fontSize: 13, color: '#FFF', fontWeight: 900, textTransform: 'uppercase' }}>
                                     {planetLabel}
                                 </div>
@@ -1453,12 +1478,12 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                     <div style={{ textAlign: 'right' }}>
                         <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>Status</div>
                         <div style={{ fontSize: 13, color: '#99CC33', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'flex-end' }}>
-                            <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 1.5, repeat: Infinity }} style={{ width: 8, height: 8, borderRadius: '50%', background: '#99CC33' }} /> Exploração Ativa
+                            <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 1.5, repeat: Infinity }} style={{ width: 8, height: 8, borderRadius: '50%', background: '#99CC33' }} /> {isEs ? 'EXPLORACIÓN ACTIVA' : 'EXPLORAÇÃO ATIVA'}
                         </div>
                     </div>
                     <div style={{ height: 40, width: 2, background: 'rgba(255,255,255,0.1)' }} />
                     <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>NODOS DETECTADOS</div>
+                        <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>{isEs ? 'NODOS DETECTADOS' : 'NODOS DETECTADOS'}</div>
                         <div style={{ fontSize: 22, color: '#FFF', fontWeight: 900 }}>
                             {allSecciones.reduce((acc, s) => acc + (s.rows || []).length, 0)}
                         </div>
@@ -1471,7 +1496,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                             <>
                                 <div style={{ height: 40, width: 2, background: 'rgba(255,255,255,0.1)' }} />
                                 <div style={{ textAlign: 'right' }}>
-                                    <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>ACUMULADO DÍAS</div>
+                                    <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800 }}>{isEs ? 'ACUMULADO DÍAS' : 'ACUMULADO DÍAS'}</div>
                                     <div style={{ fontSize: 22, color: '#FFF', fontWeight: 900 }}>
                                         {lastDay}
                                     </div>
@@ -1490,14 +1515,14 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                     {allSecciones.map((sec, sidx) => (
                         <div key={sidx} style={{ marginBottom: 40 }}>
                             {allSecciones.length > 1 && (
-                                <div style={{ marginBottom: 20, borderBottom: `2px solid ${typeColors[sec.tipo] || planetColor}`, paddingBottom: 8, display: 'flex', alignItems: 'center', gap: 12 }}>
-                                    <div style={{ color: typeColors[sec.tipo] || planetColor }}>{typeIcons[sec.tipo] || typeIcons.mision1}</div>
+                                <div style={{ marginBottom: 20, borderBottom: `2px solid ${getSafeMissionColor(sec, planetColor)}`, paddingBottom: 8, display: 'flex', alignItems: 'center', gap: 12 }}>
+                                    <div style={{ color: getSafeMissionColor(sec, planetColor) }}>{getSafeMissionIcon(sec)}</div>
                                     <div style={{ fontSize: 14, fontWeight: 900, color: '#1B0088', textTransform: 'uppercase', letterSpacing: '1px' }}>{sec.label?.replace(/MÓDULO\s*\d*:\s*/i, '') || ''}</div>
                                 </div>
                             )}
                             {(sec.rows || []).length === 0 ? (
                                 <div style={{ padding: '40px', textAlign: 'center', background: 'rgba(27,0,136,0.02)', borderRadius: 16, border: '1px dashed rgba(27,0,136,0.1)' }}>
-                                    <div style={{ fontSize: 14, color: '#1B0088', opacity: 0.7 }}>Sin nodos en esta sección.</div>
+                                    <div style={{ fontSize: 14, color: '#1B0088', opacity: 0.7 }}>{isEs ? 'Sin nodos en esta sección.' : 'Sin nodos en esta sección.'}</div>
                                 </div>
                             ) : (
                                 <>
@@ -1548,7 +1573,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                                             </div>
                                                         )}
                                                         
-                                                        <div style={{ fontSize: 10, color: 'rgba(27,0,136,0.4)', fontWeight: 800 }}>{rows.length} NODOS DETECTADOS</div>
+                                                        <div style={{ fontSize: 10, color: 'rgba(27,0,136,0.4)', fontWeight: 800 }}>{rows.length} {isEs ? 'NODOS' : 'NODOS'}</div>
                                                     </motion.div>
                                                     
                                                     <AnimatePresence>
@@ -1591,13 +1616,13 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                     <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 24, padding: 40, boxShadow: '0 10px 30px rgba(0,0,0,0.04)' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24 }}>
                             <Target size={20} color={planetColor} />
-                            <div style={{ fontWeight: 900, fontSize: 13, letterSpacing: '1.5px', color: '#0F004F' }}>Resumo de missão</div>
+                            <div style={{ fontWeight: 900, fontSize: 13, letterSpacing: '1.5px', color: '#0F004F' }}>{isEs ? 'RESUMEN DE MISIÓN' : 'RESUMO DE MISSÃO'}</div>
                         </div>
                         
                         <div style={{ height: '1.5px', background: '#F1F5F9', marginBottom: 30 }} />
                         
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-                            <span style={{ fontSize: 13, color: '#858585', fontWeight: 600 }}>Tempo Restante</span>
+                            <span style={{ fontSize: 13, color: '#858585', fontWeight: 600 }}>{isEs ? 'Tiempo Restante' : 'Tempo Restante'}</span>
                             <span style={{ fontSize: 14, fontWeight: 900, color: '#1B0088' }}>
                                 {(() => {
                                     const remaining = allSecciones.reduce((acc, s) => acc + (s.rows || []).reduce((a: number, r: any, i: number) => {
@@ -1609,7 +1634,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                             </span>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-                            <span style={{ fontSize: 13, color: '#858585', fontWeight: 600 }}>Resolvidos</span>
+                            <span style={{ fontSize: 13, color: '#858585', fontWeight: 600 }}>{isEs ? 'Resolvidos' : 'Resolvidos'}</span>
                             <span style={{ fontSize: 14, fontWeight: 900, color: '#99CC33' }}>
                                 {(() => {
                                     const totalRows = allSecciones.reduce((acc, s) => acc + (s.rows || []).length, 0);
@@ -1668,10 +1693,10 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                         <BadgeCheck size={28} />
                                     </motion.div>
                                     <div style={{ fontSize: 16, color: '#1B0088', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', textAlign: 'center' }}>
-                                        Missão Concluída!
+                                        {isEs ? 'MISIÓN CONCLUIDA' : 'MISSÃO CONCLUÍDA!'}
                                     </div>
                                     <div style={{ fontSize: 12, color: '#64748B', fontWeight: 600, textAlign: 'center', lineHeight: 1.5, zIndex: 1, marginBottom: 8 }}>
-                                        Excelente trabalho. Todos os objetivos desta missão foram alcançados com sucesso.
+                                        {isEs ? 'Excelente trabajo. Todos los objetivos han sido alcanzados.' : 'Excelente trabalho. Todos os objetivos desta missão foram alcançados com sucesso.'}
                                     </div>
                                     <button
                                         onClick={onBack}
@@ -1683,47 +1708,12 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                         onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
                                         onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
                                     >
-                                        <ArrowLeft size={16} /> Retornar ao Mapa
+                                        <ArrowLeft size={16} /> {isEs ? 'VOLVER AL MAPA' : 'RETORNAR AO MAPA'}
                                     </button>
                                 </motion.div>
                             )}
                         </AnimatePresence>
                     </div>
-
-                    {/* Extra OJT Card */}
-                    {firstSec && firstSec.tipo === 'ojt' && (firstSec.ojtExtraTitle || firstSec.ojtExtraDesc || firstSec.ojtExtraLink) && (
-                        <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 24, padding: 32, boxShadow: '0 10px 30px rgba(0,0,0,0.04)' }}>
-                            {firstSec.ojtExtraTitle && (
-                                <div style={{ fontSize: 14, fontWeight: 900, color: '#1B0088', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 10 }}>
-                                    <Target size={18} color={planetColor} /> {firstSec.ojtExtraTitle}
-                                </div>
-                            )}
-                            
-                            {firstSec.ojtExtraDesc && (
-                                <div style={{ fontSize: 13, color: '#64748b', lineHeight: 1.6, marginBottom: firstSec.ojtExtraLink ? 20 : 0, whiteSpace: 'pre-wrap' }}>
-                                    {firstSec.ojtExtraDesc}
-                                </div>
-                            )}
-
-                            {firstSec.ojtExtraLink && (
-                                <a 
-                                    href={firstSec.ojtExtraLink} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    style={{ 
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                                        width: '100%', background: 'rgba(27,0,136,0.05)', color: '#1B0088', 
-                                        padding: '12px', borderRadius: 10, fontSize: 12, fontWeight: 900, 
-                                        textDecoration: 'none', transition: 'all 0.2s', border: '1px solid rgba(27,0,136,0.1)'
-                                    }}
-                                    onMouseEnter={e => { e.currentTarget.style.background = '#1B0088'; e.currentTarget.style.color = '#fff'; }}
-                                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(27,0,136,0.05)'; e.currentTarget.style.color = '#1B0088'; }}
-                                >
-                                    <ExternalLink size={16} /> ABRIR RECURSO EXTRA
-                                </a>
-                            )}
-                        </div>
-                    )}
                 </div>
             </div>
             
@@ -1747,15 +1737,15 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                     <FileText size={24} />
                                 </div>
                                 <div>
-                                    <h2 style={{ margin: 0, fontSize: 20, color: '#1B0088', fontWeight: 900 }}>Bitácora de Vuelo</h2>
-                                    <p style={{ margin: 0, fontSize: 12, color: '#64748B' }}>¿Hubo algún problema o algo a destacar en esta misión?</p>
+                                    <h2 style={{ margin: 0, fontSize: 20, color: '#1B0088', fontWeight: 900 }}>{isEs ? 'Bitácora de Vuelo' : 'Bitácora de Vuelo'}</h2>
+                                    <p style={{ margin: 0, fontSize: 12, color: '#64748B' }}>{isEs ? '¿Hubo algo a destacar en esta misión?' : '¿Hubo algo a destacar en esta misión?'}</p>
                                 </div>
                             </div>
 
                             <textarea 
                                 value={feedbackText}
                                 onChange={e => setFeedbackText(e.target.value)}
-                                placeholder="Ej: El PDF de la dinámica 2 no abría, nos demoramos 10 min extra..."
+                                placeholder="Ej: Todo bien..."
                                 style={{ width: '100%', height: 120, padding: 15, borderRadius: 12, border: '2px solid #E2E8F0', fontSize: 14, fontFamily: 'inherit', resize: 'none', marginBottom: 25, outline: 'none', boxSizing: 'border-box' }}
                                 onFocus={e => e.target.style.borderColor = planetColor}
                                 onBlur={e => e.target.style.borderColor = '#E2E8F0'}
@@ -1766,7 +1756,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                     onClick={() => setShowFeedbackModal(false)}
                                     style={{ padding: '12px 24px', background: '#F1F5F9', color: '#64748B', border: 'none', borderRadius: 12, fontWeight: 800, cursor: 'pointer' }}
                                 >
-                                    Cancelar
+                                    {isEs ? 'Cancelar' : 'Cancelar'}
                                 </button>
                                 <button 
                                     onClick={() => {
@@ -1775,7 +1765,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                     }}
                                     style={{ padding: '12px 24px', background: '#99CC33', color: '#fff', border: 'none', borderRadius: 12, fontWeight: 900, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, boxShadow: '0 4px 15px rgba(153,204,51,0.3)' }}
                                 >
-                                    <Check size={18} /> Finalizar Misión
+                                    <Check size={18} /> {isEs ? 'Finalizar Misión' : 'Finalizar Misión'}
                                 </button>
                             </div>
                         </motion.div>
@@ -1788,6 +1778,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
 };
 
 export const PlanetContentView = ({ planetIdx, onBack, data, planetMeta, planetLabel, sectorLabel="SECTOR", onboardingData, onTrackEvent }: any) => {
+    const isEs = (typeof window !== 'undefined' && (window as any).YODA_STATION === 'SSC') || (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_station_name') === 'SSC');
     const [viewMode, setViewMode] = React.useState<'map' | 'detail' | 'onboarding'>('map');
     const [selectedIdx, setSelectedIdx] = React.useState(0);
     const [tick, setTick] = React.useState(0);
@@ -1856,14 +1847,14 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetMeta, planetL
                         {(typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') && (
                             <div style={{ background: 'rgba(237, 22, 80, 0.2)', border: '1px solid #ED1650', color: '#fff', padding: '10px 20px', borderRadius: 8, margin: '20px auto 0', width: 'fit-content', display: 'flex', alignItems: 'center', gap: 10, fontSize: 12, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', boxShadow: '0 0 20px rgba(237, 22, 80, 0.4)' }}>
                                 <Eye size={18} color="#ED1650" />
-                                <span>MODO EXPLORACIÓN ACTIVO: Tu progreso no será guardado ni reportado.</span>
+                                <span>{isEs ? 'MODO LECTURA ACTIVO' : 'MODO EXPLORACIÓN ACTIVO'}</span>
                             </div>
                         )}
 
                         <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '75px 60px 0 60px', position: 'absolute', top: 0, left: 0, right: 0, zIndex: 110, gap: 20, pointerEvents: 'none', alignItems: 'flex-start' }}>
                              <div style={{ pointerEvents: 'auto' }}>
                                 <TacticalSatelliteWidget 
-                                    title="MATERIAIS" 
+                                    title={isEs ? "MATERIALES" : "MATERIAIS"} 
                                     icon={<FileText size={24} />} 
                                     links={planetObj?.materiais} 
                                     color={planetColor} 
@@ -1871,7 +1862,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetMeta, planetL
                              </div>
                              <div style={{ pointerEvents: 'auto' }}>
                                 <TacticalSatelliteWidget 
-                                    title="AVALIAÇÕES" 
+                                    title={isEs ? "EVALUACIONES" : "AVALIAÇÕES"} 
                                     icon={<BadgeCheck size={24} />} 
                                     color="#00D6CC"
                                     evalMsg={planetObj?.evalMsg}
@@ -1893,13 +1884,10 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetMeta, planetL
                                     exit={{ opacity: 0, scale: 1.1, filter: 'blur(20px)' }}
                                     transition={{ duration: 0.6 }}
                                 >
-                                    <div style={{ textAlign: 'center', marginTop: 40, marginBottom: 40 }}>
-                                        <div style={{ display: 'inline-block', background: 'rgba(27, 0, 136, 0.4)', backdropFilter: 'blur(10px)', border: `1px solid ${planetColor === '#1b0088' ? '#99CC33' : planetColor}`, borderRadius: 30, padding: '8px 20px', marginBottom: 16, boxShadow: `0 0 15px ${planetColor === '#1b0088' ? 'rgba(153, 204, 51, 0.3)' : planetColor + '44'}` }}>
-                                            <span style={{ fontSize: 10, color: planetColor === '#1b0088' ? '#99CC33' : '#ffffff', fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase' }}>MAPA TÁTICO DE EXPLORAÇÃO</span>
-                                        </div>
-                                        <div style={{ fontSize: 36, fontWeight: 900, color: '#fff', letterSpacing: '4px', textTransform: 'uppercase' }}>EXPEDIÇÃO: {planetLabel}</div>
-                                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>
-                                            <div style={{ width: 140, height: 2, background: `linear-gradient(90deg, transparent, ${planetColor}, transparent)` }} />
+                                    <div style={{ textAlign: 'center', marginTop: 40, marginBottom: 80, position: 'relative', zIndex: 10 }}>
+                                        <div style={{ fontSize: 10, color: '#00D6CC', fontWeight: 900, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: 12 }}>{isEs ? 'MAPA TÁCTICO DE EXPLORACIÓN' : 'MAPA TÁTICO DE EXPLORAÇÃO'}</div>
+                                        <div style={{ fontSize: 48, fontWeight: 900, color: '#fff', letterSpacing: '6px', textTransform: 'uppercase' }}>
+                                            {isEs ? 'EXPEDICIÓN' : 'EXPEDIÇÃO'}: {planetLabel}
                                         </div>
                                     </div>
                                     <MissionSectorMap 
@@ -2046,7 +2034,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetMeta, planetL
                                         e.currentTarget.style.boxShadow = `0 10px 30px ${planetColor}44`;
                                     }}
                                 >
-                                    VOLTAR AO SETOR
+                                    {isEs ? 'VOLVER AL SECTOR' : 'VOLTAR AO SETOR'}
                                 </button>
                             </motion.div>
                         </div>

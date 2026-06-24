@@ -14,6 +14,7 @@ export interface MissionProgress {
   marcarComoFinalizado: string | null;
   tiempoAperturaRaw?: number;
   marcarComoVistoRaw?: number;
+  marcarComoFinalizadoRaw?: number;
 }
 
 export type TrackAction = 'APERTURA' | 'VISTO' | 'FINALIZADO';

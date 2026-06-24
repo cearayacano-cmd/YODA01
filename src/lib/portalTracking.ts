@@ -3,7 +3,7 @@ export interface PortalProgress {
   email: string;
   portalCategory: string; // e.g. "Portal Instrutor", "Formulários", "Workshops"
   linkName: string;       // e.g. "01. Usuários Treinamento" or "TAB"
-  actionType: 'VISIT' | 'CLICK_LINK';
+  actionType: 'VISIT' | 'CLICK_LINK' | 'CLICK';
   timestamp: string;
 }
 
@@ -17,7 +17,7 @@ export const updatePortalTracking = (
   email: string,
   portalCategory: string,
   linkName: string,
-  actionType: 'VISIT' | 'CLICK_LINK'
+  actionType: 'VISIT' | 'CLICK_LINK' | 'CLICK'
 ) => {
   if (typeof localStorage === 'undefined') return;
 

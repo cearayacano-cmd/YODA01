@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const Btn = ({ onClick, children, style={} }) => (
   <motion.button 
@@ -30,12 +30,16 @@ export const Btn = ({ onClick, children, style={} }) => (
   </motion.button>
 );
 
-export const BackBtn = ({ onClick, label='VOLTAR' }: any) => (
+export const BackBtn = ({ onClick, label }: any) => {
+  const isEs = (typeof window !== 'undefined' && (window as any).YODA_STATION === 'SSC') || (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_station_name') === 'SSC');
+  const displayLabel = label && label !== 'VOLTAR' && label !== 'VOLVER' ? label : (isEs ? 'VOLVER' : 'VOLTAR');
+  return (
   <Btn onClick={onClick} style={{ padding: '8px 18px', fontSize: 13 }}>
     <ChevronLeft size={18} strokeWidth={3} />
-    {label}
+    {displayLabel}
   </Btn>
-);
+  );
+};
 
 export const TacticalSatelliteIcon = ({ size = 24, color = 'currentColor', bgColor = "#0F004F", panelColor }: any) => {
     const accentColor = color; 

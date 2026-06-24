@@ -58,11 +58,15 @@ const Btn = ({ onClick, children, style={} }: any) => (
   }}>{children}</button>
 );
 
-const BackBtn = ({ onClick, label='VOLVER' }: any) => (
+const BackBtn = ({ onClick, label }: any) => {
+  const isEs = typeof localStorage !== 'undefined' && localStorage.getItem('yoda_station_name') === 'SSC';
+  const displayLabel = label && label !== 'VOLTAR' && label !== 'VOLVER' ? label : (isEs ? 'VOLVER' : 'VOLTAR');
+  return (
   <Btn onClick={onClick} style={{display:'flex',alignItems:'center',gap:6}}>
-    ← {label}
+    ← {displayLabel}
   </Btn>
-);
+  );
+};
 
 /* ── SHARED COMPONENTS ──────────────────────────────────────────────── */
 const thS = () => ({padding:'6px 10px', fontSize:9, color:'#555555', textTransform:'uppercase' as const, fontWeight:700, letterSpacing:'0.05em', textAlign:'left' as const, borderBottom:'1px solid #cccccc'});
@@ -129,10 +133,12 @@ const MacroTemaTable = ({ mt, rows }: any) => {
 /* ── MAIN APP COMPONENT ─────────────────────────────────────────────── */
 export default function App() {
   const [view, setView] = useState('landing');
-  const [currentStation, setCurrentStation] = useState('BR');
+  const [currentStation, setCurrentStation] = useState(() => typeof localStorage !== 'undefined' ? localStorage.getItem('yoda_station_name') || 'BR' : 'BR');
+  if (typeof window !== 'undefined') (window as any).YODA_STATION = currentStation;
   const [activeSector, setActiveSector] = useState('frontLine');
   const [activeCourseIdx, setActiveCourseIdx] = useState(0);
-  const [adminStation, setAdminStation] = useState('BR');
+  const [adminStation, setAdminStation] = useState<string>('BR');
+  const [selectedInstructorId, setSelectedInstructorId] = useState<string | null>(null);
   const [adminSector, setAdminSector] = useState('frontLine');
   const [adminCourseIdx, setAdminCourseIdx] = useState(0);
   const [adminSatellitePk, setAdminSatellitePk] = useState('conhecendo');
@@ -291,6 +297,7 @@ export default function App() {
           
           return (
             <PlanetContentView 
+              isEs={currentStation === 'SSC'}
               planetIdx={activeCourseIdx} 
               onBack={() => go('planets')} 
               data={sectorData}
@@ -330,11 +337,17 @@ export default function App() {
         );
       case 'instructor-dashboard':
         return (
-          <InstructorDashboard logs={activityLogs} config={activeConfig} onBack={()=>go('admin')} />
+          <InstructorDashboard logs={activityLogs} config={activeConfig} initialUser={selectedInstructorId} onBack={()=>go('admin')} />
         );
       case 'admin-activity-tracking':
         return (
-          <UnifiedTrackingDashboard stationName={adminStation} onBack={()=>go('admin')} />
+          <UnifiedTrackingDashboard 
+            stationName={adminStation} 
+            logs={activityLogs}
+            config={activeConfig}
+            initialInstructorId={selectedInstructorId}
+            onBack={()=>go('admin')} 
+          />
         );
       case 'admin-exploracion':
         return (
@@ -418,14 +431,38 @@ export default function App() {
             />
           );
         }
-      default:
+      default: {
+        const checkAccess = (station: string, email: string) => {
+          if (!email) return false;
+          const lowerEmail = email.toLowerCase();
+          if (lowerEmail.includes('@latam.com')) return true;
+          if (station === 'br') {
+            return lowerEmail.includes('@konectabr.com') || lowerEmail.includes('@aec.com');
+          }
+          if (station === 'ssc') {
+            return lowerEmail.includes('@konectaperu.com') || lowerEmail.includes('@almacontact.com');
+          }
+          return false;
+        };
         return <Landing 
-          onNavigate={(st: string)=>{setCurrentStation(st.toUpperCase());go(st.toLowerCase())}} 
+          canAccessBR={checkAccess('br', activeUser || 'instructor@example.com')}
+          canAccessSSC={checkAccess('ssc', activeUser || 'instructor@example.com')}
+          onNavigate={(st: string)=>{
+            if (checkAccess(st, activeUser || 'instructor@example.com')) {
+              setCurrentStation(st.toUpperCase());
+              localStorage.setItem('yoda_station_name', st.toUpperCase());
+              go(st.toLowerCase());
+            } else {
+              alert(`ACCESO DENEGADO\nTu perfil (${activeUser}) no pertenece a una fábrica con permisos para ingresar a ${st.toUpperCase()} Station.`);
+              addLog('ACCESO DENEGADO', `Intento fallido a ${st.toUpperCase()} Station`);
+            }
+          }} 
           onAdmin={()=>go('admin')}
           onActivityLog={()=>go('activity-log')}
           activeUser={activeUser}
           changeUser={changeUser}
         />;
+      }
     }
   };
 

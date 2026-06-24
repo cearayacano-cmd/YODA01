@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Lock, ChevronLeft, Beaker, Settings, Package, Webcam, Rocket, Radar, Microscope, Cpu, Box, Activity, Monitor, Eye, Sun, Layers, GraduationCap } from 'lucide-react';
+import { Lock, ChevronLeft, Beaker, Settings, Package, Webcam, Rocket, Radar, Microscope, Cpu, Box, Activity, Monitor, Eye, Sun, Layers, GraduationCap, Maximize, Compass } from 'lucide-react';
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { Btn, BackBtn, TacticalSatelliteIcon } from './Shared';
 import { updatePortalTracking } from '../lib/portalTracking';
@@ -21,18 +21,18 @@ const MissionIcon = ({ color, alertMode }: any) => (
   </motion.div>
 );
 
-const LandingMissionCard = ({ title, subtitle, id, color, buttonText = "INICIAR SECUENCIA", onClick, onMouseEnter, onMouseLeave }: any) => (
+const LandingMissionCard = ({ title, subtitle, id, color, buttonText = "INICIAR SECUENCIA", onClick, onMouseEnter, onMouseLeave, disabled }: any) => (
   <motion.div 
-    onClick={onClick}
-    onMouseEnter={onMouseEnter}
-    onMouseLeave={onMouseLeave}
-    whileHover={{ scale: 1.05, translateY: -10 }}
+    onClick={disabled ? undefined : onClick}
+    onMouseEnter={disabled ? undefined : onMouseEnter}
+    onMouseLeave={disabled ? undefined : onMouseLeave}
+    whileHover={disabled ? {} : { scale: 1.05, translateY: -10 }}
     style={{
-      background: 'rgba(15, 0, 79, 0.4)',
+      background: disabled ? 'rgba(15, 0, 79, 0.2)' : 'rgba(15, 0, 79, 0.4)',
       backdropFilter: 'blur(12px)',
-      border: `1px solid ${color}40`,
+      border: `1px solid ${disabled ? '#333' : color + '40'}`,
       padding: '50px 40px',
-      cursor: 'pointer',
+      cursor: disabled ? 'not-allowed' : 'pointer',
       textAlign: 'center',
       borderRadius: 12,
       minWidth: 320,
@@ -41,35 +41,36 @@ const LandingMissionCard = ({ title, subtitle, id, color, buttonText = "INICIAR 
       alignItems: 'center',
       position: 'relative',
       overflow: 'hidden',
-      boxShadow: `0 20px 40px rgba(0,0,0,0.4), inset 0 0 20px ${color}10`
+      boxShadow: disabled ? 'none' : `0 20px 40px rgba(0,0,0,0.4), inset 0 0 20px ${color}10`,
+      opacity: disabled ? 0.3 : 1
     }}
   >
     {/* Decorative corner light */}
-    <div style={{ position: 'absolute', top: 0, right: 0, width: 40, height: 40, background: `radial-gradient(circle at top right, ${color}30, transparent)`, borderRadius: '0 12px 0 0', pointerEvents: 'none' }} />
+    <div style={{ position: 'absolute', top: 0, right: 0, width: 40, height: 40, background: disabled ? 'transparent' : `radial-gradient(circle at top right, ${color}30, transparent)`, borderRadius: '0 12px 0 0', pointerEvents: 'none' }} />
     
     <div style={{ fontSize: 11, color: '#999', letterSpacing: '0.4em', marginBottom: 40, fontWeight: 700, pointerEvents: 'none' }}>STATION • {id.toUpperCase()}</div>
     <div style={{ pointerEvents: 'none' }}>
-      <MissionIcon color={color} />
+      <MissionIcon color={disabled ? '#666' : color} />
     </div>
     <div style={{ fontSize: 72, fontWeight: 900, color: '#fff', marginBottom: 8, letterSpacing: '0.05em', pointerEvents: 'none' }}>{id.toUpperCase()}</div>
     {subtitle && <div style={{ fontSize: 14, color: '#bbb', marginBottom: 30, fontWeight: 500, pointerEvents: 'none' }}>{subtitle}</div>}
     
     <div style={{ 
       padding: '10px 24px', 
-      background: color, 
-      color: '#fff', 
+      background: disabled ? '#333' : color, 
+      color: disabled ? '#999' : '#fff', 
       fontSize: 10, 
       fontWeight: 900, 
       borderRadius: 4, 
       letterSpacing: '0.2em',
       pointerEvents: 'none'
     }}>
-      {buttonText}
+      {disabled ? 'ACCESO DENEGADO' : buttonText}
     </div>
   </motion.div>
 );
 
-export const Landing = ({ onNavigate, onAdmin, onActivityLog, activeUser, changeUser }: any) => {
+export const Landing = ({ onNavigate, onAdmin, onActivityLog, activeUser, changeUser, canAccessBR = true, canAccessSSC = true }: any) => {
   const [hoveredStation, setHoveredStation] = useState<string | null>(null);
   const [autoVariant, setAutoVariant] = useState('es');
 
@@ -131,8 +132,10 @@ export const Landing = ({ onNavigate, onAdmin, onActivityLog, activeUser, change
             onMouseLeave={e=>e.currentTarget.style.background='transparent'}
           >
             <option value="carlose.araya@latam.com" style={{ background: '#0F004F', color: '#fff' }}>carlose.araya@latam.com (Admin)</option>
-            <option value="instructor@konectabr.com" style={{ background: '#0F004F', color: '#fff' }}>instructor@konectabr.com</option>
-            <option value="instructor@aec.com" style={{ background: '#0F004F', color: '#fff' }}>instructor@aec.com</option>
+            <option value="instructor@konectabr.com" style={{ background: '#0F004F', color: '#fff' }}>instructor@konectabr.com (BR)</option>
+            <option value="instructor@aec.com" style={{ background: '#0F004F', color: '#fff' }}>instructor@aec.com (BR)</option>
+            <option value="instructor@konectaperu.com" style={{ background: '#0F004F', color: '#fff' }}>instructor@konectaperu.com (SSC)</option>
+            <option value="instructor@almacontact.com" style={{ background: '#0F004F', color: '#fff' }}>instructor@almacontact.com (SSC)</option>
           </select>
           <div style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>
             <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -168,6 +171,7 @@ export const Landing = ({ onNavigate, onAdmin, onActivityLog, activeUser, change
           id="ssc" 
           subtitle="" 
           color="#7000AB" 
+          disabled={!canAccessSSC}
           onClick={() => onNavigate('ssc')} 
           onMouseEnter={() => handleEnter('ssc')}
           onMouseLeave={handleLeave}
@@ -285,6 +289,7 @@ export const Landing = ({ onNavigate, onAdmin, onActivityLog, activeUser, change
           subtitle="" 
           color="#99CC33" 
           buttonText="INICIAR SEQUÊNCIA"
+          disabled={!canAccessBR}
           onClick={() => onNavigate('br')} 
           onMouseEnter={() => handleEnter('br')}
           onMouseLeave={handleLeave}
@@ -338,8 +343,9 @@ const RotatingEarth = () => {
         backgroundSize: '900px 450px',
         backgroundRepeat: 'repeat-x',
         animation: 'earthSeamlessRotate 120s linear infinite',
-        mixBlendMode: 'screen',
         opacity: 0.8,
+        mixBlendMode: 'screen',
+        zIndex: 2,
         maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 40%, rgba(0,0,0,1) 60%)',
         WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,0) 40%, rgba(0,0,0,1) 60%)'
       }} />
@@ -739,6 +745,8 @@ const EarthHorizon = () => {
   );
 };
 
+
+
 const SpaceBackground = ({ showEarth = true, showShip = true, showHorizon = false }: any) => {
   const [isMounted, setIsMounted] = React.useState(false);
   React.useEffect(() => setIsMounted(true), []);
@@ -858,7 +866,10 @@ const ConsoleSideFrame = ({ children, side }: any) => {
       gap: '0px',
       width: '365px',
       zIndex: 25,
-      transform: `perspective(1800px) rotateY(${rotation}deg) rotateX(2deg)`,
+      transform: `perspective(1800px) rotateY(${rotation}deg) rotateX(2deg) translateY(0px)`,
+      opacity: 1,
+      pointerEvents: 'auto',
+      transition: 'all 0.5s ease-in-out',
       transformStyle: 'preserve-3d',
     }}>
       {/* LED EDGE PIPES */}
@@ -1336,8 +1347,8 @@ const TacticalKey = ({ label, color, active = false, onClick, large = false }: a
   </motion.div>
 );
 
-const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive, onPreparacao, onIncidencias, states, isIntegrated = false, isEs = false }: any) => {
-  const { alertMode, hudHidden, dimLights } = states;
+const SpaceKeyboard = ({ onAlert, onActivityLog, onFullscreen, onMonitoring, onIara, iaraActive, onPreparacao, onIncidencias, states, isIntegrated = false, isEs = false }: any) => {
+  const { alertMode, isFullscreen, showActivityLog } = states;
   const color = alertMode ? "#B20F3B" : "#99CC33";
 
   return (
@@ -1415,38 +1426,38 @@ const SpaceKeyboard = ({ onAlert, onHud, onDim, onMonitoring, onIara, iaraActive
         </div>
 
         <div style={{ display: 'flex', gap: '6px' }}>
-          {/* Mini Sun Toggle (Illumination) */}
+          {/* Mini Fullscreen Toggle */}
           <motion.div
             whileHover={{ backgroundColor: 'rgba(0,184,204,0.3)', boxShadow: '0 0 10px rgba(0,200,220,0.8)' }}
             whileTap={{ scale: 0.95 }}
-            onClick={onDim}
+            onClick={onFullscreen}
             style={{
               height: '18px', width: '28px',
-              background: !dimLights ? 'rgba(0,184,204,0.35)' : 'transparent',
-              border: `1px solid ${!dimLights ? '#00DDEE' : 'rgba(255,255,255,0.2)'}`,
+              background: isFullscreen ? 'rgba(0,184,204,0.35)' : 'transparent',
+              border: `1px solid ${isFullscreen ? '#00DDEE' : 'rgba(255,255,255,0.2)'}`,
               borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center',
               cursor: 'pointer', transition: 'all 0.3s',
             }}
-            title="Alternar Iluminación"
+            title={isEs ? "Alternar Pantalla Completa" : "Alternar Tela Cheia"}
           >
-            <Sun size={12} color="#fff" style={{ filter: !dimLights ? 'drop-shadow(0 0 4px #00FFFF)' : 'none' }} />
+            <Maximize size={12} color="#fff" style={{ filter: isFullscreen ? 'drop-shadow(0 0 4px #00FFFF)' : 'none' }} />
           </motion.div>
 
-          {/* Mini Layers Toggle (HUD) */}
+          {/* Mini Activity Log Button */}
           <motion.div
             whileHover={{ backgroundColor: 'rgba(0,184,204,0.3)', boxShadow: '0 0 10px rgba(0,200,220,0.8)' }}
             whileTap={{ scale: 0.97 }}
-            onClick={onHud}
+            onClick={onActivityLog}
             style={{
               height: '18px', width: '28px',
-              background: !hudHidden ? 'rgba(0,184,204,0.35)' : 'transparent',
-              border: `1px solid ${!hudHidden ? '#00DDEE' : 'rgba(255,255,255,0.2)'}`,
+              background: showActivityLog ? 'rgba(0,184,204,0.35)' : 'transparent',
+              border: `1px solid ${showActivityLog ? '#00DDEE' : 'rgba(255,255,255,0.2)'}`,
               borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center',
               cursor: 'pointer', transition: 'all 0.3s',
             }}
-            title="Alternar HUD"
+            title={isEs ? "Bitácora de Sistema (Activity Log)" : "Diário de Sistema (Activity Log)"}
           >
-            <Layers size={12} color="#fff" style={{ filter: !hudHidden ? 'drop-shadow(0 0 4px #00FFFF)' : 'none' }} />
+            <Activity size={12} color="#fff" style={{ filter: showActivityLog ? 'drop-shadow(0 0 4px #00FFFF)' : 'none' }} />
           </motion.div>
         </div>
       </div>
@@ -1797,12 +1808,171 @@ const StationIcon = ({ isEs }: { isEs?: boolean }) => {
   );
 };
 
+const ActivityLogPanel = ({ isVisible, onClose, isEs }: any) => {
+  const [logs, setLogs] = React.useState<any[]>([]);
+  const activeUser = localStorage.getItem('yoda_active_user') || 'instructor@example.com';
+
+  React.useEffect(() => {
+    if (isVisible) {
+      const savedLogs = localStorage.getItem('yoda_activity_logs');
+      if (savedLogs) {
+        try {
+          const parsed = JSON.parse(savedLogs);
+          // Only show logs for current user, up to 15
+          setLogs(parsed.filter((l: any) => l.user === activeUser).slice(0, 15));
+        } catch (e) {}
+      }
+    }
+  }, [isVisible]);
+
+  const formatTime = (isoString: string) => {
+    try {
+      const d = new Date(isoString);
+      return `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
+    } catch {
+      return '00:00';
+    }
+  };
+
+  const formatMessage = (log: any) => {
+    const d = log.details || '';
+    
+    if (log.action === 'NAVIGATE' || log.action === 'CLICK_LINK') {
+      let target = d.replace('Navegación a: ', '').trim();
+      
+      const moduleNames: Record<string, { es: string, pt: string }> = {
+        'ssc': { es: 'Estación SSC (Hispano)', pt: 'Estação SSC (Hispano)' },
+        'brasil': { es: 'Estación BR (Brasil)', pt: 'Estação BR (Brasil)' },
+        'landing': { es: 'Centro de Mando', pt: 'Centro de Comando' },
+        'admin': { es: 'Monitoreo Global', pt: 'Monitoramento Global' },
+        'operaciones': { es: 'Portal de Operaciones', pt: 'Portal de Operações' },
+        'suministros': { es: 'Forms & Herramientas', pt: 'Forms & Ferramentas' },
+        'laboratorio': { es: 'Portal de Líderes', pt: 'Portal de Líderes' },
+        'ingenieria': { es: 'Workshops (Ingeniería)', pt: 'Workshops (Engenharia)' }
+      };
+
+      const mapped = moduleNames[target];
+      if (mapped) return isEs ? `Ingreso a: ${mapped.es}` : `Acesso a: ${mapped.pt}`;
+      return isEs ? `Navegación hacia: ${target}` : `Navegação para: ${target}`;
+    }
+
+    if (log.action === 'NUEVA_PARTIDA') return isEs ? `Inicio de nueva misión.` : `Início de nova missão.`;
+    if (log.action === 'VISIT') return isEs ? `Lectura de sección: ${d}` : `Leitura da seção: ${d}`;
+    if (log.action === 'COMPLETAR MÓDULO') return isEs ? `Módulo superado: ${d}` : `Módulo superado: ${d}`;
+    
+    return isEs ? `Actividad: ${d}` : `Atividade: ${d}`;
+  };
+
+  const getLogType = (action: string) => {
+    if (action === 'COMPLETAR MÓDULO' || action === 'NUEVA_PARTIDA') return 'success';
+    if (action === 'CLICK_LINK' || action === 'NAVIGATE' || action === 'VISIT') return 'info';
+    return 'alert';
+  };
+
+  const getLogIcon = (action: string) => {
+    if (action === 'COMPLETAR MÓDULO') return '🏆';
+    if (action === 'NUEVA_PARTIDA') return '🚀';
+    if (action === 'NAVIGATE' || action === 'CLICK_LINK') return '🧭';
+    if (action === 'VISIT') return '📖';
+    return '⚡';
+  };
+
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 100, opacity: 0 }}
+          transition={{ type: 'spring', damping: 25, stiffness: 120 }}
+          style={{
+            position: 'absolute',
+            bottom: '26%',
+            right: '24%',
+            width: '320px',
+            maxHeight: '400px',
+            background: 'rgba(10, 0, 30, 0.95)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(0, 255, 255, 0.2)',
+            borderRadius: '16px',
+            zIndex: 100,
+            padding: '24px',
+            display: 'flex',
+            flexDirection: 'column',
+            boxShadow: '0 10px 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(0, 255, 255, 0.05)'
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '12px' }}>
+            <h3 style={{ margin: 0, color: '#00FFFF', fontSize: '12px', letterSpacing: '0.15em', fontWeight: 900 }}>
+              {isEs ? 'BITÁCORA DEL EXPLORADOR' : 'DIÁRIO DO EXPLORADOR'}
+            </h3>
+            <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: 24, lineHeight: 1 }}>×</button>
+          </div>
+          
+          <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '12px', paddingRight: '5px' }}>
+            {logs.length === 0 ? (
+              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', textAlign: 'center', marginTop: 30, fontWeight: 600 }}>
+                {isEs ? 'No hay actividad reciente.' : 'Nenhuma atividade recente.'}
+              </div>
+            ) : (
+              logs.map((log, i) => {
+                const type = getLogType(log.action);
+                return (
+                  <div key={i} style={{ 
+                    background: 'rgba(255,255,255,0.03)', 
+                    padding: '14px', 
+                    borderRadius: '12px',
+                    borderLeft: `4px solid ${type === 'alert' ? '#FFD700' : type === 'success' ? '#00FF00' : '#00FFFF'}`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '14px'
+                  }}>
+                    <div style={{ fontSize: '24px', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))' }}>
+                      {getLogIcon(log.action)}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.4)', marginBottom: '4px', fontWeight: 800, letterSpacing: '0.05em' }}>
+                        {formatTime(log.time)}
+                      </div>
+                      <div style={{ fontSize: '12px', color: '#fff', lineHeight: 1.4, fontWeight: 600 }}>
+                        {formatMessage(log)}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
 
 export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: any) => {
   const [alertMode, setAlertMode] = useState(false);
-  const [hudHidden, setHudHidden] = useState(false);
-  const [dimLights, setDimLights] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [showIara, setShowIara] = useState(false);
+  const [showActivityLog, setShowActivityLog] = useState(false);
+  
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => console.log(err));
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(err => console.log(err));
+      }
+    }
+  };
   const isEs = stationName === 'SSC';
   
   // Responsive Scaling Logic
@@ -1842,6 +2012,7 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
   return (
     <div style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden', backgroundColor: '#F8F7FF', fontFamily: '"Inter", sans-serif', display: 'flex', flexDirection: 'column' }}>
 
+
       {/* Central Portal Window for SpaceBackground */}
       <div style={{
         position: 'absolute',
@@ -1853,7 +2024,8 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
         clipPath: 'polygon(5% 0, 95% 0, 100% 10%, 100% 90%, 95% 100%, 5% 100%, 0 90%, 0 10%)',
         overflow: 'hidden',
         zIndex: 1,
-        boxShadow: '0 20px 60px rgba(0,0,0,0.15)'
+        boxShadow: '0 20px 60px rgba(0,0,0,0.15)',
+        transition: 'all 0.5s ease-in-out'
       }}>
         <SpaceBackground showEarth={true} showShip={true} />
         {/* Glow border inside portal */}
@@ -1862,13 +2034,15 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
           inset: 0, 
           border: '4px solid rgba(255,255,255,0.2)', 
           clipPath: 'polygon(5% 0, 95% 0, 100% 10%, 100% 90%, 95% 100%, 5% 100%, 0 90%, 0 10%)', 
-          pointerEvents: 'none' 
+          pointerEvents: 'none',
+          transition: 'opacity 0.5s ease'
         }} />
       </div>
 
       <IaraHologram isVisible={showIara} onClose={() => setShowIara(false)} iaraLink={iaraLink} />
+      <ActivityLogPanel isVisible={showActivityLog} onClose={() => setShowActivityLog(false)} isEs={isEs} />
 
-      <div style={{ height: '84px', background: '#FFFFFF', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 32px', transition: 'all 0.5s ease', borderBottom: '1px solid rgba(27,0,136,0.1)' }}>
+      <div style={{ height: '84px', background: '#FFFFFF', position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 32px', transition: 'all 0.5s ease', borderBottom: isEs ? '2px solid #7000AB' : '2px solid #99CC33' }}>
         <BackBtn onClick={onBack} label={isEs ? "SALIR" : "SAIR"} />
         <div style={{ 
           position: 'absolute', 
@@ -1903,16 +2077,18 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
           transition: 'transform 0.1s ease-out'
         }}>
           <ConsoleSideFrame side="left">
-          <ModuleCard 
+          <ModuleCard
             sec="SEC-A1" title={config?.moduleMeta?.ops?.title || (isEs ? "Portal Instructor" : "Portal Instrutor")} subtitle="" color="#FFE017" side="left"
             icon={<GraduationCap />} stats={[{label: 'MÓDULOS', val: config?.operaciones?.length || 0}, {label: isEs ? 'ACTUALIZADO' : 'ATUALIZADO', val: config?.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Portal Instrutor', 'CLICK_LINK'); onNavigate('operaciones'); }} 
           />
-          <ModuleCard 
+          <ModuleCard
             sec="SEC-A2" title={config?.moduleMeta?.sup?.title || (isEs ? "Formularios" : "Formulários")} subtitle="" color="#00FFF2" side="left"
             icon={<Package />} stats={[{label: 'MÓDULOS', val: config?.suministros?.length || 0}, {label: isEs ? 'ACTUALIZADO' : 'ATUALIZADO', val: config?.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Formulários', 'CLICK_LINK'); onNavigate('suministros'); }} 
           />
         </ConsoleSideFrame>
         
+        {/* Dim Overlay for background removed */}
+
         {/* UNIFIED WORKSTATION UNIT (Monitor + Keyboard) */}
         <div style={{ 
           display: 'flex', 
@@ -1933,14 +2109,14 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
           <div style={{ transform: 'perspective(1500px) rotateX(10deg)', marginTop: -15, zIndex: 5 }}>
             <SpaceKeyboard 
               onAlert={() => setAlertMode(!alertMode)}
-              onHud={() => setHudHidden(!hudHidden)}
-              onDim={() => setDimLights(!dimLights)}
+              onActivityLog={() => setShowActivityLog(!showActivityLog)}
+              onFullscreen={toggleFullscreen}
               onMonitoring={() => config?.monitoringUrl && window.open(config.monitoringUrl, '_blank')}
               onIara={() => setShowIara(prev => !prev)}
               iaraActive={showIara}
               onPreparacao={() => config?.preparacaoLink && window.open(config.preparacaoLink, '_blank')}
               onIncidencias={() => config?.incidenciasLink ? window.open(config.incidenciasLink, '_blank') : window.open('https://forms.gle/AF44FUbJZbrhKHoQA', '_blank')}
-              states={{ alertMode, hudHidden, dimLights }}
+              states={{ alertMode, isFullscreen, showActivityLog }}
               isIntegrated={true}
               isEs={isEs}
             />
@@ -1948,11 +2124,11 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
         </div>
 
         <ConsoleSideFrame side="right">
-          <ModuleCard 
+          <ModuleCard
             sec="SEC-B1" title={config?.moduleMeta?.lab?.title || "Portal de Líderes"} subtitle="" color="#A4FF00" side="right"
             icon={<Microscope />} stats={[{label: 'MÓDULOS', val: config.laboratorio?.length || 0}, {label: isEs ? 'ACTUALIZADO' : 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Portal de Líderes', 'CLICK_LINK'); onNavigate('laboratorio'); }} 
           />
-          <ModuleCard 
+          <ModuleCard
             sec="SEC-B2" title={config?.moduleMeta?.eng?.title || "Workshops"} subtitle="" color="#D400FF" side="right"
             icon={<Cpu />} stats={[{label: 'MÓDULOS', val: config.ingenieria?.length || 0}, {label: isEs ? 'ACTUALIZADO' : 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Workshops', 'CLICK_LINK'); onNavigate('ingenieria'); }} 
           />
