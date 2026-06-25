@@ -8,6 +8,8 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery || '');
   const [filterGroup, setFilterGroup] = useState('ALL');
   const [filterStatus, setFilterStatus] = useState('ALL');
+  const [filterInstructor, setFilterInstructor] = useState('ALL');
+  const [filterDate, setFilterDate] = useState('');
   const [sortOrder, setSortOrder] = useState('LAST_ACTIVE');
 
   useEffect(() => {
@@ -176,6 +178,15 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
     return Array.from(groups).sort();
   }, [instructorStats]);
 
+  // Extract unique instructors for the filter dropdown
+  const uniqueInstructors = useMemo(() => {
+    const instructors = new Set<string>();
+    instructorStats.forEach(inst => {
+      instructors.add(inst.email);
+    });
+    return Array.from(instructors).sort();
+  }, [instructorStats]);
+
   // Apply Filters and Sorting
   const processedStats = useMemo(() => {
     let result = [...instructorStats];
@@ -189,18 +200,30 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
       );
     }
 
+    // Filter by Instructor
+    if (filterInstructor !== 'ALL') {
+      result = result.filter(inst => inst.email === filterInstructor);
+    }
+
     // Filter by Group
     if (filterGroup !== 'ALL') {
       result = result.filter(inst => inst.sessionCode === filterGroup);
     }
 
+    // Filter by Date
+    if (filterDate) {
+      result = result.filter(inst => {
+        const instDate = new Date(inst.lastActive).toISOString().split('T')[0];
+        return instDate === filterDate;
+      });
+    }
+
     // Filter by Status
     if (filterStatus !== 'ALL') {
       result = result.filter(inst => {
-        const pct = Math.min(100, Math.round((inst.finished / totalMissionsAvailable) * 100));
-        if (filterStatus === 'BEHIND') return pct < 30;
-        if (filterStatus === 'ON_TRACK') return pct >= 30 && pct < 70;
-        if (filterStatus === 'GRADUATED') return pct >= 70;
+        const isFinished = inst.finished >= inst.totalNodes;
+        if (filterStatus === 'FINISHED') return isFinished;
+        if (filterStatus === 'IN_PROGRESS') return !isFinished;
         return true;
       });
     }
@@ -208,8 +231,8 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
     // Sort
     result.sort((a, b) => {
       if (sortOrder === 'LAST_ACTIVE') return b.lastActive - a.lastActive;
-      const pctA = Math.min(100, Math.round((a.finished / totalMissionsAvailable) * 100));
-      const pctB = Math.min(100, Math.round((b.finished / totalMissionsAvailable) * 100));
+      const pctA = Math.min(100, Math.round((a.finished / a.totalNodes) * 100));
+      const pctB = Math.min(100, Math.round((b.finished / b.totalNodes) * 100));
       if (sortOrder === 'LOWEST_PROGRESS') return pctA - pctB;
       if (sortOrder === 'HIGHEST_PROGRESS') return pctB - pctA;
       if (sortOrder === 'ALPHABETICAL') return a.email.localeCompare(b.email);
@@ -217,12 +240,12 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
     });
 
     return result;
-  }, [instructorStats, searchQuery, filterGroup, filterStatus, sortOrder, totalMissionsAvailable]);
+  }, [instructorStats, searchQuery, filterInstructor, filterGroup, filterDate, filterStatus, sortOrder]);
 
   const globalStats = {
-    instructors: instructorStats.length,
-    totalFinished: instructorStats.reduce((acc, curr) => acc + curr.finishedPlanets, 0),
-    totalOpened: instructorStats.reduce((acc, curr) => acc + curr.openedPlanets, 0)
+    instructors: new Set(instructorStats.map(s => s.email)).size,
+    totalFinished: instructorStats.filter(curr => curr.finished >= curr.totalNodes).length,
+    totalOpened: instructorStats.length
   };
 
   return (
@@ -283,7 +306,17 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <Filter size={16} color="#0F004F" />
+          <select 
+            value={filterInstructor} 
+            onChange={(e) => setFilterInstructor(e.target.value)}
+            style={{ padding: '10px', borderRadius: 8, border: '1px solid #E2E8F0', outline: 'none', fontSize: 12, fontWeight: 700, color: '#0F004F', cursor: 'pointer', background: '#fff', maxWidth: 200 }}
+          >
+            <option value="ALL">TODOS LOS INSTRUCTORES</option>
+            {uniqueInstructors.map(g => <option key={g} value={g}>{g.split('@')[0]}</option>)}
+          </select>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <select 
             value={filterGroup} 
             onChange={(e) => setFilterGroup(e.target.value)}
@@ -300,10 +333,18 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
           style={{ padding: '10px', borderRadius: 8, border: '1px solid #E2E8F0', outline: 'none', fontSize: 12, fontWeight: 700, color: '#0F004F', cursor: 'pointer', background: '#fff' }}
         >
           <option value="ALL">CUALQUIER ESTADO</option>
-          <option value="BEHIND">ATRASADOS (&lt;30%)</option>
-          <option value="ON_TRACK">EN CAMINO (30-70%)</option>
-          <option value="GRADUATED">AVANZADOS (&gt;70%)</option>
+          <option value="IN_PROGRESS">EN CURSO</option>
+          <option value="FINISHED">FINALIZADOS</option>
         </select>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <input 
+            type="date" 
+            value={filterDate}
+            onChange={(e) => setFilterDate(e.target.value)}
+            style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E2E8F0', outline: 'none', fontSize: 12, fontWeight: 700, color: '#0F004F', cursor: 'pointer', background: '#fff' }}
+          />
+        </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginLeft: 'auto' }}>
           <SortDesc size={16} color="#0F004F" />

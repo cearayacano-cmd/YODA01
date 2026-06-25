@@ -186,13 +186,14 @@ export const InstructorDashboard = ({ logs, config, onBack, initialUser, isEmbed
     const missions = getMissionTracking().filter((m: any) => m.email === selectedUser);
     const groupedMissions: Record<string, any[]> = {};
     missions.forEach((m: any) => {
-        if (!groupedMissions[m.missao]) groupedMissions[m.missao] = [];
-        groupedMissions[m.missao].push(m);
+        const pName = m.planetas || m.missao || 'Desconocido';
+        if (!groupedMissions[pName]) groupedMissions[pName] = [];
+        groupedMissions[pName].push(m);
     });
     
-    Object.keys(groupedMissions).forEach(missaoName => {
-        const mList = groupedMissions[missaoName];
-        const section = (config.rutaLider || []).find((s: any) => s.label === missaoName || s.name === missaoName);
+    Object.keys(groupedMissions).forEach(planetName => {
+        const mList = groupedMissions[planetName];
+        const section = (config.rutaLider || []).find((s: any) => s.label === planetName || s.name === planetName);
         const totalNodes = section && section.rows ? section.rows.length : Math.max(mList.length, 1);
         const completedNodes = mList.filter((m: any) => m.marcarComoFinalizado).length;
         const isCompleted = totalNodes > 0 && completedNodes >= totalNodes;
@@ -212,7 +213,7 @@ export const InstructorDashboard = ({ logs, config, onBack, initialUser, isEmbed
 
         partidasInfo.push({
             id: mList[0]?.codigo || ('YODA-' + Math.floor(1000 + Math.random() * 9000)),
-            planetName: missaoName,
+            planetName: planetName,
             totalNodes,
             completedNodes,
             isCompleted,
