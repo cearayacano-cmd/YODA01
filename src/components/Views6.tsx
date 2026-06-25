@@ -686,7 +686,7 @@ const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATE
     if (rows.length === 0) return false;
     const effectivePlanetLabel = section.planetLabel || section.name || section.label || planetLabel;
     const allDone = rows.every((r: any, i: number) => {
-        const key = `resolved_${effectivePlanetLabel}_${r.tema}_${i}`;
+        const key = `resolved_${planetLabel}_${r.tema}_${i}`;
         const val = localStorage.getItem(key);
         console.log(`Checking key: ${key} -> ${val}`);
         return val === 'true';
@@ -903,7 +903,7 @@ export const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onbo
                   <div key={i} style={{ position: 'absolute', top: yPos, left: xPos, transform: 'translate(-50%, -50%)' }}>
                      <MissionMapNode 
                         section={sec} index={i} planetColor={planetColor} texture={texture} tick={tick}
-                        planetLabel={sec.nombre || sec.label || planetLabel}
+                        planetLabel={planetLabel}
                         onClick={() => onSelectSection(i)} 
                      />
                   </div>
@@ -1230,13 +1230,27 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, sectorLabe
 
                 {/* Completion Check */}
                 <motion.div
-                    whileHover={{ scale: 1.05 }}
+                    animate={
+                        (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') 
+                            ? {} 
+                            : isResolved 
+                                ? { scale: 1, opacity: 1, boxShadow: '0 4px 12px rgba(153, 204, 51, 0.4)' }
+                                : { 
+                                    scale: [1, 1.03, 1], 
+                                    boxShadow: [`0 4px 12px ${planetColor}44`, `0 8px 24px ${planetColor}88`, `0 4px 12px ${planetColor}44`] 
+                                  }
+                    }
+                    transition={{
+                        duration: 2,
+                        repeat: isResolved ? 0 : Infinity,
+                        ease: "easeInOut"
+                    }}
+                    whileHover={{ scale: 1.05, filter: 'brightness(1.15)' }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => {
                         const isReadOnly = localStorage.getItem('yoda_read_only_mode') === 'true';
                         if (isReadOnly) return; // NO-OP in read-only mode
                         
-                        const storageKey = `resolved_${planetLabel}_${node.tema}_${index}`;
                         const isDone = localStorage.getItem(storageKey) === 'true';
                         
                         if (!isDone) {
@@ -1273,16 +1287,16 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, sectorLabe
                         }
 
                         localStorage.setItem(storageKey, isDone ? 'false' : 'true');
+                        setIsResolved(!isDone);
+                        if (onUpdate) onUpdate();
                         onTrackEvent && onTrackEvent('COMPLETION', `Marcó nodo como ${isDone ? 'Pendiente' : 'Finalizado'}: ${node.tema}`);
                         if (typeof window !== 'undefined' && (window as any).refreshOnboarding) {
                             (window as any).refreshOnboarding();
-                        } else {
-                            window.location.reload();
                         }
                     }}
                     style={{
                         height: 36,
-                        background: (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? 'transparent' : isResolved ? '#99CC33' : planetColor,
+                        background: (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? 'transparent' : isResolved ? '#99CC33' : `linear-gradient(135deg, ${planetColor}, ${planetColor}dd)`,
                         color: (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? planetColor : '#fff',
                         borderRadius: 10,
                         cursor: (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? 'not-allowed' : 'pointer',
@@ -1290,19 +1304,27 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, sectorLabe
                         alignItems: 'center',
                         justifyContent: 'center',
                         alignSelf: 'center',
-                        padding: '0 20px',
+                        padding: '0 24px',
                         fontSize: 10,
                         fontWeight: 900,
-                        letterSpacing: '0.5px',
+                        letterSpacing: '1px',
                         gap: 8,
-                        boxShadow: (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? 'none' : `0 4px 12px ${isResolved ? 'rgba(153, 204, 51, 0.4)' : planetColor + '44'}`,
-                        border: (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? `1px dashed ${planetColor}` : 'none',
+                        border: (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? `1px dashed ${planetColor}` : isResolved ? 'none' : `1px solid rgba(255,255,255,0.2)`,
                         transition: 'all 0.2s ease',
-                        textTransform: 'uppercase'
+                        textTransform: 'uppercase',
+                        position: 'relative',
+                        overflow: 'hidden'
                     }}
                 >
+                    {!isResolved && (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') !== 'true') && (
+                        <motion.div 
+                            animate={{ x: ['-100%', '200%'] }} 
+                            transition={{ duration: 3, repeat: Infinity, ease: 'linear' }} 
+                            style={{ position: 'absolute', top: 0, left: 0, width: '50%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)', transform: 'skewX(-20deg)' }} 
+                        />
+                    )}
                     {(typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? <Eye size={16} strokeWidth={2.5} /> : isResolved ? <Check size={16} strokeWidth={4} /> : <CheckCircle2 size={16} strokeWidth={2.5} />} 
-                    {(typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? 'MODO LECTURA' : isResolved ? 'FINALIZADO' : 'MARCAR COMO VISTO'}
+                    {(typeof localStorage !== 'undefined' && localStorage.getItem('yoda_read_only_mode') === 'true') ? 'MODO LECTURA' : isResolved ? 'FINALIZADO' : 'CONFIRMAR LEITURA'}
                 </motion.div>
             </div>
         </motion.div>
@@ -1332,6 +1354,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     const [collapsedThemes, setCollapsedThemes] = useState<string[]>(initialThemes);
     const [showFeedbackModal, setShowFeedbackModal] = useState(false);
     const [feedbackText, setFeedbackText] = useState("");
+    const [localTick, setLocalTick] = useState(0);
 
     const handleMarkAllAsComplete = () => {
         setShowFeedbackModal(true);
@@ -1389,7 +1412,15 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
         return allSecciones.every(sec => 
             (sec.rows || []).every((r: any, i: number) => localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true')
         );
-    }, [allSecciones, tick, planetLabel]);
+    }, [allSecciones, tick, localTick, planetLabel]);
+    
+    const handleBack = () => {
+        if (isAllComplete) {
+            confirmCompletion();
+        } else {
+            if (onBack) onBack();
+        }
+    };
     
     const toggleTheme = (theme: string) => {
         setCollapsedThemes(prev => {
@@ -1447,7 +1478,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                 boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
             }}>
                 <button 
-                  onClick={onBack}
+                  onClick={handleBack}
                   style={{ 
                     background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', 
                     padding: '10px 24px', borderRadius: 8, cursor: 'pointer', fontSize: 11, fontWeight: 900, 
@@ -1603,6 +1634,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                                                         missaoName={titleOverride || seccion?.nombre?.toUpperCase() || seccion?.label?.toUpperCase() || 'EXPLORAÇÃO TÁTICA'}
                                                                         onTrackEvent={onTrackEvent}
                                                                         themeKey={themeKey}
+                                                                        onUpdate={() => setLocalTick(t => t + 1)}
                                                                     />
                                                                 ))}
                                                             </motion.div>
@@ -1707,7 +1739,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                         {isEs ? 'Excelente trabajo. Todos los objetivos han sido alcanzados.' : 'Excelente trabalho. Todos os objetivos desta missão foram alcançados com sucesso.'}
                                     </div>
                                     <button
-                                        onClick={onBack}
+                                        onClick={handleBack}
                                         style={{
                                             background: '#1B0088', color: '#fff', border: 'none', padding: '12px 20px', borderRadius: 8,
                                             fontWeight: 800, fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8,

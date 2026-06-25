@@ -87,17 +87,45 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
   // Aggregate data per instructor
   // Aggregate data per instructor
   const instructorStats = useMemo(() => {
-    const stats: Record<string, { email: string, instructorId: string, opened: number, finished: number, openedPlanets: number, finishedPlanets: number, lastMission: string, lastActive: number, sessionCode: string, consumedMinutes: number }> = {};
+    const stats: Record<string, { email: string, instructorId: string, planetName: string, expedicion: string, opened: number, finished: number, totalNodes: number, totalProgrammedMinutesStr: string, lastMission: string, lastActive: number, sessionCode: string, consumedMinutes: number }> = {};
 
     data.forEach(log => {
-      if (!stats[log.instructor]) {
-        stats[log.instructor] = {
+      const planetName = log.planetas || 'Desconocido';
+      const expedicion = log.expedicion || 'Galaxia Principal';
+      const key = `${log.instructor}|${planetName}`;
+
+      if (!stats[key]) {
+        // Calculate total nodes for this planet
+        let tNodes = 1;
+        let tMins = 0;
+        if (config && config.rutaLider) {
+          const section = config.rutaLider.find((s: any) => s.label === planetName || s.name === planetName);
+          if (section) {
+            let n = 0;
+            const countNodes = (rows: any[]) => {
+                rows.forEach((r: any) => {
+                    if (r.tipo === 'group') {
+                        countNodes(r.rows || []);
+                    } else if (r.tema) {
+                        n++;
+                        tMins += parseTime(r.tiempo || r.ch || '0');
+                    }
+                });
+            };
+            countNodes(Array.isArray(section) ? section : (section.secciones || []));
+            if (n > 0) tNodes = n;
+          }
+        }
+
+        stats[key] = {
           email: log.email,
           instructorId: log.instructor,
+          planetName: planetName,
+          expedicion: expedicion,
           opened: 0,
           finished: 0,
-          openedPlanets: 0,
-          finishedPlanets: 0,
+          totalNodes: tNodes,
+          totalProgrammedMinutesStr: tMins > 0 ? formatTime(tMins) : '0h 0m',
           lastMission: 'N/A',
           lastActive: 0,
           sessionCode: log.codigo,
@@ -105,45 +133,39 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
         };
       }
 
-      if (log.tiempoAperturaRaw && log.tiempoAperturaRaw > stats[log.instructor].lastActive) {
-        stats[log.instructor].lastActive = log.tiempoAperturaRaw;
-        stats[log.instructor].lastMission = log.tema || log.missao;
+      if (log.tiempoAperturaRaw && log.tiempoAperturaRaw > stats[key].lastActive) {
+        stats[key].lastActive = log.tiempoAperturaRaw;
+        stats[key].lastMission = log.tema || log.missao;
       }
-      if (log.marcarComoVistoRaw && log.marcarComoVistoRaw > stats[log.instructor].lastActive) {
-         stats[log.instructor].lastActive = log.marcarComoVistoRaw;
-         stats[log.instructor].lastMission = log.tema || log.missao;
+      if (log.marcarComoVistoRaw && log.marcarComoVistoRaw > stats[key].lastActive) {
+         stats[key].lastActive = log.marcarComoVistoRaw;
+         stats[key].lastMission = log.tema || log.missao;
       }
     });
 
-    // Now count unique missions opened and finished per instructor
-    Object.keys(stats).forEach(instructor => {
-        const instructorLogs = data.filter(d => d.instructor === instructor);
+    // Now count unique missions opened and finished per instructor+planet
+    Object.keys(stats).forEach(key => {
+        const [instructor, planetName] = key.split('|');
+        const instructorLogs = data.filter(d => d.instructor === instructor && (d.planetas || 'Desconocido') === planetName);
         
         // Unique missions opened
-        const openedMissions = new Set(instructorLogs.filter(d => !!d.tiempoApertura).map(d => `${d.planetas}-${d.missao}-${d.tema}`));
-        stats[instructor].opened = openedMissions.size;
+        const openedMissions = new Set(instructorLogs.filter(d => !!d.tiempoApertura).map(d => `${d.missao}-${d.tema}`));
+        stats[key].opened = openedMissions.size;
 
         // Unique missions finished
         const finishedLogs = instructorLogs.filter(d => !!d.marcarComoFinalizado);
         const finishedMap = new Map<string, string>();
-        finishedLogs.forEach(d => finishedMap.set(`${d.planetas}-${d.missao}-${d.tema}`, d.tiempoEstimado));
+        finishedLogs.forEach(d => finishedMap.set(`${d.missao}-${d.tema}`, d.tiempoEstimado));
         
-        stats[instructor].finished = finishedMap.size;
-
-        // Unique planets opened and finished
-        const openedPlanetsSet = new Set(instructorLogs.filter(d => !!d.tiempoApertura && !!d.planetas).map(d => d.planetas));
-        stats[instructor].openedPlanets = openedPlanetsSet.size;
-
-        const finishedPlanetsSet = new Set(finishedLogs.filter(d => !!d.planetas).map(d => d.planetas));
-        stats[instructor].finishedPlanets = finishedPlanetsSet.size;
+        stats[key].finished = finishedMap.size;
         
         let mins = 0;
         finishedMap.forEach(timeStr => mins += parseTime(timeStr));
-        stats[instructor].consumedMinutes = mins;
+        stats[key].consumedMinutes = mins;
     });
 
     return Object.values(stats); // We sort later
-  }, [data]);
+  }, [data, config]);
 
   // Extract unique groups for the filter dropdown
   const uniqueGroups = useMemo(() => {
@@ -158,12 +180,12 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
   const processedStats = useMemo(() => {
     let result = [...instructorStats];
 
-    // Filter by Search
     if (searchQuery) {
-      const q = searchQuery.toLowerCase();
+      const term = searchQuery.toLowerCase();
       result = result.filter(inst => 
-        inst.email.toLowerCase().includes(q) || 
-        (inst.sessionCode && inst.sessionCode.toLowerCase().includes(q))
+        inst.email.toLowerCase().includes(term) || 
+        inst.instructorId.toLowerCase().includes(term) ||
+        inst.planetName.toLowerCase().includes(term)
       );
     }
 
@@ -308,70 +330,111 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
         )}
 
         {processedStats.map((inst, i) => {
-          const progressPercentage = Math.min(100, Math.round((inst.finished / totalMissionsAvailable) * 100));
+          const progressPercentage = Math.min(100, Math.round((inst.finished / inst.totalNodes) * 100));
           let progressColor = '#ED1650'; // Red for < 30%
           if (progressPercentage >= 30) progressColor = '#FFB800'; // Yellow for 30-70%
           if (progressPercentage >= 70) progressColor = '#99CC33'; // Green for > 70%
 
           return (
             <motion.div 
-              key={inst.email}
-              initial={{opacity: 0, scale: 0.95}}
-              animate={{opacity: 1, scale: 1}}
-              transition={{delay: i * 0.05}}
-              style={{ background: '#fff', borderRadius: 16, padding: 24, boxShadow: '0 4px 15px rgba(0,0,0,0.05)', cursor: 'pointer', border: '2px solid transparent', transition: 'all 0.2s ease' }}
-              whileHover={{ scale: 1.02, borderColor: '#00D6CC', boxShadow: '0 8px 25px rgba(0,214,204,0.15)' }}
+              key={`${inst.email}-${inst.planetName}`}
+              initial={{opacity: 0, y: 20}}
+              animate={{opacity: 1, y: 0}}
+              transition={{delay: i * 0.05, duration: 0.4, type: 'spring'}}
+              style={{ 
+                background: 'linear-gradient(145deg, #ffffff, #fcfdff)', 
+                borderRadius: 24, 
+                padding: 30, 
+                boxShadow: '0 10px 40px rgba(0,0,0,0.04), 0 2px 10px rgba(0,0,0,0.02)', 
+                cursor: 'pointer', 
+                position: 'relative',
+                overflow: 'hidden',
+                border: '1px solid rgba(255,255,255,0.8)'
+              }}
+              whileHover={{ 
+                y: -5, 
+                boxShadow: `0 20px 40px ${progressColor}22, 0 10px 20px rgba(0,0,0,0.05)`,
+                borderColor: `${progressColor}55`
+              }}
               onClick={() => onViewDetails && onViewDetails(inst.instructorId, inst.sessionCode)}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
-                <div>
-                  <div style={{ fontSize: 18, fontWeight: 900, color: '#0F004F' }}>{inst.email.split('@')[0]}</div>
-                  <div style={{ fontSize: 11, color: '#888', fontWeight: 600 }}>{inst.email}</div>
+              {/* Dynamic Glow Background */}
+              <div style={{ position: 'absolute', top: -50, right: -50, width: 150, height: 150, background: `radial-gradient(circle, ${progressColor}15 0%, transparent 70%)`, borderRadius: '50%', pointerEvents: 'none' }} />
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                  <div style={{ 
+                    width: 50, height: 50, borderRadius: 16, 
+                    background: `linear-gradient(135deg, ${progressColor}22, ${progressColor}11)`, 
+                    border: `2px solid ${progressColor}44`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: progressColor, fontWeight: 900, fontSize: 20,
+                    boxShadow: `inset 0 2px 10px ${progressColor}22`
+                  }}>
+                    {inst.expedicion.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 18, fontWeight: 900, color: '#0F004F', letterSpacing: '-0.5px' }}>{inst.expedicion}</div>
+                    <div style={{ fontSize: 12, color: '#888', fontWeight: 600 }}>{inst.planetName}</div>
+                  </div>
                 </div>
-                <div style={{ background: '#F0F4F8', padding: '4px 8px', borderRadius: 6, fontSize: 10, fontWeight: 800, color: '#555' }}>
-                  {inst.sessionCode}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
+                  <div style={{ background: 'rgba(15,0,79,0.04)', border: '1px solid rgba(15,0,79,0.1)', padding: '4px 10px', borderRadius: 20, fontSize: 10, fontWeight: 800, color: '#0F004F', letterSpacing: '1px', maxWidth: '120px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {inst.email.split('@')[0]}
+                  </div>
+                  <div style={{ background: 'rgba(22, 163, 74, 0.1)', border: '1px solid rgba(22, 163, 74, 0.2)', padding: '2px 8px', borderRadius: 10, fontSize: 9, fontWeight: 800, color: '#16A34A', letterSpacing: '1px' }}>
+                    ACTIVO
+                  </div>
                 </div>
               </div>
 
-              {/* Progress Bar */}
-              <div style={{ marginBottom: 20 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <span style={{ fontSize: 11, fontWeight: 800, color: '#444', textTransform: 'uppercase' }}>Progreso Ruta Guardián</span>
-                  <span style={{ fontSize: 12, fontWeight: 900, color: progressColor }}>{progressPercentage}%</span>
+              {/* Premium Progress Bar */}
+              <div style={{ marginBottom: 24, background: 'rgba(245,247,249,0.8)', padding: 16, borderRadius: 16, border: '1px solid rgba(0,0,0,0.03)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12, alignItems: 'center' }}>
+                  <span style={{ fontSize: 11, fontWeight: 800, color: '#666', textTransform: 'uppercase', letterSpacing: '1px' }}>Progreso de la Clase</span>
+                  <span style={{ fontSize: 16, fontWeight: 900, color: progressColor }}>{progressPercentage}%</span>
                 </div>
-                <div style={{ height: 8, background: '#EEEEEE', borderRadius: 4, overflow: 'hidden' }}>
+                <div style={{ height: 10, background: '#E2E8F0', borderRadius: 10, overflow: 'hidden', position: 'relative', boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.1)' }}>
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: `${progressPercentage}%` }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                    style={{ height: '100%', background: progressColor, borderRadius: 4 }}
-                  />
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                    style={{ height: '100%', background: `linear-gradient(90deg, ${progressColor}, ${progressColor}dd)`, borderRadius: 10, position: 'relative' }}
+                  >
+                    <motion.div 
+                        animate={{ x: ['-100%', '200%'] }} 
+                        transition={{ duration: 2, repeat: Infinity, ease: 'linear' }} 
+                        style={{ position: 'absolute', top: 0, left: 0, width: '50%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)', transform: 'skewX(-20deg)' }} 
+                    />
+                  </motion.div>
                 </div>
-                <div style={{ fontSize: 10, color: '#888', marginTop: 6, textAlign: 'right', fontWeight: 600 }}>
-                  {inst.finished} de {totalMissionsAvailable} misiones completadas
+                <div style={{ fontSize: 11, color: '#888', marginTop: 10, textAlign: 'right', fontWeight: 700 }}>
+                  <span style={{ color: '#0F004F' }}>{inst.finished}</span> de {inst.totalNodes} módulos completados
                 </div>
               </div>
 
               {/* Time Analysis */}
-              <div style={{ marginBottom: 20, display: 'flex', gap: 10 }}>
-                <div style={{ flex: 1, background: '#F8F9FA', padding: 10, borderRadius: 8 }}>
-                  <div style={{ fontSize: 9, fontWeight: 800, color: '#888', textTransform: 'uppercase', marginBottom: 4 }}>Tiempo Programado</div>
-                  <div style={{ fontSize: 12, fontWeight: 900, color: '#0F004F', display: 'flex', alignItems: 'center', gap: 4 }}>
-                    <Clock size={12} color="#0F004F" /> {formatTime(totalProgrammedMinutes)}
+              <div style={{ marginBottom: 24, display: 'flex', gap: 12 }}>
+                <div style={{ flex: 1, background: '#fff', border: '1px solid #E2E8F0', padding: 12, borderRadius: 12, display: 'flex', alignItems: 'center', gap: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.02)' }}>
+                  <div style={{ background: 'rgba(15,0,79,0.05)', padding: 8, borderRadius: 8 }}><Clock size={16} color="#0F004F" /></div>
+                  <div>
+                    <div style={{ fontSize: 9, fontWeight: 800, color: '#888', textTransform: 'uppercase', marginBottom: 2 }}>Asignado</div>
+                    <div style={{ fontSize: 13, fontWeight: 900, color: '#0F004F' }}>{inst.totalProgrammedMinutesStr}</div>
                   </div>
                 </div>
-                <div style={{ flex: 1, background: '#F8F9FA', padding: 10, borderRadius: 8 }}>
-                  <div style={{ fontSize: 9, fontWeight: 800, color: '#888', textTransform: 'uppercase', marginBottom: 4 }}>Tiempo Consumido</div>
-                  <div style={{ fontSize: 12, fontWeight: 900, color: progressColor, display: 'flex', alignItems: 'center', gap: 4 }}>
-                    <Clock size={12} color={progressColor} /> {formatTime(inst.consumedMinutes)}
+                <div style={{ flex: 1, background: '#fff', border: `1px solid ${progressColor}33`, padding: 12, borderRadius: 12, display: 'flex', alignItems: 'center', gap: 12, boxShadow: `0 2px 8px ${progressColor}11` }}>
+                  <div style={{ background: `${progressColor}15`, padding: 8, borderRadius: 8 }}><Clock size={16} color={progressColor} /></div>
+                  <div>
+                    <div style={{ fontSize: 9, fontWeight: 800, color: '#888', textTransform: 'uppercase', marginBottom: 2 }}>Invertido</div>
+                    <div style={{ fontSize: 13, fontWeight: 900, color: progressColor }}>{formatTime(inst.consumedMinutes)}</div>
                   </div>
                 </div>
               </div>
 
-              {/* Last Activity */}
-              <div style={{ background: '#F8FAFC', padding: 12, borderRadius: 8, borderLeft: '3px solid #00D6CC' }}>
-                <div style={{ fontSize: 10, fontWeight: 800, color: '#00D6CC', textTransform: 'uppercase', marginBottom: 4 }}>Última Misión Activa</div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#333' }}>
+              {/* Last Activity Badge */}
+              <div style={{ background: 'linear-gradient(90deg, rgba(0,214,204,0.1), transparent)', padding: '12px 16px', borderRadius: 12, borderLeft: '4px solid #00D6CC', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ fontSize: 10, fontWeight: 800, color: '#00D6CC', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Última Actividad</div>
+                <div style={{ fontSize: 13, fontWeight: 800, color: '#333', maxWidth: '50%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', textAlign: 'right' }}>
                   {inst.lastMission}
                 </div>
               </div>
