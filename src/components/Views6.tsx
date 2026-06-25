@@ -81,7 +81,7 @@ export const getSafeMissionIcon = (sec: any) => {
     return typeIcons[sec?.tipo] || typeIcons['mision1'];
 };
 
-const AnimatedIaraOverlay = () => {
+export const AnimatedIaraOverlay = () => {
     return (
         <video 
             src="/IARA2.mp4" 
@@ -381,7 +381,7 @@ const MissionHeaderHUD = ({ sectorLabel, planetLabel, planetColor, onBack }: any
         <div style={{ width: 220 }}>
             <div style={{ fontSize: 9, color: '#fff', fontWeight: 900, opacity: 0.6, marginBottom: 8, letterSpacing: '1px', textAlign: 'right' }}>{isEs ? 'PROGRESO DE MISIÓN' : 'PROGRESSO DE MISSÃO'} / 0 XP</div>
             <div style={{ height: 6, background: 'rgba(255,255,255,0.1)', borderRadius: 10, overflow: 'hidden' }}>
-                <motion.div initial={{ width: 0 }} animate={{ width: '15%' }} style={{ height: '100%', background: planetColor }} />
+                <motion.div initial={{ width: 0 }} animate={{ width: '15%' }} style={{ height: '100%', background: 'linear-gradient(90deg, #b45309, #d97706)', boxShadow: '0 0 10px rgba(217,119,6,0.5)' }} />
             </div>
         </div>
       </div>
@@ -408,43 +408,50 @@ const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', d
                 style={{ position: 'relative' }}
             >
                 <motion.div 
-                    whileHover={{ scale: 1.02, boxShadow: `0 0 30px ${color}44` }}
+                    whileHover={{ scale: 1.02, boxShadow: `0 15px 35px rgba(0,0,0,0.15)` }}
                     onClick={() => {
                         if (mode === 'DIRECT') window.open(directUrl, '_blank');
                         else setIsOpen(!isOpen);
                     }}
                     style={{ 
-                        cursor: 'pointer', padding: '12px 20px', borderRadius: '4px 20px 4px 20px',
-                        background: 'rgba(15,0,79,0.8)', backdropFilter: 'blur(12px)',
-                        border: `1px solid ${color}88`, borderLeft: `4px solid ${color}`,
+                        cursor: 'pointer', padding: '10px 20px', borderRadius: '4px 20px 4px 20px',
+                        background: '#F8F7FF',
+                        border: `1px solid rgba(15,0,79,0.1)`, borderLeft: `4px solid #4c1d95`,
                         display: 'flex', alignItems: 'center', gap: 15,
-                        boxShadow: `0 10px 30px rgba(0,0,0,0.5), inset 0 0 15px ${color}22`,
+                        boxShadow: `0 10px 25px rgba(0,0,0,0.4), inset 0 -4px 10px rgba(0,0,0,0.05)`,
                         minWidth: 220,
                         position: 'relative',
                         overflow: 'hidden'
                     }}
                 >
-                    {/* Background Pattern */}
-                    <div style={{ position: 'absolute', inset: 0, opacity: 0.1, backgroundImage: 'radial-gradient(circle at 2px 2px, #fff 1px, transparent 0)', backgroundSize: '10px 10px', pointerEvents: 'none' }} />
+                    {/* Ship Decals (Purple & Gold Stripes) */}
+                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: 'linear-gradient(90deg, #4c1d95, #6d28d9)' }} />
+                    <div style={{ position: 'absolute', top: 4, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #d97706, #f59e0b)' }} />
                     
+                    <div style={{ position: 'absolute', bottom: 4, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #d97706, #f59e0b)' }} />
+                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 4, background: 'linear-gradient(90deg, #4c1d95, #6d28d9)' }} />
+                    
+                    {/* Subtle Diagonal accent */}
+                    <div style={{ position: 'absolute', top: -50, right: 40, width: 60, height: 160, background: 'rgba(76, 29, 149, 0.04)', transform: 'rotate(25deg)', pointerEvents: 'none' }} />
+
                     <div style={{ 
-                        width: 40, height: 40, borderRadius: '50%', 
-                        background: `${color}22`, display: 'flex', alignItems: 'center', 
-                        justifyContent: 'center', color: color, border: `1px solid ${color}44`,
-                        boxShadow: `0 0 15px ${color}33`
+                        width: 40, height: 40, borderRadius: '4px 12px 4px 12px', zIndex: 2,
+                        background: 'linear-gradient(135deg, #4c1d95, #3b0764)', display: 'flex', alignItems: 'center', 
+                        justifyContent: 'center', color: '#fff', border: `2px solid #eab308`,
+                        boxShadow: `0 0 15px rgba(234, 179, 8, 0.4)`
                     }}>
                         {mode === 'DIRECT' ? <Rocket size={20} /> : (icon || <Radio size={20} />)}
                     </div>
                     
-                    <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: 8, color: color, fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: 2 }}>
+                    <div style={{ flex: 1, zIndex: 2 }}>
+                        <div style={{ fontSize: 8, color: '#4c1d95', fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: 2 }}>
                             {mode === 'DIRECT' ? 'AUTO_EXEC' : 'DATA_LINK'}
                         </div>
-                        <div style={{ fontSize: 15, fontWeight: 900, color: '#fff', letterSpacing: '1.5px', textTransform: 'uppercase' }}>{mainLabel}</div>
+                        <div style={{ fontSize: 15, fontWeight: 900, color: '#0F004F', letterSpacing: '1.5px', textTransform: 'uppercase' }}>{mainLabel}</div>
                     </div>
 
-                    <div style={{ opacity: 0.5, color: color }}>
-                        {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                    <div style={{ color: '#d97706', zIndex: 2, paddingRight: 5 }}>
+                        {isOpen ? <ChevronUp size={20} strokeWidth={3} /> : <ChevronDown size={20} strokeWidth={3} />}
                     </div>
                 </motion.div>
             </motion.div>
@@ -457,23 +464,19 @@ const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', d
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
                         style={{ 
                             position: 'absolute', top: 'calc(100% + 20px)', right: 0, width: 340,
-                            background: '#0f004f',
-                            backgroundImage: `
-                                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
-                            `,
-                            backgroundSize: '20px 20px',
-                            backdropFilter: 'blur(20px)',
-                            border: `1px solid ${color}44`, borderRadius: 24, padding: 24,
-                            boxShadow: '0 40px 80px rgba(0,0,0,0.8), inset 0 0 40px rgba(0,0,0,0.5)', zIndex: 120,
+                            background: 'rgba(248, 247, 255, 0.95)',
+                            backdropFilter: 'blur(30px)',
+                            border: `1px solid rgba(15,0,79,0.1)`, borderRadius: 24, padding: 24,
+                            boxShadow: '0 40px 80px rgba(0,0,0,0.15), inset 0 0 0 1px rgba(255,255,255,0.5)', zIndex: 120,
                             overflow: 'hidden'
                         }}
                     >
                         {/* Decorative Corner */}
-                        <div style={{ position: 'absolute', top: 0, left: 0, width: 40, height: 40, borderTop: `2px solid ${color}`, borderLeft: `2px solid ${color}`, opacity: 0.5, borderRadius: '24px 0 0 0' }} />
+                        <div style={{ position: 'absolute', top: 0, left: 0, width: 40, height: 40, borderTop: `3px solid ${color}`, borderLeft: `3px solid ${color}`, opacity: 0.8, borderRadius: '24px 0 0 0' }} />
+                        
                         {/* SELECTOR DE GRUPO (Si hay subGroups) */}
                         {subGroups.length > 1 && (
-                            <div style={{ display: 'flex', gap: 10, marginBottom: 20, background: 'rgba(0,0,0,0.3)', padding: 6, borderRadius: 14, border: '1px solid rgba(255,255,255,0.05)' }}>
+                            <div style={{ display: 'flex', gap: 10, marginBottom: 20, background: 'rgba(15,0,79,0.05)', padding: 6, borderRadius: 14, border: '1px solid rgba(15,0,79,0.05)' }}>
                                 {subGroups.map((g: any) => (
                                     <button 
                                         key={g.id}
@@ -481,23 +484,19 @@ const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', d
                                         style={{ 
                                             flex: 1, padding: '12px 14px', borderRadius: 10, border: 'none', cursor: 'pointer',
                                             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                                            background: activeGroup === g.id ? `linear-gradient(135deg, ${g.color}, ${g.color}dd)` : 'transparent',
-                                            color: activeGroup === g.id ? '#000' : 'rgba(255,255,255,0.4)',
+                                            background: activeGroup === g.id ? '#fff' : 'transparent',
+                                            color: activeGroup === g.id ? '#0F004F' : '#64748b',
                                             fontWeight: 900, fontSize: 11, textTransform: 'uppercase', letterSpacing: '1px',
                                             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                                            boxShadow: activeGroup === g.id ? `0 4px 15px ${g.color}66` : 'none',
+                                            boxShadow: activeGroup === g.id ? `0 4px 15px rgba(0,0,0,0.05)` : 'none',
                                             position: 'relative', overflow: 'hidden'
                                         }}
                                     >
                                         {activeGroup === g.id && (
                                             <>
                                                 <motion.div 
-                                                    layoutId="activeTab"
-                                                    style={{ position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.1)' }}
-                                                />
-                                                <motion.div 
                                                     layoutId="indicator"
-                                                    style={{ position: 'absolute', bottom: 0, left: '20%', right: '20%', height: 3, background: '#fff', borderRadius: '3px 3px 0 0' }}
+                                                    style={{ position: 'absolute', bottom: 0, left: '20%', right: '20%', height: 3, background: g.color, borderRadius: '3px 3px 0 0' }}
                                                 />
                                             </>
                                         )}
@@ -510,13 +509,13 @@ const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', d
 
                         {evalMsg && (
                             <div style={{ 
-                                background: '#0f004f', 
+                                background: '#fff', 
                                 borderLeft: `3px solid ${color}`,
                                 padding: '16px 20px',
                                 borderRadius: 12,
                                 marginBottom: 16,
-                                border: '1px solid rgba(255,255,255,0.05)',
-                                boxShadow: 'inset 0 0 20px rgba(0,0,0,0.3)'
+                                border: '1px solid rgba(15,0,79,0.05)',
+                                boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
                             }}>
                                 {evalTime && (
                                     <div style={{ marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -525,7 +524,7 @@ const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', d
                                         </span>
                                     </div>
                                 )}
-                                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.9)', lineHeight: 1.6, whiteSpace: 'pre-line' }}>
+                                <div style={{ fontSize: 13, color: '#0F004F', lineHeight: 1.6, whiteSpace: 'pre-line', fontWeight: 600 }}>
                                     {evalMsg}
                                 </div>
                             </div>
@@ -535,20 +534,21 @@ const TacticalSatelliteWidget = ({ title, icon, links, color, mode = 'PORTAL', d
                             {((activeGroup ? subGroups.find((g: any) => g.id === activeGroup)?.links : (links || [])) || []).map((link: any, i: number) => (
                                 <motion.a 
                                     key={i}
-                                    whileHover={{ x: 8, background: 'rgba(255,255,255,0.08)' }}
+                                    whileHover={{ x: 8, background: 'rgba(15,0,79,0.03)' }}
                                     href={link.url} target="_blank" rel="noopener noreferrer"
                                     style={{ 
                                         padding: '14px 18px', borderRadius: 12, display: 'flex', 
                                         alignItems: 'center', justifyContent: 'space-between',
-                                        textDecoration: 'none', color: '#fff', transition: '0.2s',
-                                        background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)'
+                                        textDecoration: 'none', color: '#0F004F', transition: '0.2s',
+                                        background: '#fff', border: '1px solid rgba(15,0,79,0.05)',
+                                        boxShadow: '0 2px 10px rgba(0,0,0,0.02)'
                                     }}
                                 >
                                     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                        <div style={{ width: 5, height: 5, borderRadius: '50%', background: color }} />
-                                        <span style={{ fontSize: 13, fontWeight: 800 }}>{link.label}</span>
+                                        <div style={{ width: 6, height: 6, borderRadius: '50%', background: activeGroup ? subGroups.find((g:any)=>g.id===activeGroup)?.color : color }} />
+                                        <span style={{ fontSize: 13, fontWeight: 800 }}>{link.label || 'LINK'}</span>
                                     </div>
-                                    <ExternalLink size={14} color={color} style={{ opacity: 0.6 }} />
+                                    <ExternalLink size={14} color="#64748b" />
                                 </motion.a>
                             ))}
                         </div>
@@ -684,7 +684,15 @@ const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATE
   const isCompleted = React.useMemo(() => {
     const rows = section.rows || [];
     if (rows.length === 0) return false;
-    return rows.every((r: any, i: number) => localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true');
+    const effectivePlanetLabel = section.planetLabel || section.name || section.label || planetLabel;
+    const allDone = rows.every((r: any, i: number) => {
+        const key = `resolved_${effectivePlanetLabel}_${r.tema}_${i}`;
+        const val = localStorage.getItem(key);
+        console.log(`Checking key: ${key} -> ${val}`);
+        return val === 'true';
+    });
+    console.log(`Node ${effectivePlanetLabel} isCompleted: ${allDone}`);
+    return allDone;
   }, [section, tick, planetLabel]);
 
   const nodeColor = getSafeMissionColor(section, planetColor);
@@ -843,7 +851,7 @@ export const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onbo
 
             {/* Start Path: Adjusted to emerge from ship's thrusters */}
               <motion.path 
-                  d={`M 500 0 C 500 100, 200 100, 200 210`} stroke="#3B82F6" strokeWidth="8" fill="none" 
+                  d={`M 500 0 C 500 100, 200 100, 200 210`} stroke={secciones[0]?.color || planetColor || "#3B82F6"} strokeWidth="8" fill="none" 
                   strokeDasharray="20 20" filter="url(#missionPathGlow)" 
                   animate={{ strokeDashoffset: [100, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
@@ -863,7 +871,7 @@ export const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onbo
 
                 return (
                   <motion.path 
-                    key={i} d={dZigZag} stroke="#3B82F6" strokeWidth="8" fill="none" 
+                    key={i} d={dZigZag} stroke={sec.color || planetColor || "#3B82F6"} strokeWidth="8" fill="none" 
                     strokeDasharray="20 20" filter="url(#missionPathGlow)"
                     animate={{ strokeDashoffset: [100, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
@@ -876,7 +884,7 @@ export const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onbo
               const dFinal = `M ${startX} ${yStart} C ${startX} ${yEnd - 80}, 500 ${yEnd - 80}, 500 ${yEnd}`;
               return (
                 <motion.path 
-                  key="final-path" d={dFinal} stroke="#3B82F6" strokeWidth="8" fill="none" 
+                  key="final-path" d={dFinal} stroke={secciones[secciones.length - 1]?.color || planetColor || "#3B82F6"} strokeWidth="8" fill="none" 
                   strokeDasharray="20 20" filter="url(#missionPathGlow)"
                   animate={{ strokeDashoffset: [100, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
@@ -895,7 +903,7 @@ export const MissionSectorMap = ({ secciones, planetColor, onSelectSection, onbo
                   <div key={i} style={{ position: 'absolute', top: yPos, left: xPos, transform: 'translate(-50%, -50%)' }}>
                      <MissionMapNode 
                         section={sec} index={i} planetColor={planetColor} texture={texture} tick={tick}
-                        planetLabel={planetLabel}
+                        planetLabel={sec.nombre || sec.label || planetLabel}
                         onClick={() => onSelectSection(i)} 
                      />
                   </div>
@@ -1434,7 +1442,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
             
             {/* Specialized Header (Blueprint Pro Style) */}
             <div style={{ 
-                height: '90px', background: '#1B0088', borderBottom: `4px solid ${planetColor}`,
+                height: '90px', background: '#0F004F', borderBottom: `4px solid ${planetColor}`,
                 display: 'flex', alignItems: 'center', padding: '0 60px', gap: 40, zIndex: 10,
                 boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
             }}>
@@ -1445,7 +1453,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                     padding: '10px 24px', borderRadius: 8, cursor: 'pointer', fontSize: 11, fontWeight: 900, 
                     display: 'flex', alignItems: 'center', gap: 12, textTransform: 'uppercase', letterSpacing: '1px'
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#1B0088' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#0F004F' }}
                   onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}
                 >
                     <ArrowLeft size={16} /> {isEs ? 'RETORNAR AL MAPA' : 'RETORNAR AO MAPA'}
@@ -1777,9 +1785,9 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     );
 };
 
-export const PlanetContentView = ({ planetIdx, onBack, data, planetMeta, planetLabel, sectorLabel="SECTOR", onboardingData, onTrackEvent }: any) => {
+export const PlanetContentView = ({ planetIdx, onBack, data, planetMeta, planetLabel, sectorLabel="SECTOR", onboardingData, onTrackEvent, initialViewMode = 'map', disableCongrats = false, forceSingleSection, forceLevelLayout }: any) => {
     const isEs = (typeof window !== 'undefined' && (window as any).YODA_STATION === 'SSC') || (typeof localStorage !== 'undefined' && localStorage.getItem('yoda_station_name') === 'SSC');
-    const [viewMode, setViewMode] = React.useState<'map' | 'detail' | 'onboarding'>('map');
+    const [viewMode, setViewMode] = React.useState<'map' | 'detail' | 'onboarding'>(forceSingleSection ? 'detail' : initialViewMode);
     const [selectedIdx, setSelectedIdx] = React.useState(0);
     const [tick, setTick] = React.useState(0);
     const [showCongrats, setShowCongrats] = React.useState(false);
@@ -1792,7 +1800,7 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetMeta, planetL
     // Safety check for data
     if (!data) return null;
 
-    const planetObj = (Array.isArray(data) && data[planetIdx]) ? data[planetIdx] : null;
+    const planetObj = (Array.isArray(data) && data[planetIdx]) ? data[planetIdx] : data;
     const planetColor = planetMeta?.color || planetObj?.color || '#ED1650';
 
     let secciones = [];
@@ -1806,6 +1814,15 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetMeta, planetL
         }
     }
 
+    if (forceSingleSection) {
+        const found = secciones.find((s: any) => s.nombre === forceSingleSection || s.label === forceSingleSection || s.name === forceSingleSection);
+        if (found) {
+            secciones = [found];
+        } else {
+            secciones = [];
+        }
+    }
+
     const isModuleComplete = React.useMemo(() => {
         if (!secciones || secciones.length === 0) return false;
         return secciones.every(sec => {
@@ -1816,14 +1833,14 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetMeta, planetL
     }, [secciones, tick, planetLabel]);
 
     React.useEffect(() => {
-        if (isModuleComplete) {
+        if (isModuleComplete && !disableCongrats) {
             const storageKey = `congrats_shown_${planetLabel}_${sectorLabel}`;
             if (localStorage.getItem(storageKey) !== 'true') {
                 setTimeout(() => setShowCongrats(true), 1000);
                 localStorage.setItem(storageKey, 'true');
             }
         }
-    }, [isModuleComplete, planetLabel, sectorLabel]);
+    }, [isModuleComplete, planetLabel, sectorLabel, disableCongrats]);
 
     const handleSelectSection = (idx: number) => {
         setSelectedIdx(idx);
@@ -1912,7 +1929,13 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetMeta, planetL
                 <FscDetailedTerminal 
                     seccion={secciones[selectedIdx] || {rows:[]}} 
                     planetColor={planetColor} 
-                    onBack={() => setViewMode('map')} 
+                    onBack={() => {
+                        if (initialViewMode === 'detail') {
+                            onBack(); // Go back to the RutaLiderView!
+                        } else {
+                            setViewMode('map');
+                        }
+                    }} 
                     tick={tick}
                     planetLabel={planetLabel}
                     sectorLabel={sectorLabel}
@@ -1922,7 +1945,13 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetMeta, planetL
                 <FscDetailedTerminal 
                     secciones={onboardingData?.[(planetMeta?.onboardingIdx ?? planetObj?.onboardingIdx) || 0]?.data?.secciones || []} 
                     planetColor={planetColor} 
-                    onBack={() => setViewMode('map')} 
+                    onBack={() => {
+                        if (initialViewMode === 'detail') {
+                            onBack();
+                        } else {
+                            setViewMode('map');
+                        }
+                    }} 
                     tick={tick}
                     planetLabel="NAVE DE ONBOARDING"
                     sectorLabel="PROTOCOLO DE PREPARACIÓN"

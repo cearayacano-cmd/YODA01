@@ -48,31 +48,120 @@
         "url": "https://docs.google.com/forms/d/e/1FAIpQLSc6skAZ2tsMQx3b5uMjVzI_0kbafi11Bj7rsOJgVbrOzgLWtw/viewform"
       }
     ],
-    "lastUpdate": "23/06/2026",
+    "lastUpdate": "25/06/2026",
     "rutaLider": [
       {
-        "poder": "Gestão de Equipe",
-        "tema": "Feedback Efetivo",
-        "tiempo": "2H",
-        "desc": "Técnicas de retroalimentação para o desenvolvimento da equipe.",
-        "consejo": "Mantenha um foco positivo e construtivo",
-        "adjunto": "#"
+        "label": "Gestão de Equipe",
+        "tipo": "mision1",
+        "rows": [
+          {
+            "macroTema": "Feedback Efetivo",
+            "dia": "1",
+            "tema": "Feedback Efetivo",
+            "detalhe": "Técnicas de retroalimentação para o desenvolvimento da equipe.",
+            "tiempo": "2H",
+            "herramientas": [
+              {
+                "tipo": "🔗 Link",
+                "url": "#"
+              }
+            ],
+            "iaPic": [],
+            "consejo": "Mantenha um foco positivo e construtivo"
+          },
+          {
+            "macroTema": "Resolução de Conflitos",
+            "dia": "1",
+            "tema": "Resolução de Conflitos",
+            "detalhe": "Controle de situações difíceis entre colaboradores",
+            "tiempo": "2H",
+            "herramientas": [
+              {
+                "tipo": "🔗 Link",
+                "url": "#"
+              }
+            ],
+            "iaPic": [],
+            "consejo": "Escuta ativa é a chave"
+          }
+        ]
       },
       {
-        "poder": "Gestão de Equipe",
-        "tema": "Resolução de Conflitos",
-        "tiempo": "2H",
-        "desc": "Controle de situações difíceis entre colaboradores",
-        "consejo": "Escuta ativa é a chave",
-        "adjunto": "#"
+        "label": "Estratégia de Vendas",
+        "tipo": "mision1",
+        "rows": [
+          {
+            "macroTema": "Cierre de Ventas",
+            "dia": "1",
+            "tema": "Cierre de Ventas",
+            "detalhe": "Metodologias para fechar negociações exitosas.",
+            "tiempo": "3H",
+            "herramientas": [
+              {
+                "tipo": "🔗 Link",
+                "url": "#"
+              }
+            ],
+            "iaPic": [],
+            "consejo": "Identifica las objeciones temprano."
+          }
+        ]
       },
       {
-        "poder": "Estratégia de Vendas",
-        "tema": "Cierre de Ventas",
-        "tiempo": "3H",
-        "desc": "Metodologias para fechar negociações exitosas.",
-        "consejo": "Identifica las objeciones temprano.",
-        "adjunto": "#"
+        "tipo": "imersao",
+        "label": "IMERSÃO",
+        "rows": [
+          {
+            "macroTema": "test",
+            "dia": "",
+            "tema": "tes",
+            "detalhe": "test",
+            "consejo": "",
+            "herramientas": [
+              {
+                "tipo": "🖼️ Slide",
+                "url": ""
+              }
+            ],
+            "iaPic": [],
+            "tiempo": ""
+          }
+        ],
+        "dbOjtLabel": "",
+        "dbOjtUrl": "",
+        "totalCh": "",
+        "ajusteRota": "",
+        "ajusteRotaUrlKon": "",
+        "ajusteRotaUrlAec": "",
+        "ajusteRotaCh": ""
+      },
+      {
+        "tipo": "mision1",
+        "label": "test",
+        "rows": [
+          {
+            "macroTema": "test",
+            "dia": "",
+            "tema": "test",
+            "detalhe": "test",
+            "consejo": "",
+            "herramientas": [
+              {
+                "tipo": "🖼️ Slide",
+                "url": ""
+              }
+            ],
+            "iaPic": [],
+            "tiempo": ""
+          }
+        ],
+        "dbOjtLabel": "",
+        "dbOjtUrl": "",
+        "totalCh": "",
+        "ajusteRota": "",
+        "ajusteRotaUrlKon": "",
+        "ajusteRotaUrlAec": "",
+        "ajusteRotaCh": ""
       }
     ],
     "onboarding": [
@@ -6278,7 +6367,7 @@
                 "macroTema": "Alterações Voluntárias",
                 "dia": "3,4,5,6",
                 "tema": "Reemissão Sabre Interact",
-                "detalhe": "- Instrutor mostra através da ferramenta Sabre Training como finalizar reemissão através do Sabre  (somente por contingência caso Allegro n����o funcione)\n- Instrutor deve reforçar que este processo só será feito com autorização do supervisor e que ao final o agente deverá realizar o controle de aderência através do Allegro (conteúdo visto no Poder 1)",
+                "detalhe": "- Instrutor mostra através da ferramenta Sabre Training como finalizar reemissão através do Sabre  (somente por contingência caso Allegro n������������o funcione)\n- Instrutor deve reforçar que este processo só será feito com autorização do supervisor e que ao final o agente deverá realizar o controle de aderência através do Allegro (conteúdo visto no Poder 1)",
                 "tiempo": "0:20:00",
                 "herramientas": [
                   {
@@ -8326,7 +8415,7 @@
                 "macroTema": "Atividade Ajuste de rota com o navegador:",
                 "dia": 1,
                 "tema": "Atividade Ajuste de rota com o navegador: Bônus LATAM PASS",
-                "detalhe": "- Instrutor vai apresentar 3 cenários e pedir a justificativa com base no arquivo do PIC, atividade pode realizada em dupla\nCenário 1: Cliente comprou passagem no site oficial durante uma campanha com 20% de bônus. A tarifa foi “Promo” e o CPF está associado ao LATAM Pass. Pergunta: O bônus será creditado? Quando? Algum risco de negação?\n\nCenário 2 : Cliente remarcou o voo para data fora do período da campanha. Pergunta: O bônus permanece? O que deve ser comunicado ao cliente?\nCenário 3:\nCompra feita via agência parceira que não participa da campanha, com cartão de terceiros. Pergunta: O bônus é aplicado? Se não, qual orientação correta?\nMicrosimulação de atendimento (5 min)\nO participante escreve uma resposta clara e empática para um cliente que pergunta:\nCritérios: clareza, prazos, condições, e orientação sobre acompanhamento.",
+                "detalhe": "- Instrutor vai apresentar 3 cenários e pedir a justificativa com base no arquivo do PIC, atividade pode realizada em dupla\nCenário 1: Cliente comprou passagem no site oficial durante uma campanha com 20% de bônus. A tarifa foi “Promo” e o CPF está associado ao LATAM Pass. Pergunta: O bônus será creditado? Quando? Algum risco de negação?\n\nCenário 2 : Cliente remarcou o voo para data fora do período da campanha. Pergunta: O bônus permanece? O que deve ser comunicado ao cliente?\nCenário 3:\nCompra feita via agência parceira que não participa da campanha, com cartão de terceiros. Pergunta: O bônus é aplicado? Se não, qual orientação correta?\nMicrosimulação de atendimento (5 min)\nO participante escreve uma resposta clara e empática para um cliente que pergunta:\nCritérios: clareza, prazos, condiç��es, e orientação sobre acompanhamento.",
                 "tiempo": "00:50:00",
                 "herramientas": [],
                 "iaPic": [
@@ -23863,7 +23952,8 @@
           "texture": "OCEAN"
         }
       ]
-    }
+    },
+    "rutaLiderEnabled": false
   },
   "ssc": {
     "monitoringUrl": "",
@@ -23871,12 +23961,310 @@
     "preparacaoLink": "",
     "suministros": [],
     "ingenieria": [],
-    "laboratorio": [],
+    "laboratorio": [
+      {
+        "label": "NUEVO_LINK",
+        "url": "https://sites.google.com/latam.com/elevar-el-conocimiento-siempre/untitled-page"
+      }
+    ],
     "operaciones": [],
-    "lastUpdate": "24/06/2026",
-    "rutaLider": [],
-    "onboarding": [],
+    "lastUpdate": "25/06/2026",
+    "rutaLider": [
+      {
+        "tipo": "imersao",
+        "label": "test",
+        "rows": [
+          {
+            "macroTema": "tes",
+            "dia": "",
+            "tema": "tes",
+            "detalhe": "tes",
+            "consejo": "",
+            "herramientas": [
+              {
+                "tipo": "🖼️ Slide",
+                "url": ""
+              }
+            ],
+            "iaPic": [],
+            "tiempo": ""
+          }
+        ],
+        "dbOjtLabel": "",
+        "dbOjtUrl": "",
+        "totalCh": "",
+        "ajusteRota": "",
+        "ajusteRotaUrlKon": "",
+        "ajusteRotaUrlAec": "",
+        "ajusteRotaCh": ""
+      },
+      {
+        "tipo": "mision1",
+        "label": "MISSÃO 1:tes",
+        "rows": [
+          {
+            "macroTema": "tes",
+            "dia": "",
+            "tema": "tes",
+            "detalhe": "tes",
+            "consejo": "",
+            "herramientas": [
+              {
+                "tipo": "🖼️ Slide",
+                "url": ""
+              }
+            ],
+            "iaPic": [],
+            "tiempo": ""
+          }
+        ],
+        "dbOjtLabel": "",
+        "dbOjtUrl": "",
+        "totalCh": "",
+        "ajusteRota": "",
+        "ajusteRotaUrlKon": "",
+        "ajusteRotaUrlAec": "",
+        "ajusteRotaCh": ""
+      },
+      {
+        "tipo": "mision1",
+        "label": "MISSÃO 2:tes",
+        "rows": [
+          {
+            "macroTema": "teste",
+            "dia": "",
+            "tema": "tes",
+            "detalhe": "tes",
+            "consejo": "",
+            "herramientas": [
+              {
+                "tipo": "🖼️ Slide",
+                "url": ""
+              }
+            ],
+            "iaPic": [],
+            "tiempo": ""
+          }
+        ],
+        "dbOjtLabel": "",
+        "dbOjtUrl": "",
+        "totalCh": "",
+        "ajusteRota": "",
+        "ajusteRotaUrlKon": "",
+        "ajusteRotaUrlAec": "",
+        "ajusteRotaCh": ""
+      }
+    ],
+    "onboarding": [
+      {
+        "label": "NAVE DE ONBOARDING 1",
+        "data": {
+          "secciones": [
+            {
+              "tipo": "mision1",
+              "label": "MISSÃO 1:",
+              "rows": [
+                {
+                  "macroTema": "__TEMP_99x0fw2ln",
+                  "dia": "",
+                  "tema": "",
+                  "detalhe": "",
+                  "consejo": "",
+                  "herramientas": [
+                    {
+                      "tipo": "🖼️ Slide",
+                      "url": ""
+                    }
+                  ],
+                  "iaPic": [],
+                  "tiempo": ""
+                }
+              ],
+              "dbOjtLabel": "",
+              "dbOjtUrl": "",
+              "totalCh": "",
+              "ajusteRota": "",
+              "ajusteRotaUrlKon": "",
+              "ajusteRotaUrlAec": "",
+              "ajusteRotaCh": ""
+            }
+          ]
+        }
+      }
+    ],
     "frontLineContent": [
+      {
+        "secciones": [
+          {
+            "tipo": "mision1",
+            "label": "MISSÃO 1:",
+            "rows": [
+              {
+                "macroTema": "Introdução ",
+                "dia": "",
+                "tema": "",
+                "detalhe": "",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": ""
+              },
+              {
+                "macroTema": "Introdução ",
+                "dia": "",
+                "tema": "Introdução ao Pós Venda I",
+                "detalhe": "",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [
+                  {
+                    "label": "PIC LINK",
+                    "url": ""
+                  }
+                ],
+                "tiempo": "0:05:00"
+              },
+              {
+                "macroTema": "Introdução ",
+                "dia": "",
+                "tema": "Política de modificação de bilhetes (Conceitos)",
+                "detalhe": "",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": "0:10:00"
+              },
+              {
+                "macroTema": "Introdução ",
+                "dia": "",
+                "tema": "",
+                "detalhe": "",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": ""
+              },
+              {
+                "macroTema": "__TEMP_n7vo4b1hl",
+                "dia": "",
+                "tema": "",
+                "detalhe": "",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": ""
+              },
+              {
+                "macroTema": "__TEMP_lm5czg8rp",
+                "dia": "",
+                "tema": "",
+                "detalhe": "",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": ""
+              }
+            ],
+            "dbOjtLabel": "",
+            "dbOjtUrl": "",
+            "totalCh": "",
+            "ajusteRota": "",
+            "ajusteRotaUrlKon": "",
+            "ajusteRotaUrlAec": "",
+            "ajusteRotaCh": ""
+          },
+          {
+            "tipo": "landing",
+            "label": "LANDING",
+            "rows": [
+              {
+                "macroTema": "__TEMP_anpe579p4",
+                "dia": "",
+                "tema": "",
+                "detalhe": "",
+                "consejo": "",
+                "herramientas": [
+                  {
+                    "tipo": "🖼️ Slide",
+                    "url": ""
+                  }
+                ],
+                "iaPic": [],
+                "tiempo": ""
+              }
+            ],
+            "dbOjtLabel": "",
+            "dbOjtUrl": "",
+            "totalCh": "",
+            "ajusteRota": "",
+            "ajusteRotaUrlKon": "",
+            "ajusteRotaUrlAec": "",
+            "ajusteRotaCh": ""
+          }
+        ],
+        "materiais": [
+          {
+            "label": "NUEVO LINK",
+            "url": "https://docs.google.com/spreadsheets/d/1QRryhvFeuR9MiQ365LCxUUbtNqIKgMrFiciIgyqomXk/edit?gid=202286037#gid=202286037"
+          },
+          {
+            "label": "NUEVO LINK",
+            "url": "https://docs.google.com/spreadsheets/d/1QRryhvFeuR9MiQ365LCxUUbtNqIKgMrFiciIgyqomXk/edit?gid=202286037#gid=202286037"
+          },
+          {
+            "label": "NUEVO LINK",
+            "url": "https://docs.google.com/spreadsheets/d/1QRryhvFeuR9MiQ365LCxUUbtNqIKgMrFiciIgyqomXk/edit?gid=202286037#gid=202286037"
+          },
+          {
+            "label": "NUEVO LINK",
+            "url": "https://docs.google.com/spreadsheets/d/1QRryhvFeuR9MiQ365LCxUUbtNqIKgMrFiciIgyqomXk/edit?gid=202286037#gid=202286037"
+          }
+        ],
+        "evalKon": [
+          {
+            "label": "NUEVO LINK",
+            "url": "https://"
+          }
+        ],
+        "evalAec": [
+          {
+            "label": "NUEVO LINK",
+            "url": "https://"
+          }
+        ],
+        "evalMsg": "",
+        "evalTime": ""
+      },
       {
         "secciones": [],
         "materiais": [],
@@ -23884,7 +24272,8 @@
         "evalAec": [],
         "evalMsg": "",
         "evalTime": ""
-      }
+      },
+      []
     ],
     "soporteContent": [],
     "satelites": {

@@ -178,6 +178,26 @@ export const HyperProPlanetVisual = ({ color, index, texture = 'CRATERS', size =
                  filter: 'blur(2px)'
              }} />
           ))}
+
+          {/* Tech/Ship Capsule Texture */}
+          {texture === 'TECH' && (
+            <div style={{ position: 'absolute', inset: 0, opacity: 0.8, backgroundImage: `linear-gradient(45deg, transparent 48%, rgba(255, 215, 0, 0.4) 50%, transparent 52%), linear-gradient(-45deg, transparent 48%, rgba(104, 45, 136, 0.6) 50%, transparent 52%)`, backgroundSize: '20px 20px', zIndex: 1 }} />
+          )}
+
+          {/* New Elegant CAPSULE texture */}
+          {texture === 'CAPSULE' && (
+            <>
+              {/* Subtle tech grid */}
+              <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(255, 215, 0, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 215, 0, 0.1) 1px, transparent 1px)', backgroundSize: '15px 15px', borderRadius: '50%', zIndex: 1 }} />
+              
+              {/* Metallic/Purple arc panels */}
+              <div style={{ position: 'absolute', top: '10%', left: '10%', width: '80%', height: '80%', border: '2px solid rgba(104, 45, 136, 0.4)', borderRadius: '50%', borderTopColor: '#FFD700', borderBottomColor: '#FFD700', transform: 'rotate(45deg)', zIndex: 1 }} />
+              <div style={{ position: 'absolute', top: '20%', left: '20%', width: '60%', height: '60%', border: '1px dashed rgba(255, 215, 0, 0.5)', borderRadius: '50%', animation: 'hologramRotate 30s linear infinite', zIndex: 1 }} />
+              
+              {/* Inner glowing core */}
+              <div style={{ position: 'absolute', top: '40%', left: '40%', width: '20%', height: '20%', background: '#682D88', boxShadow: '0 0 20px #FFD700', borderRadius: '50%', opacity: 0.6, zIndex: 1 }} />
+            </>
+          )}
           
           <div style={{ position: 'relative', zIndex: 10 }}>{children}</div>
           

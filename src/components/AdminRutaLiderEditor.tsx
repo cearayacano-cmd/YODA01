@@ -43,7 +43,7 @@ const SmartTextarea = ({ value, onChange, ...props }: any) => {
   return <textarea value={val} onChange={e => { setVal(e.target.value); onChange(e); }} {...props} />;
 };
 
-export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, initialPlanet, title = "EDITOR", isOnboarding, onSave, hideSidebar }: any) => {
+export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, initialPlanet, title = "EDITOR", isOnboarding, onSave }: any) => {
   const stationName = typeof localStorage !== 'undefined' ? (localStorage.getItem('yoda_station') || 'BR') : 'BR';
   const [activePlanet, setActivePlanet] = useState(initialPlanet || 0);
   const [editingSecIdx, setEditingSecIdx] = useState<number | null>(null);
@@ -289,7 +289,6 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
 
   return (
     <div style={{ display: 'flex', height: '100vh', background: '#F8F7FF', fontFamily: '"Trebuchet MS", sans-serif' }}>
-      {!hideSidebar && (
       <div style={{ width: '280px', background: '#0F004F', borderRight: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', boxShadow: '10px 0 30px rgba(0,0,0,0.05)', zIndex: 50 }}>
         <div style={{ padding: '32px 24px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
           <button onClick={onBack} style={{ background: 'rgba(255,255,255,0.1)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.2)', padding: '12px 24px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s', width: '100%', justifyContent: 'center' }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#0F004F' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}><ArrowLeft size={16} /> VOLVER</button>
@@ -307,14 +306,10 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
           })}
         </div>
       </div>
-      )}
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <div style={{ padding: '20px 48px', background: '#0F004F', borderBottom: '4px solid #ED1650', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 8px 32px rgba(27,0,136,0.15)', zIndex: 40 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-            {hideSidebar && (
-              <button onClick={onBack} style={{ background: 'rgba(255,255,255,0.1)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.2)', padding: '12px 24px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px', fontWeight: 900, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s', marginRight: '8px' }} onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#0F004F' }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}><ArrowLeft size={16} /> VOLVER</button>
-            )}
             <div style={{ width: 44, height: 44, background: 'rgba(237,22,80,0.2)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1650' }}><Satellite size={24} /></div>
             <div>
                 <div style={{ fontSize: 10, fontWeight: 900, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 2 }}>{title} <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>-</span> <span style={{ background: stationName === 'BR' ? '#99CC33' : '#682D88', padding: '2px 6px', borderRadius: 4, color: '#fff' }}>{stationName} STATION</span></div>

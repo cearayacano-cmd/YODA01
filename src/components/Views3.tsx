@@ -387,122 +387,132 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack, isEs }: 
                        </div>
 
                        <div style={{ display: 'flex', flexDirection: 'column', gap: 15 }}>
-                           {(() => {
-                               const planetLabel = sectorData[selectedPlanetForModal]?.label;
-                               let hasProgress = false;
-                               if (typeof localStorage !== 'undefined' && planetLabel) {
-                                   for (let i = 0; i < localStorage.length; i++) {
-                                       const key = localStorage.key(i);
-                                       if (key && key.startsWith(`resolved_${planetLabel}_`) && localStorage.getItem(key) === 'true') {
-                                           hasProgress = true;
-                                           break;
-                                       }
-                                   }
-                               }
-                               return hasProgress ? (
-                                   <button 
-                                       onClick={() => {
-                                           localStorage.setItem('yoda_read_only_mode', 'false');
-                                           onNavigate('mission', sectorId, selectedPlanetForModal);
-                                       }}
-                                       style={{ background: 'rgba(27, 0, 136, 0.6)', border: '1px solid rgba(255,255,255,0.2)', padding: '15px 20px', borderRadius: 12, color: '#fff', display: 'flex', alignItems: 'center', gap: 15, cursor: 'pointer', transition: '0.3s cubic-bezier(0.4, 0, 0.2, 1)', textAlign: 'left', backdropFilter: 'blur(10px)' }}
-                                       onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.borderColor = '#fff'; e.currentTarget.style.transform = 'scale(1.02)'; }}
-                                       onMouseLeave={e => { e.currentTarget.style.background = 'rgba(27, 0, 136, 0.6)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; e.currentTarget.style.transform = 'scale(1)'; }}
-                                   >
-                                       <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 10px rgba(255,255,255,0.2)' }}><Rocket size={20} /></div>
-                                       <div>
-                                           <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px' }}>{isEs ? 'Continuar Expedición' : 'Continuar Expedição'}</div>
-                                           <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>{isEs ? 'El progreso se guardará en su partida actual.' : 'O progresso será salvo na sua partida atual.'}</div>
-                                       </div>
-                                   </button>
-                               ) : null;
-                           })()}
+                            {(() => {
+                                const planetLabel = sectorData[selectedPlanetForModal]?.label;
+                                let hasProgress = false;
+                                if (typeof localStorage !== 'undefined' && planetLabel) {
+                                    for (let i = 0; i < localStorage.length; i++) {
+                                        const key = localStorage.key(i);
+                                        if (key && key.startsWith(`resolved_${planetLabel}_`) && localStorage.getItem(key) === 'true') {
+                                            hasProgress = true;
+                                            break;
+                                        }
+                                    }
+                                }
 
-                           <button 
-                               onClick={() => setShowNewGameConfirm(true)}
-                               style={{ background: 'rgba(237, 22, 80, 0.1)', border: '1px solid rgba(237, 22, 80, 0.4)', padding: '15px 20px', borderRadius: 12, color: '#fff', display: 'flex', alignItems: 'center', gap: 15, cursor: 'pointer', transition: '0.3s cubic-bezier(0.4, 0, 0.2, 1)', textAlign: 'left', backdropFilter: 'blur(10px)' }}
-                               onMouseEnter={e => { e.currentTarget.style.background = 'rgba(237, 22, 80, 0.25)'; e.currentTarget.style.borderColor = '#ED1650'; e.currentTarget.style.transform = 'scale(1.02)'; }}
-                               onMouseLeave={e => { e.currentTarget.style.background = 'rgba(237, 22, 80, 0.1)'; e.currentTarget.style.borderColor = 'rgba(237, 22, 80, 0.4)'; e.currentTarget.style.transform = 'scale(1)'; }}
-                           >
-                               <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(237, 22, 80, 0.2)', color: '#ED1650', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 10px rgba(237, 22, 80, 0.2)' }}><Star size={20} /></div>
-                               <div>
-                                   <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', color: '#FF4D79' }}>{isEs ? 'Nueva Partida' : 'Nova Partida'}</div>
-                                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>{isEs ? 'Inicie desde cero con un nuevo código.' : 'Inicie do zero com um novo código.'}</div>
-                               </div>
-                           </button>
-
-                           <button 
-                               onClick={() => {
-                                   localStorage.setItem('yoda_read_only_mode', 'true');
-                                   onNavigate('mission', sectorId, selectedPlanetForModal);
-                               }}
-                               style={{ background: 'rgba(0, 214, 204, 0.05)', border: '1px solid rgba(0, 214, 204, 0.3)', padding: '15px 20px', borderRadius: 12, color: '#fff', display: 'flex', alignItems: 'center', gap: 15, cursor: 'pointer', transition: '0.3s cubic-bezier(0.4, 0, 0.2, 1)', textAlign: 'left', backdropFilter: 'blur(10px)' }}
-                               onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0, 214, 204, 0.15)'; e.currentTarget.style.borderColor = '#00D6CC'; e.currentTarget.style.transform = 'scale(1.02)'; }}
-                               onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0, 214, 204, 0.05)'; e.currentTarget.style.borderColor = 'rgba(0, 214, 204, 0.3)'; e.currentTarget.style.transform = 'scale(1)'; }}
-                           >
-                               <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(0, 214, 204, 0.1)', color: '#00D6CC', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 10px rgba(0, 214, 204, 0.2)' }}><Eye size={20} /></div>
-                               <div>
-                                   <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', color: '#00D6CC' }}>{isEs ? 'Modo Exploración' : 'Modo Exploração'}</div>
-                                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>{isEs ? 'Solo lectura. El progreso no será guardado.' : 'Apenas leitura. O progresso não será salvo.'}</div>
-                               </div>
-                           </button>
-                        </div>
-                        
-                        <AnimatePresence>
-                        {showNewGameConfirm && (
-                            <motion.div 
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.95 }}
-                                style={{ position: 'absolute', inset: 0, zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(15, 0, 79, 0.95)', backdropFilter: 'blur(10px)', borderRadius: 24, padding: 30 }}
-                            >
-                                <div style={{ textAlign: 'center' }}>
-                                    <div style={{ display: 'inline-flex', padding: 15, borderRadius: '50%', background: 'rgba(237, 22, 80, 0.1)', marginBottom: 20, boxShadow: 'inset 0 0 20px rgba(237, 22, 80, 0.2)' }}>
-                                        <Star size={40} color="#ED1650" />
-                                    </div>
-                                    <div style={{ fontSize: 22, fontWeight: 900, color: '#fff', letterSpacing: '2px', textShadow: '0 4px 10px rgba(0,0,0,0.5)', marginBottom: 10 }}>{isEs ? '¿INICIAR NUEVA PARTIDA?' : 'INICIAR NOVA PARTIDA?'}</div>
-                                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', marginBottom: 40, maxWidth: 300, margin: '0 auto 40px', lineHeight: 1.5 }}>{isEs ? <>Esto creará una clase en blanco y <strong style={{color:'#ED1650'}}>borrará todo el progreso actual</strong> de este equipo en el navegador.</> : <>Isso criará uma classe em branco e <strong style={{color:'#ED1650'}}>apagará todo o progresso atual</strong> desta equipe no navegador.</>}</div>
+                                const startNewGame = () => {
+                                    const newPartida = 'MISION-' + Math.random().toString(36).substring(2, 6).toUpperCase();
+                                    localStorage.setItem('yoda_active_partida', newPartida);
                                     
-                                    <div style={{ display: 'flex', gap: 15, justifyContent: 'center' }}>
-                                        <button 
-                                            onClick={() => setShowNewGameConfirm(false)}
-                                            style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', padding: '12px 25px', borderRadius: 12, color: '#fff', fontSize: 12, fontWeight: 900, cursor: 'pointer', transition: '0.2s' }}
-                                            onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-                                            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                        >
-                                            CANCELAR
-                                        </button>
+                                    Object.keys(localStorage).forEach(key => {
+                                        if (key.startsWith('resolved_') || key.startsWith('congrats_shown_')) {
+                                            localStorage.removeItem(key);
+                                        }
+                                    });
+
+                                    const savedLogs = localStorage.getItem('yoda_activity_logs');
+                                    let logs = savedLogs ? JSON.parse(savedLogs) : [];
+                                    logs = [{ time: new Date().toISOString(), user: localStorage.getItem('yoda_active_user') || 'carlose.araya@latam.com', action: 'NUEVA_PARTIDA', details: `Partida Generada: ${newPartida}`, partidaId: newPartida }, ...logs].slice(0, 1000);
+                                    localStorage.setItem('yoda_activity_logs', JSON.stringify(logs));
+
+                                    localStorage.setItem('yoda_read_only_mode', 'false');
+                                    setShowNewGameConfirm(false);
+                                    onNavigate('mission', sectorId, selectedPlanetForModal);
+                                };
+
+                                return (
+                                    <>
+                                        {hasProgress && (
+                                            <button 
+                                                onClick={() => {
+                                                    localStorage.setItem('yoda_read_only_mode', 'false');
+                                                    onNavigate('mission', sectorId, selectedPlanetForModal);
+                                                }}
+                                                style={{ background: 'rgba(27, 0, 136, 0.6)', border: '1px solid rgba(255,255,255,0.2)', padding: '15px 20px', borderRadius: 12, color: '#fff', display: 'flex', alignItems: 'center', gap: 15, cursor: 'pointer', transition: '0.3s cubic-bezier(0.4, 0, 0.2, 1)', textAlign: 'left', backdropFilter: 'blur(10px)' }}
+                                                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.borderColor = '#fff'; e.currentTarget.style.transform = 'scale(1.02)'; }}
+                                                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(27, 0, 136, 0.6)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; e.currentTarget.style.transform = 'scale(1)'; }}
+                                            >
+                                                <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 10px rgba(255,255,255,0.2)' }}><Rocket size={20} /></div>
+                                                <div>
+                                                    <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px' }}>{isEs ? 'Continuar Expedición' : 'Continuar Expedição'}</div>
+                                                    <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>{isEs ? 'El progreso se guardará en su partida actual.' : 'O progresso será salvo na sua partida atual.'}</div>
+                                                </div>
+                                            </button>
+                                        )}
+
                                         <button 
                                             onClick={() => {
-                                                const newPartida = 'MISION-' + Math.random().toString(36).substring(2, 6).toUpperCase();
-                                                localStorage.setItem('yoda_active_partida', newPartida);
-                                                
-                                                Object.keys(localStorage).forEach(key => {
-                                                    if (key.startsWith('resolved_') || key.startsWith('congrats_shown_')) {
-                                                        localStorage.removeItem(key);
-                                                    }
-                                                });
+                                                if (hasProgress) setShowNewGameConfirm(true);
+                                                else startNewGame();
+                                            }}
+                                            style={{ background: 'rgba(237, 22, 80, 0.1)', border: '1px solid rgba(237, 22, 80, 0.4)', padding: '15px 20px', borderRadius: 12, color: '#fff', display: 'flex', alignItems: 'center', gap: 15, cursor: 'pointer', transition: '0.3s cubic-bezier(0.4, 0, 0.2, 1)', textAlign: 'left', backdropFilter: 'blur(10px)' }}
+                                            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(237, 22, 80, 0.25)'; e.currentTarget.style.borderColor = '#ED1650'; e.currentTarget.style.transform = 'scale(1.02)'; }}
+                                            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(237, 22, 80, 0.1)'; e.currentTarget.style.borderColor = 'rgba(237, 22, 80, 0.4)'; e.currentTarget.style.transform = 'scale(1)'; }}
+                                        >
+                                            <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(237, 22, 80, 0.2)', color: '#ED1650', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 10px rgba(237, 22, 80, 0.2)' }}><Star size={20} /></div>
+                                            <div>
+                                                <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', color: '#FF4D79' }}>{isEs ? 'Nueva Partida' : 'Nova Partida'}</div>
+                                                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>{isEs ? 'Inicie desde cero con un nuevo código.' : 'Inicie do zero com um novo código.'}</div>
+                                            </div>
+                                        </button>
 
-                                                const savedLogs = localStorage.getItem('yoda_activity_logs');
-                                                let logs = savedLogs ? JSON.parse(savedLogs) : [];
-                                                logs = [{ time: new Date().toISOString(), user: localStorage.getItem('yoda_active_user') || 'carlose.araya@latam.com', action: 'NUEVA_PARTIDA', details: `Partida Generada: ${newPartida}`, partidaId: newPartida }, ...logs].slice(0, 1000);
-                                                localStorage.setItem('yoda_activity_logs', JSON.stringify(logs));
-
-                                                localStorage.setItem('yoda_read_only_mode', 'false');
-                                                setShowNewGameConfirm(false);
+                                        <button 
+                                            onClick={() => {
+                                                localStorage.setItem('yoda_read_only_mode', 'true');
                                                 onNavigate('mission', sectorId, selectedPlanetForModal);
                                             }}
-                                            style={{ background: '#ED1650', border: 'none', padding: '12px 25px', borderRadius: 12, color: '#fff', fontSize: 12, fontWeight: 900, cursor: 'pointer', boxShadow: '0 5px 15px rgba(237, 22, 80, 0.4)', transition: '0.2s' }}
-                                            onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
-                                            onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+                                            style={{ background: 'rgba(0, 214, 204, 0.05)', border: '1px solid rgba(0, 214, 204, 0.3)', padding: '15px 20px', borderRadius: 12, color: '#fff', display: 'flex', alignItems: 'center', gap: 15, cursor: 'pointer', transition: '0.3s cubic-bezier(0.4, 0, 0.2, 1)', textAlign: 'left', backdropFilter: 'blur(10px)' }}
+                                            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0, 214, 204, 0.15)'; e.currentTarget.style.borderColor = '#00D6CC'; e.currentTarget.style.transform = 'scale(1.02)'; }}
+                                            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0, 214, 204, 0.05)'; e.currentTarget.style.borderColor = 'rgba(0, 214, 204, 0.3)'; e.currentTarget.style.transform = 'scale(1)'; }}
                                         >
-                                            {isEs ? 'SÍ, COMENZAR DESDE CERO' : 'SIM, COMEÇAR DO ZERO'}
+                                            <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(0, 214, 204, 0.1)', color: '#00D6CC', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 10px rgba(0, 214, 204, 0.2)' }}><Eye size={20} /></div>
+                                            <div>
+                                                <div style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', color: '#00D6CC' }}>{isEs ? 'Modo Exploración' : 'Modo Exploração'}</div>
+                                                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>{isEs ? 'Solo lectura. El progreso no será guardado.' : 'Apenas leitura. O progresso não será salvo.'}</div>
+                                            </div>
                                         </button>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        )}
-                        </AnimatePresence>
+
+                                        <AnimatePresence>
+                                        {showNewGameConfirm && (
+                                            <motion.div 
+                                                initial={{ opacity: 0, scale: 0.95 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                exit={{ opacity: 0, scale: 0.95 }}
+                                                style={{ position: 'absolute', inset: 0, zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(15, 0, 79, 0.95)', backdropFilter: 'blur(10px)', borderRadius: 24, padding: 30 }}
+                                            >
+                                                <div style={{ textAlign: 'center' }}>
+                                                    <div style={{ display: 'inline-flex', padding: 15, borderRadius: '50%', background: 'rgba(237, 22, 80, 0.1)', marginBottom: 20, boxShadow: 'inset 0 0 20px rgba(237, 22, 80, 0.2)' }}>
+                                                        <Star size={40} color="#ED1650" />
+                                                    </div>
+                                                    <div style={{ fontSize: 22, fontWeight: 900, color: '#fff', letterSpacing: '2px', textShadow: '0 4px 10px rgba(0,0,0,0.5)', marginBottom: 10 }}>{isEs ? '¿INICIAR NUEVA PARTIDA?' : 'INICIAR NOVA PARTIDA?'}</div>
+                                                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', marginBottom: 40, maxWidth: 300, margin: '0 auto 40px', lineHeight: 1.5 }}>{isEs ? <>Esto creará una clase en blanco y <strong style={{color:'#ED1650'}}>borrará todo el progreso actual</strong> de este equipo en el navegador.</> : <>Isso criará uma classe em branco e <strong style={{color:'#ED1650'}}>apagará todo o progresso atual</strong> desta equipe no navegador.</>}</div>
+                                                    
+                                                    <div style={{ display: 'flex', gap: 15, justifyContent: 'center' }}>
+                                                        <button 
+                                                            onClick={() => setShowNewGameConfirm(false)}
+                                                            style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', padding: '12px 25px', borderRadius: 12, color: '#fff', fontSize: 12, fontWeight: 900, cursor: 'pointer', transition: '0.2s' }}
+                                                            onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                                                            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                                                        >
+                                                            CANCELAR
+                                                        </button>
+                                                        <button 
+                                                            onClick={startNewGame}
+                                                            style={{ background: '#ED1650', border: 'none', padding: '12px 25px', borderRadius: 12, color: '#fff', fontSize: 12, fontWeight: 900, cursor: 'pointer', boxShadow: '0 5px 15px rgba(237, 22, 80, 0.4)', transition: '0.2s' }}
+                                                            onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+                                                            onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+                                                        >
+                                                            {isEs ? 'SÍ, COMENZAR DESDE CERO' : 'SIM, COMEÇAR DO ZERO'}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                        </AnimatePresence>
+                                    </>
+                                );
+                            })()}
+                        </div>
                         
                    </motion.div>
                </motion.div>

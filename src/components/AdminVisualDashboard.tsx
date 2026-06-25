@@ -76,6 +76,11 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
         countNodes(Array.isArray(planet) ? planet : (planet.secciones || []));
       });
     }
+    if (config.rutaLider) {
+      config.rutaLider.forEach((planet: any) => {
+        countNodes(Array.isArray(planet) ? planet : (planet.secciones || []));
+      });
+    }
     return { totalMissionsAvailable: count === 0 ? 1 : count, totalProgrammedMinutes: mins };
   }, [config]);
 
@@ -331,7 +336,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
               {/* Progress Bar */}
               <div style={{ marginBottom: 20 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <span style={{ fontSize: 11, fontWeight: 800, color: '#444', textTransform: 'uppercase' }}>Progreso Base</span>
+                  <span style={{ fontSize: 11, fontWeight: 800, color: '#444', textTransform: 'uppercase' }}>Progreso Ruta Guardián</span>
                   <span style={{ fontSize: 12, fontWeight: 900, color: progressColor }}>{progressPercentage}%</span>
                 </div>
                 <div style={{ height: 8, background: '#EEEEEE', borderRadius: 4, overflow: 'hidden' }}>

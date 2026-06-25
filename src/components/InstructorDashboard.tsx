@@ -180,8 +180,52 @@ export const InstructorDashboard = ({ logs, config, onBack, initialUser, isEmbed
   const userPartidasData = useMemo(() => {
     if (!selectedUser) return [];
     const userLogs = relevantLogs.filter((l: any) => l.user === selectedUser);
-    const partidasInfo = getPartidasInfo(userLogs, config);
-    return partidasInfo.sort((a, b) => new Date(b.lastActivity).getTime() - new Date(a.lastActivity).getTime());
+    let partidasInfo = getPartidasInfo(userLogs, config);
+    
+    // Merge Ruta Lider missions from getMissionTracking
+    const missions = getMissionTracking().filter((m: any) => m.email === selectedUser);
+    const groupedMissions: Record<string, any[]> = {};
+    missions.forEach((m: any) => {
+        if (!groupedMissions[m.missao]) groupedMissions[m.missao] = [];
+        groupedMissions[m.missao].push(m);
+    });
+    
+    Object.keys(groupedMissions).forEach(missaoName => {
+        const mList = groupedMissions[missaoName];
+        const section = (config.rutaLider || []).find((s: any) => s.label === missaoName || s.name === missaoName);
+        const totalNodes = section && section.rows ? section.rows.length : Math.max(mList.length, 1);
+        const completedNodes = mList.filter((m: any) => m.marcarComoFinalizado).length;
+        const isCompleted = totalNodes > 0 && completedNodes >= totalNodes;
+        
+        // Find latest activity
+        let lastActivity = new Date(0).toISOString();
+        let firstActivity = new Date().toISOString();
+        mList.forEach((m: any) => {
+            const timeA = m.tiempoAperturaRaw || new Date(0).getTime();
+            const timeV = m.marcarComoVistoRaw || new Date(0).getTime();
+            const timeF = m.marcarComoFinalizadoRaw || new Date(0).getTime();
+            const latest = Math.max(timeA, timeV, timeF);
+            const earliest = Math.min(timeA || Date.now(), timeV || Date.now(), timeF || Date.now());
+            if (latest > new Date(lastActivity).getTime()) lastActivity = new Date(latest).toISOString();
+            if (earliest < new Date(firstActivity).getTime()) firstActivity = new Date(earliest).toISOString();
+        });
+
+        partidasInfo.push({
+            id: mList[0]?.codigo || ('YODA-' + Math.floor(1000 + Math.random() * 9000)),
+            planetName: missaoName,
+            totalNodes,
+            completedNodes,
+            isCompleted,
+            lastActivity,
+            firstActivity,
+            logs: [],
+            planetStructure: [],
+            completedNodeTitles: mList.filter((m: any) => m.marcarComoFinalizado).map((m: any) => m.tema),
+            rawMissions: mList
+        });
+    });
+
+    return partidasInfo.sort((a: any, b: any) => new Date(b.lastActivity).getTime() - new Date(a.lastActivity).getTime());
   }, [relevantLogs, selectedUser, config]);
 
   // KPI & Gamification logic for the selected instructor
@@ -189,7 +233,7 @@ export const InstructorDashboard = ({ logs, config, onBack, initialUser, isEmbed
     if (!selectedUser) return null;
     
     // REAL Gamification Engine based on completed missions time
-    const missionData = getMissionTracking().filter(m => m.instructor === selectedUser);
+    const missionData = getMissionTracking().filter(m => m.email === selectedUser);
     let totalMinutes = 0;
     
     const parseTime = (tStr: string) => {
@@ -256,9 +300,27 @@ export const InstructorDashboard = ({ logs, config, onBack, initialUser, isEmbed
       const ingenieria = uLogs.filter((l: any) => l.action === 'NAVIGATE' && l.details === 'Navegación a: ingenieria').length;
 
       const pInfo = getPartidasInfo(uLogs, config);
-      const partidasGeneradas = pInfo.length;
-      const partidasCompletadas = pInfo.filter(p => p.isCompleted).length;
-      const isDictando = pInfo.some(p => !p.isCompleted && p.totalNodes > 0);
+      let partidasGeneradas = pInfo.length;
+      let partidasCompletadas = pInfo.filter(p => p.isCompleted).length;
+      let isDictando = pInfo.some(p => !p.isCompleted && p.totalNodes > 0);
+      
+      // Also add Lider missions
+      const uMissions = getMissionTracking().filter((m: any) => m.email === u);
+      const groupedMissions: Record<string, any[]> = {};
+      uMissions.forEach((m: any) => {
+          if (!groupedMissions[m.missao]) groupedMissions[m.missao] = [];
+          groupedMissions[m.missao].push(m);
+      });
+      partidasGeneradas += Object.keys(groupedMissions).length;
+      Object.keys(groupedMissions).forEach(missaoName => {
+          const mList = groupedMissions[missaoName];
+          const completedNodes = mList.filter(m => m.marcarComoFinalizado).length;
+          if (completedNodes >= mList.length && mList.length > 0) {
+              partidasCompletadas++;
+          } else if (mList.length > 0) {
+              isDictando = true;
+          }
+      });
       
       const sortedLogs = [...uLogs].sort((a: any, b: any) => new Date(b.time).getTime() - new Date(a.time).getTime());
       const lastActivity = sortedLogs[0]?.time;
@@ -696,13 +758,14 @@ export const InstructorDashboard = ({ logs, config, onBack, initialUser, isEmbed
                   </thead>
                   <tbody>
                     {userPartidasData.map(partida => (
+                      <React.Fragment key={partida.id}>
                       <tr 
-                        key={partida.id}
-                        style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}
+                        onClick={() => setSelectedPartida(selectedPartida === partida.id ? null : partida.id)}
+                        style={{ borderBottom: '1px solid rgba(0,0,0,0.05)', cursor: 'pointer', background: selectedPartida === partida.id ? 'rgba(0,0,0,0.02)' : 'transparent', transition: 'background 0.2s' }}
                       >
                         <td style={{ padding: '16px 24px' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            {selectedPartida === partida.id && <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: highlightBrand }} />}
+                            {selectedPartida === partida.id ? <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: highlightBrand }} /> : <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'transparent' }} />}
                             <span style={{ fontFamily: 'monospace', fontSize: '14px', fontWeight: 700, color: primaryBrand }}>{partida.id}</span>
                           </div>
                         </td>
@@ -758,6 +821,37 @@ export const InstructorDashboard = ({ logs, config, onBack, initialUser, isEmbed
                           {new Date(partida.lastActivity).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}
                         </td>
                       </tr>
+                      {selectedPartida === partida.id && (
+                        <tr>
+                          <td colSpan={6} style={{ padding: 0 }}>
+                            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} style={{ background: '#F8FAFC', borderBottom: '1px solid rgba(0,0,0,0.05)', padding: '24px', overflow: 'hidden' }}>
+                              <div style={{ fontSize: '12px', fontWeight: 800, color: primaryBrand, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '16px' }}>Detalle de Actividades</div>
+                              {partida.rawMissions && partida.rawMissions.length > 0 ? (
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '12px' }}>
+                                  {partida.rawMissions.map((m: any, i: number) => {
+                                    const isDone = !!m.marcarComoFinalizado;
+                                    const isViewed = !!m.marcarComoVisto;
+                                    return (
+                                      <div key={i} style={{ padding: '12px', background: '#fff', borderRadius: '8px', border: '1px solid rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                        <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: isDone ? 'rgba(22, 163, 74, 0.1)' : isViewed ? 'rgba(245, 158, 11, 0.1)' : 'rgba(0,0,0,0.05)', color: isDone ? secondaryBrand : isViewed ? '#F59E0B' : '#9CA3AF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                          {isDone ? <CheckCircle size={16} /> : isViewed ? <Clock size={16} /> : <div style={{ width: 8, height: 8, borderRadius: 4, background: '#9CA3AF' }} />}
+                                        </div>
+                                        <div style={{ flex: 1, overflow: 'hidden' }}>
+                                          <div style={{ fontSize: '12px', fontWeight: 700, color: '#111827', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{m.tema}</div>
+                                          <div style={{ fontSize: '10px', color: '#6B7280', textTransform: 'uppercase', fontWeight: 600 }}>{isDone ? `Finalizado: ${m.marcarComoFinalizado}` : isViewed ? `Visto: ${m.marcarComoVisto}` : 'Pendiente'}</div>
+                                        </div>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              ) : (
+                                <div style={{ fontSize: '13px', color: '#6B7280' }}>Este tipo de partida agrupa nodos tradicionales de OJT. No hay submisiones rastreadas en el formato Gamificado para este módulo.</div>
+                              )}
+                            </motion.div>
+                          </td>
+                        </tr>
+                      )}
+                      </React.Fragment>
                     ))}
                   </tbody>
                 </table>

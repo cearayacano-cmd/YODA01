@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Wrench, BookOpen, Settings, Hexagon, Network, Microscope, Package, Box, Radar, Activity, Cpu, ArrowLeft, Zap, Target, Info, ExternalLink, X, CheckCircle2, Lightbulb, Rocket, Shield, Award, Star, GraduationCap, LayoutGrid, FileText, Lock } from 'lucide-react';
+import { PlanetContentView, MissionSectorMap, AnimatedIaraOverlay } from './Views6';
 import { BackBtn } from './Shared';
 import { updatePortalTracking } from '../lib/portalTracking';
 
@@ -30,7 +31,7 @@ const MapBackground = () => (
   <div style={{ 
     position: 'fixed', 
     inset: 0, 
-    background: 'radial-gradient(circle at center, #1B0088 0%, #0F004F 100%)', 
+    background: 'linear-gradient(135deg, #1E1A48 0%, #4D1B42 100%)', 
     zIndex: 0, 
     overflow: 'hidden' 
   }}>
@@ -63,35 +64,24 @@ const MapBackground = () => (
 );
 
 const HUD = ({ level, xp, totalXp, activePowers, onBack }: any) => (
-  <div style={{ position: 'sticky', top: 0, background: 'rgba(15, 0, 79, 0.95)', backdropFilter: 'blur(20px)', borderBottom: '2px solid #99CC33', padding: '14px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 100, boxShadow: '0 4px 30px rgba(0,0,0,0.3)' }}>
-    <BackBtn onClick={onBack} label="SAIR" />
+  <div style={{ position: 'relative', top: 0, background: 'transparent', padding: '24px 40px', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 100 }}>
+    <div style={{ position: 'fixed', left: 40, top: 24, zIndex: 200 }}>
+      <BackBtn onClick={onBack} label="SAIR" />
+    </div>
     
-    <div style={{ textAlign: 'center' }}>
-      <div style={{ fontSize: '8px', color: '#ED1650', letterSpacing: '4px', fontWeight: 900, textTransform: 'none', marginBottom: '2px' }}>Terminal de Exploração Estratégica</div>
+    <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '40px' }}>
+      <div style={{ fontSize: '10px', color: '#00D6CC', letterSpacing: '8px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '8px' }}>
+        Terminal de Exploração Estratégica
+      </div>
       <div style={{ 
-        fontSize: '28px', 
+        fontSize: '56px', 
         fontWeight: 900, 
-        letterSpacing: '2px', 
+        letterSpacing: '6px', 
         color: '#FFFFFF',
+        textTransform: 'uppercase',
         filter: 'drop-shadow(0 0 15px rgba(255,255,255,0.2))'
       }}>
         Rota do Lider Guardião
-      </div>
-    </div>
-
-    <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
-      <div style={{ border: '2.5px solid #99CC33', borderRadius: '8px', padding: '6px 16px', textAlign: 'center', minWidth: '80px', background: 'rgba(153, 204, 51, 0.05)' }}>
-        <div style={{ fontSize: '8px', color: '#99CC33', fontWeight: 900 }}>NIVEL</div>
-        <div style={{ fontSize: '22px', color: '#fff', fontWeight: 900 }}>{level}</div>
-      </div>
-      <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', color: 'rgba(255,255,255,0.6)', fontWeight: 800, marginBottom: '6px' }}>
-          <span>PROGRESSO DE COMPREENSÃO</span>
-          <span style={{ color: '#99CC33' }}>{xp} / {totalXp} XP</span>
-        </div>
-        <div style={{ width: '160px', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '10px', overflow: 'hidden' }}>
-          <div style={{ width: `${(xp / totalXp) * 100}%`, height: '100%', background: 'linear-gradient(90deg, #99CC33, #4257E8)', boxShadow: '0 0 10px #99CC33', transition: 'width 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }} />
-        </div>
       </div>
     </div>
   </div>
@@ -386,31 +376,31 @@ const PowerDiscoveryTerminal = ({ p, nodes, onBack, onComplete }: any) => {
 };
 
 export const RutaLiderView = ({ links, rutaData, onBack }: any) => {
-  const [completed, setCompleted] = useState(new Set());
+  const [completed, setCompleted] = useState<Set<string>>(new Set());
   const [selectedPower, setSelectedPower] = useState<any>(null);
+  const [tick, setTick] = useState(0);
+  const [showCongrats, setShowCongrats] = useState(false);
   
   // Dynamic Grouping Logic for the Map
-  const poderNames = [...new Set((rutaData || []).map((d: any) => d.poder))];
-  
-  const mapConfig = poderNames.map((name, idx) => {
-    const nodesInPower = (rutaData || []).filter((d: any) => d.poder === name);
-    // Fixed aesthetics by position to maintain WOW factor
+  const mapConfig = (rutaData || []).map((section: any, idx: number) => {
     const aesthetics = [
-      { color: '#ED1650', icon: <Zap size={40} /> },
-      { color: '#99CC33', icon: <Target size={40} /> },
-      { color: '#00D6CC', icon: <Shield size={40} /> },
-      { color: '#662D91', icon: <Award size={40} /> },
-      { color: '#1B0088', icon: <Star size={40} /> }
+      { color: '#ED1650', icon: 'Zap' },
+      { color: '#99CC33', icon: 'Target' },
+      { color: '#00D6CC', icon: 'Shield' },
+      { color: '#662D91', icon: 'Award' },
+      { color: '#1B0088', icon: 'Star' }
     ];
     const aesthetic = aesthetics[idx % aesthetics.length];
     
     return {
-      name: name,
+      name: section.label || 'MISIÓN',
+      label: section.label || 'MISIÓN',
       color: aesthetic.color,
       icon: aesthetic.icon,
-      nodos: nodesInPower.length,
-      time: nodesInPower[0]?.tiempo || 'N/A',
-      desc: nodesInPower[0]?.desc || 'Contenido del poder'
+      nodos: (section.rows || []).length,
+      time: section.rows?.[0]?.tiempo || 'N/A',
+      desc: section.rows?.[0]?.desc || 'Contenido de la misión',
+      rows: section.rows || []
     };
   });
 
@@ -420,8 +410,27 @@ export const RutaLiderView = ({ links, rutaData, onBack }: any) => {
     if(p) setSelectedPower(p);
   };
 
-  const markCompleted = (name: string) => {
-    setCompleted(prev => new Set([...prev, name]));
+  useEffect(() => {
+    const newCompleted = new Set<string>();
+    mapConfig.forEach(poder => {
+      const rows = poder.rows || [];
+      if (rows.length > 0 && rows.every((r:any, i:number) => localStorage.getItem(`resolved_${poder.name}_${r.tema}_${i}`) === 'true')) {
+          newCompleted.add(poder.name);
+      }
+    });
+    setCompleted(newCompleted);
+
+    if (newCompleted.size === mapConfig.length && mapConfig.length > 0) {
+        const congratsKey = `congrats_shown_RUTA_LIDER`;
+        if (localStorage.getItem(congratsKey) !== 'true') {
+            setTimeout(() => setShowCongrats(true), 1000);
+            localStorage.setItem(congratsKey, 'true');
+        }
+    }
+  }, [tick, mapConfig.length]);
+
+  const handleTrackEvent = (type: string, payload: string) => {
+    setTick(t => t + 1);
   };
 
   const xp = [...completed].reduce((acc, name) => {
@@ -438,81 +447,124 @@ export const RutaLiderView = ({ links, rutaData, onBack }: any) => {
       <HUD level={level} xp={xp} totalXp={totalXp} activePowers={completed.size} onBack={onBack} />
       
       <div style={{ position: 'relative', paddingTop: '40px', paddingBottom: '100px', overflowY: 'auto', overflowX: 'hidden' }}>
-        {/* Banner Pill */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '60px' }}>
-          <div style={{ 
-            background: 'rgba(3, 5, 15, 0.6)', backdropFilter: 'blur(10px)', border: '1px solid #99CC33', borderRadius: '30px', padding: '10px 32px',
-            fontSize: '11px', fontWeight: 900, color: '#99CC33', letterSpacing: '2px', boxShadow: '0 0 20px rgba(153, 204, 51, 0.2)'
-          }}>
-            🗺️ Escolha a sua rota - Todos as missões disponíveis ✨
-          </div>
-        </div>
+
 
         {/* The Map */}
-        <div style={{ position: 'relative', maxWidth: '1400px', margin: '0 auto' }}>
-          {/* Path SVG */}
-          <svg 
-            viewBox={`0 0 1000 ${mapConfig.length * 320}`}
-            preserveAspectRatio="none"
-            style={{ position: 'absolute', top: '50px', left: 0, width: '100%', height: `${mapConfig.length * 320}px`, pointerEvents: 'none', zIndex: 1 }}
-          >
-            <defs>
-              {mapConfig.map((p, i) => (
-                i < mapConfig.length - 1 && (
-                  <linearGradient key={`grad-${i}`} id={`grad-${i}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor={p.color} />
-                    <stop offset="100%" stopColor={mapConfig[i+1].color} />
-                  </linearGradient>
-                )
-              ))}
-              <filter id="pathGlow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="5" result="blur" />
-                <feComposite in="SourceGraphic" in2="blur" operator="over" />
-              </filter>
-            </defs>
-            
-            {/* Segments */}
-            {mapConfig.map((p, i) => {
-              if (i === mapConfig.length - 1) return null;
-              const y1 = i * 320 + 160; 
-              const y2 = (i + 1) * 320 + 160;
-              const isP1Left = i % 2 === 0;
-              
-              // Coordinates relative to 1000px viewBox width
-              const startX = isP1Left ? 200 : 800;
-              const endX = isP1Left ? 800 : 200;
-              const cpX1 = isP1Left ? 900 : 100;
-              const cpX2 = isP1Left ? 900 : 100;
-              
-              const d = `M ${startX} ${y1} C ${cpX1} ${y1}, ${cpX2} ${y2}, ${endX} ${y2}`;
-              
-              return (
-                <motion.path 
-                    key={`path-${i}`} d={d} stroke={`url(#grad-${i})`} strokeWidth="8" fill="none" 
-                    strokeDasharray="20 20" filter="url(#pathGlow)" 
-                    animate={{ strokeDashoffset: [100, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-                />
-              );
-            })}
-          </svg>
-
-          {/* Node Components */}
-          {mapConfig.map((poder, i) => (
-            <PowerNode key={poder.name} p={poder} index={i} isCompleted={completed.has(poder.name)} onOpen={handleOpenPower} />
-          ))}
+        <div style={{ position: 'relative', maxWidth: '1400px', margin: '0 auto', zIndex: 10 }}>
+          <MissionSectorMap 
+            secciones={mapConfig.map((p: any) => ({
+                nombre: p.name,
+                label: p.name,
+                color: p.color,
+                icon: p.icon,
+                rows: p.rows && p.rows.length > 0 ? p.rows : [{ detalhe: p.desc, ch: p.time }]
+            }))}
+            planetColor="#3B82F6"
+            onSelectSection={(idx: number) => handleOpenPower(mapConfig[idx].name)}
+            isFirstPlanet={false}
+            texture="CRATERS"
+            tick={tick}
+            planetLabel="RUTA DEL LÍDER"
+          />
         </div>
       </div>
 
       <AnimatePresence>
         {selectedPower && (
-          <PowerDiscoveryTerminal 
-            p={selectedPower} 
-            nodes={(rutaData || []).filter((r: any) => r.poder === selectedPower.name)}
-            onBack={() => setSelectedPower(null)}
-            onComplete={() => markCompleted(selectedPower.name)}
-          />
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            exit={{ opacity: 0, y: 50 }}
+            style={{ position: 'absolute', inset: 0, zIndex: 100, background: '#040114', overflowY: 'auto' }}
+          >
+            <PlanetContentView 
+              planetIdx={mapConfig.findIndex(m => m.name === selectedPower.name)}
+              data={{ secciones: mapConfig }}
+              planetMeta={{
+                color: selectedPower.color,
+                texture: 'CRATERS',
+                onboardingIdx: null
+              }}
+              planetLabel={selectedPower.name}
+              sectorLabel="Módulo de Aprendizaje"
+              initialViewMode="detail"
+              onBack={() => setSelectedPower(null)}
+              onTrackEvent={handleTrackEvent}
+              disableCongrats={true}
+              forceSingleSection={selectedPower.name}
+            />
+          </motion.div>
         )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+          {showCongrats && (
+              <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  style={{ 
+                      position: 'fixed', inset: 0, zIndex: 20000, 
+                      background: '#000',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center'
+                  }}
+              >
+                  <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 30% 50%, rgba(27,0,136,0.15) 0%, transparent 60%)', pointerEvents: 'none' }} />
+                  
+                  <div style={{ 
+                      width: '100%', maxWidth: '1400px', display: 'flex', alignItems: 'center', gap: 80, padding: '0 80px',
+                      position: 'relative', zIndex: 10
+                  }}>
+                      <motion.div 
+                          initial={{ opacity: 0, x: -50 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.3 }}
+                          style={{ flex: 1, display: 'flex', justifyContent: 'center' }}
+                      >
+                          <div style={{ position: 'relative', width: '100%', maxWidth: '420px' }}>
+                              <div style={{ position: 'absolute', inset: -60, borderRadius: '50%', background: `radial-gradient(circle, #3B82F611 0%, transparent 70%)`, filter: 'blur(50px)' }} />
+                              <AnimatedIaraOverlay />
+                              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03))', backgroundSize: '100% 4px, 3px 100%', pointerEvents: 'none' }} />
+                          </div>
+                      </motion.div>
+
+                      <motion.div 
+                          initial={{ opacity: 0, x: 50 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.5 }}
+                          style={{ flex: 1, textAlign: 'left' }}
+                      >
+                          <div style={{ 
+                              display: 'inline-block', padding: '6px 16px', background: 'rgba(153, 204, 51, 0.1)', 
+                              border: '1px solid rgba(153, 204, 51, 0.3)', borderRadius: 100,
+                              color: '#99CC33', fontSize: 12, fontWeight: 900, letterSpacing: '2px', marginBottom: 24, textTransform: 'uppercase'
+                          }}>
+                              RUTA DEL LÍDER COMPLETADA
+                          </div>
+                          
+                          <div style={{ fontSize: 64, fontWeight: 900, color: '#fff', lineHeight: 1, marginBottom: 24, letterSpacing: '-2px', textTransform: 'uppercase' }}>
+                              EXPEDICIÓN<br/>CONCLUIDA!
+                          </div>
+                          
+                          <div style={{ fontSize: 18, color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, marginBottom: 40, maxWidth: 500 }}>
+                              Excelente trabajo. Has dominado todas las misiones de la Ruta del Líder.
+                          </div>
+
+                          <button 
+                              onClick={() => setShowCongrats(false)}
+                              style={{ 
+                                  background: '#1B0088', color: '#fff', border: 'none', padding: '16px 40px',
+                                  borderRadius: 12, fontSize: 14, fontWeight: 900, letterSpacing: '1px', textTransform: 'uppercase',
+                                  cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 12,
+                                  boxShadow: '0 10px 30px rgba(27, 0, 136, 0.3)'
+                              }}
+                          >
+                              <ArrowLeft size={18} /> CONTINUAR
+                          </button>
+                      </motion.div>
+                  </div>
+              </motion.div>
+          )}
       </AnimatePresence>
     </div>
   );
@@ -988,14 +1040,52 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
   const themeColor = '#99CC33';
   const heroIcon = (
     <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <motion.div animate={{ y: [0, -5, 0], opacity: [0.8, 1, 0.8] }} transition={{ duration: 3, repeat: Infinity }}>
+      <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
         <Microscope size={48} color={themeColor} strokeWidth={1.5} style={{ filter: `drop-shadow(0 0 12px ${themeColor})` }} />
       </motion.div>
-      <motion.div animate={{ scale: [0.9, 1.1, 0.9] }} transition={{ duration: 2, repeat: Infinity }}>
-        <Activity size={20} color="#ffffff" style={{ position: 'absolute', bottom: 5, right: 5, filter: 'drop-shadow(0 0 6px #ffffff)' }} />
-      </motion.div>
+      <Star size={20} color="#ffffff" style={{ position: 'absolute', bottom: 10, right: 10, filter: 'drop-shadow(0 0 5px #ffffff)' }} />
     </div>
   );
+
+  const progress = React.useMemo(() => {
+    let totalNodes = 0;
+    let completedNodes = 0;
+    
+    if (rutaData && rutaData.length > 0) {
+      const isNested = !!rutaData[0].label;
+      if (isNested) {
+        rutaData.forEach((poder: any) => {
+          (poder.rows || []).forEach((r: any, i: number) => {
+            totalNodes++;
+            if (localStorage.getItem(`resolved_${poder.label}_${r.tema}_${i}`) === 'true') {
+              completedNodes++;
+            }
+          });
+        });
+      } else {
+        const poderNames = [...new Set(rutaData.map((d: any) => d.poder))];
+        poderNames.forEach((name) => {
+          const nodes = rutaData.filter((d: any) => d.poder === name);
+          nodes.forEach((r: any, i: number) => {
+            totalNodes++;
+            if (localStorage.getItem(`resolved_${name}_${r.tema}_${i}`) === 'true') {
+              completedNodes++;
+            }
+          });
+        });
+      }
+    }
+    return { total: totalNodes, completed: completedNodes };
+  }, [rutaData]);
+
+  let btnText = isEs ? 'NUEVA MISIÓN' : 'NOVA MISSÃO';
+  if (progress.total > 0 && progress.completed === progress.total) {
+    btnText = isEs ? 'VER MAPA' : 'VER MAPA';
+  } else if (progress.completed > 0) {
+    btnText = isEs ? 'CONTINUAR' : 'CONTINUAR';
+  }
+
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   return (
     <TechBaseView
@@ -1017,7 +1107,87 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
       sideDecalRight="DATOS"
       isEs={isEs}
     >
-      {rutaData && rutaData.length > 0 && (
+      <AnimatePresence>
+        {showResetConfirm && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(10px)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center'
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              style={{
+                background: '#0F004F', border: `2px solid ${themeColor}`, borderRadius: 24, padding: 40,
+                maxWidth: 500, width: '90%', textAlign: 'center', boxShadow: `0 20px 60px rgba(0,0,0,0.5)`,
+                position: 'relative', overflow: 'hidden'
+              }}
+            >
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: themeColor }} />
+              <div style={{ marginBottom: 24, display: 'flex', justifyContent: 'center' }}>
+                <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'rgba(0, 214, 204, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${themeColor}` }}>
+                  <Zap size={40} color={themeColor} />
+                </div>
+              </div>
+              <div style={{ fontSize: 24, fontWeight: 900, color: '#fff', marginBottom: 12, letterSpacing: '1px' }}>
+                {isEs ? '¡ATENCIÓN GUARDIÁN!' : 'ATENÇÃO GUARDIÃO!'}
+              </div>
+              <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', marginBottom: 32, lineHeight: 1.6 }}>
+                {isEs 
+                  ? 'Estás a punto de iniciar una nueva partida. Todo tu progreso anterior será borrado de los registros y tendrás que iniciar desde cero. ¿Estás listo para esta misión?' 
+                  : 'Você está prestes a iniciar um novo jogo. Todo o seu progresso anterior será apagado dos registros e você terá que começar do zero. Você está pronto para esta missão?'}
+              </div>
+              
+              <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
+                <button
+                  onClick={() => setShowResetConfirm(false)}
+                  style={{
+                    padding: '14px 28px', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)',
+                    borderRadius: 12, color: '#fff', fontSize: 13, fontWeight: 900, letterSpacing: '1px', cursor: 'pointer', flex: 1
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                >
+                  {isEs ? 'CANCELAR' : 'CANCELAR'}
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (rutaData) {
+                        rutaData.forEach((section: any) => {
+                            (section.rows || []).forEach((r:any, i:number) => {
+                                localStorage.removeItem(`resolved_MISIÓN_${r.tema}_${i}`);
+                                localStorage.removeItem(`resolved_${section.label || 'MISIÓN'}_${r.tema}_${i}`);
+                                localStorage.removeItem(`resolved_${section.name || 'MISIÓN'}_${r.tema}_${i}`);
+                            });
+                        });
+                    }
+                    updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'PROGRAMA DE FORMAÇÃO - CAPA LIDERANÇA', 'NUEVA PARTIDA', 'CLICK');
+                    setShowResetConfirm(false);
+                    onNavigateRuta();
+                  }}
+                  style={{
+                    padding: '14px 28px', background: themeColor, border: `1px solid ${themeColor}`,
+                    borderRadius: 12, color: '#0F004F', fontSize: 13, fontWeight: 900, letterSpacing: '1px', cursor: 'pointer', flex: 1,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.filter = 'brightness(1.1)'}
+                  onMouseLeave={e => e.currentTarget.style.filter = 'brightness(1)'}
+                >
+                  <Rocket size={16} /> {isEs ? 'SÍ, REINICIAR' : 'SIM, REINICIAR'}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {rutaData && rutaData.length > 0 && config?.rutaLiderEnabled !== false && (
         <motion.div
           whileHover={{ x: 10, background: '#2500A5' }}
           style={{ 
@@ -1028,7 +1198,7 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
             alignItems: 'center', 
             gap: 24,
             padding: '24px 32px',
-            cursor: 'pointer',
+            cursor: 'default', // Removed pointer from parent
             background: '#1B0088',
             borderLeft: `6px solid ${themeColor}`,
             borderRight: '1px solid rgba(255,255,255,0.1)',
@@ -1038,7 +1208,6 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
             borderRadius: '0 12px 12px 0',
             marginBottom: 32
           }} 
-          onClick={onNavigateRuta}
         >
           <div style={{
             width: 84, height: 84,
@@ -1074,21 +1243,77 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
           <div style={{ flex: 1, zIndex: 2 }}>
             <div style={{ fontSize: 10, color: themeColor, letterSpacing: '0.2em', fontWeight: 900, marginBottom: 6 }}>{isEs ? 'PROGRAMA FORMATIVO · CAPA LIDERAZGO' : 'PROGRAMA FORMATIVO · CAPA LIDERANÇA'}</div>
             <div style={{ fontSize: 24, fontWeight: 900, letterSpacing: '0.02em', color: '#ffffff', marginBottom: 6 }}>{isEs ? 'Programa de Formación - Capa Liderazgo' : 'Programa de Formação - Capa Liderança'}</div>
+            {progress.total > 0 && progress.completed > 0 && progress.completed < progress.total && (
+                <div style={{ marginTop: 12, display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <div style={{ flex: 1, height: 4, background: 'rgba(255,255,255,0.2)', borderRadius: 2, overflow: 'hidden' }}>
+                    <div style={{ width: `${(progress.completed / progress.total) * 100}%`, height: '100%', background: themeColor, borderRadius: 2 }} />
+                  </div>
+                  <div style={{ fontSize: 10, fontWeight: 900, color: themeColor }}>{progress.completed}/{progress.total}</div>
+                </div>
+            )}
           </div>
 
-          <div style={{
-            position: 'relative',
-            padding: '12px 24px',
-            background: 'transparent',
-            border: `2px solid ${themeColor}`,
-            borderRadius: '6px',
-            color: themeColor,
-            fontSize: 12,
-            fontWeight: 900,
-            zIndex: 2,
-            letterSpacing: '1px'
-          }}>
-            ABRIR MAPA
+          <div style={{ display: 'flex', gap: 12, zIndex: 2 }}>
+            {btnText === 'CONTINUAR' ? (
+               <>
+                 <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={(e) => { 
+                    e.stopPropagation(); 
+                    setShowResetConfirm(true);
+                 }} style={{
+                    padding: '14px 24px',
+                    background: 'rgba(255,255,255,0.1)',
+                    border: `1px solid rgba(255,255,255,0.2)`,
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontSize: 12,
+                    fontWeight: 900,
+                    letterSpacing: '1px',
+                    cursor: 'pointer',
+                    display: 'flex', alignItems: 'center', gap: 8
+                 }}>
+                    <Zap size={16} /> {isEs ? 'NUEVA PARTIDA' : 'NOVA PARTIDA'}
+                 </motion.button>
+                 <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={(e) => {
+                    e.stopPropagation();
+                    updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'PROGRAMA DE FORMAÇÃO - CAPA LIDERANÇA', 'CONTINUAR PARTIDA', 'CLICK');
+                    onNavigateRuta();
+                 }} style={{
+                    padding: '14px 32px',
+                    background: themeColor,
+                    border: `none`,
+                    borderRadius: '8px',
+                    color: '#0F004F',
+                    fontSize: 12,
+                    fontWeight: 900,
+                    letterSpacing: '1px',
+                    cursor: 'pointer',
+                    display: 'flex', alignItems: 'center', gap: 8,
+                    boxShadow: `0 0 20px ${themeColor}66`
+                 }}>
+                    <Rocket size={16} /> {btnText}
+                 </motion.button>
+               </>
+            ) : (
+               <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={(e) => {
+                  e.stopPropagation();
+                  updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'PROGRAMA DE FORMAÇÃO - CAPA LIDERANÇA', btnText === 'VER MAPA' ? 'VER MAPA' : 'NUEVA PARTIDA', 'CLICK');
+                  onNavigateRuta();
+               }} style={{
+                  padding: '14px 32px',
+                  background: progress.completed === progress.total ? '#99CC33' : themeColor,
+                  border: `none`,
+                  borderRadius: '8px',
+                  color: '#0F004F',
+                  fontSize: 12,
+                  fontWeight: 900,
+                  letterSpacing: '1px',
+                  cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', gap: 8,
+                  boxShadow: `0 0 20px ${progress.completed === progress.total ? '#99CC3366' : `${themeColor}66`}`
+               }}>
+                 <Rocket size={16} /> {btnText}
+               </motion.button>
+            )}
           </div>
         </motion.div>
       )}

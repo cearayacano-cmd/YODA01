@@ -464,17 +464,37 @@ export const AdminCenter = ({ config, setConfig, onBack, adminStation, onExplora
                             <div style={{fontSize:11, color:'#64748b'}}>Gestão de aprendizagem</div>
                           </div>
                         </div>
-                        <button 
-                          onClick={()=>onRutaLider(activeStation)} 
-                          style={{
-                            background:'#0F004F', color:'#ffffff', border:'none', 
-                            padding:'10px 20px', cursor:'pointer', fontSize:12, fontWeight:800, 
-                            borderRadius:8, display: 'flex', alignItems: 'center', gap: 8,
-                            boxShadow: '0 4px 12px rgba(27,0,136,0.2)'
-                          }}
-                        >
-                          ABRIR CONFIG <ArrowUpRight size={16} />
-                        </button>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                          <div 
+                            onClick={() => updateF('rutaLiderEnabled', !(tempConfig[sk] || tempConfig.br || {}).rutaLiderEnabled)}
+                            style={{
+                              width: 44, height: 24, borderRadius: 12, 
+                              background: (tempConfig[sk] || tempConfig.br || {}).rutaLiderEnabled !== false ? '#99CC33' : '#E2E8F0',
+                              cursor: 'pointer', position: 'relative',
+                              transition: 'all 0.3s ease',
+                              boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)'
+                            }}
+                          >
+                            <div style={{
+                              width: 20, height: 20, borderRadius: '50%', background: '#FFF',
+                              position: 'absolute', top: 2, left: (tempConfig[sk] || tempConfig.br || {}).rutaLiderEnabled !== false ? 22 : 2,
+                              transition: 'all 0.3s ease',
+                              boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
+                            }} />
+                          </div>
+                          
+                          <button 
+                            onClick={()=>onRutaLider(activeStation)} 
+                            style={{
+                              background:'#0F004F', color:'#ffffff', border:'none', 
+                              padding:'10px 20px', cursor:'pointer', fontSize:12, fontWeight:800, 
+                              borderRadius:8, display: 'flex', alignItems: 'center', gap: 8,
+                              boxShadow: '0 4px 12px rgba(27,0,136,0.2)'
+                            }}
+                          >
+                            ABRIR CONFIG <ArrowUpRight size={16} />
+                          </button>
+                        </div>
                       </div>
                     )}
                   </div>
