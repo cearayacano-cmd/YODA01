@@ -15,7 +15,7 @@ export const AdminUsersList = ({ onViewUser, stationName, onViewInstructorDashbo
     const uniqueUsers = new Map<string, any>();
     
     data.forEach(log => {
-      if (!uniqueUsers.has(log.instructor)) {
+      if (log.email && !uniqueUsers.has(log.email)) {
         
         let nombreFicticio = '';
         let fabrica = '';
@@ -45,7 +45,7 @@ export const AdminUsersList = ({ onViewUser, stationName, onViewInstructorDashbo
           }
         }
 
-        uniqueUsers.set(log.instructor, {
+        uniqueUsers.set(log.email, {
           instructorId: log.instructor,
           email: log.email,
           nombreFicticio,
@@ -184,7 +184,7 @@ export const AdminUsersList = ({ onViewUser, stationName, onViewInstructorDashbo
             ) : (
               filteredUsers.map((user, idx) => (
                 <motion.tr 
-                  key={user.instructorId}
+                  key={user.email}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.05 }}
