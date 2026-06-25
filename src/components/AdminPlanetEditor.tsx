@@ -594,8 +594,8 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px', textAlign: 'center', cursor: 'grab', color: '#cbd5e1' }} onMouseEnter={e => e.currentTarget.parentElement?.setAttribute('draggable', 'true')} onMouseLeave={e => e.currentTarget.parentElement?.removeAttribute('draggable')}>
                                             <GripVertical size={16} />
                                           </td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><SmartTextarea value={row.tema} onChange={(e: any) => updateRow(si, oi, 'tema', e.target.value)} onInput={(e: any) => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={(e: any) => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(27,0,136,0.2)'; e.currentTarget.style.background = '#fff'; }} onBlur={(e: any) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = 'transparent'; }} placeholder="Título..." style={{ background: 'transparent', border: '1px solid transparent', borderRadius: '8px', padding: '12px', color: '#0F004F', fontSize: '13px', fontWeight: 700, width: '100%', outline: 'none', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box' }} /></td>
-                                          <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}><SmartTextarea value={row.detalhe} onChange={(e: any) => updateRow(si, oi, 'detalhe', e.target.value)} onInput={(e: any) => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={(e: any) => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(27,0,136,0.2)'; e.currentTarget.style.background = '#fff'; }} onBlur={(e: any) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = 'transparent'; }} placeholder="Detalle..." style={{ background: 'transparent', border: '1px solid transparent', borderRadius: '8px', padding: '12px', color: '#334155', fontSize: '12px', width: '100%', outline: 'none', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box', lineHeight: '1.5' }} /></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}><SmartTextarea value={row.tema} onChange={(e: any) => updateRow(si, oi, 'tema', e.target.value)} onInput={(e: any) => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={(e: any) => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(27,0,136,0.2)'; e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = '#0F004F'; }} onBlur={(e: any) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = '#F8FAFC'; e.currentTarget.style.borderColor = '#E2E8F0'; }} placeholder="Título..." style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '8px', padding: '12px', color: '#0F004F', fontSize: '13px', fontWeight: 700, width: '100%', outline: 'none', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box' }} /></td>
+                                          <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}><SmartTextarea value={row.detalhe} onChange={(e: any) => updateRow(si, oi, 'detalhe', e.target.value)} onInput={(e: any) => { e.currentTarget.style.height = 'auto'; e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; }} onFocus={(e: any) => { e.currentTarget.style.boxShadow = '0 0 0 2px rgba(27,0,136,0.2)'; e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = '#0F004F'; }} onBlur={(e: any) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.background = '#F8FAFC'; e.currentTarget.style.borderColor = '#E2E8F0'; }} placeholder="Detalle..." style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '8px', padding: '12px', color: '#475569', fontSize: '12px', width: '100%', outline: 'none', resize: 'none', minHeight: '80px', overflow: 'hidden', transition: 'all 0.2s ease', boxSizing: 'border-box', lineHeight: '1.5' }} /></td>
                                           <td style={{ border: '1px solid #e2e8f0', padding: '8px' }}>
                                             {(Array.isArray(row.herramientas) ? row.herramientas : row.herramientas ? [row.herramientas] : []).map((h: any, hi: number) => (
                                               <div key={hi} style={{ marginBottom: 8, paddingBottom: 8, borderBottom: '1px dashed #e2e8f0', position: 'relative' }}>
@@ -678,18 +678,18 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                                   </tbody>
                                 </table>
                                 <div style={{ padding: '8px', background: '#ffffff', borderBottomLeftRadius: '8px', borderBottomRightRadius: '8px', border: '1px solid #e2e8f0', borderTop: 'none' }}>
-                                    <button 
-                                      onClick={() => {
-                                        const lastRowIdx = rows.length > 0 ? rows[rows.length - 1].originalIndex : sec.rows.length - 1;
-                                        const dia = rows.length > 0 ? rows[rows.length - 1].dia : '';
-                                        insertRowAfter(si, lastRowIdx, mt === 'SIN MACROTEMA' ? '' : mt, dia);
-                                      }}
-                                      style={{ width: '100%', padding: '12px', background: '#f8fafc', border: '2px dashed #cbd5e1', borderRadius: '8px', color: '#0F004F', fontWeight: 900, fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, transition: 'all 0.2s ease' }}
-                                      onMouseEnter={e => { e.currentTarget.style.background = '#f1f5f9'; e.currentTarget.style.borderColor = '#0F004F'; e.currentTarget.style.transform = 'scale(1.01)'; }}
-                                      onMouseLeave={e => { e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.borderColor = '#cbd5e1'; e.currentTarget.style.transform = 'scale(1)'; }}
-                                    >
-                                      <Plus size={16} /> AÑADIR NUEVA ACTIVIDAD AL MACROTEMA
-                                    </button>
+                                      <button 
+                                        onClick={() => {
+                                          const lastRowIdx = rows.length > 0 ? rows[rows.length - 1].originalIndex : sec.rows.length - 1;
+                                          const dia = rows.length > 0 ? rows[rows.length - 1].dia : '';
+                                          insertRowAfter(si, lastRowIdx, mt === 'SIN MACROTEMA' ? '' : mt, dia);
+                                        }}
+                                        style={{ width: '100%', padding: '14px', background: '#F0F9FF', border: '2px dashed #0EA5E9', borderRadius: '12px', color: '#0EA5E9', fontWeight: 900, fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, transition: 'all 0.2s ease' }}
+                                        onMouseEnter={e => { e.currentTarget.style.background = '#0EA5E9'; e.currentTarget.style.color = '#FFF'; e.currentTarget.style.borderStyle = 'solid'; e.currentTarget.style.transform = 'scale(1.01)'; }}
+                                        onMouseLeave={e => { e.currentTarget.style.background = '#F0F9FF'; e.currentTarget.style.color = '#0EA5E9'; e.currentTarget.style.borderStyle = 'dashed'; e.currentTarget.style.transform = 'scale(1)'; }}
+                                      >
+                                        <Plus size={18} strokeWidth={3} /> AÑADIR NUEVA ACTIVIDAD AL MACROTEMA
+                                      </button>
                                 </div>
                                   </motion.div>
                                   )}

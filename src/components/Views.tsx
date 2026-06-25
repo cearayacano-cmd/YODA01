@@ -1810,6 +1810,7 @@ const StationIcon = ({ isEs }: { isEs?: boolean }) => {
 
 const ActivityLogPanel = ({ isVisible, onClose, isEs }: any) => {
   const [logs, setLogs] = React.useState<any[]>([]);
+  const [lastKnownStatus, setLastKnownStatus] = React.useState<string | null>(null);
   const activeUser = localStorage.getItem('yoda_active_user') || 'instructor@example.com';
 
   React.useEffect(() => {
@@ -1818,8 +1819,15 @@ const ActivityLogPanel = ({ isVisible, onClose, isEs }: any) => {
       if (savedLogs) {
         try {
           const parsed = JSON.parse(savedLogs);
-          // Only show logs for current user, up to 15
-          setLogs(parsed.filter((l: any) => l.user === activeUser).slice(0, 15));
+          const userLogs = parsed.filter((l: any) => l.user === activeUser);
+          setLogs(userLogs.slice(0, 15));
+          
+          const lastCompletion = userLogs.find((l: any) => l.action === 'COMPLETION' && !l.details.includes('toda la expedición') && !l.details.includes('Reinició'));
+          if (lastCompletion) {
+             setLastKnownStatus(lastCompletion.details);
+          } else {
+             setLastKnownStatus(null);
+          }
         } catch (e) {}
       }
     }
@@ -1860,20 +1868,43 @@ const ActivityLogPanel = ({ isVisible, onClose, isEs }: any) => {
     if (log.action === 'VISIT') return isEs ? `Lectura de sección: ${d}` : `Leitura da seção: ${d}`;
     if (log.action === 'COMPLETAR MÓDULO') return isEs ? `Módulo superado: ${d}` : `Módulo superado: ${d}`;
     
+    // Internal Planet Tracking
+    if (log.action === 'OPEN_LINK') {
+        const linkDetail = d.replace('Abrió recurso: ', '').replace('Abrió PIC: ', '');
+        return isEs ? `Consulta de recurso: ${linkDetail}` : `Consulta de recurso: ${linkDetail}`;
+    }
+    if (log.action === 'COMPLETION') {
+        if (d.includes('Pendiente')) return isEs ? `Misión pausada: ${d.replace('Marcó nodo como Pendiente: ', '')}` : `Missão pausada: ${d.replace('Marcó nodo como Pendiente: ', '')}`;
+        if (d.includes('toda la expedición')) return isEs ? `¡Expedición completada!` : `Expedição concluída!`;
+        if (d.includes('Reinició')) return isEs ? `Reinicio de expedición.` : `Reinício de expedição.`;
+        return isEs ? `Misión cumplida: ${d.replace('Marcó nodo como Finalizado: ', '')}` : `Missão cumprida: ${d.replace('Marcó nodo como Finalizado: ', '')}`;
+    }
+    if (log.action === 'TRACK_TIEMPO') {
+        const timePart = d.split(' en ')[1]?.split('.')[0] || '';
+        return isEs ? `Tiempo en nodo: ${timePart}` : `Tempo no nó: ${timePart}`;
+    }
+    if (log.action === 'BITACORA') {
+        const text = d.split(': ')[1] || d;
+        return isEs ? `Nota de Explorador: "${text}"` : `Nota de Explorador: "${text}"`;
+    }
+
     return isEs ? `Actividad: ${d}` : `Atividade: ${d}`;
   };
 
   const getLogType = (action: string) => {
-    if (action === 'COMPLETAR MÓDULO' || action === 'NUEVA_PARTIDA') return 'success';
-    if (action === 'CLICK_LINK' || action === 'NAVIGATE' || action === 'VISIT') return 'info';
+    if (action === 'COMPLETAR MÓDULO' || action === 'NUEVA_PARTIDA' || action === 'COMPLETION') return 'success';
+    if (action === 'CLICK_LINK' || action === 'NAVIGATE' || action === 'VISIT' || action === 'OPEN_LINK') return 'info';
+    if (action === 'BITACORA') return 'alert';
     return 'alert';
   };
 
   const getLogIcon = (action: string) => {
-    if (action === 'COMPLETAR MÓDULO') return '🏆';
+    if (action === 'COMPLETAR MÓDULO' || action === 'COMPLETION') return '✅';
     if (action === 'NUEVA_PARTIDA') return '🚀';
     if (action === 'NAVIGATE' || action === 'CLICK_LINK') return '🧭';
-    if (action === 'VISIT') return '📖';
+    if (action === 'VISIT' || action === 'OPEN_LINK') return '🔍';
+    if (action === 'TRACK_TIEMPO') return '⏱️';
+    if (action === 'BITACORA') return '✍️';
     return '⚡';
   };
 
@@ -1910,6 +1941,34 @@ const ActivityLogPanel = ({ isVisible, onClose, isEs }: any) => {
           </div>
           
           <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '12px', paddingRight: '5px' }}>
+            {lastKnownStatus && (
+              <div style={{
+                background: lastKnownStatus.includes('Pendiente') ? 'rgba(255, 215, 0, 0.1)' : 'rgba(0, 255, 0, 0.1)',
+                border: `1px solid ${lastKnownStatus.includes('Pendiente') ? 'rgba(255, 215, 0, 0.3)' : 'rgba(0, 255, 0, 0.3)'}`,
+                borderRadius: '12px',
+                padding: '16px',
+                marginBottom: '4px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '14px'
+              }}>
+                <div style={{ fontSize: '28px', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))' }}>
+                  {lastKnownStatus.includes('Pendiente') ? '⏸️' : '✅'}
+                </div>
+                <div>
+                  <div style={{ fontSize: '10px', color: lastKnownStatus.includes('Pendiente') ? '#FFD700' : '#00FF00', fontWeight: 900, letterSpacing: '0.05em', marginBottom: '4px' }}>
+                    {isEs ? 'ESTADO ACTUAL' : 'STATUS ATUAL'}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#fff', fontWeight: 800, lineHeight: 1.3 }}>
+                    {lastKnownStatus.includes('Pendiente') 
+                      ? (isEs ? `Dejaste en pausa:\n${lastKnownStatus.replace('Marcó nodo como Pendiente: ', '')}` : `Você pausou:\n${lastKnownStatus.replace('Marcó nodo como Pendiente: ', '')}`)
+                      : (isEs ? `Última clase dada:\n${lastKnownStatus.replace('Marcó nodo como Finalizado: ', '')}` : `Última aula dada:\n${lastKnownStatus.replace('Marcó nodo como Finalizado: ', '')}`)
+                    }
+                  </div>
+                </div>
+              </div>
+            )}
+
             {logs.length === 0 ? (
               <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', textAlign: 'center', marginTop: 30, fontWeight: 600 }}>
                 {isEs ? 'No hay actividad reciente.' : 'Nenhuma atividade recente.'}
@@ -2056,7 +2115,7 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
         }}>
           <StationIcon isEs={isEs} />
           <div>
-            <div style={{ fontSize: 11, letterSpacing: '0.4em', color: '#1B0088', opacity: 0.6, textTransform: 'uppercase', marginBottom: 2, fontWeight: 800 }}>{isEs ? 'ESTACIÓN ESPACIAL' : 'ESTAÇÃO ESPACIAL'}</div>
+            <div style={{ fontSize: 11, letterSpacing: '0.4em', color: '#1B0088', opacity: 0.6, textTransform: 'uppercase', marginBottom: 2, fontWeight: 800 }}>{isEs ? 'PORTAL DE APRENDIZAJE' : 'PORTAL DE APRENDIZAGEM'}</div>
             <div style={{ fontSize: 24, fontWeight: 900, color: '#1B0088', letterSpacing: '0.1em' }}>{stationName} STATION</div>
           </div>
         </div>

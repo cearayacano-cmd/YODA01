@@ -266,6 +266,16 @@ export default function App() {
   };
 
   const renderView = () => {
+    const isAdmin = activeUser.includes('carlose.araya');
+    const isBRUser = activeUser.includes('konectabr.com') || activeUser.includes('aec.com');
+    const isSSCUser = activeUser.includes('konectaperu.com') || activeUser.includes('almacontact.com');
+    
+    // Admin accesses everything.
+    // BR users access only BR. SSC users access only SSC.
+    // If unknown, default to BR.
+    const canAccessBR = isAdmin || isBRUser || (!isAdmin && !isSSCUser);
+    const canAccessSSC = isAdmin || isSSCUser;
+
     switch(view) {
       case 'landing':
         return <Landing 
@@ -274,6 +284,8 @@ export default function App() {
           onActivityLog={()=>go('activity-log')}
           activeUser={activeUser}
           changeUser={changeUser}
+          canAccessBR={canAccessBR}
+          canAccessSSC={canAccessSSC}
         />;
       case 'activity-log':
         return <ActivityLogView logs={activityLogs} activeUser={activeUser} onBack={()=>go('landing')} />;
