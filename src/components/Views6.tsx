@@ -684,14 +684,12 @@ const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATE
   const isCompleted = React.useMemo(() => {
     const rows = section.rows || [];
     if (rows.length === 0) return false;
-    const effectivePlanetLabel = section.planetLabel || section.name || section.label || planetLabel;
+    const effectivePlanetLabel = planetLabel;
     const allDone = rows.every((r: any, i: number) => {
-        const key = `resolved_${planetLabel}_${r.tema}_${i}`;
+        const key = `resolved_${effectivePlanetLabel}_${r.tema}_${i}`;
         const val = localStorage.getItem(key);
-        console.log(`Checking key: ${key} -> ${val}`);
         return val === 'true';
     });
-    console.log(`Node ${effectivePlanetLabel} isCompleted: ${allDone}`);
     return allDone;
   }, [section, tick, planetLabel]);
 
@@ -1059,14 +1057,18 @@ const secondsToTime = (secs: number) => {
     return `${m}m ${s}s`;
 };
 
-const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, sectorLabel, missaoName, onTrackEvent, themeKey }: any) => {
+const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, sectorLabel, missaoName, onTrackEvent, themeKey, onUpdate }: any) => {
     const storageKey = `resolved_${planetLabel}_${node.tema}_${index}`;
-    const isResolved = localStorage.getItem(storageKey) === 'true';
+    const [isResolved, setIsResolved] = React.useState(typeof localStorage !== 'undefined' && localStorage.getItem(storageKey) === 'true');
     const recs = Array.isArray(node.herramientas) ? node.herramientas : 
                  Array.isArray(node.ferramentas) ? node.ferramentas : 
                  (node.herramientas ? [node.herramientas] : 
                  (node.ferramentas ? [node.ferramentas] : []));
     const firstRec = recs[0] || null;
+
+    React.useEffect(() => {
+        setIsResolved(typeof localStorage !== 'undefined' && localStorage.getItem(storageKey) === 'true');
+    }, [storageKey]);
 
     return (
         <motion.div 
@@ -1944,13 +1946,13 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetMeta, planetL
                                         planetColor={planetColor} 
                                         texture={planetMeta?.texture || planetObj?.texture}
                                         tick={tick}
+                                        planetLabel={planetLabel}
                                         onSelectSection={handleSelectSection} 
                                         onboardingData={onboardingData}
                                         activeOnboardingIdx={planetMeta?.onboardingIdx ?? planetObj?.onboardingIdx}
                                         onSelectOnboarding={() => setViewMode('onboarding')}
                                         isFirstPlanet={(planetIdx === 0 && sectorLabel === 'FRONT LINE') || (planetMeta?.onboardingIdx ?? planetObj?.onboardingIdx) != null}
                                         onBackToPlanets={onBack}
-                                        planetLabel={planetLabel}
                                     />
                                 </motion.div>
                             </AnimatePresence>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Target, Download } from 'lucide-react';
+import { ArrowLeft, Target, Download, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getMissionTracking, MissionProgress } from '../lib/tracking';
 
 const thS = {
@@ -41,7 +41,9 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
   const [filterCode, setFilterCode] = useState<string>(initialCodeFilter || 'ALL');
   const [filterInstructor, setFilterInstructor] = useState<string>(initialInstructorFilter || 'ALL');
   const [filterPlaneta, setFilterPlaneta] = useState<string>('ALL');
+  const [filterStatus, setFilterStatus] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
     setData(getMissionTracking());
@@ -55,6 +57,11 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
       if (filterCode !== 'ALL' && d.codigo !== filterCode) return false;
       if (filterInstructor !== 'ALL' && d.instructor !== filterInstructor) return false;
       if (filterPlaneta !== 'ALL' && d.planetas !== filterPlaneta) return false;
+      
+      const isFinished = d.marcarComoVisto || d.marcarComoFinalizado;
+      if (filterStatus === 'FINALIZADO' && !isFinished) return false;
+      if (filterStatus === 'ACTIVO' && isFinished) return false;
+
       if (searchQuery) {
           const q = searchQuery.toLowerCase();
           const matchesSearch = 
@@ -69,6 +76,15 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
       }
       return true;
   });
+
+  // Reset page when filters change
+  useEffect(() => {
+      setCurrentPage(1);
+  }, [filterCode, filterInstructor, filterPlaneta, filterStatus, searchQuery]);
+
+  const itemsPerPage = 50;
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const currentData = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const calculateApproxTime = (row: MissionProgress) => {
     if (!row.tiempoAperturaRaw || !row.marcarComoVistoRaw) return { text: '-', isTooFast: false, isCapped: false };
@@ -139,17 +155,6 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
     document.body.removeChild(link);
   };
 
-  const clearData = () => {
-    if (window.confirm('¿Estás seguro de que deseas eliminar TODOS los registros de monitoreo? Esto no se puede deshacer.')) {
-      localStorage.removeItem('yoda_mission_tracking');
-      setData([]);
-      setFilterCode('ALL');
-      setFilterInstructor('ALL');
-      setFilterPlaneta('ALL');
-      setSearchQuery('');
-    }
-  };
-
   return (
     <div style={{ minHeight: '100vh', background: '#f5f7f9', padding: '40px', fontFamily: 'Trebuchet MS, Trebuchet, Arial, sans-serif' }}>
       
@@ -167,19 +172,6 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
           </div>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: 15 }}>
-            <button 
-              onClick={clearData}
-              style={{
-                display: 'flex', alignItems: 'center', gap: 8,
-                background: '#fff', border: '1px solid #ED1650', color: '#ED1650',
-                padding: '10px 20px', borderRadius: 8, cursor: 'pointer',
-                fontWeight: 800, fontSize: 12, textTransform: 'uppercase',
-                boxShadow: '0 4px 10px rgba(237,22,80,0.1)'
-              }}
-            >
-              Limpiar Registros
-            </button>
-
             <button 
               onClick={exportCSV}
               style={{
@@ -209,6 +201,14 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
                 <select value={filterCode} onChange={e => setFilterCode(e.target.value)} style={selectS}>
                     <option value="ALL">TODOS</option>
                     {uniqueCodes.map(i => <option key={i} value={i}>{i}</option>)}
+                </select>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 5, flex: 1, minWidth: 150 }}>
+                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>Estado</label>
+                <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} style={selectS}>
+                    <option value="ALL">TODOS</option>
+                    <option value="ACTIVO">ACTIVO</option>
+                    <option value="FINALIZADO">FINALIZADO</option>
                 </select>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5, flex: 1, minWidth: 150 }}>
@@ -252,14 +252,14 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
                 </tr>
               </thead>
               <tbody>
-                {filteredData.length === 0 ? (
+                {currentData.length === 0 ? (
                   <tr>
-                    <td colSpan={10} style={{ padding: 40, textAlign: 'center', color: '#888', fontSize: 14 }}>
+                    <td colSpan={13} style={{ padding: 40, textAlign: 'center', color: '#888', fontSize: 14 }}>
                       No hay datos de misiones registrados aún.
                     </td>
                   </tr>
                 ) : (
-                  filteredData.map((row, idx) => (
+                  currentData.map((row, idx) => (
                     <motion.tr 
                       key={idx}
                       initial={{ opacity: 0, y: 10 }}
@@ -307,6 +307,33 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
               </tbody>
             </table>
           </div>
+          
+          {totalPages > 1 && (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '15px 20px', borderTop: '1px solid #eee', background: '#fafafa' }}>
+              <div style={{ fontSize: 12, color: '#666', fontWeight: 700 }}>
+                Mostrando {Math.min(filteredData.length, (currentPage - 1) * itemsPerPage + 1)} - {Math.min(filteredData.length, currentPage * itemsPerPage)} de {filteredData.length} registros
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <button 
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  style={{ padding: '8px 12px', background: currentPage === 1 ? '#eee' : '#0F004F', color: currentPage === 1 ? '#aaa' : '#fff', border: 'none', borderRadius: 6, cursor: currentPage === 1 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center' }}
+                >
+                  <ChevronLeft size={16} />
+                </button>
+                <div style={{ fontSize: 12, fontWeight: 800, color: '#0F004F', minWidth: 60, textAlign: 'center' }}>
+                  {currentPage} / {totalPages}
+                </div>
+                <button 
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  style={{ padding: '8px 12px', background: currentPage === totalPages ? '#eee' : '#0F004F', color: currentPage === totalPages ? '#aaa' : '#fff', border: 'none', borderRadius: 6, cursor: currentPage === totalPages ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center' }}
+                >
+                  <ChevronRight size={16} />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
       </div>

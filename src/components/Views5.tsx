@@ -414,10 +414,13 @@ export const RutaLiderView = ({ links, rutaData, onBack }: any) => {
     const newCompleted = new Set<string>();
     mapConfig.forEach(poder => {
       const rows = poder.rows || [];
-      if (rows.length > 0 && rows.every((r:any, i:number) => localStorage.getItem(`resolved_${poder.name}_${r.tema}_${i}`) === 'true')) {
+      const allDone = rows.length > 0 && rows.every((r:any, i:number) => localStorage.getItem(`resolved_${poder.name}_${r.tema}_${i}`) === 'true');
+      console.log(`RutaLiderView - Node ${poder.name} allDone: ${allDone}`);
+      if (allDone) {
           newCompleted.add(poder.name);
       }
     });
+    console.log(`RutaLiderView - Total completed: ${newCompleted.size} / ${mapConfig.length}`);
     setCompleted(newCompleted);
 
     if (newCompleted.size === mapConfig.length && mapConfig.length > 0) {
@@ -485,7 +488,7 @@ export const RutaLiderView = ({ links, rutaData, onBack }: any) => {
                 texture: 'CRATERS',
                 onboardingIdx: null
               }}
-              planetLabel={selectedPower.name}
+              planetLabel="RUTA DEL LÍDER"
               sectorLabel="Módulo de Aprendizaje"
               initialViewMode="detail"
               onBack={() => setSelectedPower(null)}
@@ -1158,6 +1161,8 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
+                    const email = localStorage.getItem('yoda_active_user') || 'instructor@example.com';
+                    localStorage.removeItem(`yoda_session_code_lider_${email}`);
                     if (rutaData) {
                         rutaData.forEach((section: any) => {
                             (section.rows || []).forEach((r:any, i:number) => {
@@ -1167,7 +1172,7 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
                             });
                         });
                     }
-                    updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'PROGRAMA DE FORMAÇÃO - CAPA LIDERANÇA', 'NUEVA PARTIDA', 'CLICK');
+                    updatePortalTracking(email, 'PROGRAMA DE FORMAÇÃO - CAPA LIDERANÇA', 'NUEVA PARTIDA', 'CLICK');
                     setShowResetConfirm(false);
                     onNavigateRuta();
                   }}

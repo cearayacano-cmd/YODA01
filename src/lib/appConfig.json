@@ -48,7 +48,7 @@
         "url": "https://docs.google.com/forms/d/e/1FAIpQLSc6skAZ2tsMQx3b5uMjVzI_0kbafi11Bj7rsOJgVbrOzgLWtw/viewform"
       }
     ],
-    "lastUpdate": "25/06/2026",
+    "lastUpdate": "26/06/2026",
     "rutaLider": [
       {
         "label": "Gestão de Equipe",
@@ -23953,7 +23953,7 @@
         }
       ]
     },
-    "rutaLiderEnabled": false
+    "rutaLiderEnabled": true
   },
   "ssc": {
     "monitoringUrl": "",

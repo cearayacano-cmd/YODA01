@@ -92,31 +92,80 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
     const stats: Record<string, { email: string, instructorId: string, planetName: string, expedicion: string, opened: number, finished: number, totalNodes: number, totalProgrammedMinutesStr: string, lastMission: string, lastActive: number, sessionCode: string, consumedMinutes: number }> = {};
 
     data.forEach(log => {
-      const planetName = log.planetas || 'Desconocido';
+      let planetName = log.planetas || 'Desconocido';
       const expedicion = log.expedicion || 'Galaxia Principal';
+      
+      if (expedicion === 'Módulo de Aprendizaje') {
+          planetName = 'Ruta del Líder';
+      }
+      
       const key = `${log.instructor}|${planetName}`;
 
       if (!stats[key]) {
         // Calculate total nodes for this planet
         let tNodes = 1;
         let tMins = 0;
-        if (config && config.rutaLider) {
-          const section = config.rutaLider.find((s: any) => s.label === planetName || s.name === planetName);
-          if (section) {
+        
+        if (config) {
             let n = 0;
-            const countNodes = (rows: any[]) => {
-                rows.forEach((r: any) => {
-                    if (r.tipo === 'group') {
-                        countNodes(r.rows || []);
+            const countNodes = (items: any[]) => {
+                items.forEach((r: any) => {
+                    if (r.rows) {
+                        countNodes(r.rows);
                     } else if (r.tema) {
                         n++;
                         tMins += parseTime(r.tiempo || r.ch || '0');
                     }
                 });
             };
-            countNodes(Array.isArray(section) ? section : (section.secciones || []));
+
+            const getSecciones = (obj: any) => {
+                if (!obj) return [];
+                if (obj.secciones) return obj.secciones;
+                if (Array.isArray(obj)) return obj;
+                if (obj.rows) return [obj];
+                return [];
+            };
+
+            const searchAndCount = (exploracionKey: string, contentArray: any[]) => {
+                if (!config.exploracion || !config.exploracion[exploracionKey] || !contentArray) return false;
+                
+                const idx = config.exploracion[exploracionKey].findIndex((p: any) => p.label === planetName || p.name === planetName || p.id === planetName);
+                
+                if (idx !== -1 && contentArray[idx]) {
+                    const contentObj = contentArray[idx];
+                    countNodes(getSecciones(contentObj));
+                    return true;
+                }
+                
+                // Fallback direct search
+                const p = contentArray.find((s: any) => s.label === planetName || s.name === planetName || s.id === planetName);
+                if (p) {
+                   countNodes(getSecciones(p));
+                   return true;
+                }
+                return false;
+            };
+
+            if (planetName === 'Ruta del Líder') {
+                if (config.rutaLider) {
+                    config.rutaLider.forEach((p: any) => {
+                        countNodes(getSecciones(p));
+                    });
+                }
+            } else {
+                if (!searchAndCount('frontLine', config.frontLineContent)) {
+                    if (!searchAndCount('soporte', config.soporteContent)) {
+                        if (!searchAndCount('fieldSupport', config.fsc)) {
+                            if (config.onboarding) {
+                                const p = config.onboarding.find((s: any) => s.label === planetName || s.name === planetName || s.id === planetName);
+                                if (p) countNodes(Array.isArray(p) ? p : (p.secciones || []));
+                            }
+                        }
+                    }
+                }
+            }
             if (n > 0) tNodes = n;
-          }
         }
 
         stats[key] = {
@@ -148,7 +197,13 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
     // Now count unique missions opened and finished per instructor+planet
     Object.keys(stats).forEach(key => {
         const [instructor, planetName] = key.split('|');
-        const instructorLogs = data.filter(d => d.instructor === instructor && (d.planetas || 'Desconocido') === planetName);
+        const instructorLogs = data.filter(d => {
+            if (d.instructor !== instructor) return false;
+            const logExp = d.expedicion || 'Galaxia Principal';
+            const logPlanet = d.planetas || 'Desconocido';
+            if (planetName === 'Ruta del Líder' && logExp === 'Módulo de Aprendizaje') return true;
+            return logPlanet === planetName;
+        });
         
         // Unique missions opened
         const openedMissions = new Set(instructorLogs.filter(d => !!d.tiempoApertura).map(d => `${d.missao}-${d.tema}`));
@@ -372,9 +427,12 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
 
         {processedStats.map((inst, i) => {
           const progressPercentage = Math.min(100, Math.round((inst.finished / inst.totalNodes) * 100));
-          let progressColor = '#ED1650'; // Red for < 30%
-          if (progressPercentage >= 30) progressColor = '#FFB800'; // Yellow for 30-70%
-          if (progressPercentage >= 70) progressColor = '#99CC33'; // Green for > 70%
+          let progressColor = '#ED1650'; // Default for Ruta del Líder / others
+          const exp = (inst.expedicion || '').toUpperCase();
+          if (exp.includes('FRONT LINE')) progressColor = '#00A9E0';
+          else if (exp.includes('SUPORTE') || exp.includes('SOPORTE')) progressColor = '#D400FF';
+          else if (exp.includes('FIELD SUPPORT')) progressColor = '#99CC33';
+          else if (exp.includes('MÓDULO DE APRENDIZAJE') || exp.includes('RUTA DEL LÍDER') || inst.planetName === 'Ruta del Líder') progressColor = '#ed1650';
 
           return (
             <motion.div 
@@ -415,8 +473,8 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
                     {inst.expedicion.charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <div style={{ fontSize: 18, fontWeight: 900, color: '#0F004F', letterSpacing: '-0.5px' }}>{inst.expedicion}</div>
-                    <div style={{ fontSize: 12, color: '#888', fontWeight: 600 }}>{inst.planetName}</div>
+                    <div style={{ fontSize: 18, fontWeight: 900, color: '#0F004F', letterSpacing: '-0.5px', textTransform: 'uppercase' }}>{inst.planetName}</div>
+                    <div style={{ fontSize: 12, color: '#888', fontWeight: 600 }}>{inst.expedicion}</div>
                   </div>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>

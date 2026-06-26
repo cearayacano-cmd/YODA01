@@ -61,10 +61,20 @@ export const updateMissionTracking = (
       trackingData[existingIndex].marcarComoFinalizado = timestamp;
     }
   } else {
-      let sessionCode = localStorage.getItem('yoda_session_code_' + email);
+      let prefix = 'YODA-';
+      let expKey = 'default';
+      const exp = (expedicion || '').toUpperCase();
+      
+      if (exp.includes('FRONT LINE')) { prefix = 'YODA-FT'; expKey = 'frontLine'; }
+      else if (exp.includes('SUPORTE') || exp.includes('SOPORTE')) { prefix = 'YODA-SP'; expKey = 'soporte'; }
+      else if (exp.includes('FIELD SUPPORT')) { prefix = 'YODA-FP'; expKey = 'fieldSupport'; }
+      else if (exp.includes('MÓDULO DE APRENDIZAJE') || exp.includes('RUTA DEL LÍDER') || exp.includes('PROGRAMA DE FORMAÇÃO') || exp.includes('GUARDIÁN') || exp.includes('LIDERANÇA')) { prefix = 'YODA-GD'; expKey = 'lider'; }
+
+      let sessionCode = localStorage.getItem(`yoda_session_code_${expKey}_${email}`);
+      
       if (!sessionCode) {
-        sessionCode = 'YODA-' + Math.floor(1000 + Math.random() * 9000);
-        localStorage.setItem('yoda_session_code_' + email, sessionCode);
+        sessionCode = prefix + Math.floor(1000 + Math.random() * 9000);
+        localStorage.setItem(`yoda_session_code_${expKey}_${email}`, sessionCode);
       }
       
       const newRecord: MissionProgress = {

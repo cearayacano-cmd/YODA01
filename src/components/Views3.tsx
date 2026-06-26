@@ -401,8 +401,8 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack, isEs }: 
                                 }
 
                                 const startNewGame = () => {
-                                    const newPartida = 'MISION-' + Math.random().toString(36).substring(2, 6).toUpperCase();
-                                    localStorage.setItem('yoda_active_partida', newPartida);
+                                    const email = localStorage.getItem('yoda_active_user') || 'instructor@example.com';
+                                    localStorage.removeItem(`yoda_session_code_${sectorId}_${email}`);
                                     
                                     Object.keys(localStorage).forEach(key => {
                                         if (key.startsWith('resolved_') || key.startsWith('congrats_shown_')) {
@@ -412,7 +412,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack, isEs }: 
 
                                     const savedLogs = localStorage.getItem('yoda_activity_logs');
                                     let logs = savedLogs ? JSON.parse(savedLogs) : [];
-                                    logs = [{ time: new Date().toISOString(), user: localStorage.getItem('yoda_active_user') || 'carlose.araya@latam.com', action: 'NUEVA_PARTIDA', details: `Partida Generada: ${newPartida}`, partidaId: newPartida }, ...logs].slice(0, 1000);
+                                    logs = [{ time: new Date().toISOString(), user: localStorage.getItem('yoda_active_user') || 'instructor@example.com', action: 'NUEVA_PARTIDA', details: 'Partida Reiniciada (Nuevo Código Generado)', partidaId: 'REINICIO' }, ...logs].slice(0, 1000);
                                     localStorage.setItem('yoda_activity_logs', JSON.stringify(logs));
 
                                     localStorage.setItem('yoda_read_only_mode', 'false');
