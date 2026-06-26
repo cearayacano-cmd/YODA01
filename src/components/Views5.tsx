@@ -1060,7 +1060,7 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
         rutaData.forEach((poder: any) => {
           (poder.rows || []).forEach((r: any, i: number) => {
             totalNodes++;
-            if (localStorage.getItem(`resolved_${poder.label}_${r.tema}_${i}`) === 'true') {
+            if (localStorage.getItem(`resolved_Ruta del Líder_${r.tema}_${i}`) === 'true') {
               completedNodes++;
             }
           });
@@ -1071,7 +1071,7 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
           const nodes = rutaData.filter((d: any) => d.poder === name);
           nodes.forEach((r: any, i: number) => {
             totalNodes++;
-            if (localStorage.getItem(`resolved_${name}_${r.tema}_${i}`) === 'true') {
+            if (localStorage.getItem(`resolved_Ruta del Líder_${r.tema}_${i}`) === 'true') {
               completedNodes++;
             }
           });
