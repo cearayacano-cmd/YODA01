@@ -414,7 +414,7 @@ export const RutaLiderView = ({ links, rutaData, onBack }: any) => {
     const newCompleted = new Set<string>();
     mapConfig.forEach(poder => {
       const rows = poder.rows || [];
-      const allDone = rows.length > 0 && rows.every((r:any, i:number) => localStorage.getItem(`resolved_${poder.name}_${r.tema}_${i}`) === 'true');
+      const allDone = rows.length > 0 && rows.every((r:any, i:number) => localStorage.getItem(`resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${poder.name}_${r.tema}_${i}`) === 'true');
       console.log(`RutaLiderView - Node ${poder.name} allDone: ${allDone}`);
       if (allDone) {
           newCompleted.add(poder.name);
@@ -424,7 +424,7 @@ export const RutaLiderView = ({ links, rutaData, onBack }: any) => {
     setCompleted(newCompleted);
 
     if (newCompleted.size === mapConfig.length && mapConfig.length > 0) {
-        const congratsKey = `congrats_shown_RUTA_LIDER`;
+        const congratsKey = `congrats_shown_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_RUTA_LIDER`;
         if (localStorage.getItem(congratsKey) !== 'true') {
             setTimeout(() => setShowCongrats(true), 1000);
             localStorage.setItem(congratsKey, 'true');
@@ -1061,7 +1061,7 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
         rutaData.forEach((poder: any) => {
           (poder.rows || []).forEach((r: any, i: number) => {
             totalNodes++;
-            if (localStorage.getItem(`resolved_Ruta del Líder_${r.tema}_${i}`) === 'true') {
+            if (localStorage.getItem(`resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_Ruta del Líder_${r.tema}_${i}`) === 'true') {
               completedNodes++;
             }
           });
@@ -1072,7 +1072,7 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
           const nodes = rutaData.filter((d: any) => d.poder === name);
           nodes.forEach((r: any, i: number) => {
             totalNodes++;
-            if (localStorage.getItem(`resolved_Ruta del Líder_${r.tema}_${i}`) === 'true') {
+            if (localStorage.getItem(`resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_Ruta del Líder_${r.tema}_${i}`) === 'true') {
               completedNodes++;
             }
           });
@@ -1170,9 +1170,9 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
                     if (rutaData) {
                         rutaData.forEach((section: any) => {
                             (section.rows || []).forEach((r:any, i:number) => {
-                                localStorage.removeItem(`resolved_MISIÓN_${r.tema}_${i}`);
-                                localStorage.removeItem(`resolved_${section.label || 'MISIÓN'}_${r.tema}_${i}`);
-                                localStorage.removeItem(`resolved_${section.name || 'MISIÓN'}_${r.tema}_${i}`);
+                                localStorage.removeItem(`resolved_${email}_MISIÓN_${r.tema}_${i}`);
+                                localStorage.removeItem(`resolved_${email}_${section.label || 'MISIÓN'}_${r.tema}_${i}`);
+                                localStorage.removeItem(`resolved_${email}_${section.name || 'MISIÓN'}_${r.tema}_${i}`);
                             });
                         });
                     }

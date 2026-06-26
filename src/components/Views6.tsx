@@ -686,7 +686,7 @@ const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATE
     if (rows.length === 0) return false;
     const effectivePlanetLabel = planetLabel;
     const allDone = rows.every((r: any, i: number) => {
-        const key = `resolved_${effectivePlanetLabel}_${r.tema}_${i}`;
+        const key = `resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${effectivePlanetLabel}_${r.tema}_${i}`;
         const val = localStorage.getItem(key);
         return val === 'true';
     });
@@ -1058,7 +1058,7 @@ const secondsToTime = (secs: number) => {
 };
 
 const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, sectorLabel, missaoName, onTrackEvent, themeKey, onUpdate }: any) => {
-    const storageKey = `resolved_${planetLabel}_${node.tema}_${index}`;
+    const storageKey = `resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${planetLabel}_${node.tema}_${index}`;
     const [isResolved, setIsResolved] = React.useState(typeof localStorage !== 'undefined' && localStorage.getItem(storageKey) === 'true');
     const recs = Array.isArray(node.herramientas) ? node.herramientas : 
                  Array.isArray(node.ferramentas) ? node.ferramentas : 
@@ -1379,7 +1379,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
         const missaoName = titleOverride || seccion?.nombre?.toUpperCase() || seccion?.label?.toUpperCase() || 'EXPLORAÇÃO TÁTICA';
         allSecciones.forEach((sec: any) => {
             (sec.rows || []).forEach((r: any, i: number) => {
-                localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'true');
+                localStorage.setItem(`resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${planetLabel}_${r.tema}_${i}`, 'true');
                 const email = localStorage.getItem('yoda_active_user') || 'instructor@example.com';
                 updateMissionTracking(email, sectorLabel || 'Sector', planetLabel || 'Planeta', missaoName, r.macroTema || 'GENERAL', r.tema, r.tiempo || r.ch || '-', 'FINALIZADO');
             });
@@ -1392,14 +1392,14 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
     const handleResetProgress = () => {
         allSecciones.forEach(sec => {
             (sec.rows || []).forEach((r: any, i: number) => {
-                localStorage.setItem(`resolved_${planetLabel}_${r.tema}_${i}`, 'false');
+                localStorage.setItem(`resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${planetLabel}_${r.tema}_${i}`, 'false');
             });
         });
         
         if (onTrackEvent) onTrackEvent('COMPLETION', `Reinició el progreso de la expedición: ${planetLabel}`);
         
         // Clear congrats flag too
-        const congratsKey = `congrats_shown_${planetLabel || titleOverride || seccion?.nombre || ''}_${sectorLabel || subtitleOverride || 'SECTOR'}`;
+        const congratsKey = `congrats_shown_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${planetLabel || titleOverride || seccion?.nombre || ''}_${sectorLabel || subtitleOverride || 'SECTOR'}`;
         localStorage.setItem(congratsKey, 'false');
         
         if (typeof window !== 'undefined' && (window as any).refreshOnboarding) {
@@ -1412,7 +1412,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
 
     const isAllComplete = useMemo(() => {
         return allSecciones.every(sec => 
-            (sec.rows || []).every((r: any, i: number) => localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true')
+            (sec.rows || []).every((r: any, i: number) => localStorage.getItem(`resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${planetLabel}_${r.tema}_${i}`) === 'true')
         );
     }, [allSecciones, tick, localTick, planetLabel]);
     
@@ -1668,7 +1668,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                             <span style={{ fontSize: 14, fontWeight: 900, color: '#1B0088' }}>
                                 {(() => {
                                     const remaining = allSecciones.reduce((acc, s) => acc + (s.rows || []).reduce((a: number, r: any, i: number) => {
-                                        const isResolved = localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true';
+                                        const isResolved = localStorage.getItem(`resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${planetLabel}_${r.tema}_${i}`) === 'true';
                                         return isResolved ? a : a + timeToSeconds(r.tiempo || r.ch || '');
                                     }, 0), 0);
                                     return secondsToTime(remaining);
@@ -1680,7 +1680,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                             <span style={{ fontSize: 14, fontWeight: 900, color: '#99CC33' }}>
                                 {(() => {
                                     const totalRows = allSecciones.reduce((acc, s) => acc + (s.rows || []).length, 0);
-                                    const resolvedCount = allSecciones.reduce((acc, s) => acc + (s.rows || []).filter((r: any, i: number) => localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true').length, 0);
+                                    const resolvedCount = allSecciones.reduce((acc, s) => acc + (s.rows || []).filter((r: any, i: number) => localStorage.getItem(`resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${planetLabel}_${r.tema}_${i}`) === 'true').length, 0);
                                     return `${resolvedCount} / ${totalRows}`;
                                 })()}
                             </span>
@@ -1693,7 +1693,7 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                                 animate={{ 
                                     width: `${(() => {
                                         const totalRows = allSecciones.reduce((acc, s) => acc + (s.rows || []).length, 0);
-                                        const resolvedCount = allSecciones.reduce((acc, s) => acc + (s.rows || []).filter((r: any, i: number) => localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true').length, 0);
+                                        const resolvedCount = allSecciones.reduce((acc, s) => acc + (s.rows || []).filter((r: any, i: number) => localStorage.getItem(`resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${planetLabel}_${r.tema}_${i}`) === 'true').length, 0);
                                         return totalRows > 0 ? (resolvedCount / totalRows) * 100 : 0;
                                     })()}%` 
                                 }}
@@ -1862,13 +1862,13 @@ export const PlanetContentView = ({ planetIdx, onBack, data, planetMeta, planetL
         return secciones.every(sec => {
             const rows = sec.rows || [];
             if (rows.length === 0) return true;
-            return rows.every((r: any, i: number) => localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true');
+            return rows.every((r: any, i: number) => localStorage.getItem(`resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${planetLabel}_${r.tema}_${i}`) === 'true');
         });
     }, [secciones, tick, planetLabel]);
 
     React.useEffect(() => {
         if (isModuleComplete && !disableCongrats) {
-            const storageKey = `congrats_shown_${planetLabel}_${sectorLabel}`;
+            const storageKey = `congrats_shown_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${planetLabel}_${sectorLabel}`;
             if (localStorage.getItem(storageKey) !== 'true') {
                 setTimeout(() => setShowCongrats(true), 1000);
                 localStorage.setItem(storageKey, 'true');

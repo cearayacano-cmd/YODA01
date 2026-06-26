@@ -114,7 +114,7 @@ const TacticalPlanetCard = ({ course, index, color, type, contentData, onClick, 
   allSecciones.forEach((s: any) => {
     (s.rows || []).forEach((r: any, i: number) => {
       totalRows++;
-      if (localStorage.getItem(`resolved_${planetLabel}_${r.tema}_${i}`) === 'true') {
+      if (localStorage.getItem(`resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${planetLabel}_${r.tema}_${i}`) === 'true') {
         resolvedCount++;
       }
     });
@@ -393,7 +393,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack, isEs }: 
                                 if (typeof localStorage !== 'undefined' && planetLabel) {
                                     for (let i = 0; i < localStorage.length; i++) {
                                         const key = localStorage.key(i);
-                                        if (key && key.startsWith(`resolved_${planetLabel}_`) && localStorage.getItem(key) === 'true') {
+                                        if (key && key.startsWith(`resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${planetLabel}_`) && localStorage.getItem(key) === 'true') {
                                             hasProgress = true;
                                             break;
                                         }
@@ -405,7 +405,7 @@ export const PlanetSelection = ({ sectorId, config, onNavigate, onBack, isEs }: 
                                     localStorage.removeItem(`yoda_session_code_${sectorId}_${email}`);
                                     
                                     Object.keys(localStorage).forEach(key => {
-                                        if (key.startsWith('resolved_') || key.startsWith('congrats_shown_')) {
+                                        if (key.startsWith(`resolved_${email}_`) || key.startsWith(`congrats_shown_${email}_`)) {
                                             localStorage.removeItem(key);
                                         }
                                     });
