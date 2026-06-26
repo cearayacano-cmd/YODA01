@@ -3,11 +3,11 @@ import { AdminTrackingDashboard } from './AdminTrackingDashboard';
 import { AdminPortalTrackingDashboard } from './AdminPortalTrackingDashboard';
 import { AdminVisualDashboard } from './AdminVisualDashboard';
 import { AdminUsersList } from './AdminUsersList';
-
-import { ArrowLeft, Users, LayoutDashboard, TableProperties, Compass, Star } from 'lucide-react';
+import { PerformanceDashboard } from './PerformanceDashboard';
+import { ArrowLeft, Users, LayoutDashboard, TableProperties, Compass, Star, Trophy } from 'lucide-react';
 
 export const UnifiedTrackingDashboard = ({ view, logs, config, onBack, stationName, initialInstructorId }: any) => {
-  const [activeTab, setActiveTab] = useState<'users' | 'visual' | 'missions' | 'portals'>('users');
+  const [activeTab, setActiveTab] = useState<'users' | 'visual' | 'missions' | 'portals' | 'performance'>('users');
   const [selectedInstructor, setSelectedInstructor] = useState<string | undefined>(initialInstructorId);
   const [selectedCode, setSelectedCode] = useState<string | undefined>();
 
@@ -22,7 +22,8 @@ export const UnifiedTrackingDashboard = ({ view, logs, config, onBack, stationNa
     { id: 'users', label: 'DIRECTORIO', icon: <Users size={20} />, color: '#ED1650' },
     { id: 'visual', label: 'RESUMEN VISUAL', icon: <LayoutDashboard size={20} />, color: '#FFB800' },
     { id: 'missions', label: 'MISIONES', icon: <TableProperties size={20} />, color: '#00D6CC' },
-    { id: 'portals', label: 'PORTALES', icon: <Compass size={20} />, color: '#99CC33' }
+    { id: 'portals', label: 'PORTALES', icon: <Compass size={20} />, color: '#99CC33' },
+    { id: 'performance', label: 'PERFORMANCE', icon: <Trophy size={20} />, color: '#FF00FF' }
   ];
 
   return (
@@ -132,6 +133,11 @@ export const UnifiedTrackingDashboard = ({ view, logs, config, onBack, stationNa
         {activeTab === 'portals' && (
           <div style={{ position: 'absolute', inset: 0, overflow: 'auto' }}>
             <AdminPortalTrackingDashboard />
+          </div>
+        )}
+        {activeTab === 'performance' && (
+          <div style={{ position: 'absolute', inset: 0, overflow: 'auto' }}>
+            <PerformanceDashboard />
           </div>
         )}
       </div>
