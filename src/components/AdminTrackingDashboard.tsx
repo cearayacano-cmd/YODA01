@@ -87,9 +87,10 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
   const currentData = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const calculateApproxTime = (row: MissionProgress) => {
-    if (!row.tiempoAperturaRaw || !row.marcarComoVistoRaw) return { text: '-', isTooFast: false, isCapped: false };
+    const finishRaw = row.marcarComoVistoRaw || row.marcarComoFinalizadoRaw;
+    if (!row.tiempoAperturaRaw || !finishRaw) return { text: '-', isTooFast: false, isCapped: false };
     
-    let diffMs = row.marcarComoVistoRaw - row.tiempoAperturaRaw;
+    let diffMs = finishRaw - row.tiempoAperturaRaw;
     let diffSecs = Math.max(0, Math.floor(diffMs / 1000));
     
     let isTooFast = false;
@@ -138,7 +139,7 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
       row.tema || '',
       row.tiempoEstimado || '',
       row.tiempoApertura || '',
-      row.marcarComoVisto || '',
+      (row.marcarComoVisto || row.marcarComoFinalizado) || '',
       calculateApproxTime(row).text
     ]);
 
@@ -285,8 +286,8 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
                       <td style={{ ...tdS, color: row.tiempoApertura ? '#28a745' : '#ccc' }}>
                         {row.tiempoApertura || '-'}
                       </td>
-                      <td style={{ ...tdS, color: row.marcarComoVisto ? '#007bff' : '#ccc' }}>
-                        {row.marcarComoVisto || '-'}
+                      <td style={{ ...tdS, color: (row.marcarComoVisto || row.marcarComoFinalizado) ? '#007bff' : '#ccc' }}>
+                        {(row.marcarComoVisto || row.marcarComoFinalizado) || '-'}
                       </td>
                       <td style={{ 
                         ...tdS, 
