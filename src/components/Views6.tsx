@@ -1257,7 +1257,7 @@ const FscDetailedNodeCard = ({ node, index, planetColor, planetLabel, sectorLabe
                         
                         if (!isDone) {
                             const email = localStorage.getItem('yoda_active_user') || 'instructor@example.com';
-                            updateMissionTracking(email, sectorLabel || 'Sector', planetLabel || 'Planeta', missaoName, node.macroTema || 'GENERAL', node.tema, node.tiempo || node.ch || '-', 'VISTO');
+                            updateMissionTracking(email, sectorLabel || 'Sector', planetLabel || 'Planeta', missaoName, node.macroTema || 'GENERAL', node.tema, node.tiempo || node.ch || '-', 'FINALIZADO');
                             const timeKey = `yoda_time_start_${planetLabel}_${themeKey}`;
                             const startStr = localStorage.getItem(timeKey);
                             if (startStr) {
