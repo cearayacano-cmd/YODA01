@@ -344,7 +344,7 @@ export const PerformanceDashboard = () => {
               <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F004F', letterSpacing: '-0.02em', margin: 0 }}>Rendimiento de Instructores</h1>
               <p style={{ fontSize: 14, color: '#64748B', margin: 0 }}>Analiza cursos dictados, horas acumuladas y precisión de cumplimiento horario.</p>
               
-              <div style={{ display: 'flex', gap: 20, marginTop: 16, background: '#fff', padding: '8px 16px', borderRadius: 12, border: '1px solid #E2E8F0', display: 'inline-flex', alignItems: 'center' }}>
+              <div style={{ gap: 20, marginTop: 16, background: '#fff', padding: '8px 16px', borderRadius: 12, border: '1px solid #E2E8F0', display: 'inline-flex', alignItems: 'center' }}>
                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#64748B', fontWeight: 700 }}>
                    <ShieldAlert size={14} color="#94A3B8" /> APRENDIZ (&lt; 400h)
                  </div>
