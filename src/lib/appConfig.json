@@ -49,121 +49,7 @@
       }
     ],
     "lastUpdate": "26/06/2026",
-    "rutaLider": [
-      {
-        "label": "Gestão de Equipe",
-        "tipo": "mision1",
-        "rows": [
-          {
-            "macroTema": "Feedback Efetivo",
-            "dia": "1",
-            "tema": "Feedback Efetivo",
-            "detalhe": "Técnicas de retroalimentação para o desenvolvimento da equipe.",
-            "tiempo": "2H",
-            "herramientas": [
-              {
-                "tipo": "🔗 Link",
-                "url": "#"
-              }
-            ],
-            "iaPic": [],
-            "consejo": "Mantenha um foco positivo e construtivo"
-          },
-          {
-            "macroTema": "Resolução de Conflitos",
-            "dia": "1",
-            "tema": "Resolução de Conflitos",
-            "detalhe": "Controle de situações difíceis entre colaboradores",
-            "tiempo": "2H",
-            "herramientas": [
-              {
-                "tipo": "🔗 Link",
-                "url": "#"
-              }
-            ],
-            "iaPic": [],
-            "consejo": "Escuta ativa é a chave"
-          }
-        ]
-      },
-      {
-        "label": "Estratégia de Vendas",
-        "tipo": "mision1",
-        "rows": [
-          {
-            "macroTema": "Cierre de Ventas",
-            "dia": "1",
-            "tema": "Cierre de Ventas",
-            "detalhe": "Metodologias para fechar negociações exitosas.",
-            "tiempo": "3H",
-            "herramientas": [
-              {
-                "tipo": "🔗 Link",
-                "url": "#"
-              }
-            ],
-            "iaPic": [],
-            "consejo": "Identifica las objeciones temprano."
-          }
-        ]
-      },
-      {
-        "tipo": "imersao",
-        "label": "IMERSÃO",
-        "rows": [
-          {
-            "macroTema": "test",
-            "dia": "",
-            "tema": "tes",
-            "detalhe": "test",
-            "consejo": "",
-            "herramientas": [
-              {
-                "tipo": "🖼️ Slide",
-                "url": ""
-              }
-            ],
-            "iaPic": [],
-            "tiempo": ""
-          }
-        ],
-        "dbOjtLabel": "",
-        "dbOjtUrl": "",
-        "totalCh": "",
-        "ajusteRota": "",
-        "ajusteRotaUrlKon": "",
-        "ajusteRotaUrlAec": "",
-        "ajusteRotaCh": ""
-      },
-      {
-        "tipo": "mision1",
-        "label": "test",
-        "rows": [
-          {
-            "macroTema": "test",
-            "dia": "",
-            "tema": "test",
-            "detalhe": "test",
-            "consejo": "",
-            "herramientas": [
-              {
-                "tipo": "🖼️ Slide",
-                "url": ""
-              }
-            ],
-            "iaPic": [],
-            "tiempo": ""
-          }
-        ],
-        "dbOjtLabel": "",
-        "dbOjtUrl": "",
-        "totalCh": "",
-        "ajusteRota": "",
-        "ajusteRotaUrlKon": "",
-        "ajusteRotaUrlAec": "",
-        "ajusteRotaCh": ""
-      }
-    ],
+    "rutaLider": [],
     "onboarding": [
       {
         "label": "NAVE DE ONBOARDING BASE",
@@ -9163,7 +9049,7 @@
                 "consejo": ""
               },
               {
-                "macroTema": "Antecipação e postergação Alteração de voo por Antecipação/Postergação a sócios Elite isentos de cobrança",
+                "macroTema": "Antecipação e postergação Alteração de voo por Antecipação/Postergação a s��cios Elite isentos de cobrança",
                 "dia": 4,
                 "tema": "Antecipação e postergação Alteração de voo por Antecipação/Postergação a sócios Elite isentos de cobrança",
                 "detalhe": "- Instutor explica o procedimento para alteração de nome nos casos em que o UPG está confirmado ",
@@ -23953,7 +23839,8 @@
         }
       ]
     },
-    "rutaLiderEnabled": true
+    "rutaLiderEnabled": false,
+    "incidenciasLink": ""
   },
   "ssc": {
     "monitoringUrl": "",
@@ -23968,7 +23855,7 @@
       }
     ],
     "operaciones": [],
-    "lastUpdate": "25/06/2026",
+    "lastUpdate": "26/06/2026",
     "rutaLider": [
       {
         "tipo": "imersao",
@@ -24094,174 +23981,10 @@
     ],
     "frontLineContent": [
       {
-        "secciones": [
-          {
-            "tipo": "mision1",
-            "label": "MISSÃO 1:",
-            "rows": [
-              {
-                "macroTema": "Introdução ",
-                "dia": "",
-                "tema": "",
-                "detalhe": "",
-                "consejo": "",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ Slide",
-                    "url": ""
-                  }
-                ],
-                "iaPic": [],
-                "tiempo": ""
-              },
-              {
-                "macroTema": "Introdução ",
-                "dia": "",
-                "tema": "Introdução ao Pós Venda I",
-                "detalhe": "",
-                "consejo": "",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ Slide",
-                    "url": ""
-                  }
-                ],
-                "iaPic": [
-                  {
-                    "label": "PIC LINK",
-                    "url": ""
-                  }
-                ],
-                "tiempo": "0:05:00"
-              },
-              {
-                "macroTema": "Introdução ",
-                "dia": "",
-                "tema": "Política de modificação de bilhetes (Conceitos)",
-                "detalhe": "",
-                "consejo": "",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ Slide",
-                    "url": ""
-                  }
-                ],
-                "iaPic": [],
-                "tiempo": "0:10:00"
-              },
-              {
-                "macroTema": "Introdução ",
-                "dia": "",
-                "tema": "",
-                "detalhe": "",
-                "consejo": "",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ Slide",
-                    "url": ""
-                  }
-                ],
-                "iaPic": [],
-                "tiempo": ""
-              },
-              {
-                "macroTema": "__TEMP_n7vo4b1hl",
-                "dia": "",
-                "tema": "",
-                "detalhe": "",
-                "consejo": "",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ Slide",
-                    "url": ""
-                  }
-                ],
-                "iaPic": [],
-                "tiempo": ""
-              },
-              {
-                "macroTema": "__TEMP_lm5czg8rp",
-                "dia": "",
-                "tema": "",
-                "detalhe": "",
-                "consejo": "",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ Slide",
-                    "url": ""
-                  }
-                ],
-                "iaPic": [],
-                "tiempo": ""
-              }
-            ],
-            "dbOjtLabel": "",
-            "dbOjtUrl": "",
-            "totalCh": "",
-            "ajusteRota": "",
-            "ajusteRotaUrlKon": "",
-            "ajusteRotaUrlAec": "",
-            "ajusteRotaCh": ""
-          },
-          {
-            "tipo": "landing",
-            "label": "LANDING",
-            "rows": [
-              {
-                "macroTema": "__TEMP_anpe579p4",
-                "dia": "",
-                "tema": "",
-                "detalhe": "",
-                "consejo": "",
-                "herramientas": [
-                  {
-                    "tipo": "🖼️ Slide",
-                    "url": ""
-                  }
-                ],
-                "iaPic": [],
-                "tiempo": ""
-              }
-            ],
-            "dbOjtLabel": "",
-            "dbOjtUrl": "",
-            "totalCh": "",
-            "ajusteRota": "",
-            "ajusteRotaUrlKon": "",
-            "ajusteRotaUrlAec": "",
-            "ajusteRotaCh": ""
-          }
-        ],
-        "materiais": [
-          {
-            "label": "NUEVO LINK",
-            "url": "https://docs.google.com/spreadsheets/d/1QRryhvFeuR9MiQ365LCxUUbtNqIKgMrFiciIgyqomXk/edit?gid=202286037#gid=202286037"
-          },
-          {
-            "label": "NUEVO LINK",
-            "url": "https://docs.google.com/spreadsheets/d/1QRryhvFeuR9MiQ365LCxUUbtNqIKgMrFiciIgyqomXk/edit?gid=202286037#gid=202286037"
-          },
-          {
-            "label": "NUEVO LINK",
-            "url": "https://docs.google.com/spreadsheets/d/1QRryhvFeuR9MiQ365LCxUUbtNqIKgMrFiciIgyqomXk/edit?gid=202286037#gid=202286037"
-          },
-          {
-            "label": "NUEVO LINK",
-            "url": "https://docs.google.com/spreadsheets/d/1QRryhvFeuR9MiQ365LCxUUbtNqIKgMrFiciIgyqomXk/edit?gid=202286037#gid=202286037"
-          }
-        ],
-        "evalKon": [
-          {
-            "label": "NUEVO LINK",
-            "url": "https://"
-          }
-        ],
-        "evalAec": [
-          {
-            "label": "NUEVO LINK",
-            "url": "https://"
-          }
-        ],
+        "secciones": [],
+        "materiais": [],
+        "evalKon": [],
+        "evalAec": [],
         "evalMsg": "",
         "evalTime": ""
       },
@@ -24393,6 +24116,7 @@
         }
       ]
     },
-    "incidenciasLink": ""
+    "incidenciasLink": "",
+    "rutaLiderEnabled": false
   }
 }
