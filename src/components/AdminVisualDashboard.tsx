@@ -5,6 +5,7 @@ import { getMissionTracking, MissionProgress } from '../lib/tracking';
 
 export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails }: any) => {
   const [data, setData] = useState<MissionProgress[]>([]);
+  const [activityLogs, setActivityLogs] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery || '');
   const [filterGroup, setFilterGroup] = useState('ALL');
   const [filterStatus, setFilterStatus] = useState('ALL');
@@ -14,6 +15,8 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
 
   useEffect(() => {
     setData(getMissionTracking());
+    const savedLogs = localStorage.getItem('yoda_activity_logs');
+    setActivityLogs(savedLogs ? JSON.parse(savedLogs) : []);
   }, []);
 
   // Calculate Total Available Missions in BR Onboarding
@@ -234,23 +237,36 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
         // Calculate MACRO finished: a macro is finished if ALL its expected rows are in the finishedSet
         let finishedMacroCount = 0;
         stats[key].macroStructure.forEach(macro => {
-            const allFinished = macro.expectedRows.every(rowName => 
-                 finishedSet.has(`${macro.sectionName}-${rowName}`) || 
-                 finishedSet.has(`-${rowName}`) || 
-                 finishedSet.has(`${stats[key].planetName}-${rowName}`)
-            );
+            const allFinished = macro.expectedRows.every(rowName => {
+                 const secName = macro.sectionName.toUpperCase();
+                 const rowUpper = rowName.toUpperCase();
+                 return Array.from(finishedSet).some(finishedKey => {
+                     const keyUpper = finishedKey.toUpperCase();
+                     return keyUpper === `${secName}-${rowUpper}` || 
+                            keyUpper === `-${rowUpper}` || 
+                            keyUpper === `${stats[key].planetName.toUpperCase()}-${rowUpper}`;
+                 });
+            });
             if (macro.expectedRows.length > 0 && allFinished) finishedMacroCount++;
         });
         
         stats[key].finished = finishedMacroCount;
         
-        let mins = 0;
-        finishedMap.forEach(timeStr => mins += parseTime(timeStr));
+        // Calculate INVERTIDO from actual activity logs!
+        const planetLogs = activityLogs.filter(a => a.user === stats[key].email && a.action === 'TRACK_TIEMPO' && a.planetLabel === planetName);
+        const totalElapsedSecs = planetLogs.reduce((acc, a) => acc + (a.elapsedSecs || 0), 0);
+        
+        // Always include at least 1 minute if they have any finished nodes but spent less than 60s, to show some progress.
+        let mins = Math.floor(totalElapsedSecs / 60);
+        if (mins === 0 && (totalElapsedSecs > 0 || finishedMacroCount > 0 || finishedSet.size > 0)) {
+            mins = 1;
+        }
+        
         stats[key].consumedMinutes = mins;
     });
 
     return Object.values(stats); // We sort later
-  }, [data, config]);
+  }, [data, activityLogs, config]);
 
   // Extract unique groups for the filter dropdown
   const uniqueGroups = useMemo(() => {
