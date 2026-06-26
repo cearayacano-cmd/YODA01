@@ -187,14 +187,49 @@ export const InstructorDashboard = ({ logs, config, onBack, initialUser, isEmbed
     const groupedMissions: Record<string, any[]> = {};
     missions.forEach((m: any) => {
         const pName = m.planetas || m.missao || 'Desconocido';
+        if (pName.toUpperCase().includes('ONBOARDING')) return;
         if (!groupedMissions[pName]) groupedMissions[pName] = [];
         groupedMissions[pName].push(m);
     });
     
     Object.keys(groupedMissions).forEach(planetName => {
         const mList = groupedMissions[planetName];
-        const section = (config.rutaLider || []).find((s: any) => s.label === planetName || s.name === planetName);
-        const totalNodes = section && section.rows ? section.rows.length : Math.max(mList.length, 1);
+        
+        let totalNodes = Math.max(mList.length, 1);
+        const getSecs = (obj: any) => obj ? (obj.secciones || (Array.isArray(obj) ? obj : (obj.rows ? [obj] : []))) : [];
+        const countSecs = (sections: any[]) => sections.reduce((acc, sec) => acc + (sec.rows ? sec.rows.length : (sec.secciones ? countSecs(sec.secciones) : (Array.isArray(sec) ? sec.length : 1))), 0);
+        
+        if (config) {
+            let foundNodes = 0;
+            const searchTotal = (key: string, arr: any[]) => {
+                if (!config.exploracion || !config.exploracion[key] || !arr) return false;
+                const idx = config.exploracion[key].findIndex((p: any) => p.label === planetName || p.name === planetName || p.id === planetName);
+                let p = idx !== -1 ? arr[idx] : arr.find((s: any) => s.label === planetName || s.name === planetName || s.id === planetName);
+                if (p) {
+                    if (config.onboarding) {
+                        const oIdx = (idx !== -1 ? config.exploracion[key][idx].onboardingIdx : p.onboardingIdx) || 0;
+                        if (config.onboarding[oIdx]) foundNodes += countSecs(getSecs(config.onboarding[oIdx].data || config.onboarding[oIdx]));
+                    }
+                    foundNodes += countSecs(getSecs(p));
+                    return true;
+                }
+                return false;
+            };
+            
+            if (planetName === 'Ruta del Líder' && config.rutaLider) {
+                config.rutaLider.forEach((p: any) => foundNodes += countSecs(getSecs(p)));
+            } else if (!searchTotal('frontLine', config.frontLineContent)) {
+                if (!searchTotal('soporte', config.soporteContent)) {
+                    if (!searchTotal('fieldSupport', config.fsc)) {
+                        if (config.onboarding) {
+                            const p = config.onboarding.find((s: any) => s.label === planetName || s.name === planetName || s.id === planetName);
+                            if (p) foundNodes += countSecs(getSecs(p));
+                        }
+                    }
+                }
+            }
+            if (foundNodes > 0) totalNodes = foundNodes;
+        }
         const completedNodes = mList.filter((m: any) => m.marcarComoFinalizado).length;
         const isCompleted = totalNodes > 0 && completedNodes >= totalNodes;
         
@@ -256,7 +291,12 @@ export const InstructorDashboard = ({ logs, config, onBack, initialUser, isEmbed
     };
 
     missionData.filter(m => !!m.marcarComoFinalizado).forEach(m => {
-      totalMinutes += parseTime(m.tiempoEstimado);
+      const finishRaw = m.marcarComoFinalizadoRaw || 0;
+      const startRaw = m.tiempoAperturaRaw || finishRaw;
+      const diffMs = finishRaw - startRaw;
+      const diffMins = Math.max(0, Math.floor(diffMs / 60000));
+      const estMins = parseTime(m.tiempoEstimado);
+      totalMinutes += Math.min(diffMins, estMins);
     });
 
     const totalHoras = Math.floor(totalMinutes / 60);
