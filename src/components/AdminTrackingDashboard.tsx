@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Target, Download, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Target, Download, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 import { getMissionTracking, MissionProgress } from '../lib/tracking';
 
 const thS = {
@@ -44,6 +44,8 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
   const [filterStatus, setFilterStatus] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [expandedMissao, setExpandedMissao] = useState<string[]>([]);
+  const [expandedMacro, setExpandedMacro] = useState<string[]>([]);
 
   useEffect(() => {
     setData(getMissionTracking());
@@ -82,9 +84,40 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
       setCurrentPage(1);
   }, [filterCode, filterInstructor, filterPlaneta, filterStatus, searchQuery]);
 
-  const itemsPerPage = 50;
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-  const currentData = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const groupedData = useMemo(() => {
+    const groups: any = {};
+    filteredData.forEach(row => {
+        const mKey = `${row.instructor}|${row.planetas}|${row.missao}`;
+        const macKey = row.macrotema || 'GENERAL';
+        
+        if (!groups[mKey]) {
+            groups[mKey] = {
+                id: mKey,
+                missao: row.missao,
+                instructor: row.instructor,
+                planeta: row.planetas,
+                macros: {}
+            };
+        }
+        if (!groups[mKey].macros[macKey]) {
+            groups[mKey].macros[macKey] = {
+                id: `${mKey}|${macKey}`,
+                macrotema: macKey,
+                rows: []
+            };
+        }
+        groups[mKey].macros[macKey].rows.push(row);
+    });
+    return groups;
+  }, [filteredData]);
+
+  const groupKeys = Object.keys(groupedData);
+  const itemsPerPage = 20;
+  const totalPages = Math.ceil(groupKeys.length / itemsPerPage);
+  const currentKeys = groupKeys.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  const toggleMissao = (id: string) => setExpandedMissao(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]);
+  const toggleMacro = (id: string) => setExpandedMacro(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]);
 
   const calculateApproxTime = (row: MissionProgress) => {
     const finishRaw = row.marcarComoVistoRaw || row.marcarComoFinalizadoRaw;
@@ -253,57 +286,102 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
                 </tr>
               </thead>
               <tbody>
-                {currentData.length === 0 ? (
+                {currentKeys.length === 0 ? (
                   <tr>
                     <td colSpan={13} style={{ padding: 40, textAlign: 'center', color: '#888', fontSize: 14 }}>
                       No hay datos de misiones registrados aún.
                     </td>
                   </tr>
                 ) : (
-                  currentData.map((row, idx) => (
-                    <motion.tr 
-                      key={idx}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: idx * 0.05 }}
-                      style={{ background: idx % 2 === 0 ? '#fafafa' : '#ffffff' }}
-                      whileHover={{ backgroundColor: '#f0f4f8' }}
-                    >
-                      <td style={tdS}><strong>{row.mesAño}</strong></td>
-                      <td style={tdS}>{row.instructor}</td>
-                      <td style={{ ...tdS, color: '#0056b3' }}>{row.email}</td>
-                      <td style={tdS}>
-                        <span style={{ background: '#eee', padding: '2px 6px', borderRadius: 4, fontSize: 10, fontFamily: 'monospace' }}>
-                          {row.codigo}
-                        </span>
-                      </td>
-                      <td style={{ ...tdS, fontWeight: 700 }}>{row.expedicion}</td>
-                      <td style={tdS}>{row.planetas}</td>
-                      <td style={{ ...tdS, width: 180 }}>{row.missao}</td>
-                      <td style={{ ...tdS, width: 200, color: '#444' }}>{row.macrotema}</td>
-                      <td style={{ ...tdS, width: 250 }}>{row.tema}</td>
-                      <td style={{ ...tdS, fontWeight: 700, color: '#1B0088' }}>{row.tiempoEstimado}</td>
-                      <td style={{ ...tdS, color: row.tiempoApertura ? '#28a745' : '#ccc' }}>
-                        {row.tiempoApertura || '-'}
-                      </td>
-                      <td style={{ ...tdS, color: (row.marcarComoVisto || row.marcarComoFinalizado) ? '#007bff' : '#ccc' }}>
-                        {(row.marcarComoVisto || row.marcarComoFinalizado) || '-'}
-                      </td>
-                      <td style={{ 
-                        ...tdS, 
-                        color: calculateApproxTime(row).text !== '-' ? (calculateApproxTime(row).isTooFast ? '#ED1650' : (calculateApproxTime(row).isCapped ? '#FFC800' : '#99CC33')) : '#ccc',
-                        fontWeight: 700 
-                      }}>
-                        {calculateApproxTime(row).text}
-                        {calculateApproxTime(row).isTooFast && (
-                          <div style={{ fontSize: 9, color: '#ED1650', marginTop: 2, fontWeight: 800 }}>¡MUY RÁPIDO!</div>
-                        )}
-                        {calculateApproxTime(row).isCapped && (
-                          <div style={{ fontSize: 9, color: '#FFC800', marginTop: 2, fontWeight: 800 }}>TIEMPO LIMITADO</div>
-                        )}
-                      </td>
-                    </motion.tr>
-                  ))
+                  currentKeys.map((mKey) => {
+                    const mData = groupedData[mKey];
+                    const isMExp = expandedMissao.includes(mKey);
+                    
+                    return (
+                        <React.Fragment key={mKey}>
+                            <tr 
+                               onClick={() => toggleMissao(mKey)}
+                               style={{ background: '#e2e8f0', cursor: 'pointer', borderBottom: '2px solid #fff' }}
+                            >
+                               <td colSpan={13} style={{ padding: '12px 15px', fontWeight: 900, color: '#0F004F', fontSize: 13 }}>
+                                   <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                       {isMExp ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+                                       <span style={{ color: '#64748b' }}>Instructor:</span> {mData.instructor} 
+                                       <span style={{ color: '#64748b', marginLeft: 15 }}>Planeta:</span> {mData.planeta}
+                                       <span style={{ color: '#64748b', marginLeft: 15 }}>Missão:</span> <span style={{ color: '#00D6CC', background: '#0F004F', padding: '2px 8px', borderRadius: 4 }}>{mData.missao}</span>
+                                   </div>
+                               </td>
+                            </tr>
+            
+                            {isMExp && Object.keys(mData.macros).map(macKey => {
+                                const macData = mData.macros[macKey];
+                                const isMacExp = expandedMacro.includes(macData.id);
+                                
+                                return (
+                                    <React.Fragment key={macData.id}>
+                                        <tr 
+                                           onClick={() => toggleMacro(macData.id)}
+                                           style={{ background: '#f1f5f9', cursor: 'pointer', borderBottom: '1px solid #fff' }}
+                                        >
+                                           <td colSpan={13} style={{ padding: '10px 15px 10px 40px', fontWeight: 800, color: '#334155', fontSize: 12 }}>
+                                               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                                   {isMacExp ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                                                   <span style={{ color: '#94a3b8' }}>MacroTema:</span> {macData.macrotema}
+                                                   <span style={{ fontSize: 10, background: '#cbd5e1', padding: '2px 6px', borderRadius: 10, color: '#475569' }}>{macData.rows.length} Temas</span>
+                                               </div>
+                                           </td>
+                                        </tr>
+            
+                                        {isMacExp && macData.rows.map((row: any, idx: number) => (
+                                            <motion.tr 
+                                              key={idx}
+                                              initial={{ opacity: 0, y: 10 }}
+                                              animate={{ opacity: 1, y: 0 }}
+                                              transition={{ delay: idx * 0.02 }}
+                                              style={{ background: idx % 2 === 0 ? '#fafafa' : '#ffffff' }}
+                                              whileHover={{ backgroundColor: '#f0f4f8' }}
+                                            >
+                                              <td style={{...tdS, paddingLeft: 40}}><strong>{row.mesAño}</strong></td>
+                                              <td style={tdS}>{row.instructor}</td>
+                                              <td style={{ ...tdS, color: '#0056b3' }}>{row.email}</td>
+                                              <td style={tdS}>
+                                                <span style={{ background: '#eee', padding: '2px 6px', borderRadius: 4, fontSize: 10, fontFamily: 'monospace' }}>
+                                                  {row.codigo}
+                                                </span>
+                                              </td>
+                                              <td style={{ ...tdS, fontWeight: 700 }}>{row.expedicion}</td>
+                                              <td style={tdS}>{row.planetas}</td>
+                                              <td style={{ ...tdS, width: 180 }}>{row.missao}</td>
+                                              <td style={{ ...tdS, width: 200, color: '#444' }}>{row.macrotema}</td>
+                                              <td style={{ ...tdS, width: 250 }}>{row.tema}</td>
+                                              <td style={{ ...tdS, fontWeight: 700, color: '#1B0088' }}>{row.tiempoEstimado}</td>
+                                              <td style={{ ...tdS, color: row.tiempoApertura ? '#28a745' : '#ccc' }}>
+                                                {row.tiempoApertura || '-'}
+                                              </td>
+                                              <td style={{ ...tdS, color: (row.marcarComoVisto || row.marcarComoFinalizado) ? '#007bff' : '#ccc' }}>
+                                                {(row.marcarComoVisto || row.marcarComoFinalizado) || '-'}
+                                              </td>
+                                              <td style={{ 
+                                                ...tdS, 
+                                                color: calculateApproxTime(row).text !== '-' ? (calculateApproxTime(row).isTooFast ? '#ED1650' : (calculateApproxTime(row).isCapped ? '#FFC800' : '#99CC33')) : '#ccc',
+                                                fontWeight: 700 
+                                              }}>
+                                                {calculateApproxTime(row).text}
+                                                {calculateApproxTime(row).isTooFast && (
+                                                  <div style={{ fontSize: 9, color: '#ED1650', marginTop: 2, fontWeight: 800 }}>¡MUY RÁPIDO!</div>
+                                                )}
+                                                {calculateApproxTime(row).isCapped && (
+                                                  <div style={{ fontSize: 9, color: '#FFC800', marginTop: 2, fontWeight: 800 }}>TIEMPO LIMITADO</div>
+                                                )}
+                                              </td>
+                                            </motion.tr>
+                                        ))}
+                                    </React.Fragment>
+                                )
+                            })}
+                        </React.Fragment>
+                    )
+                  })
                 )}
               </tbody>
             </table>
@@ -312,7 +390,7 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
           {totalPages > 1 && (
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '15px 20px', borderTop: '1px solid #eee', background: '#fafafa' }}>
               <div style={{ fontSize: 12, color: '#666', fontWeight: 700 }}>
-                Mostrando {Math.min(filteredData.length, (currentPage - 1) * itemsPerPage + 1)} - {Math.min(filteredData.length, currentPage * itemsPerPage)} de {filteredData.length} registros
+                Mostrando {Math.min(groupKeys.length, (currentPage - 1) * itemsPerPage + 1)} - {Math.min(groupKeys.length, currentPage * itemsPerPage)} de {groupKeys.length} misiones
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <button 
