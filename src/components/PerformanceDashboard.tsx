@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, Clock, Target, Activity, Zap, Layers, AlertCircle, CheckCircle2, ChevronRight, X, UserX, UserCheck, Shield, ShieldAlert, ShieldCheck, Crown } from 'lucide-react';
+import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { getMissionTracking, MissionProgress } from '../lib/tracking';
 
 export const PerformanceDashboard = () => {
@@ -303,15 +304,29 @@ export const PerformanceDashboard = () => {
                                </div>
                            </div>
 
-                           <div>
-                               <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 12 }}>CURSOS MÁS DICTADOS</div>
-                               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                                  {s.courseList.slice(0, 3).map((c: any, i: number) => (
-                                     <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#fff', border: '1px solid #E2E8F0', padding: '12px 16px', borderRadius: 12 }}>
-                                        <div style={{ fontSize: 13, fontWeight: 700, color: '#0F004F' }}>{c.name}</div>
-                                        <div style={{ fontSize: 13, fontWeight: 900, color: '#00D6CC' }}>{c.count}x</div>
-                                     </div>
-                                  ))}
+                           <div style={{ marginTop: 8 }}>
+                               <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 16 }}>VOLUMEN POR CURSO</div>
+                               <div style={{ height: 160, width: '100%' }}>
+                                 {s.courseList.length > 0 ? (
+                                   <ResponsiveContainer width="100%" height="100%">
+                                     <BarChart data={s.courseList.slice(0, 4)} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+                                       <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
+                                       <Tooltip 
+                                          cursor={{ fill: '#F1F5F9' }} 
+                                          contentStyle={{ borderRadius: 12, border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}
+                                          labelStyle={{ color: '#0F004F', fontWeight: 800, marginBottom: 4 }}
+                                          formatter={(value: number) => [`${value} misiones`, 'Total Dictado']}
+                                       />
+                                       <Bar dataKey="count" radius={[6, 6, 6, 6]} barSize={40}>
+                                         {s.courseList.slice(0, 4).map((entry: any, index: number) => (
+                                           <Cell key={`cell-${index}`} fill={index === 0 ? '#ED1650' : '#0F004F'} opacity={index === 0 ? 1 : 0.2} />
+                                         ))}
+                                       </Bar>
+                                     </BarChart>
+                                   </ResponsiveContainer>
+                                 ) : (
+                                   <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#CBD5E1', fontSize: 13, fontWeight: 600 }}>Sin cursos dictados</div>
+                                 )}
                                </div>
                            </div>
                        </div>
