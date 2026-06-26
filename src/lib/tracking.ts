@@ -59,6 +59,7 @@ export const updateMissionTracking = (
       trackingData[existingIndex].marcarComoVistoRaw = Date.now();
     } else if (actionType === 'FINALIZADO') {
       trackingData[existingIndex].marcarComoFinalizado = timestamp;
+      trackingData[existingIndex].marcarComoFinalizadoRaw = Date.now();
     }
   } else {
       let prefix = 'YODA-';
