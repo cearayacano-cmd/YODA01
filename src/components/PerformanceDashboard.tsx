@@ -192,9 +192,9 @@ export const PerformanceDashboard = () => {
   }, [data, activityLogs, forceRender]);
 
   const getRank = (totalHours: number) => {
-    if (totalHours >= 1500) return { title: 'Instructor Maestro', color: '#FFB800', bg: 'rgba(255,184,0,0.1)', icon: Crown };
-    if (totalHours >= 500) return { title: 'Instructor Guardián', color: '#8B5CF6', bg: 'rgba(139,92,246,0.1)', icon: ShieldCheck };
-    if (totalHours >= 100) return { title: 'Instructor Explorador', color: '#3B82F6', bg: 'rgba(59,130,246,0.1)', icon: Shield };
+    if (totalHours >= 4000) return { title: 'Instructor Maestro', color: '#FFB800', bg: 'rgba(255,184,0,0.1)', icon: Crown };
+    if (totalHours >= 1500) return { title: 'Instructor Guardián', color: '#8B5CF6', bg: 'rgba(139,92,246,0.1)', icon: ShieldCheck };
+    if (totalHours >= 400) return { title: 'Instructor Explorador', color: '#3B82F6', bg: 'rgba(59,130,246,0.1)', icon: Shield };
     return { title: 'Instructor Aprendiz', color: '#94A3B8', bg: 'rgba(148,163,184,0.1)', icon: ShieldAlert };
   };
 
@@ -331,16 +331,16 @@ export const PerformanceDashboard = () => {
               
               <div style={{ display: 'flex', gap: 20, marginTop: 16, background: '#fff', padding: '8px 16px', borderRadius: 12, border: '1px solid #E2E8F0', display: 'inline-flex' }}>
                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#64748B', fontWeight: 700 }}>
-                   <ShieldAlert size={14} color="#94A3B8" /> APRENDIZ (&lt; 100h)
+                   <ShieldAlert size={14} color="#94A3B8" /> APRENDIZ (&lt; 400h)
                  </div>
                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#64748B', fontWeight: 700 }}>
-                   <Shield size={14} color="#3B82F6" /> EXPLORADOR (+100h)
+                   <Shield size={14} color="#3B82F6" /> EXPLORADOR (+400h)
                  </div>
                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#64748B', fontWeight: 700 }}>
-                   <ShieldCheck size={14} color="#8B5CF6" /> GUARDIÁN (+500h)
+                   <ShieldCheck size={14} color="#8B5CF6" /> GUARDIÁN (+1500h)
                  </div>
                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#64748B', fontWeight: 700 }}>
-                   <Crown size={14} color="#FFB800" /> MAESTRO (+1500h)
+                   <Crown size={14} color="#FFB800" /> MAESTRO (+4000h)
                  </div>
               </div>
           </div>
