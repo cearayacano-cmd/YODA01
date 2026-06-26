@@ -1,13 +1,14 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Trophy, Clock, Target, Star, AlertCircle, CheckCircle2, ChevronDown, ChevronRight, Activity, Zap } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Trophy, Clock, Target, Activity, Zap, Layers, AlertCircle, CheckCircle2, ChevronRight, X, UserX, UserCheck } from 'lucide-react';
 import { getMissionTracking, MissionProgress } from '../lib/tracking';
 
 export const PerformanceDashboard = () => {
-  const [expandedInstructor, setExpandedInstructor] = useState<string | null>(null);
   const [data, setData] = useState<MissionProgress[]>([]);
   const [activityLogs, setActivityLogs] = useState<any[]>([]);
   const [forceRender, setForceRender] = useState(0);
+  const [selectedToCompare, setSelectedToCompare] = useState<string[]>([]);
+  const [showComparison, setShowComparison] = useState(false);
 
   const injectFakeData = () => {
     const tracking = getMissionTracking();
@@ -42,7 +43,6 @@ export const PerformanceDashboard = () => {
        setActivityLogs(logs);
     };
 
-    // Veterano: 200 hours, high precision on course A, some fast on course B
     // Veterano: 200 hours, high precision, multi-sessions
     addMissions('veterano@latam.com', 'HVC BAG', 100, 60, 60, 'FINALIZADO', 'SES-01');
     addMissions('veterano@latam.com', 'HVC BAG', 20, 60, 30, 'FINALIZADO', 'SES-02');
@@ -94,7 +94,6 @@ export const PerformanceDashboard = () => {
   const stats = useMemo(() => {
     const usersData: Record<string, any> = {};
 
-    // Base records from Mission Tracking
     data.forEach(log => {
       if (!log.email || log.email === 'admin') return;
 
@@ -133,7 +132,6 @@ export const PerformanceDashboard = () => {
           actual = Math.round((log.marcarComoFinalizadoRaw - log.tiempoAperturaRaw) / 60000);
         }
         
-        // Sometimes tracking isn't perfect, cap anomalies
         if (actual < 0) actual = 0;
         if (actual > expected * 3) actual = expected * 3;
 
@@ -145,7 +143,7 @@ export const PerformanceDashboard = () => {
         ud.totalActualMins += actual;
 
         const diff = actual - expected;
-        const tolerance = expected * 0.15; // 15% tolerance
+        const tolerance = expected * 0.15;
 
         if (diff < -tolerance) ud.fast++;
         else if (diff > tolerance) ud.slow++;
@@ -161,7 +159,6 @@ export const PerformanceDashboard = () => {
       if (log.marcarComoVistoRaw) ud.activeDays.add(new Date(log.marcarComoVistoRaw).toISOString().split('T')[0]);
     });
 
-    // Merge from activity logs for external portals
     activityLogs.forEach((log: any) => {
         if (!log.user || log.user === 'admin') return;
         const ud = usersData[log.user];
@@ -176,7 +173,6 @@ export const PerformanceDashboard = () => {
     return Object.values(usersData).map(ud => {
       const totalMissions = ud.onTime + ud.fast + ud.slow;
       
-      // Calculate Most Dictated Course
       let topCourse = 'N/A';
       let maxCount = -1;
       const courseList = Array.from(ud.courses.entries()).map(([k, v]: any) => {
@@ -193,158 +189,247 @@ export const PerformanceDashboard = () => {
       };
     }).sort((a, b) => b.totalActualMins - a.totalActualMins);
 
-  }, [data, activityLogs]);
+  }, [data, activityLogs, forceRender]);
+
+  const toggleSelect = (email: string) => {
+     if (selectedToCompare.includes(email)) {
+        setSelectedToCompare(prev => prev.filter(e => e !== email));
+     } else {
+        if (selectedToCompare.length < 3) {
+           setSelectedToCompare(prev => [...prev, email]);
+        }
+     }
+  };
+
+  const CircleProgress = ({ score }: { score: number }) => {
+    const radius = 24;
+    const circumference = 2 * Math.PI * radius;
+    const strokeDashoffset = circumference - (score / 100) * circumference;
+    const color = score >= 70 ? '#00D6CC' : score >= 40 ? '#FFB800' : '#ED1650';
+
+    return (
+      <div style={{ position: 'relative', width: 60, height: 60, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <svg width="60" height="60" style={{ transform: 'rotate(-90deg)' }}>
+          <circle cx="30" cy="30" r={radius} fill="none" stroke="#E2E8F0" strokeWidth="6" />
+          <motion.circle 
+            cx="30" cy="30" r={radius} fill="none" stroke={color} strokeWidth="6" 
+            strokeLinecap="round" strokeDasharray={circumference} 
+            initial={{ strokeDashoffset: circumference }}
+            animate={{ strokeDashoffset }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+          />
+        </svg>
+        <div style={{ position: 'absolute', fontSize: 13, fontWeight: 900, color: '#0F004F' }}>
+          {score}%
+        </div>
+      </div>
+    );
+  };
+
+  if (showComparison) {
+      const selectedStats = stats.filter(s => selectedToCompare.includes(s.email));
+
+      return (
+         <div style={{ padding: '40px 60px', background: '#F8F7FF', minHeight: '100%', overflowY: 'auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 40 }}>
+                <div>
+                   <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 8 }}>
+                     <div style={{ background: '#ED1650', padding: 12, borderRadius: 16, boxShadow: '0 8px 20px rgba(237,22,80,0.2)', cursor: 'pointer' }} onClick={() => setShowComparison(false)}>
+                       <X size={28} color="#fff" />
+                     </div>
+                     <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F004F', margin: 0 }}>Modo Comparación</h1>
+                   </div>
+                   <p style={{ fontSize: 14, color: '#64748B', margin: 0 }}>Comparando métricas clave de {selectedToCompare.length} instructores.</p>
+                </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: `repeat(${selectedStats.length}, 1fr)`, gap: 32 }}>
+                {selectedStats.map(s => (
+                   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} key={s.email} style={{ background: '#fff', borderRadius: 24, padding: 32, boxShadow: '0 10px 40px rgba(0,0,0,0.05)', border: '1px solid rgba(27,0,136,0.05)' }}>
+                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: 32 }}>
+                          <div style={{ width: 80, height: 80, borderRadius: '50%', background: '#0F004F', color: '#00D6CC', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, fontWeight: 900, marginBottom: 16 }}>
+                              {s.name.substring(0, 2).toUpperCase()}
+                          </div>
+                          <div style={{ fontSize: 22, fontWeight: 900, color: '#0F004F', textTransform: 'capitalize' }}>{s.name}</div>
+                          <div style={{ fontSize: 13, color: '#64748B' }}>{s.email}</div>
+                       </div>
+
+                       <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                           <div>
+                               <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 4 }}>PRECISIÓN GLOBAL</div>
+                               <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                                  <CircleProgress score={s.precisionScore} />
+                                  <div>
+                                     <div style={{ fontSize: 13, color: '#64748B' }}><strong style={{color: '#0F004F'}}>{s.onTime}</strong> A Tiempo</div>
+                                     <div style={{ fontSize: 13, color: '#64748B' }}><strong style={{color: '#0F004F'}}>{s.fast}</strong> Rápidos | <strong style={{color: '#0F004F'}}>{s.slow}</strong> Lentos</div>
+                                  </div>
+                               </div>
+                           </div>
+
+                           <div style={{ background: '#F8FAFC', borderRadius: 16, padding: 20 }}>
+                               <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 12 }}>ESTADÍSTICAS VITALES</div>
+                               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>Horas Acumuladas</span>
+                                  <span style={{ fontSize: 15, color: '#0F004F', fontWeight: 900 }}>{(s.totalActualMins / 60).toFixed(1)}h</span>
+                               </div>
+                               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>Días Activos</span>
+                                  <span style={{ fontSize: 15, color: '#0F004F', fontWeight: 900 }}>{s.activeDays.size}</span>
+                               </div>
+                               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>Portales Externos</span>
+                                  <span style={{ fontSize: 15, color: '#0F004F', fontWeight: 900 }}>{s.externalPortals}</span>
+                               </div>
+                               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>Tasa de Abandono</span>
+                                  <span style={{ fontSize: 15, color: '#ED1650', fontWeight: 900 }}>{s.abandoned}</span>
+                               </div>
+                           </div>
+
+                           <div>
+                               <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 12 }}>CURSOS MÁS DICTADOS</div>
+                               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                                  {s.courseList.slice(0, 3).map((c: any, i: number) => (
+                                     <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#fff', border: '1px solid #E2E8F0', padding: '12px 16px', borderRadius: 12 }}>
+                                        <div style={{ fontSize: 13, fontWeight: 700, color: '#0F004F' }}>{c.name}</div>
+                                        <div style={{ fontSize: 13, fontWeight: 900, color: '#00D6CC' }}>{c.count}x</div>
+                                     </div>
+                                  ))}
+                               </div>
+                           </div>
+                       </div>
+                   </motion.div>
+                ))}
+            </div>
+         </div>
+      );
+  }
 
   return (
     <div style={{ padding: '40px 60px', background: '#F8F7FF', minHeight: '100%', overflowY: 'auto' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 40 }}>
-        <div style={{ background: '#0F004F', padding: 12, borderRadius: 16, boxShadow: '0 8px 20px rgba(15,0,79,0.2)' }}>
-          <Target size={28} color="#00D6CC" />
-        </div>
-        <div>
-          <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F004F', letterSpacing: '-0.02em', margin: 0 }}>Rendimiento de Instructores</h1>
-          <p style={{ fontSize: 14, color: '#64748B', margin: 0 }}>Analiza cursos dictados, horas acumuladas y precisión de cumplimiento horario.</p>
-          <button 
-             onClick={injectFakeData}
-             style={{ marginTop: 12, background: 'rgba(237,22,80,0.1)', color: '#ED1650', border: '1px dashed rgba(237,22,80,0.3)', padding: '6px 12px', borderRadius: 8, cursor: 'pointer', fontSize: 12, fontWeight: 700 }}
-          >
-             🤖 Inyectar Datos Ficticios
-          </button>
-        </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 40 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <div style={{ background: '#0F004F', padding: 12, borderRadius: 16, boxShadow: '0 8px 20px rgba(15,0,79,0.2)' }}>
+              <Target size={28} color="#00D6CC" />
+            </div>
+            <div>
+              <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F004F', letterSpacing: '-0.02em', margin: 0 }}>Rendimiento de Instructores</h1>
+              <p style={{ fontSize: 14, color: '#64748B', margin: 0 }}>Analiza cursos dictados, horas acumuladas y precisión de cumplimiento horario.</p>
+              <button 
+                 onClick={injectFakeData}
+                 style={{ marginTop: 12, background: 'rgba(237,22,80,0.1)', color: '#ED1650', border: '1px dashed rgba(237,22,80,0.3)', padding: '6px 12px', borderRadius: 8, cursor: 'pointer', fontSize: 12, fontWeight: 700 }}
+              >
+                 🤖 Inyectar Datos Ficticios
+              </button>
+            </div>
+          </div>
+
+          <AnimatePresence>
+             {selectedToCompare.length > 0 && (
+                <motion.div 
+                   initial={{ opacity: 0, scale: 0.9 }} 
+                   animate={{ opacity: 1, scale: 1 }} 
+                   exit={{ opacity: 0, scale: 0.9 }}
+                   style={{ background: '#fff', border: '2px solid #00D6CC', borderRadius: 16, padding: '16px 24px', display: 'flex', alignItems: 'center', gap: 24, boxShadow: '0 8px 25px rgba(0,214,204,0.15)' }}
+                >
+                   <div>
+                      <div style={{ fontSize: 12, fontWeight: 800, color: '#64748B' }}>SELECCIONADOS PARA COMPARAR</div>
+                      <div style={{ fontSize: 16, fontWeight: 900, color: '#0F004F' }}>{selectedToCompare.length} / 3 Instructores</div>
+                   </div>
+                   <button 
+                      onClick={() => setShowComparison(true)}
+                      style={{ background: '#00D6CC', color: '#0F004F', border: 'none', padding: '12px 24px', borderRadius: 12, fontWeight: 900, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8 }}
+                   >
+                      <Layers size={18} /> COMPARAR AHORA
+                   </button>
+                </motion.div>
+             )}
+          </AnimatePresence>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 24 }}>
         {stats.map((s, idx) => {
-          const isExpanded = expandedInstructor === s.email;
+          const isSelected = selectedToCompare.includes(s.email);
+          const canSelect = isSelected || selectedToCompare.length < 3;
           
           return (
-            <div key={s.email} style={{ background: '#fff', borderRadius: 20, boxShadow: '0 4px 20px rgba(27,0,136,0.05)', border: '1px solid rgba(27,0,136,0.05)', overflow: 'hidden' }}>
-              {/* Row Header */}
-              <div 
-                onClick={() => setExpandedInstructor(isExpanded ? null : s.email)}
-                style={{ padding: '24px 32px', display: 'flex', alignItems: 'center', gap: 24, cursor: 'pointer', background: isExpanded ? '#FAFAFA' : '#fff' }}
-              >
-                 <div style={{ 
-                    width: 48, height: 48, borderRadius: '50%', background: '#E2E8F0', 
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#475569', fontWeight: 900, fontSize: 16
-                  }}>
-                    {s.name.substring(0, 2).toUpperCase()}
-                  </div>
+             <motion.div 
+                initial={{ opacity: 0, y: 20 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                transition={{ delay: idx * 0.05 }}
+                key={s.email} 
+                style={{ 
+                   background: isSelected ? '#FAFAFA' : '#fff', 
+                   borderRadius: 24, 
+                   padding: 24,
+                   boxShadow: isSelected ? '0 0 0 2px #00D6CC, 0 10px 30px rgba(0,214,204,0.1)' : '0 4px 20px rgba(27,0,136,0.05)', 
+                   border: '1px solid rgba(27,0,136,0.05)', 
+                   position: 'relative',
+                   transition: 'all 0.2s'
+                }}
+             >
+                <div style={{ position: 'absolute', top: 20, right: 20 }}>
+                   <button 
+                      onClick={() => toggleSelect(s.email)}
+                      disabled={!canSelect}
+                      style={{ 
+                         background: isSelected ? '#00D6CC' : 'transparent',
+                         border: isSelected ? 'none' : '1px solid #CBD5E1',
+                         color: isSelected ? '#fff' : '#94A3B8',
+                         width: 32, height: 32, borderRadius: '50%',
+                         display: 'flex', alignItems: 'center', justifyContent: 'center',
+                         cursor: canSelect ? 'pointer' : 'not-allowed',
+                         opacity: canSelect ? 1 : 0.3
+                      }}
+                   >
+                      {isSelected ? <CheckCircle2 size={18} /> : <UserCheck size={16} />}
+                   </button>
+                </div>
 
-                  <div style={{ flex: 1.5 }}>
-                     <div style={{ fontSize: 16, fontWeight: 800, color: '#0F004F', textTransform: 'capitalize' }}>{s.name}</div>
-                     <div style={{ fontSize: 12, color: '#64748B' }}>{s.email}</div>
-                  </div>
-
-                  <div style={{ flex: 1 }}>
-                     <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em' }}>TOP CURSO</div>
-                     <div style={{ fontSize: 14, fontWeight: 700, color: '#ED1650' }}>{s.topCourse}</div>
-                  </div>
-
-                  <div style={{ flex: 1, textAlign: 'center' }}>
-                     <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em' }}>HORAS ACUM.</div>
-                     <div style={{ fontSize: 20, fontWeight: 900, color: '#0F004F' }}>{(s.totalActualMins / 60).toFixed(1)}h</div>
-                  </div>
-
-                  <div style={{ flex: 1, textAlign: 'center' }}>
-                     <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em' }}>PRECISIÓN</div>
-                     <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: s.precisionScore >= 70 ? 'rgba(0,214,204,0.1)' : 'rgba(255,184,0,0.1)', color: s.precisionScore >= 70 ? '#00BDB4' : '#B45309', padding: '4px 12px', borderRadius: 20, fontWeight: 900, fontSize: 14 }}>
-                       <Clock size={14} /> {s.precisionScore}%
-                     </div>
-                  </div>
-
-                  <div style={{ color: '#94A3B8' }}>
-                    {isExpanded ? <ChevronDown /> : <ChevronRight />}
-                  </div>
-              </div>
-
-              {/* Expanded Breakdown */}
-              {isExpanded && (
-                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} style={{ borderTop: '1px solid #F1F5F9', background: '#FAFAFA', padding: '32px' }}>
-                   
-                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 40 }}>
-                     {/* Accuracy Stats */}
-                     <div>
-                       <h3 style={{ fontSize: 13, fontWeight: 800, color: '#0F004F', letterSpacing: '0.1em', marginBottom: 20 }}>RITMO DE ENSEÑANZA</h3>
-                       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                           <span style={{ fontSize: 13, color: '#64748B', display: 'flex', alignItems: 'center', gap: 8 }}><CheckCircle2 size={16} color="#00D6CC" /> A Tiempo</span>
-                           <span style={{ fontSize: 14, fontWeight: 800, color: '#0F004F' }}>{s.onTime} misiones</span>
-                         </div>
-                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                           <span style={{ fontSize: 13, color: '#64748B', display: 'flex', alignItems: 'center', gap: 8 }}><Zap size={16} color="#FFB800" /> Muy Rápido</span>
-                           <span style={{ fontSize: 14, fontWeight: 800, color: '#0F004F' }}>{s.fast} misiones</span>
-                         </div>
-                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                           <span style={{ fontSize: 13, color: '#64748B', display: 'flex', alignItems: 'center', gap: 8 }}><AlertCircle size={16} color="#ED1650" /> Tiempo Excedido</span>
-                           <span style={{ fontSize: 14, fontWeight: 800, color: '#0F004F' }}>{s.slow} misiones</span>
-                         </div>
-                       </div>
-                     </div>
-                     
-                     {/* Other Metrics */}
-                     <div>
-                       <h3 style={{ fontSize: 13, fontWeight: 800, color: '#0F004F', letterSpacing: '0.1em', marginBottom: 20 }}>MÉTRICAS ADICIONALES</h3>
-                       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                           <span style={{ fontSize: 13, color: '#64748B' }}>Sesiones Creadas</span>
-                           <span style={{ fontSize: 14, fontWeight: 800, color: '#0F004F' }}>{s.sessions.size}</span>
-                         </div>
-                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                           <span style={{ fontSize: 13, color: '#64748B' }}>Días Activos (Conexiones)</span>
-                           <span style={{ fontSize: 14, fontWeight: 800, color: '#0F004F' }}>{s.activeDays.size} días</span>
-                         </div>
-                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                           <span style={{ fontSize: 13, color: '#64748B' }}>Modo Solo Lectura</span>
-                           <span style={{ fontSize: 14, fontWeight: 800, color: '#0F004F' }}>{s.readOnly} misiones</span>
-                         </div>
-                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                           <span style={{ fontSize: 13, color: '#64748B' }}>Tasa de Abandono</span>
-                           <span style={{ fontSize: 14, fontWeight: 800, color: '#ED1650' }}>{s.abandoned} misiones</span>
-                         </div>
-                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                           <span style={{ fontSize: 13, color: '#64748B' }}>Clics en Portales Externos</span>
-                           <span style={{ fontSize: 14, fontWeight: 800, color: '#00D6CC' }}>{s.externalPortals}</span>
-                         </div>
-                       </div>
-                     </div>
-
-                     {/* Courses List */}
-                     <div style={{ gridColumn: '1 / -1' }}>
-                       <h3 style={{ fontSize: 13, fontWeight: 800, color: '#0F004F', letterSpacing: '0.1em', marginBottom: 20 }}>CURSOS DICTADOS ({s.courseList.length})</h3>
-                       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                         {s.courseList.map((c: any, i: number) => (
-                           <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fff', padding: '12px 16px', borderRadius: 12, border: '1px solid #E2E8F0' }}>
-                             <div style={{ fontSize: 14, fontWeight: 700, color: '#0F004F' }}>{c.name}</div>
-                             <div style={{ display: 'flex', gap: 24 }}>
-                               <div style={{ textAlign: 'right' }}>
-                                 <div style={{ fontSize: 10, color: '#94A3B8', fontWeight: 800 }}>MISIONES COMP.</div>
-                                 <div style={{ fontSize: 13, fontWeight: 800, color: '#0F004F' }}>{c.count}</div>
-                               </div>
-                               <div style={{ textAlign: 'right' }}>
-                                 <div style={{ fontSize: 10, color: '#94A3B8', fontWeight: 800 }}>TIEMPO INVERTIDO</div>
-                                 <div style={{ fontSize: 13, fontWeight: 800, color: '#0F004F' }}>{(c.actualMins/60).toFixed(1)}h</div>
-                               </div>
-                               <div style={{ textAlign: 'right' }}>
-                                 <div style={{ fontSize: 10, color: '#94A3B8', fontWeight: 800 }}>DESVIACIÓN</div>
-                                 <div style={{ fontSize: 13, fontWeight: 800, color: c.actualMins > c.expectedMins ? '#ED1650' : '#00D6CC' }}>
-                                    {Math.abs(c.actualMins - c.expectedMins)}m {c.actualMins > c.expectedMins ? 'extra' : 'menos'}
-                                 </div>
-                               </div>
-                             </div>
-                           </div>
-                         ))}
-                       </div>
-                     </div>
+                <div style={{ display: 'flex', gap: 16, alignItems: 'center', marginBottom: 24 }}>
+                   <div style={{ width: 56, height: 56, borderRadius: '50%', background: '#0F004F', color: '#00D6CC', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 900 }}>
+                      {s.name.substring(0, 2).toUpperCase()}
                    </div>
-                </motion.div>
-              )}
-            </div>
+                   <div>
+                      <div style={{ fontSize: 16, fontWeight: 900, color: '#0F004F', textTransform: 'capitalize' }}>{s.name}</div>
+                      <div style={{ fontSize: 12, color: '#64748B' }}>{s.email}</div>
+                   </div>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 24 }}>
+                   <CircleProgress score={s.precisionScore} />
+                   <div>
+                      <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em' }}>PRECISIÓN</div>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: '#0F004F' }}>
+                         <span style={{ color: '#00D6CC' }}>{s.onTime}</span> a tiempo / {s.totalMissions}
+                      </div>
+                   </div>
+                </div>
+
+                <div style={{ background: '#F8FAFC', borderRadius: 16, padding: 16, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                   <div>
+                      <div style={{ fontSize: 10, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em' }}>HORAS DICTADAS</div>
+                      <div style={{ fontSize: 16, fontWeight: 900, color: '#0F004F' }}>{(s.totalActualMins / 60).toFixed(1)}h</div>
+                   </div>
+                   <div>
+                      <div style={{ fontSize: 10, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em' }}>TOP CURSO</div>
+                      <div style={{ fontSize: 14, fontWeight: 800, color: '#ED1650', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.topCourse}</div>
+                   </div>
+                   <div>
+                      <div style={{ fontSize: 10, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em' }}>SESIONES</div>
+                      <div style={{ fontSize: 16, fontWeight: 900, color: '#0F004F' }}>{s.sessions.size}</div>
+                   </div>
+                   <div>
+                      <div style={{ fontSize: 10, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em' }}>PORTALES</div>
+                      <div style={{ fontSize: 16, fontWeight: 900, color: '#00D6CC' }}>{s.externalPortals} clics</div>
+                   </div>
+                </div>
+             </motion.div>
           );
         })}
 
         {stats.length === 0 && (
-          <div style={{ padding: '60px 20px', textAlign: 'center', color: '#94A3B8', background: '#fff', borderRadius: 20, border: '1px dashed #CBD5E1' }}>
+          <div style={{ gridColumn: '1 / -1', padding: '60px 20px', textAlign: 'center', color: '#94A3B8', background: '#fff', borderRadius: 20, border: '1px dashed #CBD5E1' }}>
             <Activity size={48} style={{ margin: '0 auto 16px', opacity: 0.5 }} />
             <div style={{ fontSize: 16, fontWeight: 600 }}>No hay datos suficientes todavía</div>
             <div style={{ fontSize: 14 }}>A medida que los instructores completen misiones reales, aparecerán aquí.</div>
