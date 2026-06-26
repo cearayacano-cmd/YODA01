@@ -325,20 +325,24 @@ export const PerformanceDashboard = () => {
   return (
     <div style={{ padding: '40px 60px', background: '#F8F7FF', minHeight: '100%', overflowY: 'auto' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 40 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-            <div style={{ background: '#0F004F', padding: 12, borderRadius: 16, boxShadow: '0 8px 20px rgba(15,0,79,0.2)' }}>
-              <Target size={28} color="#00D6CC" />
-            </div>
-            <div>
+          <div>
               <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F004F', letterSpacing: '-0.02em', margin: 0 }}>Rendimiento de Instructores</h1>
               <p style={{ fontSize: 14, color: '#64748B', margin: 0 }}>Analiza cursos dictados, horas acumuladas y precisión de cumplimiento horario.</p>
-              <button 
-                 onClick={injectFakeData}
-                 style={{ marginTop: 12, background: 'rgba(237,22,80,0.1)', color: '#ED1650', border: '1px dashed rgba(237,22,80,0.3)', padding: '6px 12px', borderRadius: 8, cursor: 'pointer', fontSize: 12, fontWeight: 700 }}
-              >
-                 🤖 Inyectar Datos Ficticios
-              </button>
-            </div>
+              
+              <div style={{ display: 'flex', gap: 20, marginTop: 16, background: '#fff', padding: '8px 16px', borderRadius: 12, border: '1px solid #E2E8F0', display: 'inline-flex' }}>
+                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#64748B', fontWeight: 700 }}>
+                   <ShieldAlert size={14} color="#94A3B8" /> APRENDIZ (&lt; 100h)
+                 </div>
+                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#64748B', fontWeight: 700 }}>
+                   <Shield size={14} color="#3B82F6" /> EXPLORADOR (+100h)
+                 </div>
+                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#64748B', fontWeight: 700 }}>
+                   <ShieldCheck size={14} color="#8B5CF6" /> GUARDIÁN (+500h)
+                 </div>
+                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#64748B', fontWeight: 700 }}>
+                   <Crown size={14} color="#FFB800" /> MAESTRO (+1500h)
+                 </div>
+              </div>
           </div>
 
           <AnimatePresence>
