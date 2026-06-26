@@ -508,7 +508,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
                   </motion.div>
                 </div>
                 <div style={{ fontSize: 11, color: '#888', marginTop: 10, textAlign: 'right', fontWeight: 700 }}>
-                  <span style={{ color: '#0F004F' }}>{inst.finished}</span> de {inst.totalNodes} módulos completados
+                  <span style={{ color: '#0F004F' }}>{inst.finished}</span> de {inst.totalNodes} nodos completados
                 </div>
               </div>
 
