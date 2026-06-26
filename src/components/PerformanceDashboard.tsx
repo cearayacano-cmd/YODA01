@@ -15,33 +15,50 @@ export const PerformanceDashboard = () => {
     const mesAño = `${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
     
     // Helper to generate a fake mission
-    const addMissions = (email: string, planet: string, count: number, expectedMins: number, actualMins: number) => {
+    const addMissions = (email: string, planet: string, count: number, expectedMins: number, actualMins: number, status: 'FINALIZADO' | 'ABANDONADO' | 'SOLO_LECTURA' = 'FINALIZADO', sessionCode: string = 'S1') => {
         for(let i=0; i<count; i++) {
            const apert = Date.now() - (actualMins * 60000);
            const fin = Date.now();
            tracking.push({
-             mesAño, instructor: email.split('@')[0], email, codigo: 'YODA-FAKE', expedicion: 'MOCK',
+             mesAño, instructor: email.split('@')[0], email, codigo: sessionCode, expedicion: 'MOCK',
              planetas: planet, missao: `Misión ${i}`, macrotema: 'Tema', tema: `Tema ${i}`,
              tiempoEstimado: `${expectedMins}m`, 
-             tiempoApertura: new Date(apert).toISOString(), marcarComoFinalizado: new Date(fin).toISOString(),
-             marcarComoVisto: null,
-             tiempoAperturaRaw: apert, marcarComoFinalizadoRaw: fin
+             tiempoApertura: status === 'SOLO_LECTURA' ? null : new Date(apert).toISOString(), 
+             marcarComoFinalizado: status === 'FINALIZADO' ? new Date(fin).toISOString() : null,
+             marcarComoVisto: status === 'SOLO_LECTURA' ? new Date(fin).toISOString() : null,
+             tiempoAperturaRaw: status === 'SOLO_LECTURA' ? undefined : apert, 
+             marcarComoFinalizadoRaw: status === 'FINALIZADO' ? fin : undefined
            });
         }
     };
 
+    const addLogs = (email: string, count: number) => {
+       const logsStr = localStorage.getItem('yoda_activity_logs');
+       let logs = logsStr ? JSON.parse(logsStr) : [];
+       for(let i=0; i<count; i++) {
+          logs.push({ time: new Date().toISOString(), user: email, action: 'NAVIGATE', details: 'PORTAL_EXTERNO' });
+       }
+       localStorage.setItem('yoda_activity_logs', JSON.stringify(logs));
+       setActivityLogs(logs);
+    };
+
     // Veterano: 200 hours, high precision on course A, some fast on course B
-    addMissions('veterano@latam.com', 'HVC BAG', 100, 60, 60); // On time (100 hours)
-    addMissions('veterano@latam.com', 'HVC BAG', 20, 60, 30); // Fast (10 hours)
-    addMissions('veterano@latam.com', 'LAE', 50, 120, 120); // On time (100 hours)
+    // Veterano: 200 hours, high precision, multi-sessions
+    addMissions('veterano@latam.com', 'HVC BAG', 100, 60, 60, 'FINALIZADO', 'SES-01');
+    addMissions('veterano@latam.com', 'HVC BAG', 20, 60, 30, 'FINALIZADO', 'SES-02');
+    addMissions('veterano@latam.com', 'LAE', 50, 120, 120, 'FINALIZADO', 'SES-03');
+    addMissions('veterano@latam.com', 'LAE', 5, 120, 60, 'ABANDONADO', 'SES-03');
+    addLogs('veterano@latam.com', 45); // Portales externos
 
-    // Medio: 50 hours, mostly slow
-    addMissions('medio@latam.com', 'ONBOARDING LATAM', 40, 30, 60); // Slow (40 hours)
-    addMissions('medio@latam.com', 'SOPORTE AVANZADO', 10, 60, 60); // On time (10 hours)
+    // Medio: 50 hours, mostly slow, some read only
+    addMissions('medio@latam.com', 'ONBOARDING LATAM', 40, 30, 60, 'FINALIZADO', 'SES-10');
+    addMissions('medio@latam.com', 'ONBOARDING LATAM', 15, 30, 0, 'SOLO_LECTURA', 'SES-10');
+    addLogs('medio@latam.com', 12);
 
-    // Nuevo: 5 hours, very fast
-    addMissions('nuevo@latam.com', 'FIELD SUPPORT BASE', 5, 60, 10); // Fast (less than 1 hour)
-    addMissions('nuevo@latam.com', 'ONBOARDING LATAM', 4, 60, 60); // On time (4 hours)
+    // Nuevo: very fast, abandons a lot
+    addMissions('nuevo@latam.com', 'FIELD SUPPORT BASE', 5, 60, 10, 'FINALIZADO', 'SES-20');
+    addMissions('nuevo@latam.com', 'FIELD SUPPORT BASE', 10, 60, 30, 'ABANDONADO', 'SES-20');
+    addLogs('nuevo@latam.com', 2);
 
     localStorage.setItem('yoda_mission_tracking', JSON.stringify(tracking));
     setData(tracking);
@@ -91,6 +108,11 @@ export const PerformanceDashboard = () => {
           onTime: 0,
           fast: 0,
           slow: 0,
+          abandoned: 0,
+          readOnly: 0,
+          sessions: new Set<string>(),
+          activeDays: new Set<string>(),
+          externalPortals: 0
         };
       }
 
@@ -128,17 +150,26 @@ export const PerformanceDashboard = () => {
         if (diff < -tolerance) ud.fast++;
         else if (diff > tolerance) ud.slow++;
         else ud.onTime++;
+      } else if (log.tiempoApertura) {
+        ud.abandoned++;
+      } else if (log.marcarComoVisto) {
+        ud.readOnly++;
       }
+      
+      if (log.codigo) ud.sessions.add(log.codigo);
+      if (log.tiempoAperturaRaw) ud.activeDays.add(new Date(log.tiempoAperturaRaw).toISOString().split('T')[0]);
+      if (log.marcarComoVistoRaw) ud.activeDays.add(new Date(log.marcarComoVistoRaw).toISOString().split('T')[0]);
     });
 
-    // We can also merge raw tracking time from activity logs to make hours more robust
+    // Merge from activity logs for external portals
     activityLogs.forEach((log: any) => {
         if (!log.user || log.user === 'admin') return;
-        if (log.action === 'TRACK_TIEMPO' && log.elapsedSecs) {
-            const ud = usersData[log.user];
-            if (ud) {
-               // We could add this to total actual mins if we want strict activity logs time
+        const ud = usersData[log.user];
+        if (ud) {
+            if (log.action === 'NAVIGATE' || log.action === 'ACCESO_LINK') {
+                ud.externalPortals++;
             }
+            if (log.time) ud.activeDays.add(new Date(log.time).toISOString().split('T')[0]);
         }
     });
 
@@ -250,9 +281,36 @@ export const PerformanceDashboard = () => {
                          </div>
                        </div>
                      </div>
+                     
+                     {/* Other Metrics */}
+                     <div>
+                       <h3 style={{ fontSize: 13, fontWeight: 800, color: '#0F004F', letterSpacing: '0.1em', marginBottom: 20 }}>MÉTRICAS ADICIONALES</h3>
+                       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                           <span style={{ fontSize: 13, color: '#64748B' }}>Sesiones Creadas</span>
+                           <span style={{ fontSize: 14, fontWeight: 800, color: '#0F004F' }}>{s.sessions.size}</span>
+                         </div>
+                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                           <span style={{ fontSize: 13, color: '#64748B' }}>Días Activos (Conexiones)</span>
+                           <span style={{ fontSize: 14, fontWeight: 800, color: '#0F004F' }}>{s.activeDays.size} días</span>
+                         </div>
+                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                           <span style={{ fontSize: 13, color: '#64748B' }}>Modo Solo Lectura</span>
+                           <span style={{ fontSize: 14, fontWeight: 800, color: '#0F004F' }}>{s.readOnly} misiones</span>
+                         </div>
+                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                           <span style={{ fontSize: 13, color: '#64748B' }}>Tasa de Abandono</span>
+                           <span style={{ fontSize: 14, fontWeight: 800, color: '#ED1650' }}>{s.abandoned} misiones</span>
+                         </div>
+                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                           <span style={{ fontSize: 13, color: '#64748B' }}>Clics en Portales Externos</span>
+                           <span style={{ fontSize: 14, fontWeight: 800, color: '#00D6CC' }}>{s.externalPortals}</span>
+                         </div>
+                       </div>
+                     </div>
 
                      {/* Courses List */}
-                     <div>
+                     <div style={{ gridColumn: '1 / -1' }}>
                        <h3 style={{ fontSize: 13, fontWeight: 800, color: '#0F004F', letterSpacing: '0.1em', marginBottom: 20 }}>CURSOS DICTADOS ({s.courseList.length})</h3>
                        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                          {s.courseList.map((c: any, i: number) => (
