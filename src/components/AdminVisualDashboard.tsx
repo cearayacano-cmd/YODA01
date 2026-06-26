@@ -114,8 +114,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
       if (expedicion === 'Módulo de Aprendizaje') {
           planetName = 'Ruta del Líder';
       }
-      
-      if (planetName === 'Nave de Onboarding') return;
+      if (planetName.toUpperCase().includes('ONBOARDING')) return;
 
       const key = `${log.instructor}|${planetName}`;
 
