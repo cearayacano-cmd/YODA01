@@ -115,6 +115,8 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
           planetName = 'Ruta del Líder';
       }
       
+      if (planetName === 'Nave de Onboarding') return;
+
       const key = `${log.instructor}|${planetName}`;
 
       if (!stats[key]) {
@@ -153,6 +155,13 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
                 const idx = config.exploracion[exploracionKey].findIndex((p: any) => p.label === planetName || p.name === planetName || p.id === planetName);
                 
                 if (idx !== -1 && contentArray[idx]) {
+                    const planetObj = config.exploracion[exploracionKey][idx];
+                    if (config.onboarding) {
+                        const onboardingIdx = planetObj.onboardingIdx || 0;
+                        if (config.onboarding[onboardingIdx]) {
+                            buildMacro(getSecciones(config.onboarding[onboardingIdx].data || config.onboarding[onboardingIdx]));
+                        }
+                    }
                     buildMacro(getSecciones(contentArray[idx]));
                     return true;
                 }
@@ -160,6 +169,12 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
                 // Fallback direct search
                 const p = contentArray.find((s: any) => s.label === planetName || s.name === planetName || s.id === planetName);
                 if (p) {
+                   if (config.onboarding) {
+                       const onboardingIdx = p.onboardingIdx || 0;
+                       if (config.onboarding[onboardingIdx]) {
+                           buildMacro(getSecciones(config.onboarding[onboardingIdx].data || config.onboarding[onboardingIdx]));
+                       }
+                   }
                    buildMacro(getSecciones(p));
                    return true;
                 }
