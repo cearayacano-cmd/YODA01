@@ -468,6 +468,7 @@ export const RutaLiderView = ({ links, rutaData, onBack }: any) => {
             texture="CRATERS"
             tick={tick}
             planetLabel="RUTA DEL LÍDER"
+            onBackToPlanets={onBack}
           />
         </div>
       </div>
