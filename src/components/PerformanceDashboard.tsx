@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, Clock, Target, Star, AlertCircle, CheckCircle2, ChevronDown, ChevronRight, Activity } from 'lucide-react';
+import { Trophy, Clock, Target, Star, AlertCircle, CheckCircle2, ChevronDown, ChevronRight, Activity, Zap } from 'lucide-react';
 import { getMissionTracking, MissionProgress } from '../lib/tracking';
 
 export const PerformanceDashboard = () => {
