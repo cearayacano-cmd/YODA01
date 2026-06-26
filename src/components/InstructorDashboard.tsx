@@ -207,8 +207,12 @@ export const InstructorDashboard = ({ logs, config, onBack, initialUser, isEmbed
                 let p = idx !== -1 ? arr[idx] : arr.find((s: any) => s.label === planetName || s.name === planetName || s.id === planetName);
                 if (p) {
                     if (config.onboarding) {
-                        const oIdx = (idx !== -1 ? config.exploracion[key][idx].onboardingIdx : p.onboardingIdx) || 0;
-                        if (config.onboarding[oIdx]) foundNodes += countSecs(getSecs(config.onboarding[oIdx].data || config.onboarding[oIdx]));
+                        const pIdx = idx !== -1 ? idx : arr.indexOf(p);
+                        const isFirstPlanet = (pIdx === 0 && key === 'frontLine') || p.onboardingIdx != null;
+                        if (isFirstPlanet) {
+                            const oIdx = (idx !== -1 ? config.exploracion[key][idx].onboardingIdx : p.onboardingIdx) || 0;
+                            if (config.onboarding[oIdx]) foundNodes += countSecs(getSecs(config.onboarding[oIdx].data || config.onboarding[oIdx]));
+                        }
                     }
                     foundNodes += countSecs(getSecs(p));
                     return true;

@@ -157,7 +157,8 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
                     const planetObj = config.exploracion[exploracionKey][idx];
                     if (config.onboarding) {
                         const onboardingIdx = planetObj.onboardingIdx || 0;
-                        if (config.onboarding[onboardingIdx]) {
+                        const isFirstPlanet = (idx === 0 && exploracionKey === 'frontLine') || planetObj.onboardingIdx != null;
+                        if (isFirstPlanet && config.onboarding[onboardingIdx]) {
                             buildMacro(getSecciones(config.onboarding[onboardingIdx].data || config.onboarding[onboardingIdx]));
                         }
                     }
@@ -170,7 +171,9 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
                 if (p) {
                    if (config.onboarding) {
                        const onboardingIdx = p.onboardingIdx || 0;
-                       if (config.onboarding[onboardingIdx]) {
+                       const pIdx = contentArray.indexOf(p);
+                       const isFirstPlanet = (pIdx === 0 && exploracionKey === 'frontLine') || p.onboardingIdx != null;
+                       if (isFirstPlanet && config.onboarding[onboardingIdx]) {
                            buildMacro(getSecciones(config.onboarding[onboardingIdx].data || config.onboarding[onboardingIdx]));
                        }
                    }
