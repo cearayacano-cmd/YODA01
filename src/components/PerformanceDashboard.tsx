@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, Clock, Target, Activity, Zap, Layers, AlertCircle, CheckCircle2, ChevronRight, X, UserX, UserCheck } from 'lucide-react';
+import { Trophy, Clock, Target, Activity, Zap, Layers, AlertCircle, CheckCircle2, ChevronRight, X, UserX, UserCheck, Shield, ShieldAlert, ShieldCheck, Crown } from 'lucide-react';
 import { getMissionTracking, MissionProgress } from '../lib/tracking';
 
 export const PerformanceDashboard = () => {
@@ -191,6 +191,13 @@ export const PerformanceDashboard = () => {
 
   }, [data, activityLogs, forceRender]);
 
+  const getRank = (totalHours: number) => {
+    if (totalHours >= 150) return { title: 'Maestro Jedi', color: '#FFB800', bg: 'rgba(255,184,0,0.1)', icon: Crown };
+    if (totalHours >= 50) return { title: 'Instructor Senior', color: '#8B5CF6', bg: 'rgba(139,92,246,0.1)', icon: ShieldCheck };
+    if (totalHours >= 10) return { title: 'Instructor Regular', color: '#3B82F6', bg: 'rgba(59,130,246,0.1)', icon: Shield };
+    return { title: 'Iniciado', color: '#94A3B8', bg: 'rgba(148,163,184,0.1)', icon: ShieldAlert };
+  };
+
   const toggleSelect = (email: string) => {
      if (selectedToCompare.includes(email)) {
         setSelectedToCompare(prev => prev.filter(e => e !== email));
@@ -250,8 +257,18 @@ export const PerformanceDashboard = () => {
                           <div style={{ width: 80, height: 80, borderRadius: '50%', background: '#0F004F', color: '#00D6CC', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, fontWeight: 900, marginBottom: 16 }}>
                               {s.name.substring(0, 2).toUpperCase()}
                           </div>
-                          <div style={{ fontSize: 22, fontWeight: 900, color: '#0F004F', textTransform: 'capitalize' }}>{s.name}</div>
-                          <div style={{ fontSize: 13, color: '#64748B' }}>{s.email}</div>
+                          <div style={{ fontSize: 22, fontWeight: 900, color: '#0F004F', textTransform: 'capitalize', marginBottom: 4 }}>{s.name}</div>
+                          <div style={{ fontSize: 13, color: '#64748B', marginBottom: 16 }}>{s.email}</div>
+                          
+                          {(() => {
+                             const rank = getRank(s.totalActualMins / 60);
+                             const Icon = rank.icon;
+                             return (
+                                <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: rank.bg, color: rank.color, padding: '6px 14px', borderRadius: 20, fontSize: 12, fontWeight: 800, letterSpacing: '0.05em' }}>
+                                  <Icon size={14} strokeWidth={3} /> {rank.title.toUpperCase()}
+                                </div>
+                             );
+                          })()}
                        </div>
 
                        <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -391,8 +408,17 @@ export const PerformanceDashboard = () => {
                       {s.name.substring(0, 2).toUpperCase()}
                    </div>
                    <div>
-                      <div style={{ fontSize: 16, fontWeight: 900, color: '#0F004F', textTransform: 'capitalize' }}>{s.name}</div>
-                      <div style={{ fontSize: 12, color: '#64748B' }}>{s.email}</div>
+                      <div style={{ fontSize: 16, fontWeight: 900, color: '#0F004F', textTransform: 'capitalize', marginBottom: 4 }}>{s.name}</div>
+                      {(() => {
+                         const rank = getRank(s.totalActualMins / 60);
+                         const Icon = rank.icon;
+                         return (
+                            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, color: rank.color, fontSize: 11, fontWeight: 800, letterSpacing: '0.05em', marginBottom: 2 }}>
+                              <Icon size={12} strokeWidth={3} /> {rank.title.toUpperCase()}
+                            </div>
+                         );
+                      })()}
+                      <div style={{ fontSize: 11, color: '#94A3B8' }}>{s.email}</div>
                    </div>
                 </div>
 
