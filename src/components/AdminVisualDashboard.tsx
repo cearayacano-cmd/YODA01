@@ -86,10 +86,23 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
     return { totalMissionsAvailable: count === 0 ? 1 : count, totalProgrammedMinutes: mins };
   }, [config]);
 
-  // Aggregate data per instructor
-  // Aggregate data per instructor
-  const instructorStats = useMemo(() => {
-    const stats: Record<string, { email: string, instructorId: string, planetName: string, expedicion: string, opened: number, finished: number, totalNodes: number, totalProgrammedMinutesStr: string, lastMission: string, lastActive: number, sessionCode: string, consumedMinutes: number }> = {};
+    // Aggregate data per instructor
+    const instructorStats = useMemo(() => {
+        const stats: Record<string, { 
+            email: string, 
+            instructorId: string, 
+            planetName: string, 
+            expedicion: string, 
+            opened: number, 
+            finished: number, 
+            totalNodes: number, 
+            totalProgrammedMinutesStr: string, 
+            lastMission: string, 
+            lastActive: number, 
+            sessionCode: string, 
+            consumedMinutes: number,
+            macroStructure: { sectionName: string, expectedRows: string[] }[]
+        }> = {};
 
     data.forEach(log => {
       let planetName = log.planetas || 'Desconocido';
@@ -102,19 +115,23 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
       const key = `${log.instructor}|${planetName}`;
 
       if (!stats[key]) {
-        // Calculate total nodes for this planet
-        let tNodes = 1;
         let tMins = 0;
+        let macroStructure: { sectionName: string, expectedRows: string[] }[] = [];
         
         if (config) {
-            let n = 0;
-            const countNodes = (items: any[]) => {
-                items.forEach((r: any) => {
-                    if (r.rows) {
-                        countNodes(r.rows);
-                    } else if (r.tema) {
-                        n++;
-                        tMins += parseTime(r.tiempo || r.ch || '0');
+            const buildMacro = (sections: any[]) => {
+                sections.forEach(sec => {
+                    const secName = sec.label || sec.name || 'Unlabeled Section';
+                    const expectedRows: string[] = [];
+                    const rows = sec.rows || (sec.secciones ? sec.secciones : Array.isArray(sec) ? sec : [sec]);
+                    rows.forEach((r: any) => {
+                         if (r.tema) {
+                             expectedRows.push(r.tema);
+                             tMins += parseTime(r.tiempo || r.ch || '0');
+                         }
+                    });
+                    if (expectedRows.length > 0) {
+                        macroStructure.push({ sectionName: secName, expectedRows });
                     }
                 });
             };
@@ -133,15 +150,14 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
                 const idx = config.exploracion[exploracionKey].findIndex((p: any) => p.label === planetName || p.name === planetName || p.id === planetName);
                 
                 if (idx !== -1 && contentArray[idx]) {
-                    const contentObj = contentArray[idx];
-                    countNodes(getSecciones(contentObj));
+                    buildMacro(getSecciones(contentArray[idx]));
                     return true;
                 }
                 
                 // Fallback direct search
                 const p = contentArray.find((s: any) => s.label === planetName || s.name === planetName || s.id === planetName);
                 if (p) {
-                   countNodes(getSecciones(p));
+                   buildMacro(getSecciones(p));
                    return true;
                 }
                 return false;
@@ -150,7 +166,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
             if (planetName === 'Ruta del Líder') {
                 if (config.rutaLider) {
                     config.rutaLider.forEach((p: any) => {
-                        countNodes(getSecciones(p));
+                        buildMacro(getSecciones(p));
                     });
                 }
             } else {
@@ -159,13 +175,12 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
                         if (!searchAndCount('fieldSupport', config.fsc)) {
                             if (config.onboarding) {
                                 const p = config.onboarding.find((s: any) => s.label === planetName || s.name === planetName || s.id === planetName);
-                                if (p) countNodes(Array.isArray(p) ? p : (p.secciones || []));
+                                if (p) buildMacro(getSecciones(p));
                             }
                         }
                     }
                 }
             }
-            if (n > 0) tNodes = n;
         }
 
         stats[key] = {
@@ -175,12 +190,13 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
           expedicion: expedicion,
           opened: 0,
           finished: 0,
-          totalNodes: tNodes,
+          totalNodes: macroStructure.length > 0 ? macroStructure.length : 1,
           totalProgrammedMinutesStr: tMins > 0 ? formatTime(tMins) : '0h 0m',
           lastMission: 'N/A',
           lastActive: 0,
           sessionCode: log.codigo,
-          consumedMinutes: 0
+          consumedMinutes: 0,
+          macroStructure: macroStructure
         };
       }
 
@@ -207,14 +223,26 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
         
         // Unique missions opened
         const openedMissions = new Set(instructorLogs.filter(d => !!d.tiempoApertura).map(d => `${d.missao}-${d.tema}`));
-        stats[key].opened = openedMissions.size;
+        stats[key].opened = openedMissions.size; // This can stay as raw clicks count
 
         // Unique missions finished
         const finishedLogs = instructorLogs.filter(d => !!d.marcarComoFinalizado);
+        const finishedSet = new Set(finishedLogs.map(d => `${d.missao}-${d.tema}`));
         const finishedMap = new Map<string, string>();
         finishedLogs.forEach(d => finishedMap.set(`${d.missao}-${d.tema}`, d.tiempoEstimado));
         
-        stats[key].finished = finishedMap.size;
+        // Calculate MACRO finished: a macro is finished if ALL its expected rows are in the finishedSet
+        let finishedMacroCount = 0;
+        stats[key].macroStructure.forEach(macro => {
+            const allFinished = macro.expectedRows.every(rowName => 
+                 finishedSet.has(`${macro.sectionName}-${rowName}`) || 
+                 finishedSet.has(`-${rowName}`) || 
+                 finishedSet.has(`${stats[key].planetName}-${rowName}`)
+            );
+            if (macro.expectedRows.length > 0 && allFinished) finishedMacroCount++;
+        });
+        
+        stats[key].finished = finishedMacroCount;
         
         let mins = 0;
         finishedMap.forEach(timeStr => mins += parseTime(timeStr));
@@ -508,7 +536,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
                   </motion.div>
                 </div>
                 <div style={{ fontSize: 11, color: '#888', marginTop: 10, textAlign: 'right', fontWeight: 700 }}>
-                  <span style={{ color: '#0F004F' }}>{inst.finished}</span> de {inst.totalNodes} nodos completados
+                  <span style={{ color: '#0F004F' }}>{inst.finished}</span> de {inst.totalNodes} módulos completados
                 </div>
               </div>
 
