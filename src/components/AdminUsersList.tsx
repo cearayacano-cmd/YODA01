@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Users, Search, ChevronRight, UserCircle2 } from 'lucide-react';
 import { getMissionTracking, MissionProgress } from '../lib/tracking';
 
-export const AdminUsersList = ({ onViewUser, stationName, onViewInstructorDashboard }: { onViewUser: (instructorId: string) => void, stationName?: string, onViewInstructorDashboard?: (instructorId: string) => void }) => {
+export const AdminUsersList = ({ onViewUser, stationName }: { onViewUser: (instructorId: string) => void, stationName?: string }) => {
   const [data, setData] = useState<MissionProgress[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -220,12 +220,9 @@ export const AdminUsersList = ({ onViewUser, stationName, onViewInstructorDashbo
                   </td>
                   <td style={{ padding: '16px 24px', textAlign: 'right' }}>
                     <div 
-                      onClick={() => {
-                        if (onViewInstructorDashboard) {
-                          onViewInstructorDashboard(user.email);
-                        } else {
-                          onViewUser(user.email);
-                        }
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onViewUser(user.email);
                       }}
                       style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#00D6CC', fontWeight: 800, fontSize: 12, cursor: 'pointer' }}
                     >

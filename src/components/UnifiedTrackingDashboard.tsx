@@ -3,11 +3,11 @@ import { AdminTrackingDashboard } from './AdminTrackingDashboard';
 import { AdminPortalTrackingDashboard } from './AdminPortalTrackingDashboard';
 import { AdminVisualDashboard } from './AdminVisualDashboard';
 import { AdminUsersList } from './AdminUsersList';
-import { InstructorDashboard } from './InstructorDashboard';
+
 import { ArrowLeft, Users, LayoutDashboard, TableProperties, Compass, Star } from 'lucide-react';
 
 export const UnifiedTrackingDashboard = ({ view, logs, config, onBack, stationName, initialInstructorId }: any) => {
-  const [activeTab, setActiveTab] = useState<'users' | 'visual' | 'missions' | 'portals' | 'kpi'>(initialInstructorId ? 'kpi' : 'users');
+  const [activeTab, setActiveTab] = useState<'users' | 'visual' | 'missions' | 'portals'>('users');
   const [selectedInstructor, setSelectedInstructor] = useState<string | undefined>(initialInstructorId);
   const [selectedCode, setSelectedCode] = useState<string | undefined>();
 
@@ -17,17 +17,12 @@ export const UnifiedTrackingDashboard = ({ view, logs, config, onBack, stationNa
     setActiveTab('visual');
   };
 
-  const handleViewGamification = (instructorId: string) => {
-    setSelectedInstructor(instructorId);
-    setActiveTab('kpi');
-  };
 
   const menuItems = [
     { id: 'users', label: 'DIRECTORIO', icon: <Users size={20} />, color: '#ED1650' },
     { id: 'visual', label: 'RESUMEN VISUAL', icon: <LayoutDashboard size={20} />, color: '#FFB800' },
     { id: 'missions', label: 'MISIONES', icon: <TableProperties size={20} />, color: '#00D6CC' },
-    { id: 'portals', label: 'PORTALES', icon: <Compass size={20} />, color: '#99CC33' },
-    { id: 'kpi', label: 'PERFIL INSTRUCTOR', icon: <Star size={20} />, color: '#B200FF' }
+    { id: 'portals', label: 'PORTALES', icon: <Compass size={20} />, color: '#99CC33' }
   ];
 
   return (
@@ -116,14 +111,10 @@ export const UnifiedTrackingDashboard = ({ view, logs, config, onBack, stationNa
       <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
         {activeTab === 'users' && (
           <div style={{ position: 'absolute', inset: 0, overflow: 'auto' }}>
-            <AdminUsersList onViewUser={handleViewDetails} stationName={stationName} onViewInstructorDashboard={handleViewGamification} />
+            <AdminUsersList onViewUser={handleViewDetails} stationName={stationName} />
           </div>
         )}
-        {activeTab === 'kpi' && (
-          <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
-            <InstructorDashboard logs={logs} config={config} initialUser={selectedInstructor} onBack={() => setActiveTab('users')} isEmbedded={true} stationName={stationName} />
-          </div>
-        )}
+
         {activeTab === 'visual' && (
           <div style={{ position: 'absolute', inset: 0, overflow: 'auto' }}>
             <AdminVisualDashboard config={config} initialSearchQuery={selectedInstructor} onViewDetails={(instructorId: string, sessionCode: string) => {
