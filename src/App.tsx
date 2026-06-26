@@ -45,7 +45,7 @@ import { LinksView } from './components/Views4';
 import { LaboratorioView, IngenieriaView, SuministrosView, OperacionesView, RutaLiderView } from './components/Views5';
 import { PlanetContentView } from './components/Views6';
 import { ActivityLogView } from './components/ActivityLogView';
-import { InstructorDashboard } from './components/InstructorDashboard';
+
 import { UnifiedTrackingDashboard } from './components/UnifiedTrackingDashboard';
 
 /* ── SIMPLE BUTTONS ─────────────────────────────────────────────────── */
@@ -347,14 +347,11 @@ export default function App() {
             onRutaLider={(st: string) => { setAdminStation(st); go('admin-ruta-lider') }}
             onSave={saveConfigToDisk}
             onActivityLog={() => go('activity-log')}
-            onInstructorDashboard={() => go('instructor-dashboard')}
+
             onMissionTracking={(st: string) => { setAdminStation(st); go('admin-activity-tracking') }}
           />
         );
-      case 'instructor-dashboard':
-        return (
-          <InstructorDashboard logs={activityLogs} config={activeConfig} initialUser={selectedInstructorId} onBack={() => go('admin')} />
-        );
+
       case 'admin-activity-tracking':
         return (
           <UnifiedTrackingDashboard
