@@ -1082,9 +1082,12 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
   }, [rutaData]);
 
   let btnText = isEs ? 'NUEVA MISIÓN' : 'NOVA MISSÃO';
+  const email = typeof localStorage !== 'undefined' ? localStorage.getItem('yoda_active_user') || 'instructor@example.com' : 'instructor@example.com';
+  const hasSession = typeof localStorage !== 'undefined' && localStorage.getItem(`yoda_session_code_lider_${email}`);
+
   if (progress.total > 0 && progress.completed === progress.total) {
     btnText = isEs ? 'VER MAPA' : 'VER MAPA';
-  } else if (progress.completed > 0) {
+  } else if (progress.completed > 0 || hasSession) {
     btnText = isEs ? 'CONTINUAR' : 'CONTINUAR';
   }
 
@@ -1301,7 +1304,11 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
             ) : (
                <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={(e) => {
                   e.stopPropagation();
-                  updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'PROGRAMA DE FORMAÇÃO - CAPA LIDERANÇA', btnText === 'VER MAPA' ? 'VER MAPA' : 'NUEVA PARTIDA', 'CLICK');
+                  const email = localStorage.getItem('yoda_active_user') || 'instructor@example.com';
+                  if (!localStorage.getItem(`yoda_session_code_lider_${email}`)) {
+                      localStorage.setItem(`yoda_session_code_lider_${email}`, 'YODA-GD' + Math.floor(1000 + Math.random() * 9000));
+                  }
+                  updatePortalTracking(email, 'PROGRAMA DE FORMAÇÃO - CAPA LIDERANÇA', btnText === 'VER MAPA' ? 'VER MAPA' : 'NUEVA PARTIDA', 'CLICK');
                   onNavigateRuta();
                }} style={{
                   padding: '14px 32px',
