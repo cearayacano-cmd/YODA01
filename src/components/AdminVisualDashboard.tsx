@@ -257,8 +257,8 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
             const allFinished = macro.expectedRows.every(rowName => {
                  const secName = macro.sectionName.toUpperCase();
                  const rowUpper = rowName.toUpperCase();
-                 return Array.from(finishedSet).some(finishedKey => {
-                     const keyUpper = finishedKey.toUpperCase();
+                 return Array.from(finishedSet).some((finishedKey: any) => {
+                     const keyUpper = String(finishedKey).toUpperCase();
                      return keyUpper === `${secName}-${rowUpper}` || 
                             keyUpper === `-${rowUpper}` || 
                             keyUpper === `${stats[key].planetName.toUpperCase()}-${rowUpper}`;
