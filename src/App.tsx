@@ -199,16 +199,18 @@ export default function App() {
   React.useEffect(() => {
     // ONE-TIME AUTO WIPE FOR VERSION UPDATE
     // This ensures that all old, corrupted, or conflicting progress markers are cleared for the user.
-    if (!localStorage.getItem('yoda_auto_wipe_v7')) {
+    if (!localStorage.getItem('yoda_auto_wipe_v8')) {
       Object.keys(localStorage).forEach(key => {
-        if ((key.startsWith('yoda_') && key !== 'yoda_active_user' && key !== 'yoda_station_name' && key !== 'yoda_auto_wipe_v7') || 
-            key.startsWith('resolved_') || 
-            key.startsWith('congrats_shown_')) {
+        // Reset every single trace of user activity, except identity.
+        if (key.startsWith('yoda_') && !key.includes('active_user') && !key.includes('station_name') && !key.includes('station_country')) {
+          localStorage.removeItem(key);
+        }
+        if (key.startsWith('resolved_') || key.startsWith('congrats_')) {
           localStorage.removeItem(key);
         }
       });
-      localStorage.setItem('yoda_auto_wipe_v7', 'true');
-      console.log('Automated wipe complete (v7) - FULL CLEAR.');
+      localStorage.setItem('yoda_auto_wipe_v8', 'true');
+      console.log('Automated wipe complete (v8) - FULL CLEAR.');
     }
 
     // Dynamic config loading from /api/config
