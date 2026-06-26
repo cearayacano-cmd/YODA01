@@ -192,9 +192,9 @@ export const PerformanceDashboard = () => {
   }, [data, activityLogs, forceRender]);
 
   const getRank = (totalHours: number) => {
-    if (totalHours >= 150) return { title: 'Maestro Jedi', color: '#FFB800', bg: 'rgba(255,184,0,0.1)', icon: Crown };
-    if (totalHours >= 50) return { title: 'Instructor Senior', color: '#8B5CF6', bg: 'rgba(139,92,246,0.1)', icon: ShieldCheck };
-    if (totalHours >= 10) return { title: 'Instructor Regular', color: '#3B82F6', bg: 'rgba(59,130,246,0.1)', icon: Shield };
+    if (totalHours >= 1500) return { title: 'Maestro Jedi', color: '#FFB800', bg: 'rgba(255,184,0,0.1)', icon: Crown };
+    if (totalHours >= 500) return { title: 'Instructor Senior', color: '#8B5CF6', bg: 'rgba(139,92,246,0.1)', icon: ShieldCheck };
+    if (totalHours >= 100) return { title: 'Instructor Regular', color: '#3B82F6', bg: 'rgba(59,130,246,0.1)', icon: Shield };
     return { title: 'Iniciado', color: '#94A3B8', bg: 'rgba(148,163,184,0.1)', icon: ShieldAlert };
   };
 
