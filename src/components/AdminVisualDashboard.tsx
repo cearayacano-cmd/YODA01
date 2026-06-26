@@ -377,26 +377,6 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
             <div style={{ fontSize: 12, fontWeight: 800, color: '#666', textTransform: 'uppercase', letterSpacing: '1px' }}>Instructores Activos</div>
             <div style={{ fontSize: 32, fontWeight: 900, color: '#0F004F' }}>{globalStats.instructors}</div>
           </div>
-          <div style={{ marginLeft: 'auto' }}>
-            <button 
-                onClick={() => {
-                    if(window.confirm('¿Estás seguro de borrar absolutamente todo el progreso de todos los usuarios (QA TEST)?')) {
-                        Object.keys(localStorage).forEach(key => {
-                            if (key.startsWith('yoda_') && !key.includes('active_user') && !key.includes('station_name') && !key.includes('station_country')) {
-                                localStorage.removeItem(key);
-                            }
-                            if (key.startsWith('resolved_') || key.startsWith('congrats_')) {
-                                localStorage.removeItem(key);
-                            }
-                        });
-                        window.location.reload();
-                    }
-                }}
-                style={{ background: '#ED1650', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: 8, cursor: 'pointer', fontWeight: 'bold', fontSize: 12 }}
-            >
-                BORRAR TODO (QA TEST)
-            </button>
-          </div>
         </motion.div>
 
         <motion.div initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} transition={{delay: 0.1}} style={{ background: '#fff', padding: 24, borderRadius: 16, boxShadow: '0 4px 20px rgba(0,0,0,0.03)', display: 'flex', alignItems: 'center', gap: 20 }}>

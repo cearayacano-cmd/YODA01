@@ -357,25 +357,6 @@ export const PerformanceDashboard = () => {
                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#64748B', fontWeight: 700 }}>
                    <Crown size={14} color="#FFB800" /> MAESTRO (+4000h)
                  </div>
-                 <div style={{ width: 1, height: 16, background: '#E2E8F0', margin: '0 8px' }} />
-                 <button 
-                   onClick={injectFakeData}
-                   style={{ background: 'transparent', border: 'none', color: '#00D6CC', fontSize: 11, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
-                 >
-                   <Zap size={14} /> INYECTAR DATOS (TEST)
-                 </button>
-                 <button 
-                   onClick={() => {
-                     if(window.confirm('¿Estás seguro que deseas borrar TODO el historial de misiones y actividad para empezar desde cero?')) {
-                       localStorage.removeItem('yoda_mission_tracking');
-                       localStorage.removeItem('yoda_activity_logs');
-                       window.location.reload();
-                     }
-                   }}
-                   style={{ background: 'transparent', border: 'none', color: '#ED1650', fontSize: 11, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
-                 >
-                   <AlertCircle size={14} /> REINICIAR
-                 </button>
               </div>
           </div>
 
