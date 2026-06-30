@@ -1,10 +1,10 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, Clock, Target, Activity, Zap, Layers, AlertCircle, CheckCircle2, ChevronRight, X, UserX, UserCheck, Shield, ShieldAlert, ShieldCheck, Crown } from 'lucide-react';
+import { Trophy, Clock, Target, Activity, Zap, Layers, AlertCircle, CheckCircle2, ChevronRight, X, UserX, UserCheck, Shield, ShieldAlert, ShieldCheck, Crown, Plus } from 'lucide-react';
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { getMissionTracking, MissionProgress } from '../lib/tracking';
 
-export const PerformanceDashboard = () => {
+export const PerformanceDashboard = ({ onBack, stationName }: { onBack?: any, stationName?: string }) => {
   const [data, setData] = useState<MissionProgress[]>([]);
   const [activityLogs, setActivityLogs] = useState<any[]>([]);
   const [forceRender, setForceRender] = useState(0);
@@ -13,9 +13,13 @@ export const PerformanceDashboard = () => {
   const [filterExpedicion, setFilterExpedicion] = useState<string>('Todas');
   const [filterPlaneta, setFilterPlaneta] = useState<string>('Todos');
   const [filterFabrica, setFilterFabrica] = useState<string>('Todas');
+  const [rankConfig, setRankConfig] = useState({
+    explorador: 400,
+    guardian: 1500,
+    maestro: 3000,
+    lider: 5000
+  });
 
-  const availableExpediciones = useMemo(() => Array.from(new Set(data.map(d => d.expedicion).filter(Boolean))), [data]);
-  const availablePlanetas = useMemo(() => Array.from(new Set(data.map(d => d.planetas).filter(Boolean))), [data]);
 
   const injectFakeData = () => {
     const tracking: MissionProgress[] = [];
@@ -50,22 +54,24 @@ export const PerformanceDashboard = () => {
        setActivityLogs(logs);
     };
 
-    // Veterano: 200 hours, high precision, multi-sessions
-    addMissions('veterano@latam.com', 'HVC BAG', 100, 60, 60, 'FINALIZADO', 'SES-01', 'Front Line');
-    addMissions('veterano@latam.com', 'HVC BAG', 20, 60, 30, 'FINALIZADO', 'SES-02', 'Suporte');
-    addMissions('veterano@latam.com', 'LAE', 50, 120, 120, 'FINALIZADO', 'SES-03', 'Field Support');
-    addMissions('veterano@latam.com', 'LAE', 5, 120, 60, 'ABANDONADO', 'SES-03', 'Field Support');
-    addLogs('veterano@latam.com', 45); // Portales externos
+    // Carlos: >3000 hours (MAESTRO)
+    addMissions('carlose.araya@latam.com', 'HVC BAG', 2000, 60, 60, 'FINALIZADO', 'SES-01', 'Front Line');
+    addMissions('carlose.araya@latam.com', 'LAE', 1500, 120, 120, 'FINALIZADO', 'SES-03', 'Field Support');
+    addLogs('carlose.araya@latam.com', 45); 
 
-    // Medio: 50 hours, mostly slow, some read only
-    addMissions('medio@latam.com', 'ONBOARDING LATAM', 40, 30, 60, 'FINALIZADO', 'SES-10', 'Suporte');
-    addMissions('medio@latam.com', 'ONBOARDING LATAM', 15, 30, 0, 'SOLO_LECTURA', 'SES-10', 'Suporte');
-    addLogs('medio@latam.com', 12);
+    // Obi Wan: < 400 hours (APRENDIZ)
+    addMissions('obiwan.kenobi@almaexperien.com', 'ONBOARDING LATAM', 100, 60, 60, 'FINALIZADO', 'SES-10', 'Suporte');
+    addLogs('obiwan.kenobi@almaexperien.com', 12);
 
-    // Nuevo: very fast, abandons a lot
-    addMissions('nuevo@latam.com', 'FIELD SUPPORT BASE', 5, 60, 10, 'FINALIZADO', 'SES-20', 'Field Support');
-    addMissions('nuevo@latam.com', 'FIELD SUPPORT BASE', 10, 60, 30, 'ABANDONADO', 'SES-20', 'Field Support');
-    addLogs('nuevo@latam.com', 2);
+    // Luke: < 400 hours
+    addMissions('luke.skywalker@konectaperu.com', 'FIELD SUPPORT BASE', 50, 60, 60, 'FINALIZADO', 'SES-20', 'Field Support');
+    addLogs('luke.skywalker@konectaperu.com', 2);
+    
+    // Leia: < 400
+    addMissions('leia.skywalker@konectabrasil.com', 'HVC BAG', 30, 60, 60, 'FINALIZADO', 'SES-21', 'Suporte');
+
+    // Ben: < 400
+    addMissions('ben.solo@aec.com', 'LAE', 20, 60, 60, 'FINALIZADO', 'SES-22', 'Suporte');
 
     localStorage.setItem('yoda_mission_tracking', JSON.stringify(tracking));
     setData(tracking);
@@ -76,6 +82,8 @@ export const PerformanceDashboard = () => {
     setData(getMissionTracking());
     const savedLogs = localStorage.getItem('yoda_activity_logs');
     setActivityLogs(savedLogs ? JSON.parse(savedLogs) : []);
+    const rc = localStorage.getItem('yoda_rank_config');
+    if (rc) setRankConfig(JSON.parse(rc));
   }, []);
 
   const parseTimeStr = (tStr: string) => {
@@ -99,34 +107,56 @@ export const PerformanceDashboard = () => {
   };
 
   const computeStats = (expFilter: string, planFilter: string) => {
+    const savedUsers = localStorage.getItem('yoda_users_v4');
+    const realUsers = savedUsers ? JSON.parse(savedUsers) : [];
+    
     const usersData: Record<string, any> = {};
+
+    realUsers.forEach((u: any) => {
+       const [fab = 'Desconocida'] = u.fabrica.includes(' - ') ? u.fabrica.split(' - ') : [u.fabrica];
+       const fLower = fab.toLowerCase();
+       if (fLower.includes('latam')) return; // Exclude LATAM
+       
+       if (stationName === 'BR') {
+         if (!fLower.includes('brasil') && !fLower.includes('aec')) return;
+       }
+       if (stationName === 'SSC') {
+         if (!fLower.includes('perú') && !fLower.includes('peru') && !fLower.includes('alma')) return;
+       }
+       
+       usersData[u.correo] = {
+          email: u.correo,
+          name: u.nombre,
+          fabrica: fab,
+          courses: new Map<string, { expectedMins: number, actualMins: number, count: number }>(),
+          expediciones: new Map<string, number>(),
+          totalExpectedMins: 0,
+          totalActualMins: 0,
+          onTime: 0,
+          fast: 0,
+          slow: 0,
+          abandoned: 0,
+          readOnly: 0,
+          sessions: new Set<string>(),
+          activeDays: new Set<string>(),
+          externalPortals: 0
+       };
+    });
 
     data.forEach(log => {
       if (!log.email || log.email === 'admin') return;
+      if (log.email.toLowerCase().includes('latam')) return; // Exclude LATAM
       if (expFilter !== 'Todas' && log.expedicion !== expFilter) return;
       if (planFilter !== 'Todos' && log.planetas !== planFilter) return;
 
-      if (!usersData[log.email]) {
-        let fabrica = 'Otro';
-        if (log.email.toLowerCase().includes('carlose.araya')) {
-          fabrica = 'LATAM';
-        } else if (log.email.toLowerCase().includes('konectabr.com')) {
-          fabrica = 'Konecta Brasil';
-        } else if (log.email.toLowerCase().includes('aec.com')) {
-          fabrica = 'AeC';
-        } else if (log.email.toLowerCase().includes('konectaperu.com')) {
-          fabrica = 'Konecta Perú';
-        } else if (log.email.toLowerCase().includes('almacontact.com')) {
-          fabrica = 'Alma Contact';
-        } else {
-          const charCodeSum = log.email.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-          fabrica = charCodeSum % 2 === 0 ? 'Konecta Brasil' : 'AeC';
-        }
+      // If we are filtering by station and the user isn't in usersData (meaning they were filtered out or aren't known), skip their logs
+      if (stationName && !usersData[log.email]) return;
 
+      if (!usersData[log.email]) {
         usersData[log.email] = {
           email: log.email,
           name: log.instructor || log.email.split('@')[0].replace(/\./g, ' '),
-          fabrica,
+          fabrica: 'Desconocida',
           courses: new Map<string, { expectedMins: number, actualMins: number, count: number }>(),
           expediciones: new Map<string, number>(),
           totalExpectedMins: 0,
@@ -231,6 +261,22 @@ export const PerformanceDashboard = () => {
   const globalStats = useMemo(() => computeStats('Todas', 'Todos'), [data, activityLogs, forceRender]);
   const comparisonStats = useMemo(() => computeStats(filterExpedicion, filterPlaneta), [data, activityLogs, forceRender, filterExpedicion, filterPlaneta]);
   
+  const availableExpediciones = useMemo(() => {
+    const s = new Set<string>();
+    globalStats.forEach(ud => {
+      Array.from(ud.expediciones.keys()).forEach(e => s.add(e as string));
+    });
+    return Array.from(s).sort();
+  }, [globalStats]);
+
+  const availablePlanetas = useMemo(() => {
+    const s = new Set<string>();
+    globalStats.forEach(ud => {
+      Array.from(ud.courses.keys()).forEach(p => s.add(p as string));
+    });
+    return Array.from(s).sort();
+  }, [globalStats]);
+
   const filteredGlobalStats = useMemo(() => {
     if (filterFabrica === 'Todas') return globalStats;
     return globalStats.filter(s => s.fabrica === filterFabrica);
@@ -239,17 +285,18 @@ export const PerformanceDashboard = () => {
   const uniqueFabricas = useMemo(() => Array.from(new Set(globalStats.map(s => s.fabrica))).sort(), [globalStats]);
 
   const getRank = (totalHours: number) => {
-    if (totalHours >= 4000) return { title: 'Instructor Maestro', color: '#FFB800', bg: 'rgba(255,184,0,0.1)', icon: Crown };
-    if (totalHours >= 1500) return { title: 'Instructor Guardián', color: '#8B5CF6', bg: 'rgba(139,92,246,0.1)', icon: ShieldCheck };
-    if (totalHours >= 400) return { title: 'Instructor Explorador', color: '#3B82F6', bg: 'rgba(59,130,246,0.1)', icon: Shield };
-    return { title: 'Instructor Aprendiz', color: '#94A3B8', bg: 'rgba(148,163,184,0.1)', icon: ShieldAlert };
+    if (totalHours >= rankConfig.lider) return { title: 'Líder', color: '#ED1650', bg: 'rgba(237,22,80,0.1)', icon: Crown };
+    if (totalHours >= rankConfig.maestro) return { title: 'Maestro', color: '#FFB800', bg: 'rgba(255,184,0,0.1)', icon: Crown };
+    if (totalHours >= rankConfig.guardian) return { title: 'Guardián', color: '#8B5CF6', bg: 'rgba(139,92,246,0.1)', icon: ShieldCheck };
+    if (totalHours >= rankConfig.explorador) return { title: 'Explorador', color: '#3B82F6', bg: 'rgba(59,130,246,0.1)', icon: Shield };
+    return { title: 'Aprendiz', color: '#94A3B8', bg: 'rgba(148,163,184,0.1)', icon: ShieldAlert };
   };
 
   const toggleSelect = (email: string) => {
      if (selectedToCompare.includes(email)) {
         setSelectedToCompare(prev => prev.filter(e => e !== email));
      } else {
-        if (selectedToCompare.length < 3) {
+        if (selectedToCompare.length < 5) {
            setSelectedToCompare(prev => [...prev, email]);
         }
      }
@@ -351,16 +398,20 @@ export const PerformanceDashboard = () => {
                            <div style={{ background: '#F8FAFC', borderRadius: 16, padding: 20 }}>
                                <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 12 }}>ESTADÍSTICAS VITALES</div>
                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>Horas Acumuladas</span>
+                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>Veces Dictado</span>
+                                  <span style={{ fontSize: 15, color: '#0F004F', fontWeight: 900 }}>{s.totalMissions}</span>
+                               </div>
+                               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>Tiempo Promedio</span>
+                                  <span style={{ fontSize: 15, color: '#00D6CC', fontWeight: 900 }}>{s.totalMissions > 0 ? Math.round(s.totalActualMins / s.totalMissions) : 0}m</span>
+                               </div>
+                               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>Tiempo Total</span>
                                   <span style={{ fontSize: 15, color: '#0F004F', fontWeight: 900 }}>{(s.totalActualMins / 60).toFixed(1)}h</span>
                                </div>
                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
                                   <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>Días Activos</span>
                                   <span style={{ fontSize: 15, color: '#0F004F', fontWeight: 900 }}>{s.activeDays.size}</span>
-                               </div>
-                               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>Portales Externos</span>
-                                  <span style={{ fontSize: 15, color: '#0F004F', fontWeight: 900 }}>{s.externalPortals}</span>
                                </div>
                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
                                   <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>Tasa de Abandono</span>
@@ -411,7 +462,14 @@ export const PerformanceDashboard = () => {
     <div style={{ padding: '40px 60px', background: '#F8F7FF', minHeight: '100%', overflowY: 'auto' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 40 }}>
           <div>
-              <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F004F', letterSpacing: '-0.02em', margin: 0 }}>Rendimiento de Instructores</h1>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16 }}>
+                 {onBack && (
+                   <button onClick={onBack} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 16px', background: '#fff', border: '1px solid #E2E8F0', borderRadius: 8, cursor: 'pointer', fontWeight: 700, color: '#0F004F' }}>
+                     <ChevronRight style={{transform: 'rotate(180deg)'}} size={16} /> VOLVER
+                   </button>
+                 )}
+                 <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F004F', letterSpacing: '-0.02em', margin: 0 }}>Rendimiento de Instructores</h1>
+              </div>
               <p style={{ fontSize: 14, color: '#64748B', margin: 0 }}>Analiza cursos dictados, horas acumuladas y precisión de cumplimiento horario.</p>
               
               <div style={{ gap: 20, marginTop: 16, background: '#fff', padding: '8px 16px', borderRadius: 12, border: '1px solid #E2E8F0', display: 'inline-flex', alignItems: 'center' }}>
@@ -436,6 +494,12 @@ export const PerformanceDashboard = () => {
                   <option value="Todas">TODAS LAS FÁBRICAS</option>
                   {uniqueFabricas.map(f => <option key={f} value={f}>{f}</option>)}
                </select>
+               {/* <button 
+                  onClick={injectFakeData}
+                  style={{ marginLeft: 12, marginTop: 16, padding: '10px 16px', borderRadius: 12, border: 'none', color: '#fff', fontWeight: 800, background: '#3B82F6', cursor: 'pointer', display: 'inline-flex', verticalAlign: 'top', alignItems: 'center', gap: 6 }}
+               >
+                  <Plus size={16} strokeWidth={3} /> AGREGAR DATA DE PRUEBA
+               </button> */}
                <button 
                   onClick={() => {
                      localStorage.removeItem('yoda_mission_tracking');
@@ -458,7 +522,7 @@ export const PerformanceDashboard = () => {
                 >
                    <div>
                       <div style={{ fontSize: 12, fontWeight: 800, color: '#64748B' }}>SELECCIONADOS PARA COMPARAR</div>
-                      <div style={{ fontSize: 16, fontWeight: 900, color: '#0F004F' }}>{selectedToCompare.length} / 3 Instructores</div>
+                      <div style={{ fontSize: 16, fontWeight: 900, color: '#0F004F' }}>{selectedToCompare.length} / 5 Instructores</div>
                    </div>
                    <button 
                       onClick={() => setShowComparison(true)}

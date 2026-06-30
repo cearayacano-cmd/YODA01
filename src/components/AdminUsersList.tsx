@@ -12,75 +12,22 @@ export const AdminUsersList = ({ onViewUser, stationName }: { onViewUser: (instr
   }, []);
 
   const users = useMemo(() => {
-    const uniqueUsers = new Map<string, any>();
+    const saved = localStorage.getItem('yoda_users_v4');
+    const realUsers = saved ? JSON.parse(saved) : [];
     
-    data.forEach(log => {
-      if (log.email && !uniqueUsers.has(log.email)) {
-        
-        let nombreFicticio = '';
-        let fabrica = '';
-        let rango = '';
-
-        const prefix = log.email.split('@')[0];
-        
-        if (log.email.toLowerCase().includes('carlose.araya')) {
-          nombreFicticio = 'Carlos Araya';
-          fabrica = 'LATAM';
-          rango = 'Administrador';
-        } else {
-          nombreFicticio = prefix.split('.').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
-          rango = 'Instructor';
-          
-          if (log.email.toLowerCase().includes('konectabr.com')) {
-            fabrica = 'Konecta Brasil';
-          } else if (log.email.toLowerCase().includes('aec.com')) {
-            fabrica = 'AeC';
-          } else if (log.email.toLowerCase().includes('konectaperu.com')) {
-            fabrica = 'Konecta Perú';
-          } else if (log.email.toLowerCase().includes('almacontact.com')) {
-            fabrica = 'Alma Contact';
-          } else {
-            const charCodeSum = log.email.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-            fabrica = charCodeSum % 2 === 0 ? 'Konecta Brasil' : 'AeC';
-          }
-        }
-
-        uniqueUsers.set(log.email, {
-          instructorId: log.instructor,
-          email: log.email,
-          nombreFicticio,
-          fabrica,
-          rango,
-          sessionCode: log.codigo
-        });
-      }
+    return realUsers.map((u: any) => {
+      const [fabricaLabel = 'Desconocida', rankLabel = 'Aprendiz'] = u.fabrica.includes(' - ') ? u.fabrica.split(' - ') : [u.fabrica];
+      
+      return {
+        instructorId: u.correo,
+        email: u.correo,
+        nombreFicticio: u.nombre,
+        fabrica: fabricaLabel,
+        rango: rankLabel,
+        sessionCode: 'N/A'
+      };
     });
-
-    // Añadir usuarios predefinidos si no existen en los logs
-    const predefinedUsers = [
-      { email: 'carlose.araya@latam.com', nombre: 'Carlos Araya', fabrica: 'LATAM', rango: 'Administrador' },
-      { email: 'instructor@konectabr.com', nombre: 'Instructor Konecta BR', fabrica: 'Konecta Brasil', rango: 'Instructor' },
-      { email: 'instructor@aec.com', nombre: 'Instructor AeC', fabrica: 'AeC', rango: 'Instructor' },
-      { email: 'instructor@konectaperu.com', nombre: 'Instructor Konecta PE', fabrica: 'Konecta Perú', rango: 'Instructor' },
-      { email: 'instructor@almacontact.com', nombre: 'Instructor Alma', fabrica: 'Alma Contact', rango: 'Instructor' }
-    ];
-
-    predefinedUsers.forEach(u => {
-      // Usamos el email como instructorId si no tienen registros aún
-      if (!uniqueUsers.has(u.email)) {
-        uniqueUsers.set(u.email, {
-          instructorId: u.email,
-          email: u.email,
-          nombreFicticio: u.nombre,
-          fabrica: u.fabrica,
-          rango: u.rango,
-          sessionCode: 'N/A' // No session code yet
-        });
-      }
-    });
-
-    return Array.from(uniqueUsers.values());
-  }, [data]);
+  }, []);
 
   const [filterFabrica, setFilterFabrica] = useState('ALL');
   const [filterRango, setFilterRango] = useState('ALL');
@@ -88,12 +35,21 @@ export const AdminUsersList = ({ onViewUser, stationName }: { onViewUser: (instr
   const baseUsers = useMemo(() => {
     if (!stationName) return users;
     if (stationName === 'BR') {
-      return users.filter(u => ['LATAM', 'Konecta Brasil', 'AeC'].includes(u.fabrica));
+      return users.filter(u => {
+        const f = (u.fabrica || '').toLowerCase();
+        return f.includes('brasil') || f.includes('aec');
+      });
     }
     if (stationName === 'SSC') {
-      return users.filter(u => ['LATAM', 'Konecta Perú', 'Alma Contact'].includes(u.fabrica));
+      return users.filter(u => {
+        const f = (u.fabrica || '').toLowerCase();
+        return f.includes('perú') || f.includes('peru') || f.includes('alma');
+      });
     }
-    return users;
+    // If no stationName (e.g. global view), you might still want to exclude LATAM if it's strictly for instructors, but for now we follow the user's "en ambos". Actually let's exclude LATAM everywhere in the directory if it's just the admin.
+    // Wait, the user specifically said "en ambos no debe salir el latam". I will exclude it from BR and SSC.
+    // I will also exclude it from the baseUsers entirely if they only want instructors.
+    return users.filter(u => !(u.fabrica || '').toLowerCase().includes('latam'));
   }, [users, stationName]);
 
   const filteredUsers = useMemo(() => {
@@ -182,7 +138,16 @@ export const AdminUsersList = ({ onViewUser, stationName }: { onViewUser: (instr
                 </td>
               </tr>
             ) : (
-              filteredUsers.map((user, idx) => (
+              filteredUsers.map((user, idx) => {
+                const f = user.fabrica.toLowerCase();
+                let fColor = '#64748B'; // slate
+                if (f.includes('latam')) fColor = '#ED1650'; // red
+                else if (f.includes('alma')) fColor = '#00D6CC'; // teal
+                else if (f.includes('perú') || f.includes('peru')) fColor = '#99CC33'; // lime
+                else if (f.includes('brasil')) fColor = '#3B82F6'; // blue
+                else if (f.includes('aec')) fColor = '#8B5CF6'; // purple
+
+                return (
                 <motion.tr 
                   key={user.email}
                   initial={{ opacity: 0, y: 10 }}
@@ -209,8 +174,8 @@ export const AdminUsersList = ({ onViewUser, stationName }: { onViewUser: (instr
                       borderRadius: 12, 
                       fontSize: 12, 
                       fontWeight: 800,
-                      background: user.fabrica === 'LATAM' ? '#ED165020' : (user.fabrica === 'AeC' || user.fabrica === 'Alma Contact') ? '#00D6CC20' : '#99CC3320',
-                      color: user.fabrica === 'LATAM' ? '#ED1650' : (user.fabrica === 'AeC' || user.fabrica === 'Alma Contact') ? '#00D6CC' : '#6b8f23'
+                      background: `${fColor}20`,
+                      color: fColor
                     }}>
                       {user.fabrica}
                     </span>
@@ -230,7 +195,8 @@ export const AdminUsersList = ({ onViewUser, stationName }: { onViewUser: (instr
                     </div>
                   </td>
                 </motion.tr>
-              ))
+                );
+              })
             )}
           </tbody>
         </table>

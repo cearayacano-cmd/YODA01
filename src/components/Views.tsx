@@ -73,9 +73,14 @@ const LandingMissionCard = ({ title, subtitle, id, color, buttonText = "INICIAR 
 export const Landing = ({ onNavigate, onAdmin, onActivityLog, activeUser, changeUser, canAccessBR = true, canAccessSSC = true }: any) => {
   const [hoveredStation, setHoveredStation] = useState<string | null>(null);
   const [autoVariant, setAutoVariant] = useState('es');
+  const [dbUsers, setDbUsers] = useState<any[]>([]);
 
   // Rotate variant every 30 seconds automatically
   useEffect(() => {
+    const saved = localStorage.getItem('yoda_users_v4');
+    if (saved) {
+      try { setDbUsers(JSON.parse(saved)); } catch(e) {}
+    }
     const timer = setInterval(() => {
       setAutoVariant(prev => prev === 'es' ? 'pt' : 'es');
     }, 30000);
@@ -111,7 +116,7 @@ export const Landing = ({ onNavigate, onAdmin, onActivityLog, activeUser, change
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         <div style={{ position: 'relative' }}>
           <select 
-            value={activeUser || 'carlose.araya@latam.com'} 
+            value={activeUser} 
             onChange={(e) => changeUser && changeUser(e.target.value)}
             style={{ 
               appearance: 'none',
@@ -126,16 +131,30 @@ export const Landing = ({ onNavigate, onAdmin, onActivityLog, activeUser, change
               cursor: 'pointer',
               letterSpacing: '0.05em',
               backdropFilter: 'blur(10px)',
-              transition: 'all 0.2s'
+              transition: 'all 0.2s',
+              maxWidth: '300px',
+              textOverflow: 'ellipsis'
             }}
             onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.05)'} 
             onMouseLeave={e=>e.currentTarget.style.background='transparent'}
           >
-            <option value="carlose.araya@latam.com" style={{ background: '#0F004F', color: '#fff' }}>carlose.araya@latam.com (Admin)</option>
-            <option value="instructor@konectabr.com" style={{ background: '#0F004F', color: '#fff' }}>instructor@konectabr.com (BR)</option>
-            <option value="instructor@aec.com" style={{ background: '#0F004F', color: '#fff' }}>instructor@aec.com (BR)</option>
-            <option value="instructor@konectaperu.com" style={{ background: '#0F004F', color: '#fff' }}>instructor@konectaperu.com (SSC)</option>
-            <option value="instructor@almacontact.com" style={{ background: '#0F004F', color: '#fff' }}>instructor@almacontact.com (SSC)</option>
+            {dbUsers.map(u => {
+               const [fabricaLabel = ''] = u.fabrica.includes(' - ') ? u.fabrica.split(' - ') : [u.fabrica];
+               let roleLabel = u.acceso || '';
+               if (roleLabel === 'Administrador') roleLabel = 'ADMIN';
+               if (roleLabel === 'Explorador') roleLabel = 'EXPL';
+               if (roleLabel === 'BR Station') roleLabel = 'BR';
+               if (roleLabel === 'SSC Station') roleLabel = 'SSC';
+               
+               return (
+                 <option key={u.correo} value={u.correo} style={{ background: '#0F004F', color: '#fff' }}>
+                   {u.correo} ({roleLabel} | {fabricaLabel})
+                 </option>
+               );
+            })}
+            {dbUsers.length === 0 && (
+              <option value="admin@yoda.com" style={{ background: '#0F004F', color: '#fff' }}>admin@yoda.com (ADMIN)</option>
+            )}
           </select>
           <div style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>
             <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -144,7 +163,7 @@ export const Landing = ({ onNavigate, onAdmin, onActivityLog, activeUser, change
           </div>
         </div>
 
-        {activeUser === 'carlose.araya@latam.com' && (
+        {dbUsers.find(u => u.correo === activeUser)?.acceso === 'Administrador' && (
           <button onClick={onAdmin} style={{background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.2)', padding:'8px 24px', cursor:'pointer', fontSize:10, fontWeight:900, color:'#fff', borderRadius:30, letterSpacing: '0.15em', backdropFilter: 'blur(10px)', transition: 'all 0.2s'}} onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.1)'} onMouseLeave={e=>e.currentTarget.style.background='rgba(255,255,255,0.05)'}>
             SYS.ADMIN
           </button>

@@ -154,7 +154,25 @@ export default function App() {
       try { setActivityLogs(JSON.parse(savedLogs)); } catch (e) { }
     }
     const savedUser = localStorage.getItem('yoda_active_user');
-    if (savedUser) setActiveUser(savedUser);
+    const savedUsers = localStorage.getItem('yoda_users_v4');
+    
+    if (savedUsers) {
+       try {
+         const parsedUsers = JSON.parse(savedUsers);
+         if (parsedUsers.length > 0) {
+             if (savedUser && parsedUsers.some((u: any) => u.correo === savedUser)) {
+                 setActiveUser(savedUser);
+             } else {
+                 setActiveUser(parsedUsers[0].correo);
+                 localStorage.setItem('yoda_active_user', parsedUsers[0].correo);
+             }
+         } else if (savedUser) {
+             setActiveUser(savedUser);
+         }
+       } catch(e) {}
+    } else if (savedUser) {
+      setActiveUser(savedUser);
+    }
 
     // Ensure an active partida exists
     if (!localStorage.getItem('yoda_active_partida')) {
@@ -347,7 +365,6 @@ export default function App() {
             onRutaLider={(st: string) => { setAdminStation(st); go('admin-ruta-lider') }}
             onSave={saveConfigToDisk}
             onActivityLog={() => go('activity-log')}
-
             onMissionTracking={(st: string) => { setAdminStation(st); go('admin-activity-tracking') }}
           />
         );

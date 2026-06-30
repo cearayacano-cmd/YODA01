@@ -137,7 +137,7 @@ export const UnifiedTrackingDashboard = ({ view, logs, config, onBack, stationNa
         )}
         {activeTab === 'performance' && (
           <div style={{ position: 'absolute', inset: 0, overflow: 'auto' }}>
-            <PerformanceDashboard />
+            <PerformanceDashboard stationName={stationName} />
           </div>
         )}
       </div>

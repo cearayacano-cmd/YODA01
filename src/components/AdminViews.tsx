@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { BackBtn } from './Shared';
 import { motion } from 'framer-motion';
-import { Save, Rocket, Settings, Database, Edit3, Trash2, Plus, Link as LinkIcon, CheckCircle2, Activity, LayoutGrid, GraduationCap, ArrowUpRight, Globe, ArrowLeft, User, Target, BarChart3, Layout } from 'lucide-react';
+import { Save, Rocket, Settings, Database, Edit3, Trash2, Plus, Link as LinkIcon, CheckCircle2, Activity, LayoutGrid, GraduationCap, ArrowUpRight, Globe, ArrowLeft, User, Target, BarChart3, Layout, Users } from 'lucide-react';
+import { UserManagementView } from './UserManagementView';
 
 export const AdminCenter = ({ config, setConfig, onBack, adminStation, onExploracion, onRutaLider, onViewStation, onSave, onActivityLog, onInstructorDashboard, onMissionTracking, onPortalTracking }: any) => {
   const [activeStation, setActiveStation] = useState(adminStation || 'BR');
@@ -69,7 +70,7 @@ export const AdminCenter = ({ config, setConfig, onBack, adminStation, onExplora
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <Settings size={22} color={activeStation === 'BR' ? '#7da81a' : '#7000ab'} />
           <span style={{color:'#ffffff', fontSize:18, fontWeight:900, letterSpacing: '0.05em'}}>
-            ADMIN CENTER <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> <span style={{ background: activeStation === 'BR' ? '#99CC33' : '#682D88', padding: '2px 8px', borderRadius: 4, color: '#fff' }}>{activeStation} STATION</span>
+            ADMIN CENTER <span style={{ color: 'rgba(255,255,255,0.3)', margin: '0 8px' }}>/</span> <span style={{ background: activeStation === 'BR' ? '#99CC33' : activeStation === 'USUARIOS' ? '#00D6CC' : '#682D88', padding: '2px 8px', borderRadius: 4, color: activeStation === 'USUARIOS' ? '#0F004F' : '#fff' }}>{activeStation === 'USUARIOS' ? 'GESTIÓN DE USUARIOS' : `${activeStation} STATION`}</span>
           </span>
         </div>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 12 }}>
@@ -115,58 +116,89 @@ export const AdminCenter = ({ config, setConfig, onBack, adminStation, onExplora
           <div style={{fontSize:10, color:'rgba(255,255,255,0.4)', letterSpacing:'0.25em', textTransform:'uppercase', marginBottom:12, fontWeight:900, paddingLeft: 16}}>
             ESTACIONES BASE
           </div>
-          {['BR','SSC'].map(st=>(
+          {['BR','SSC'].map(st => {
+            const isBR = st === 'BR';
+            const themeColor = isBR ? '#4ADE80' : '#A855F7';
+            const themeRgba = isBR ? '57, 255, 20' : '139, 92, 246';
+            
+            return (
             <div key={st} style={{ marginBottom: 12 }}>
               <motion.div 
-                whileHover={{ x: 6, background: activeStation===st ? '#EAE8F9' : 'rgba(255,255,255,0.05)' }}
+                whileHover={{ x: 4, background: activeStation===st ? `rgba(${themeRgba}, 0.15)` : 'rgba(255,255,255,0.05)' }}
                 onClick={()=>setActiveStation(st)} 
                 style={{
                   padding:'14px 20px', 
                   cursor:'pointer', 
-                  borderRadius: 30, 
-                  fontWeight: activeStation===st ? 800 : 500, 
-                  background: activeStation===st ? '#EAE8F9' : 'transparent', 
-                  color: activeStation===st ? '#0F004F' : 'rgba(255,255,255,0.6)',
+                  borderRadius: 12, 
+                  fontWeight: activeStation===st ? 800 : 600, 
+                  background: activeStation===st ? `linear-gradient(90deg, rgba(${themeRgba}, 0.15) 0%, rgba(${themeRgba}, 0.05) 100%)` : 'transparent', 
+                  color: activeStation===st ? '#fff' : 'rgba(255,255,255,0.5)',
+                  border: activeStation===st ? `1px solid rgba(${themeRgba}, 0.4)` : '1px solid transparent',
                   display: 'flex',
                   alignItems: 'center',
                   gap: 14,
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                 }}
               >
-                <Rocket size={20} color={activeStation===st ? '#0F004F' : 'rgba(255,255,255,0.4)'} />
+                <Rocket size={18} color={activeStation===st ? themeColor : 'rgba(255,255,255,0.4)'} />
                 <span style={{ fontSize: 13, letterSpacing: '0.05em' }}>{st} STATION</span>
               </motion.div>
               
               {activeStation === st && (
-                <div style={{ paddingLeft: 30, marginTop: 8 }}>
+                <div style={{ paddingLeft: 16, marginTop: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
                   <motion.button 
-                    whileHover={{ scale: 1.02, background: '#00BDB4' }}
+                    whileHover={{ scale: 1.02, background: `rgba(${themeRgba}, 0.2)` }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => onMissionTracking(st)} 
                     style={{
-                      padding:'10px 16px', 
+                      padding:'12px 16px', 
                       cursor:'pointer', 
-                      borderRadius: 20,
-                      border: 'none',
-                      fontWeight: 900, 
-                      background: '#00D6CC', 
-                      color: '#0F004F',
+                      borderRadius: 10,
+                      border: `1px solid rgba(${themeRgba}, 0.3)`,
+                      fontWeight: 800, 
+                      background: `rgba(${themeRgba}, 0.1)`, 
+                      color: themeColor,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'flex-start',
                       gap: 10,
-                      boxShadow: '0 4px 15px rgba(0,214,204,0.3)',
-                      transition: 'all 0.3s ease',
+                      transition: 'all 0.2s ease',
                       width: '100%'
                     }}
                   >
-                    <Target size={14} />
-                    <span style={{ fontSize: 10, letterSpacing: '0.15em' }}>MONITOREO</span>
+                    <Target size={16} />
+                    <span style={{ fontSize: 11, letterSpacing: '0.1em' }}>MONITOREO</span>
                   </motion.button>
                 </div>
               )}
             </div>
-          ))}
+            );
+          })}
+
+          <div style={{ padding: '0 8px', marginTop: 20 }}>
+            <motion.button 
+              whileHover={{ x: 4, background: activeStation === 'USUARIOS' ? 'rgba(0, 214, 204, 0.15)' : 'rgba(255,255,255,0.05)' }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setActiveStation('USUARIOS')}
+              style={{
+                padding: '14px 20px',
+                borderRadius: 12,
+                border: activeStation === 'USUARIOS' ? '1px solid rgba(0,214,204,0.3)' : '1px solid transparent',
+                fontWeight: activeStation === 'USUARIOS' ? 800 : 600, 
+                background: activeStation === 'USUARIOS' ? 'linear-gradient(90deg, rgba(0,214,204,0.15) 0%, rgba(0,214,204,0.05) 100%)' : 'transparent', 
+                color: activeStation === 'USUARIOS' ? '#fff' : 'rgba(255,255,255,0.5)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+                gap: 14,
+                transition: 'all 0.3s ease',
+                width: '100%'
+              }}
+            >
+              <Users size={18} color={activeStation === 'USUARIOS' ? '#00D6CC' : 'rgba(255,255,255,0.4)'} />
+              <span style={{ fontSize: 13, letterSpacing: '0.05em', textAlign: 'left' }}>USUARIOS</span>
+            </motion.button>
+          </div>
           
           <div style={{ marginTop: 'auto', padding: '0 8px' }}>
             <motion.button 
@@ -204,7 +236,12 @@ export const AdminCenter = ({ config, setConfig, onBack, adminStation, onExplora
           </div>
         </div>
         
-        {/* Main Content Area */}
+        {/* RIGHT CONTENT */}
+      {activeStation === 'USUARIOS' ? (
+        <div style={{ flex: 1, overflowY: 'auto' }}>
+           <UserManagementView embedded={true} />
+        </div>
+      ) : (
         <div style={{flex:1, padding: '40px 60px', overflowY:'auto', background: '#F8F7FF'}}>
           
           <div style={{display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24}}>
@@ -506,6 +543,7 @@ export const AdminCenter = ({ config, setConfig, onBack, adminStation, onExplora
           
           <div style={{ height: 60 }} />
         </div>
+      )}
       </div>
     </div>
   );
