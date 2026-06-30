@@ -436,6 +436,16 @@ export const PerformanceDashboard = () => {
                   <option value="Todas">TODAS LAS FÁBRICAS</option>
                   {uniqueFabricas.map(f => <option key={f} value={f}>{f}</option>)}
                </select>
+               <button 
+                  onClick={() => {
+                     localStorage.removeItem('yoda_mission_tracking');
+                     localStorage.removeItem('yoda_activity_logs');
+                     window.location.reload();
+                  }}
+                  style={{ marginLeft: 12, marginTop: 16, padding: '10px 16px', borderRadius: 12, border: 'none', color: '#fff', fontWeight: 800, background: '#ED1650', cursor: 'pointer', display: 'inline-flex', verticalAlign: 'top', alignItems: 'center', gap: 6 }}
+               >
+                  <X size={16} strokeWidth={3} /> LIMPIAR DATOS
+               </button>
           </div>
 
           <AnimatePresence>
