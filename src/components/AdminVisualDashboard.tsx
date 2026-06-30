@@ -11,13 +11,16 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
   const [filterStatus, setFilterStatus] = useState('ALL');
   const [filterInstructor, setFilterInstructor] = useState('ALL');
   const [filterDate, setFilterDate] = useState('');
+  const [filterFabrica, setFilterFabrica] = useState('ALL');
+  const [filterExpedicion, setFilterExpedicion] = useState('ALL');
   const [sortOrder, setSortOrder] = useState('LAST_ACTIVE');
+  const [forceRender, setForceRender] = useState(0);
 
   useEffect(() => {
     setData(getMissionTracking());
     const savedLogs = localStorage.getItem('yoda_activity_logs');
     setActivityLogs(savedLogs ? JSON.parse(savedLogs) : []);
-  }, []);
+  }, [forceRender]);
 
   // Calculate Total Available Missions in BR Onboarding
   const parseTime = (tStr: string) => {
@@ -122,6 +125,23 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
         let tMins = 0;
         let macroStructure: { sectionName: string, expectedRows: string[] }[] = [];
         
+        let fabrica = 'Otro';
+        const prefix = log.email.split('@')[0];
+        if (log.email.toLowerCase().includes('carlose.araya')) {
+          fabrica = 'LATAM';
+        } else if (log.email.toLowerCase().includes('konectabr.com')) {
+          fabrica = 'Konecta Brasil';
+        } else if (log.email.toLowerCase().includes('aec.com')) {
+          fabrica = 'AeC';
+        } else if (log.email.toLowerCase().includes('konectaperu.com')) {
+          fabrica = 'Konecta Perú';
+        } else if (log.email.toLowerCase().includes('almacontact.com')) {
+          fabrica = 'Alma Contact';
+        } else {
+          const charCodeSum = log.email.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+          fabrica = charCodeSum % 2 === 0 ? 'Konecta Brasil' : 'AeC';
+        }
+        
         if (config) {
             const buildMacro = (sections: any[]) => {
                 sections.forEach(sec => {
@@ -206,6 +226,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
         stats[key] = {
           email: log.email,
           instructorId: log.instructor,
+          fabrica: fabrica,
           planetName: planetName,
           expedicion: expedicion,
           opened: 0,
@@ -303,6 +324,9 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
     return Array.from(instructors).sort();
   }, [instructorStats]);
 
+  const uniqueFabricas = useMemo(() => Array.from(new Set(instructorStats.map(s => s.fabrica))).sort(), [instructorStats]);
+  const uniqueExpediciones = useMemo(() => Array.from(new Set(instructorStats.map(s => s.expedicion))).sort(), [instructorStats]);
+
   // Apply Filters and Sorting
   const processedStats = useMemo(() => {
     let result = [...instructorStats];
@@ -324,6 +348,14 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
     // Filter by Group
     if (filterGroup !== 'ALL') {
       result = result.filter(inst => inst.sessionCode === filterGroup);
+    }
+
+    if (filterFabrica !== 'ALL') {
+      result = result.filter(inst => inst.fabrica === filterFabrica);
+    }
+
+    if (filterExpedicion !== 'ALL') {
+      result = result.filter(inst => inst.expedicion === filterExpedicion);
     }
 
     // Filter by Date
@@ -369,14 +401,49 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
       {/* Global KPIs */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 20, marginBottom: 40 }}>
         
-        <motion.div initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} style={{ background: '#fff', padding: 24, borderRadius: 16, boxShadow: '0 4px 20px rgba(0,0,0,0.03)', display: 'flex', alignItems: 'center', gap: 20 }}>
-          <div style={{ width: 60, height: 60, borderRadius: '50%', background: 'rgba(15,0,79,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Users size={28} color="#0F004F" />
+        <motion.div initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} style={{ background: '#fff', padding: 24, borderRadius: 16, boxShadow: '0 4px 20px rgba(0,0,0,0.03)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+            <div style={{ width: 60, height: 60, borderRadius: '50%', background: 'rgba(15,0,79,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Users size={28} color="#0F004F" />
+            </div>
+            <div>
+              <div style={{ fontSize: 12, fontWeight: 800, color: '#666', textTransform: 'uppercase', letterSpacing: '1px' }}>Instructores Activos</div>
+              <div style={{ fontSize: 32, fontWeight: 900, color: '#0F004F' }}>{globalStats.instructors}</div>
+            </div>
           </div>
-          <div>
-            <div style={{ fontSize: 12, fontWeight: 800, color: '#666', textTransform: 'uppercase', letterSpacing: '1px' }}>Instructores Activos</div>
-            <div style={{ fontSize: 32, fontWeight: 900, color: '#0F004F' }}>{globalStats.instructors}</div>
-          </div>
+          <button 
+             onClick={() => {
+                const tracking: MissionProgress[] = [];
+                const date = new Date();
+                const mesAño = `${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
+                
+                const addMissions = (email: string, planet: string, count: number, expectedMins: number, actualMins: number, status: 'FINALIZADO' | 'ABANDONADO' | 'SOLO_LECTURA' = 'FINALIZADO', sessionCode: string = 'S1', expedicionStr: string = 'Front Line') => {
+                    for(let i=0; i<count; i++) {
+                       const apert = Date.now() - (actualMins * 60000);
+                       const fin = Date.now();
+                       tracking.push({
+                         mesAño, instructor: email.split('@')[0], email, codigo: sessionCode, expedicion: expedicionStr,
+                         planetas: planet, missao: `Misión ${i}`, macrotema: 'Tema', tema: `Tema ${i}`,
+                         tiempoEstimado: `${expectedMins}m`, 
+                         tiempoApertura: status === 'SOLO_LECTURA' ? null : new Date(apert).toISOString(), 
+                         marcarComoFinalizado: status === 'FINALIZADO' ? new Date(fin).toISOString() : null,
+                         marcarComoVisto: status === 'SOLO_LECTURA' ? new Date(fin).toISOString() : null,
+                         tiempoAperturaRaw: status === 'SOLO_LECTURA' ? undefined : apert, 
+                         marcarComoFinalizadoRaw: status === 'FINALIZADO' ? fin : undefined
+                       });
+                    }
+                };
+
+                addMissions('veterano@latam.com', 'HVC BAG', 10, 60, 60, 'FINALIZADO', 'SES-01', 'Front Line');
+                addMissions('medio@konectabr.com', 'HVC BAG', 5, 60, 30, 'FINALIZADO', 'SES-02', 'Front Line');
+                addMissions('nuevo@aec.com', 'LAE', 2, 120, 120, 'FINALIZADO', 'SES-03', 'Field Support');
+                localStorage.setItem('yoda_mission_tracking', JSON.stringify(tracking));
+                setForceRender(prev => prev + 1);
+             }}
+             style={{ background: '#00D6CC', color: '#0F004F', border: 'none', padding: '8px 16px', borderRadius: 8, fontWeight: 900, cursor: 'pointer', fontSize: 11 }}
+          >
+             + INYECTAR DATOS
+          </button>
         </motion.div>
 
         <motion.div initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} transition={{delay: 0.1}} style={{ background: '#fff', padding: 24, borderRadius: 16, boxShadow: '0 4px 20px rgba(0,0,0,0.03)', display: 'flex', alignItems: 'center', gap: 20 }}>
@@ -425,10 +492,32 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
           <select 
             value={filterInstructor} 
             onChange={(e) => setFilterInstructor(e.target.value)}
-            style={{ padding: '10px', borderRadius: 8, border: '1px solid #E2E8F0', outline: 'none', fontSize: 12, fontWeight: 700, color: '#0F004F', cursor: 'pointer', background: '#fff', maxWidth: 200 }}
+            style={{ padding: '10px', borderRadius: 8, border: '1px solid #E2E8F0', outline: 'none', fontSize: 12, fontWeight: 700, color: '#0F004F', cursor: 'pointer', background: '#fff', maxWidth: 150 }}
           >
-            <option value="ALL">TODOS LOS INSTRUCTORES</option>
+            <option value="ALL">INSTRUCTORES</option>
             {uniqueInstructors.map(g => <option key={g} value={g}>{g.split('@')[0]}</option>)}
+          </select>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <select 
+            value={filterFabrica} 
+            onChange={(e) => setFilterFabrica(e.target.value)}
+            style={{ padding: '10px', borderRadius: 8, border: '1px solid #E2E8F0', outline: 'none', fontSize: 12, fontWeight: 700, color: '#0F004F', cursor: 'pointer', background: '#fff' }}
+          >
+            <option value="ALL">FÁBRICAS</option>
+            {uniqueFabricas.map(g => <option key={g} value={g}>{g}</option>)}
+          </select>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <select 
+            value={filterExpedicion} 
+            onChange={(e) => setFilterExpedicion(e.target.value)}
+            style={{ padding: '10px', borderRadius: 8, border: '1px solid #E2E8F0', outline: 'none', fontSize: 12, fontWeight: 700, color: '#0F004F', cursor: 'pointer', background: '#fff' }}
+          >
+            <option value="ALL">EXPEDICIONES</option>
+            {uniqueExpediciones.map(g => <option key={g} value={g}>{g}</option>)}
           </select>
         </div>
 
@@ -438,7 +527,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
             onChange={(e) => setFilterGroup(e.target.value)}
             style={{ padding: '10px', borderRadius: 8, border: '1px solid #E2E8F0', outline: 'none', fontSize: 12, fontWeight: 700, color: '#0F004F', cursor: 'pointer', background: '#fff' }}
           >
-            <option value="ALL">TODOS LOS GRUPOS</option>
+            <option value="ALL">GRUPOS</option>
             {uniqueGroups.map(g => <option key={g} value={g}>{g}</option>)}
           </select>
         </div>
@@ -481,8 +570,10 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
       {/* Instructor Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: 20 }}>
         {processedStats.length === 0 && (
-          <div style={{ padding: 40, background: '#fff', borderRadius: 16, gridColumn: '1 / -1', textAlign: 'center', color: '#666', fontWeight: 600 }}>
-            No se encontraron instructores con estos filtros.
+          <div style={{ padding: 60, background: '#fff', borderRadius: 16, gridColumn: '1 / -1', textAlign: 'center', color: '#94A3B8', border: '1px dashed #CBD5E1', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+            <BarChart3 size={48} color="#CBD5E1" />
+            <div style={{ fontSize: 18, fontWeight: 800, color: '#64748B' }}>No hay datos para mostrar</div>
+            <div style={{ fontSize: 14, fontWeight: 600 }}>Prueba ajustando los filtros o genera datos de prueba usando el botón de arriba.</div>
           </div>
         )}
 

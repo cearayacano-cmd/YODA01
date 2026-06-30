@@ -20,10 +20,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    command: sh -c "npm config set strict-ssl false && npm install && npm run dev"
     ports:
       - "3010:3010"
     volumes:
       - .:/app
+      - /app/node_modules
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:8010/api
     depends_on:

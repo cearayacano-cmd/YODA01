@@ -1,0 +1,92 @@
+                  <div style={{ display: 'flex', gap: '24px', marginBottom: '30px' }}>
+                    
+                    {/* Left Panel: Profile Info & Radar */}
+                    <div style={{ flex: 1, background: '#EAE1D0', borderRadius: '12px', border: '2px solid #829285', padding: '24px', position: 'relative', boxShadow: 'inset 0 0 40px rgba(0,0,0,0.05)', color: '#333' }}>
+                      {/* Top Header like Kabuto Card */}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '2px solid #C4BBAF', paddingBottom: '16px', marginBottom: '16px' }}>
+                        <div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '12px' }}>
+                            <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#9D4036', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', fontWeight: 'bold' }}>火</div>
+                            <div style={{ fontSize: '32px', fontFamily: 'monospace', fontWeight: 'bold', letterSpacing: '4px' }}>木ノ葉</div>
+                          </div>
+                          
+                          <div style={{ background: '#F4EFE6', padding: '6px 12px', marginBottom: '8px', border: '1px solid #D6CEBE', fontSize: '14px', fontWeight: 'bold' }}>
+                            Misiones Asignadas: {userPartidasData.length}
+                          </div>
+                          <div style={{ background: '#F4EFE6', padding: '6px 12px', marginBottom: '8px', border: '1px solid #D6CEBE', fontSize: '14px', fontWeight: 'bold' }}>
+                            Especialidad: {instructorKPIs?.bestPlanet}
+                          </div>
+                          <div style={{ background: '#F4EFE6', padding: '6px 12px', marginBottom: '8px', border: '1px solid #D6CEBE', fontSize: '14px', fontWeight: 'bold' }}>
+                            Rango: {instructorKPIs?.level}
+                          </div>
+                        </div>
+
+                        {/* Avatar */}
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                          <div style={{ width: '100px', height: '100px', borderRadius: '12px', background: '#4A5B52', border: '3px solid #2C3631', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '40px', color: '#fff', fontWeight: 'bold', boxShadow: '0 4px 10px rgba(0,0,0,0.2)' }}>
+                            {selectedUser.charAt(0).toUpperCase()}
+                          </div>
+                          <div style={{ marginTop: '8px', fontSize: '16px', fontWeight: 'bold', borderBottom: '2px solid #333' }}>{selectedUser.split('@')[0]}</div>
+                        </div>
+                      </div>
+
+                      {/* Radar Chart */}
+                      <div style={{ width: '100%', height: '240px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                         <ResponsiveContainer width="100%" height="100%">
+                          <RadarChart cx="50%" cy="50%" outerRadius="80%" data={instructorKPIs?.radarData || []}>
+                            <PolarGrid stroke="#829285" />
+                            <PolarAngleAxis dataKey="subject" tick={{ fill: '#333', fontSize: 10, fontWeight: 'bold' }} />
+                            <PolarRadiusAxis angle={30} domain={[0, 'dataMax']} tick={false} axisLine={false} />
+                            <Radar name="Habilidades" dataKey="A" stroke="#E36A5B" fill="#E36A5B" fillOpacity={0.6} />
+                            <Tooltip contentStyle={{ background: '#fff', borderRadius: '8px' }} />
+                          </RadarChart>
+                        </ResponsiveContainer>
+                      </div>
+                      
+                      {/* Bar Stats */}
+                      <div style={{ position: 'absolute', bottom: '20px', left: '20px', width: '120px', height: '100px', background: '#D9DDE0', border: '2px solid #5A6D63', padding: '4px' }}>
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart data={instructorKPIs?.barData || []} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+                            <XAxis dataKey="name" tick={{ fontSize: 8 }} interval={0} axisLine={false} tickLine={false} />
+                            <Bar dataKey="value" fill="#ED1650" />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
+
+                    </div>
+
+                    {/* Right Panel: Missions List */}
+                    <div style={{ width: '250px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      <div style={{ background: '#F4EFE6', padding: '16px', borderRadius: '12px', border: '2px solid #829285' }}>
+                        <div style={{ fontSize: '18px', fontWeight: 'bold', fontFamily: 'monospace', borderBottom: '2px dashed #829285', paddingBottom: '8px', marginBottom: '12px', textAlign: 'center' }}>
+                          MISSIONS
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '16px', fontWeight: 'bold', fontFamily: 'monospace' }}><span>S (Épicas)</span><span>{instructorKPIs?.missionRanks.S}</span></div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '16px', fontWeight: 'bold', fontFamily: 'monospace' }}><span>A (Largas)</span><span>{instructorKPIs?.missionRanks.A}</span></div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '16px', fontWeight: 'bold', fontFamily: 'monospace' }}><span>B (Media)</span><span>{instructorKPIs?.missionRanks.B}</span></div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '16px', fontWeight: 'bold', fontFamily: 'monospace' }}><span>C (Estándar)</span><span>{instructorKPIs?.missionRanks.C}</span></div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '16px', fontWeight: 'bold', fontFamily: 'monospace' }}><span>D (Cortas)</span><span>{instructorKPIs?.missionRanks.D}</span></div>
+                        </div>
+                      </div>
+
+                      {/* Jutsus Dominados (Sellos) */}
+                      <div style={{ flex: 1, background: '#F4EFE6', padding: '16px', borderRadius: '12px', border: '2px solid #829285', overflowY: 'auto' }}>
+                        <div style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: 'monospace', borderBottom: '2px dashed #829285', paddingBottom: '8px', marginBottom: '12px', textAlign: 'center' }}>
+                          JUTSUS DOMINADOS
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                          {instructorKPIs?.sellos.map(sello => (
+                            <div key={sello.id} style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#EAE1D0', padding: '8px', borderRadius: '8px', border: '1px solid #D6CEBE' }}>
+                               <div style={{ fontSize: '24px' }}>{sello.icon}</div>
+                               <div>
+                                  <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#333' }}>{sello.title}</div>
+                                  <div style={{ fontSize: '9px', color: '#666' }}>{sello.desc}</div>
+                               </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>

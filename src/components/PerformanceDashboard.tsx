@@ -10,19 +10,25 @@ export const PerformanceDashboard = () => {
   const [forceRender, setForceRender] = useState(0);
   const [selectedToCompare, setSelectedToCompare] = useState<string[]>([]);
   const [showComparison, setShowComparison] = useState(false);
+  const [filterExpedicion, setFilterExpedicion] = useState<string>('Todas');
+  const [filterPlaneta, setFilterPlaneta] = useState<string>('Todos');
+  const [filterFabrica, setFilterFabrica] = useState<string>('Todas');
+
+  const availableExpediciones = useMemo(() => Array.from(new Set(data.map(d => d.expedicion).filter(Boolean))), [data]);
+  const availablePlanetas = useMemo(() => Array.from(new Set(data.map(d => d.planetas).filter(Boolean))), [data]);
 
   const injectFakeData = () => {
-    const tracking = getMissionTracking();
+    const tracking: MissionProgress[] = [];
     const date = new Date();
     const mesAño = `${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
     
     // Helper to generate a fake mission
-    const addMissions = (email: string, planet: string, count: number, expectedMins: number, actualMins: number, status: 'FINALIZADO' | 'ABANDONADO' | 'SOLO_LECTURA' = 'FINALIZADO', sessionCode: string = 'S1') => {
+    const addMissions = (email: string, planet: string, count: number, expectedMins: number, actualMins: number, status: 'FINALIZADO' | 'ABANDONADO' | 'SOLO_LECTURA' = 'FINALIZADO', sessionCode: string = 'S1', expedicionStr: string = 'Front Line') => {
         for(let i=0; i<count; i++) {
            const apert = Date.now() - (actualMins * 60000);
            const fin = Date.now();
            tracking.push({
-             mesAño, instructor: email.split('@')[0], email, codigo: sessionCode, expedicion: 'MOCK',
+             mesAño, instructor: email.split('@')[0], email, codigo: sessionCode, expedicion: expedicionStr,
              planetas: planet, missao: `Misión ${i}`, macrotema: 'Tema', tema: `Tema ${i}`,
              tiempoEstimado: `${expectedMins}m`, 
              tiempoApertura: status === 'SOLO_LECTURA' ? null : new Date(apert).toISOString(), 
@@ -45,20 +51,20 @@ export const PerformanceDashboard = () => {
     };
 
     // Veterano: 200 hours, high precision, multi-sessions
-    addMissions('veterano@latam.com', 'HVC BAG', 100, 60, 60, 'FINALIZADO', 'SES-01');
-    addMissions('veterano@latam.com', 'HVC BAG', 20, 60, 30, 'FINALIZADO', 'SES-02');
-    addMissions('veterano@latam.com', 'LAE', 50, 120, 120, 'FINALIZADO', 'SES-03');
-    addMissions('veterano@latam.com', 'LAE', 5, 120, 60, 'ABANDONADO', 'SES-03');
+    addMissions('veterano@latam.com', 'HVC BAG', 100, 60, 60, 'FINALIZADO', 'SES-01', 'Front Line');
+    addMissions('veterano@latam.com', 'HVC BAG', 20, 60, 30, 'FINALIZADO', 'SES-02', 'Suporte');
+    addMissions('veterano@latam.com', 'LAE', 50, 120, 120, 'FINALIZADO', 'SES-03', 'Field Support');
+    addMissions('veterano@latam.com', 'LAE', 5, 120, 60, 'ABANDONADO', 'SES-03', 'Field Support');
     addLogs('veterano@latam.com', 45); // Portales externos
 
     // Medio: 50 hours, mostly slow, some read only
-    addMissions('medio@latam.com', 'ONBOARDING LATAM', 40, 30, 60, 'FINALIZADO', 'SES-10');
-    addMissions('medio@latam.com', 'ONBOARDING LATAM', 15, 30, 0, 'SOLO_LECTURA', 'SES-10');
+    addMissions('medio@latam.com', 'ONBOARDING LATAM', 40, 30, 60, 'FINALIZADO', 'SES-10', 'Suporte');
+    addMissions('medio@latam.com', 'ONBOARDING LATAM', 15, 30, 0, 'SOLO_LECTURA', 'SES-10', 'Suporte');
     addLogs('medio@latam.com', 12);
 
     // Nuevo: very fast, abandons a lot
-    addMissions('nuevo@latam.com', 'FIELD SUPPORT BASE', 5, 60, 10, 'FINALIZADO', 'SES-20');
-    addMissions('nuevo@latam.com', 'FIELD SUPPORT BASE', 10, 60, 30, 'ABANDONADO', 'SES-20');
+    addMissions('nuevo@latam.com', 'FIELD SUPPORT BASE', 5, 60, 10, 'FINALIZADO', 'SES-20', 'Field Support');
+    addMissions('nuevo@latam.com', 'FIELD SUPPORT BASE', 10, 60, 30, 'ABANDONADO', 'SES-20', 'Field Support');
     addLogs('nuevo@latam.com', 2);
 
     localStorage.setItem('yoda_mission_tracking', JSON.stringify(tracking));
@@ -92,17 +98,37 @@ export const PerformanceDashboard = () => {
     return 0;
   };
 
-  const stats = useMemo(() => {
+  const computeStats = (expFilter: string, planFilter: string) => {
     const usersData: Record<string, any> = {};
 
     data.forEach(log => {
       if (!log.email || log.email === 'admin') return;
+      if (expFilter !== 'Todas' && log.expedicion !== expFilter) return;
+      if (planFilter !== 'Todos' && log.planetas !== planFilter) return;
 
       if (!usersData[log.email]) {
+        let fabrica = 'Otro';
+        if (log.email.toLowerCase().includes('carlose.araya')) {
+          fabrica = 'LATAM';
+        } else if (log.email.toLowerCase().includes('konectabr.com')) {
+          fabrica = 'Konecta Brasil';
+        } else if (log.email.toLowerCase().includes('aec.com')) {
+          fabrica = 'AeC';
+        } else if (log.email.toLowerCase().includes('konectaperu.com')) {
+          fabrica = 'Konecta Perú';
+        } else if (log.email.toLowerCase().includes('almacontact.com')) {
+          fabrica = 'Alma Contact';
+        } else {
+          const charCodeSum = log.email.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+          fabrica = charCodeSum % 2 === 0 ? 'Konecta Brasil' : 'AeC';
+        }
+
         usersData[log.email] = {
           email: log.email,
           name: log.instructor || log.email.split('@')[0].replace(/\./g, ' '),
+          fabrica,
           courses: new Map<string, { expectedMins: number, actualMins: number, count: number }>(),
+          expediciones: new Map<string, number>(),
           totalExpectedMins: 0,
           totalActualMins: 0,
           onTime: 0,
@@ -139,6 +165,10 @@ export const PerformanceDashboard = () => {
         courseStats.expectedMins += expected;
         courseStats.actualMins += actual;
         courseStats.count++;
+
+        const exp = log.expedicion || 'Desconocida';
+        if (!ud.expediciones.has(exp)) ud.expediciones.set(exp, 0);
+        ud.expediciones.set(exp, ud.expediciones.get(exp) + 1);
 
         ud.totalExpectedMins += expected;
         ud.totalActualMins += actual;
@@ -181,16 +211,32 @@ export const PerformanceDashboard = () => {
          return { name: k, ...v };
       });
 
+      let topExpedicion = 'N/A';
+      let maxExp = -1;
+      Array.from(ud.expediciones.entries()).forEach(([k, v]: any) => {
+         if (v > maxExp) { maxExp = v; topExpedicion = k; }
+      });
+
       return {
         ...ud,
         totalMissions,
         topCourse,
+        topExpedicion,
         courseList,
         precisionScore: totalMissions > 0 ? Math.round((ud.onTime / totalMissions) * 100) : 0
       };
     }).sort((a, b) => b.totalActualMins - a.totalActualMins);
+  };
 
-  }, [data, activityLogs, forceRender]);
+  const globalStats = useMemo(() => computeStats('Todas', 'Todos'), [data, activityLogs, forceRender]);
+  const comparisonStats = useMemo(() => computeStats(filterExpedicion, filterPlaneta), [data, activityLogs, forceRender, filterExpedicion, filterPlaneta]);
+  
+  const filteredGlobalStats = useMemo(() => {
+    if (filterFabrica === 'Todas') return globalStats;
+    return globalStats.filter(s => s.fabrica === filterFabrica);
+  }, [globalStats, filterFabrica]);
+
+  const uniqueFabricas = useMemo(() => Array.from(new Set(globalStats.map(s => s.fabrica))).sort(), [globalStats]);
 
   const getRank = (totalHours: number) => {
     if (totalHours >= 4000) return { title: 'Instructor Maestro', color: '#FFB800', bg: 'rgba(255,184,0,0.1)', icon: Crown };
@@ -235,19 +281,37 @@ export const PerformanceDashboard = () => {
   };
 
   if (showComparison) {
-      const selectedStats = stats.filter(s => selectedToCompare.includes(s.email));
+      const selectedStats = comparisonStats.filter(s => selectedToCompare.includes(s.email));
 
       return (
          <div style={{ padding: '40px 60px', background: '#F8F7FF', minHeight: '100%', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 40 }}>
                 <div>
                    <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 8 }}>
-                     <div style={{ background: '#ED1650', padding: 12, borderRadius: 16, boxShadow: '0 8px 20px rgba(237,22,80,0.2)', cursor: 'pointer' }} onClick={() => setShowComparison(false)}>
+                     <div style={{ background: '#ED1650', padding: 12, borderRadius: 16, boxShadow: '0 8px 20px rgba(237,22,80,0.2)', cursor: 'pointer' }} onClick={() => { setShowComparison(false); setFilterExpedicion('Todas'); setFilterPlaneta('Todos'); }}>
                        <X size={28} color="#fff" />
                      </div>
                      <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F004F', margin: 0 }}>Modo Comparación</h1>
                    </div>
                    <p style={{ fontSize: 14, color: '#64748B', margin: 0 }}>Comparando métricas clave de {selectedToCompare.length} instructores.</p>
+                </div>
+                <div style={{ display: 'flex', gap: 16 }}>
+                    <select 
+                       value={filterExpedicion} 
+                       onChange={e => setFilterExpedicion(e.target.value)}
+                       style={{ padding: '10px 16px', borderRadius: 12, border: '1px solid #CBD5E1', color: '#0F004F', fontWeight: 600, background: '#fff', outline: 'none', cursor: 'pointer' }}
+                    >
+                       <option value="Todas">Todas las Expediciones</option>
+                       {availableExpediciones.map(exp => <option key={exp} value={String(exp)}>{String(exp)}</option>)}
+                    </select>
+                    <select 
+                       value={filterPlaneta} 
+                       onChange={e => setFilterPlaneta(e.target.value)}
+                       style={{ padding: '10px 16px', borderRadius: 12, border: '1px solid #CBD5E1', color: '#0F004F', fontWeight: 600, background: '#fff', outline: 'none', cursor: 'pointer' }}
+                    >
+                       <option value="Todos">Todos los Planetas</option>
+                       {availablePlanetas.map(pl => <option key={pl} value={String(pl)}>{String(pl)}</option>)}
+                    </select>
                 </div>
             </div>
 
@@ -306,24 +370,30 @@ export const PerformanceDashboard = () => {
 
                            <div style={{ marginTop: 8 }}>
                                <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 16 }}>VOLUMEN POR CURSO</div>
-                               <div style={{ height: 160, width: '100%' }}>
+                               <div style={{ height: 160, width: '100%', overflowY: 'auto', paddingRight: 8 }}>
                                  {s.courseList.length > 0 ? (
-                                   <ResponsiveContainer width="100%" height="100%">
-                                     <BarChart data={s.courseList.slice(0, 4)} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
-                                       <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
-                                       <Tooltip 
-                                          cursor={{ fill: '#F1F5F9' }} 
-                                          contentStyle={{ borderRadius: 12, border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}
-                                          labelStyle={{ color: '#0F004F', fontWeight: 800, marginBottom: 4 }}
-                                          formatter={(value: number) => [`${value} misiones`, 'Total Dictado']}
-                                       />
-                                       <Bar dataKey="count" radius={[6, 6, 6, 6]} barSize={40}>
-                                         {s.courseList.slice(0, 4).map((entry: any, index: number) => (
-                                           <Cell key={`cell-${index}`} fill={index === 0 ? '#ED1650' : '#0F004F'} opacity={index === 0 ? 1 : 0.2} />
-                                         ))}
-                                       </Bar>
-                                     </BarChart>
-                                   </ResponsiveContainer>
+                                   <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                                     {s.courseList.map((c: any, index: number) => {
+                                       const maxCount = Math.max(...s.courseList.map((x:any) => x.count));
+                                       const widthPct = maxCount > 0 ? (c.count / maxCount) * 100 : 0;
+                                       return (
+                                         <div key={c.name}>
+                                           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 4 }}>
+                                             <span style={{ color: '#475569', fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '80%' }}>{c.name}</span>
+                                             <span style={{ color: '#0F004F', fontWeight: 900 }}>{c.count}</span>
+                                           </div>
+                                           <div style={{ height: 6, background: '#F1F5F9', borderRadius: 3, overflow: 'hidden' }}>
+                                             <motion.div 
+                                               initial={{ width: 0 }}
+                                               animate={{ width: `${widthPct}%` }}
+                                               transition={{ duration: 1, delay: index * 0.05 }}
+                                               style={{ height: '100%', background: index === 0 ? '#ED1650' : '#0F004F', opacity: index === 0 ? 1 : 0.6, borderRadius: 3 }}
+                                             />
+                                           </div>
+                                         </div>
+                                       );
+                                     })}
+                                   </div>
                                  ) : (
                                    <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#CBD5E1', fontSize: 13, fontWeight: 600 }}>Sin cursos dictados</div>
                                  )}
@@ -358,6 +428,14 @@ export const PerformanceDashboard = () => {
                    <Crown size={14} color="#FFB800" /> MAESTRO (+4000h)
                  </div>
               </div>
+              <select 
+                  value={filterFabrica} 
+                  onChange={e => setFilterFabrica(e.target.value)}
+                  style={{ marginLeft: 20, marginTop: 16, padding: '10px 16px', borderRadius: 12, border: '1px solid #CBD5E1', color: '#0F004F', fontWeight: 700, background: '#fff', outline: 'none', cursor: 'pointer', display: 'inline-flex', verticalAlign: 'top' }}
+               >
+                  <option value="Todas">TODAS LAS FÁBRICAS</option>
+                  {uniqueFabricas.map(f => <option key={f} value={f}>{f}</option>)}
+               </select>
           </div>
 
           <AnimatePresence>
@@ -384,7 +462,7 @@ export const PerformanceDashboard = () => {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 24 }}>
-        {stats.map((s, idx) => {
+        {filteredGlobalStats.map((s, idx) => {
           const isSelected = selectedToCompare.includes(s.email);
           const canSelect = isSelected || selectedToCompare.length < 3;
           
@@ -432,12 +510,15 @@ export const PerformanceDashboard = () => {
                          const rank = getRank(s.totalActualMins / 60);
                          const Icon = rank.icon;
                          return (
-                            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, color: rank.color, fontSize: 11, fontWeight: 800, letterSpacing: '0.05em', marginBottom: 2 }}>
+                            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, color: rank.color, fontSize: 11, fontWeight: 800, letterSpacing: '0.05em', marginBottom: 6 }}>
                               <Icon size={12} strokeWidth={3} /> {rank.title.toUpperCase()}
                             </div>
                          );
                       })()}
-                      <div style={{ fontSize: 11, color: '#94A3B8' }}>{s.email}</div>
+                      <div style={{ fontSize: 11, color: '#94A3B8', display: 'flex', flexDirection: 'column', gap: 3 }}>
+                         <div><strong style={{color:'#64748B'}}>Fábrica:</strong> {s.fabrica}</div>
+                         <div><strong style={{color:'#64748B'}}>Top Expedición:</strong> {s.topExpedicion}</div>
+                      </div>
                    </div>
                 </div>
 
@@ -451,29 +532,21 @@ export const PerformanceDashboard = () => {
                    </div>
                 </div>
 
-                <div style={{ background: '#F8FAFC', borderRadius: 16, padding: 16, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div style={{ background: '#F8FAFC', borderRadius: 16, padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                    <div>
-                      <div style={{ fontSize: 10, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em' }}>HORAS DICTADAS</div>
+                      <div style={{ fontSize: 10, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 4 }}>HORAS DICTADAS</div>
                       <div style={{ fontSize: 16, fontWeight: 900, color: '#0F004F' }}>{(s.totalActualMins / 60).toFixed(1)}h</div>
                    </div>
-                   <div>
-                      <div style={{ fontSize: 10, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em' }}>TOP CURSO</div>
-                      <div style={{ fontSize: 14, fontWeight: 800, color: '#ED1650', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.topCourse}</div>
-                   </div>
-                   <div>
-                      <div style={{ fontSize: 10, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em' }}>SESIONES</div>
-                      <div style={{ fontSize: 16, fontWeight: 900, color: '#0F004F' }}>{s.sessions.size}</div>
-                   </div>
-                   <div>
-                      <div style={{ fontSize: 10, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em' }}>PORTALES</div>
-                      <div style={{ fontSize: 16, fontWeight: 900, color: '#00D6CC' }}>{s.externalPortals} clics</div>
+                   <div style={{ textAlign: 'right' }}>
+                      <div style={{ fontSize: 10, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 4 }}>TOP CURSO</div>
+                      <div style={{ fontSize: 14, fontWeight: 800, color: '#ED1650', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 150 }}>{s.topCourse}</div>
                    </div>
                 </div>
              </motion.div>
           );
         })}
 
-        {stats.length === 0 && (
+        {filteredGlobalStats.length === 0 && (
           <div style={{ gridColumn: '1 / -1', padding: '60px 20px', textAlign: 'center', color: '#94A3B8', background: '#fff', borderRadius: 20, border: '1px dashed #CBD5E1' }}>
             <Activity size={48} style={{ margin: '0 auto 16px', opacity: 0.5 }} />
             <div style={{ fontSize: 16, fontWeight: 600 }}>No hay datos suficientes todavía</div>

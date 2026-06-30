@@ -1,0 +1,161 @@
+// ... inside InstructorDashboard
+
+  // KPI & Gamification logic for the selected instructor
+  const instructorKPIs = useMemo(() => {
+    if (!selectedUser) return null;
+    
+    // REAL Gamification Engine based on completed missions time
+    const missionData = getMissionTracking().filter(m => m.email === selectedUser);
+    let totalMinutes = 0;
+    
+    const parseTime = (tStr: string) => {
+      if (!tStr) return 0;
+      const t = tStr.toLowerCase();
+      if (t.includes('h')) {
+        const h = parseFloat(t.replace('h', ''));
+        return isNaN(h) ? 0 : h * 60;
+      }
+      if (t.includes('m')) {
+        const m = parseFloat(t.replace('m', ''));
+        return isNaN(m) ? 0 : m;
+      }
+      if (t.includes(':')) {
+        const parts = t.split(':');
+        return (parseInt(parts[0]) || 0) * 60 + (parseInt(parts[1]) || 0);
+      }
+      return 0;
+    };
+
+    let missionRanks = { S: 0, A: 0, B: 0, C: 0, D: 0 };
+    const radarStats = { TAI: 0, NIN: 0, GEN: 0, IQ: 0, TOOL: 0 };
+    
+    const planetCounts: Record<string, number> = {};
+    const activeDaysSet = new Set<string>();
+
+    missionData.filter(m => !!m.marcarComoFinalizado).forEach(m => {
+      const finishRaw = m.marcarComoFinalizadoRaw || 0;
+      const startRaw = m.tiempoAperturaRaw || finishRaw;
+      const diffMs = finishRaw - startRaw;
+      const diffMins = Math.max(0, Math.floor(diffMs / 60000));
+      const estMins = parseTime(m.tiempoEstimado);
+      totalMinutes += Math.min(diffMins, estMins);
+      
+      if (m.marcarComoFinalizado) {
+         const date = m.marcarComoFinalizado.split(' ')[0];
+         if (date) activeDaysSet.add(date);
+      }
+    });
+
+    userPartidasData.forEach(p => {
+       if (p.isCompleted) {
+          // Categorize by planetName length
+          let pMins = 0;
+          p.rawMissions.forEach((m:any) => pMins += parseTime(m.tiempoEstimado));
+          
+          const hrs = pMins / 60;
+          if (hrs < 1) missionRanks.D++;
+          else if (hrs < 3) missionRanks.C++;
+          else if (hrs < 8) missionRanks.B++;
+          else if (hrs < 20) missionRanks.A++;
+          else missionRanks.S++;
+       }
+
+       // Radar Points
+       const pname = p.planetName;
+       planetCounts[pname] = (planetCounts[pname] || 0) + p.completedNodes;
+       
+       let cat = 'TOOL'; // Base
+       if (config) {
+          const isFrontLine = config.frontLineContent?.some((c:any) => c.label === pname || c.name === pname || c.id === pname);
+          const isSoporte = config.soporteContent?.some((c:any) => c.label === pname || c.name === pname || c.id === pname);
+          const isFsc = config.fsc?.some((c:any) => c.label === pname || c.name === pname || c.id === pname);
+          const isLider = config.rutaLider?.some((c:any) => c.label === pname || c.name === pname || c.id === pname) || pname === 'Ruta del Líder';
+          
+          if (isFrontLine) cat = 'TAI';
+          else if (isSoporte) cat = 'NIN';
+          else if (isFsc) cat = 'GEN';
+          else if (isLider) cat = 'IQ';
+       }
+       if (cat === 'TAI') radarStats.TAI += p.completedNodes;
+       else if (cat === 'NIN') radarStats.NIN += p.completedNodes;
+       else if (cat === 'GEN') radarStats.GEN += p.completedNodes;
+       else if (cat === 'IQ') radarStats.IQ += p.completedNodes;
+       else radarStats.TOOL += p.completedNodes;
+    });
+
+    const totalHoras = Math.floor(totalMinutes / 60);
+    const completedCourses = userPartidasData.filter(p => p.isCompleted).length;
+
+    let level = "Genin ⭐";
+    let nextLevelHours = 100;
+    let progress = (totalHoras / 100) * 100;
+    
+    if (totalHoras >= 1000) {
+      level = "Kage / ANBU 🌟";
+      nextLevelHours = totalHoras;
+      progress = 100;
+    } else if (totalHoras >= 600) {
+      level = "Jonin ⭐⭐⭐";
+      nextLevelHours = 1000;
+      progress = ((totalHoras - 600) / (1000 - 600)) * 100;
+    } else if (totalHoras >= 300) {
+      level = "Chunin ⭐⭐";
+      nextLevelHours = 600;
+      progress = ((totalHoras - 300) / (600 - 300)) * 100;
+    } else if (totalHoras >= 100) {
+      level = "Chunin ⭐⭐";
+      nextLevelHours = 300;
+      progress = ((totalHoras - 100) / (300 - 100)) * 100;
+    }
+
+    let especialidad = 'Ninguna';
+    let maxCount = 0;
+    const sellos: any[] = [];
+    
+    Object.keys(planetCounts).forEach(pname => {
+       if (planetCounts[pname] > maxCount) {
+          maxCount = planetCounts[pname];
+          especialidad = pname;
+       }
+       // 1 curso tiene varios nodos, así que > 5 nodos no significa 5 repeticiones.
+       // Para medir repeticiones exactas, deberíamos contar cuantas partidas hay del mismo planeta.
+    });
+
+    // Fix repetitions based on userPartidasData counts (how many partidas of the same planetName)
+    const partidaCounts: Record<string, number> = {};
+    userPartidasData.forEach(p => {
+       partidaCounts[p.planetName] = (partidaCounts[p.planetName] || 0) + 1;
+    });
+
+    let bestPlanet = 'Ninguna';
+    let maxPartidas = 0;
+    Object.keys(partidaCounts).forEach(pname => {
+       if (partidaCounts[pname] > maxPartidas) {
+          maxPartidas = partidaCounts[pname];
+          bestPlanet = pname;
+       }
+       if (partidaCounts[pname] >= 5) {
+           sellos.push({ id: `esp_${pname}`, title: `Especialista en ${pname}`, desc: `Dictado ${partidaCounts[pname]} veces`, unlocked: true, icon: '🔥' });
+       }
+    });
+
+    if (completedCourses >= 1) {
+       sellos.unshift({ id: 'primer_paso', title: 'Primer Salto', desc: 'Completaste tu primer módulo.', unlocked: true, icon: '🚀' });
+    }
+
+    const radarData = [
+       { subject: 'FrontLine (TAI)', A: radarStats.TAI, fullMark: Math.max(radarStats.TAI, 10) },
+       { subject: 'Soporte (NIN)', A: radarStats.NIN, fullMark: Math.max(radarStats.NIN, 10) },
+       { subject: 'FSC (GEN)', A: radarStats.GEN, fullMark: Math.max(radarStats.GEN, 10) },
+       { subject: 'Onboarding (TOOL)', A: radarStats.TOOL, fullMark: Math.max(radarStats.TOOL, 10) },
+       { subject: 'Líderes (IQ)', A: radarStats.IQ, fullMark: Math.max(radarStats.IQ, 10) },
+    ];
+
+    const barData = [
+       { name: 'Power', value: totalHoras }, // Horas
+       { name: 'Energy', value: activeDaysSet.size }, // Días activos
+       { name: 'IQ', value: Object.keys(partidaCounts).length } // Cursos únicos
+    ];
+
+    return { totalHoras, completedCourses, level, nextLevelHours, progress: Math.min(100, Math.max(0, progress)), sellos, missionRanks, radarData, barData, bestPlanet, activeDays: activeDaysSet.size, uniqueCourses: Object.keys(partidaCounts).length };
+  }, [selectedUser, userPartidasData, config]);

@@ -1,0 +1,8 @@
+import React, { useState, useMemo, useEffect } from 'react';
+import { ChevronLeft, Users, Navigation, CheckCircle, Clock, CalendarDays, Activity, Target, ExternalLink, BookOpen, Rocket, LayoutDashboard, Star, Shield, Zap, Brain, Crosshair } from 'lucide-react';
+import { getMissionTracking } from '../lib/tracking';
+import { motion } from 'framer-motion';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+
+// ... (keep the getPartidasInfo and SUPERVISOR_DATA as is)
+// We will replace the `instructorKPIs` and the `selectedUser !== null` render block.
