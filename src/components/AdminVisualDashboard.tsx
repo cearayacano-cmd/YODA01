@@ -411,39 +411,6 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
               <div style={{ fontSize: 32, fontWeight: 900, color: '#0F004F' }}>{globalStats.instructors}</div>
             </div>
           </div>
-          <button 
-             onClick={() => {
-                const tracking: MissionProgress[] = [];
-                const date = new Date();
-                const mesAño = `${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
-                
-                const addMissions = (email: string, planet: string, count: number, expectedMins: number, actualMins: number, status: 'FINALIZADO' | 'ABANDONADO' | 'SOLO_LECTURA' = 'FINALIZADO', sessionCode: string = 'S1', expedicionStr: string = 'Front Line') => {
-                    for(let i=0; i<count; i++) {
-                       const apert = Date.now() - (actualMins * 60000);
-                       const fin = Date.now();
-                       tracking.push({
-                         mesAño, instructor: email.split('@')[0], email, codigo: sessionCode, expedicion: expedicionStr,
-                         planetas: planet, missao: `Misión ${i}`, macrotema: 'Tema', tema: `Tema ${i}`,
-                         tiempoEstimado: `${expectedMins}m`, 
-                         tiempoApertura: status === 'SOLO_LECTURA' ? null : new Date(apert).toISOString(), 
-                         marcarComoFinalizado: status === 'FINALIZADO' ? new Date(fin).toISOString() : null,
-                         marcarComoVisto: status === 'SOLO_LECTURA' ? new Date(fin).toISOString() : null,
-                         tiempoAperturaRaw: status === 'SOLO_LECTURA' ? undefined : apert, 
-                         marcarComoFinalizadoRaw: status === 'FINALIZADO' ? fin : undefined
-                       });
-                    }
-                };
-
-                addMissions('veterano@latam.com', 'HVC BAG', 10, 60, 60, 'FINALIZADO', 'SES-01', 'Front Line');
-                addMissions('medio@konectabr.com', 'HVC BAG', 5, 60, 30, 'FINALIZADO', 'SES-02', 'Front Line');
-                addMissions('nuevo@aec.com', 'LAE', 2, 120, 120, 'FINALIZADO', 'SES-03', 'Field Support');
-                localStorage.setItem('yoda_mission_tracking', JSON.stringify(tracking));
-                setForceRender(prev => prev + 1);
-             }}
-             style={{ background: '#00D6CC', color: '#0F004F', border: 'none', padding: '8px 16px', borderRadius: 8, fontWeight: 900, cursor: 'pointer', fontSize: 11 }}
-          >
-             + INYECTAR DATOS
-          </button>
         </motion.div>
 
         <motion.div initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} transition={{delay: 0.1}} style={{ background: '#fff', padding: 24, borderRadius: 16, boxShadow: '0 4px 20px rgba(0,0,0,0.03)', display: 'flex', alignItems: 'center', gap: 20 }}>
