@@ -352,7 +352,7 @@ export default function App() {
           );
         }
       case 'ruta-lider':
-        return <RutaLiderView links={activeConfig.laboratorio} rutaData={activeConfig.rutaLider} onBack={() => go('laboratorio')} />;
+        return <RutaLiderView isEs={currentStation === 'SSC'} links={activeConfig.laboratorio} rutaData={activeConfig.rutaLider} onBack={() => go('laboratorio')} />;
       case 'laboratorio':
         return <LaboratorioView isEs={currentStation === 'SSC'} config={activeConfig} links={activeConfig.laboratorio} rutaData={activeConfig.rutaLider} onBack={() => go(currentStation.toLowerCase())} onNavigate={go} onNavigateRuta={() => go('ruta-lider')} title={activeConfig.moduleMeta?.lab?.title} subtitle={activeConfig.moduleMeta?.lab?.subtitle} />;
       case 'ingenieria':
@@ -381,6 +381,7 @@ export default function App() {
         return (
           <UnifiedTrackingDashboard
             stationName={adminStation}
+            isEs={adminStation === 'SSC'}
             logs={activityLogs}
             config={activeConfig}
             initialInstructorId={selectedInstructorId}

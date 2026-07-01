@@ -36,7 +36,7 @@ const selectS = {
   width: '100%'
 };
 
-export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFilter, stationName }: { initialInstructorFilter?: string, initialCodeFilter?: string, stationName?: string }) => {
+export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFilter, stationName, isEs }: { initialInstructorFilter?: string, initialCodeFilter?: string, stationName?: string, isEs?: boolean }) => {
   const [data, setData] = useState<MissionProgress[]>([]);
   const [filterCode, setFilterCode] = useState<string>(initialCodeFilter || 'ALL');
   const [filterInstructor, setFilterInstructor] = useState<string>(initialInstructorFilter || 'ALL');
@@ -211,9 +211,9 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
             <div>
               <div style={{ fontSize: 24, fontWeight: 900, color: '#0F004F', letterSpacing: '-0.5px', display: 'flex', alignItems: 'center', gap: 10 }}>
                 <Target size={28} color="#00D6CC" />
-                MONITOREO DE MISIONES
+                {isEs ? 'MONITOREO DE MISIONES' : 'MONITORAMENTO DE MISSÕES'}
               </div>
-              <div style={{ fontSize: 12, color: '#666', marginTop: 4 }}>Seguimiento detallado de la interacción de los agentes con el contenido</div>
+              <div style={{ fontSize: 12, color: '#666', marginTop: 4 }}>{isEs ? 'Seguimiento detallado de la interacción de los agentes con el contenido' : 'Acompanhamento detalhado da interação dos agentes com o conteúdo'}</div>
             </div>
           </div>
           
@@ -236,41 +236,41 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
         {/* Filters Bar */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 15, marginBottom: 20, background: '#fff', padding: 20, borderRadius: 12, boxShadow: '0 4px 15px rgba(0,0,0,0.03)' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5, flex: 1, minWidth: 150 }}>
-                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>Instructor</label>
+                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>{isEs ? 'Instructor' : 'Instrutor'}</label>
                 <select value={filterInstructor} onChange={e => setFilterInstructor(e.target.value)} style={selectS}>
-                    <option value="ALL">TODOS</option>
+                    <option value="ALL">{isEs ? 'TODOS' : 'TODOS'}</option>
                     {uniqueInstructors.map(i => <option key={i} value={i}>{i}</option>)}
                 </select>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5, flex: 1, minWidth: 150 }}>
-                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>Código de Sesión</label>
+                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>{isEs ? 'Código de Sesión' : 'Código de Sessão'}</label>
                 <select value={filterCode} onChange={e => setFilterCode(e.target.value)} style={selectS}>
-                    <option value="ALL">TODOS</option>
+                    <option value="ALL">{isEs ? 'TODOS' : 'TODOS'}</option>
                     {uniqueCodes.map(i => <option key={i} value={i}>{i}</option>)}
                 </select>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5, flex: 1, minWidth: 150 }}>
-                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>Estado</label>
+                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>{isEs ? 'Estado' : 'Status'}</label>
                 <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} style={selectS}>
-                    <option value="ALL">TODOS</option>
-                    <option value="ACTIVO">ACTIVO</option>
-                    <option value="FINALIZADO">FINALIZADO</option>
+                    <option value="ALL">{isEs ? 'TODOS' : 'TODOS'}</option>
+                    <option value="ACTIVO">{isEs ? 'ACTIVO' : 'ATIVO'}</option>
+                    <option value="FINALIZADO">{isEs ? 'FINALIZADO' : 'CONCLUÍDO'}</option>
                 </select>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5, flex: 1, minWidth: 150 }}>
-                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>Servicio / Planeta</label>
+                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>{isEs ? 'Servicio / Planeta' : 'Serviço / Planeta'}</label>
                 <select value={filterPlaneta} onChange={e => setFilterPlaneta(e.target.value)} style={selectS}>
-                    <option value="ALL">TODOS</option>
+                    <option value="ALL">{isEs ? 'TODOS' : 'TODOS'}</option>
                     {uniquePlanetas.map(i => <option key={i} value={i}>{i}</option>)}
                 </select>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5, flex: 2, minWidth: 250 }}>
-                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>Búsqueda Inteligente</label>
+                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>{isEs ? 'Búsqueda Inteligente' : 'Busca Inteligente'}</label>
                 <input 
                     type="text" 
                     value={searchQuery} 
                     onChange={e => setSearchQuery(e.target.value)} 
-                    placeholder="Buscar por tema, misión, email..."
+                    placeholder={isEs ? "Buscar por tema, misión, email..." : "Buscar por tema, missão, email..."}
                     style={{ ...selectS, cursor: 'text' }}
                 />
             </div>
@@ -282,26 +282,26 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
             <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 1200 }}>
               <thead>
                 <tr>
-                  <th style={thS}>mes y año</th>
-                  <th style={thS}>instructor</th>
-                  <th style={thS}>email</th>
-                  <th style={thS}>codigo</th>
-                  <th style={thS}>EXPEDIÇÃO</th>
-                  <th style={thS}>Planetas</th>
-                  <th style={thS}>Missão</th>
-                  <th style={thS}>MacroTema</th>
-                  <th style={thS}>Tema</th>
-                  <th style={thS}>Tiempo Estimado</th>
-                  <th style={thS}>Tiempo aper</th>
-                  <th style={thS}>MARCAR COMO VISTO</th>
-                  <th style={thS}>Cálculo aproximado</th>
+                  <th style={thS}>{isEs ? 'MES Y AÑO' : 'MÊS E ANO'}</th>
+                  <th style={thS}>{isEs ? 'INSTRUCTOR' : 'INSTRUTOR'}</th>
+                  <th style={thS}>{isEs ? 'EMAIL' : 'EMAIL'}</th>
+                  <th style={thS}>{isEs ? 'CODIGO' : 'CÓDIGO'}</th>
+                  <th style={thS}>{isEs ? 'EXPEDICIÓN' : 'EXPEDIÇÃO'}</th>
+                  <th style={thS}>{isEs ? 'PLANETAS' : 'PLANETAS'}</th>
+                  <th style={thS}>{isEs ? 'MISIÓN' : 'MISSÃO'}</th>
+                  <th style={thS}>{isEs ? 'MACROTEMA' : 'MACROTEMA'}</th>
+                  <th style={thS}>{isEs ? 'TEMA' : 'TEMA'}</th>
+                  <th style={thS}>{isEs ? 'TIEMPO ESTIMADO' : 'TEMPO ESTIMADO'}</th>
+                  <th style={thS}>{isEs ? 'TIEMPO APER' : 'TEMPO APER'}</th>
+                  <th style={thS}>{isEs ? 'MARCAR COMO VISTO' : 'MARCAR COMO VISTO'}</th>
+                  <th style={thS}>{isEs ? 'CÁLCULO APROXIMADO' : 'CÁLCULO APROXIMADO'}</th>
                 </tr>
               </thead>
               <tbody>
                 {currentKeys.length === 0 ? (
                   <tr>
                     <td colSpan={13} style={{ padding: 40, textAlign: 'center', color: '#888', fontSize: 14 }}>
-                      No hay datos de misiones registrados aún.
+                      {isEs ? 'No hay datos de misiones registrados aún.' : 'Não há dados de missões registrados ainda.'}
                     </td>
                   </tr>
                 ) : (
@@ -318,9 +318,9 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
                                <td colSpan={13} style={{ padding: '12px 15px', fontWeight: 900, color: '#0F004F', fontSize: 13 }}>
                                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                                        {isMExp ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
-                                       <span style={{ color: '#64748b' }}>Instructor:</span> {mData.instructor} 
-                                       <span style={{ color: '#64748b', marginLeft: 15 }}>Planeta:</span> {mData.planeta}
-                                       <span style={{ color: '#64748b', marginLeft: 15 }}>Missão:</span> <span style={{ color: '#00D6CC', background: '#0F004F', padding: '2px 8px', borderRadius: 4 }}>{mData.missao}</span>
+                                       <span style={{ color: '#64748b' }}>{isEs ? 'Instructor:' : 'Instrutor:'}</span> {mData.instructor} 
+                                       <span style={{ color: '#64748b', marginLeft: 15 }}>{isEs ? 'Planeta:' : 'Planeta:'}</span> {mData.planeta}
+                                       <span style={{ color: '#64748b', marginLeft: 15 }}>{isEs ? 'Misión:' : 'Missão:'}</span> <span style={{ color: '#00D6CC', background: '#0F004F', padding: '2px 8px', borderRadius: 4 }}>{mData.missao}</span>
                                    </div>
                                </td>
                             </tr>
@@ -338,8 +338,8 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
                                            <td colSpan={13} style={{ padding: '10px 15px 10px 40px', fontWeight: 800, color: '#334155', fontSize: 12 }}>
                                                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                                                    {isMacExp ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
-                                                   <span style={{ color: '#94a3b8' }}>MacroTema:</span> {macData.macrotema}
-                                                   <span style={{ fontSize: 10, background: '#cbd5e1', padding: '2px 6px', borderRadius: 10, color: '#475569' }}>{macData.rows.length} Temas</span>
+                                                   <span style={{ color: '#94a3b8' }}>{isEs ? 'MacroTema:' : 'MacroTema:'}</span> {macData.macrotema}
+                                                   <span style={{ fontSize: 10, background: '#cbd5e1', padding: '2px 6px', borderRadius: 10, color: '#475569' }}>{macData.rows.length} {isEs ? 'Temas' : 'Temas'}</span>
                                                </div>
                                            </td>
                                         </tr>

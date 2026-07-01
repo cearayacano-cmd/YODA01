@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Users, CheckCircle2, PlayCircle, BarChart3, Clock, Target, Search, Filter, SortDesc } from 'lucide-react';
 import { getMissionTracking, MissionProgress } from '../lib/tracking';
 
-export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails, stationName }: any) => {
+export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails, stationName, isEs }: any) => {
   const [data, setData] = useState<MissionProgress[]>([]);
   const [activityLogs, setActivityLogs] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery || '');
@@ -419,7 +419,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
               <Users size={28} color="#0F004F" />
             </div>
             <div>
-              <div style={{ fontSize: 12, fontWeight: 800, color: '#666', textTransform: 'uppercase', letterSpacing: '1px' }}>Instructores Activos</div>
+              <div style={{ fontSize: 12, fontWeight: 800, color: '#666', textTransform: 'uppercase', letterSpacing: '1px' }}>{isEs ? 'Instructores Activos' : 'Instrutores Ativos'}</div>
               <div style={{ fontSize: 32, fontWeight: 900, color: '#0F004F' }}>{globalStats.instructors}</div>
             </div>
           </div>
@@ -430,7 +430,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
             <CheckCircle2 size={28} color="#99CC33" />
           </div>
           <div>
-            <div style={{ fontSize: 12, fontWeight: 800, color: '#666', textTransform: 'uppercase', letterSpacing: '1px' }}>Planetas Finalizados</div>
+            <div style={{ fontSize: 12, fontWeight: 800, color: '#666', textTransform: 'uppercase', letterSpacing: '1px' }}>{isEs ? 'Planetas Finalizados' : 'Planetas Concluídos'}</div>
             <div style={{ fontSize: 32, fontWeight: 900, color: '#0F004F' }}>{globalStats.totalFinished}</div>
           </div>
         </motion.div>
@@ -440,7 +440,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
             <PlayCircle size={28} color="#00D6CC" />
           </div>
           <div>
-            <div style={{ fontSize: 12, fontWeight: 800, color: '#666', textTransform: 'uppercase', letterSpacing: '1px' }}>Planetas en Curso</div>
+            <div style={{ fontSize: 12, fontWeight: 800, color: '#666', textTransform: 'uppercase', letterSpacing: '1px' }}>{isEs ? 'Planetas en Curso' : 'Planetas em Curso'}</div>
             <div style={{ fontSize: 32, fontWeight: 900, color: '#0F004F' }}>{Math.max(0, globalStats.totalOpened - globalStats.totalFinished)}</div>
           </div>
         </motion.div>
@@ -449,7 +449,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
         <div style={{ fontSize: 20, fontWeight: 900, color: '#0F004F', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <BarChart3 size={24} color="#ED1650" /> PROGRESO POR INSTRUCTOR ({processedStats.length})
+          <BarChart3 size={24} color="#ED1650" /> {isEs ? 'PROGRESO POR INSTRUCTOR' : 'PROGRESSO POR INSTRUTOR'} ({processedStats.length})
         </div>
       </div>
 
@@ -460,7 +460,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
           <Search size={18} color="#888" />
           <input 
             type="text" 
-            placeholder="Buscar instructor o código..." 
+            placeholder={isEs ? "Buscar instructor o código..." : "Buscar instrutor ou código..."} 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{ border: 'none', background: 'transparent', outline: 'none', width: '100%', fontSize: 13, color: '#333', fontWeight: 600 }}
@@ -473,7 +473,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
             onChange={(e) => setFilterInstructor(e.target.value)}
             style={{ padding: '10px', borderRadius: 8, border: '1px solid #E2E8F0', outline: 'none', fontSize: 12, fontWeight: 700, color: '#0F004F', cursor: 'pointer', background: '#fff', maxWidth: 150 }}
           >
-            <option value="ALL">INSTRUCTORES</option>
+            <option value="ALL">{isEs ? 'INSTRUCTORES' : 'INSTRUTORES'}</option>
             {uniqueInstructors.map(g => <option key={g} value={g}>{g.split('@')[0]}</option>)}
           </select>
         </div>
@@ -484,7 +484,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
             onChange={(e) => setFilterFabrica(e.target.value)}
             style={{ padding: '10px', borderRadius: 8, border: '1px solid #E2E8F0', outline: 'none', fontSize: 12, fontWeight: 700, color: '#0F004F', cursor: 'pointer', background: '#fff' }}
           >
-            <option value="ALL">FÁBRICAS</option>
+            <option value="ALL">{isEs ? 'FÁBRICAS' : 'FÁBRICAS'}</option>
             {uniqueFabricas.map(g => <option key={g} value={g}>{g}</option>)}
           </select>
         </div>
@@ -495,7 +495,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
             onChange={(e) => setFilterExpedicion(e.target.value)}
             style={{ padding: '10px', borderRadius: 8, border: '1px solid #E2E8F0', outline: 'none', fontSize: 12, fontWeight: 700, color: '#0F004F', cursor: 'pointer', background: '#fff' }}
           >
-            <option value="ALL">EXPEDICIONES</option>
+            <option value="ALL">{isEs ? 'EXPEDICIONES' : 'EXPEDIÇÕES'}</option>
             {uniqueExpediciones.map(g => <option key={g} value={g}>{g}</option>)}
           </select>
         </div>
@@ -506,7 +506,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
             onChange={(e) => setFilterGroup(e.target.value)}
             style={{ padding: '10px', borderRadius: 8, border: '1px solid #E2E8F0', outline: 'none', fontSize: 12, fontWeight: 700, color: '#0F004F', cursor: 'pointer', background: '#fff' }}
           >
-            <option value="ALL">GRUPOS</option>
+            <option value="ALL">{isEs ? 'GRUPOS' : 'GRUPOS'}</option>
             {uniqueGroups.map(g => <option key={g} value={g}>{g}</option>)}
           </select>
         </div>
@@ -516,9 +516,9 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
           onChange={(e) => setFilterStatus(e.target.value)}
           style={{ padding: '10px', borderRadius: 8, border: '1px solid #E2E8F0', outline: 'none', fontSize: 12, fontWeight: 700, color: '#0F004F', cursor: 'pointer', background: '#fff' }}
         >
-          <option value="ALL">CUALQUIER ESTADO</option>
-          <option value="IN_PROGRESS">EN CURSO</option>
-          <option value="FINISHED">FINALIZADOS</option>
+          <option value="ALL">{isEs ? 'CUALQUIER ESTADO' : 'QUALQUER ESTADO'}</option>
+          <option value="IN_PROGRESS">{isEs ? 'EN CURSO' : 'EM CURSO'}</option>
+          <option value="FINISHED">{isEs ? 'FINALIZADOS' : 'CONCLUÍDOS'}</option>
         </select>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -537,10 +537,10 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
             onChange={(e) => setSortOrder(e.target.value)}
             style={{ padding: '10px', borderRadius: 8, border: '1px solid #E2E8F0', outline: 'none', fontSize: 12, fontWeight: 700, color: '#0F004F', cursor: 'pointer', background: '#fff' }}
           >
-            <option value="LAST_ACTIVE">Última Actividad</option>
-            <option value="LOWEST_PROGRESS">Menor Progreso</option>
-            <option value="HIGHEST_PROGRESS">Mayor Progreso</option>
-            <option value="ALPHABETICAL">Alfabético</option>
+            <option value="LAST_ACTIVE">{isEs ? 'Última Actividad' : 'Última Atividade'}</option>
+            <option value="LOWEST_PROGRESS">{isEs ? 'Menor Progreso' : 'Menor Progresso'}</option>
+            <option value="HIGHEST_PROGRESS">{isEs ? 'Mayor Progreso' : 'Maior Progresso'}</option>
+            <option value="ALPHABETICAL">{isEs ? 'Alfabético' : 'Alfabético'}</option>
           </select>
         </div>
 
@@ -551,8 +551,8 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
         {processedStats.length === 0 && (
           <div style={{ padding: 60, background: '#fff', borderRadius: 16, gridColumn: '1 / -1', textAlign: 'center', color: '#94A3B8', border: '1px dashed #CBD5E1', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
             <BarChart3 size={48} color="#CBD5E1" />
-            <div style={{ fontSize: 18, fontWeight: 800, color: '#64748B' }}>No hay datos para mostrar</div>
-            <div style={{ fontSize: 14, fontWeight: 600 }}>Prueba ajustando los filtros o genera datos de prueba usando el botón de arriba.</div>
+            <div style={{ fontSize: 18, fontWeight: 800, color: '#64748B' }}>{isEs ? 'No hay datos para mostrar' : 'Não há dados para mostrar'}</div>
+            <div style={{ fontSize: 14, fontWeight: 600 }}>{isEs ? 'Prueba ajustando los filtros o genera datos de prueba usando el botón de arriba.' : 'Tente ajustar os filtros ou gere dados de teste usando o botão acima.'}</div>
           </div>
         )}
 
@@ -613,7 +613,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
                     {inst.email.split('@')[0]}
                   </div>
                   <div style={{ background: 'rgba(22, 163, 74, 0.1)', border: '1px solid rgba(22, 163, 74, 0.2)', padding: '2px 8px', borderRadius: 10, fontSize: 9, fontWeight: 800, color: '#16A34A', letterSpacing: '1px' }}>
-                    ACTIVO
+                    {isEs ? 'ACTIVO' : 'ATIVO'}
                   </div>
                 </div>
               </div>
@@ -621,7 +621,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
               {/* Premium Progress Bar */}
               <div style={{ marginBottom: 24, background: 'rgba(245,247,249,0.8)', padding: 16, borderRadius: 16, border: '1px solid rgba(0,0,0,0.03)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12, alignItems: 'center' }}>
-                  <span style={{ fontSize: 11, fontWeight: 800, color: '#666', textTransform: 'uppercase', letterSpacing: '1px' }}>Progreso de la Clase</span>
+                  <span style={{ fontSize: 11, fontWeight: 800, color: '#666', textTransform: 'uppercase', letterSpacing: '1px' }}>{isEs ? 'Progreso de la Clase' : 'Progresso da Classe'}</span>
                   <span style={{ fontSize: 16, fontWeight: 900, color: progressColor }}>{progressPercentage}%</span>
                 </div>
                 <div style={{ height: 10, background: '#E2E8F0', borderRadius: 10, overflow: 'hidden', position: 'relative', boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.1)' }}>
@@ -639,7 +639,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
                   </motion.div>
                 </div>
                 <div style={{ fontSize: 11, color: '#888', marginTop: 10, textAlign: 'right', fontWeight: 700 }}>
-                  <span style={{ color: '#0F004F' }}>{inst.finished}</span> de {inst.totalNodes} módulos completados
+                  <span style={{ color: '#0F004F' }}>{inst.finished}</span> {isEs ? 'de' : 'de'} {inst.totalNodes} {isEs ? 'módulos completados' : 'módulos concluídos'}
                 </div>
               </div>
 
@@ -648,14 +648,14 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
                 <div style={{ flex: 1, background: '#fff', border: '1px solid #E2E8F0', padding: 12, borderRadius: 12, display: 'flex', alignItems: 'center', gap: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.02)' }}>
                   <div style={{ background: 'rgba(15,0,79,0.05)', padding: 8, borderRadius: 8 }}><Clock size={16} color="#0F004F" /></div>
                   <div>
-                    <div style={{ fontSize: 9, fontWeight: 800, color: '#888', textTransform: 'uppercase', marginBottom: 2 }}>Asignado</div>
+                    <div style={{ fontSize: 9, fontWeight: 800, color: '#888', textTransform: 'uppercase', marginBottom: 2 }}>{isEs ? 'Asignado' : 'Atribuído'}</div>
                     <div style={{ fontSize: 13, fontWeight: 900, color: '#0F004F' }}>{inst.totalProgrammedMinutesStr}</div>
                   </div>
                 </div>
                 <div style={{ flex: 1, background: '#fff', border: `1px solid ${progressColor}33`, padding: 12, borderRadius: 12, display: 'flex', alignItems: 'center', gap: 12, boxShadow: `0 2px 8px ${progressColor}11` }}>
                   <div style={{ background: `${progressColor}15`, padding: 8, borderRadius: 8 }}><Clock size={16} color={progressColor} /></div>
                   <div>
-                    <div style={{ fontSize: 9, fontWeight: 800, color: '#888', textTransform: 'uppercase', marginBottom: 2 }}>Invertido</div>
+                    <div style={{ fontSize: 9, fontWeight: 800, color: '#888', textTransform: 'uppercase', marginBottom: 2 }}>{isEs ? 'Invertido' : 'Investido'}</div>
                     <div style={{ fontSize: 13, fontWeight: 900, color: progressColor }}>{formatTime(inst.consumedMinutes)}</div>
                   </div>
                 </div>
@@ -663,7 +663,7 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
 
               {/* Last Activity Badge */}
               <div style={{ background: 'linear-gradient(90deg, rgba(0,214,204,0.1), transparent)', padding: '12px 16px', borderRadius: 12, borderLeft: '4px solid #00D6CC', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <div style={{ fontSize: 10, fontWeight: 800, color: '#00D6CC', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Última Actividad</div>
+                <div style={{ fontSize: 10, fontWeight: 800, color: '#00D6CC', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{isEs ? 'Última Actividad' : 'Última Atividade'}</div>
                 <div style={{ fontSize: 13, fontWeight: 800, color: '#333', maxWidth: '50%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', textAlign: 'right' }}>
                   {inst.lastMission}
                 </div>

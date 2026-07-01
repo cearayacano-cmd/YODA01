@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Users, Search, ChevronRight, UserCircle2 } from 'lucide-react';
 import { getMissionTracking, MissionProgress } from '../lib/tracking';
 
-export const AdminUsersList = ({ onViewUser, stationName }: { onViewUser: (instructorId: string) => void, stationName?: string }) => {
+export const AdminUsersList = ({ onViewUser, stationName, isEs }: { onViewUser: (instructorId: string) => void, stationName?: string, isEs?: boolean }) => {
   const [data, setData] = useState<MissionProgress[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -77,9 +77,9 @@ export const AdminUsersList = ({ onViewUser, stationName }: { onViewUser: (instr
         <div>
           <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F004F', margin: '0 0 8px 0', display: 'flex', alignItems: 'center', gap: 12 }}>
             <Users size={32} color="#ED1650" />
-            DIRECTORIO DE USUARIOS
+            {isEs ? 'DIRECTORIO DE USUARIOS' : 'DIRETÓRIO DE USUÁRIOS'}
           </h1>
-          <p style={{ margin: 0, color: '#666', fontSize: 14 }}>Listado maestro de instructores registrados en el sistema.</p>
+          <p style={{ margin: 0, color: '#666', fontSize: 14 }}>{isEs ? 'Listado maestro de instructores registrados en el sistema.' : 'Lista mestra de instrutores registrados no sistema.'}</p>
         </div>
       </div>
 
@@ -88,7 +88,7 @@ export const AdminUsersList = ({ onViewUser, stationName }: { onViewUser: (instr
           <Search size={20} color="#888" />
           <input 
             type="text" 
-            placeholder="Filtro mágico (Nombre o Correo)..." 
+            placeholder={isEs ? "Filtro mágico (Nombre o Correo)..." : "Filtro mágico (Nome ou E-mail)..."} 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{ border: 'none', background: 'transparent', outline: 'none', width: '100%', fontSize: 14, color: '#333', fontWeight: 600 }}
@@ -100,7 +100,7 @@ export const AdminUsersList = ({ onViewUser, stationName }: { onViewUser: (instr
           onChange={(e) => setFilterFabrica(e.target.value)}
           style={{ padding: '12px 20px', borderRadius: 8, border: '1px solid #E2E8F0', outline: 'none', fontSize: 13, fontWeight: 700, color: '#0F004F', cursor: 'pointer', background: '#fff' }}
         >
-          <option value="ALL">TODAS LAS FÁBRICAS</option>
+          <option value="ALL">{isEs ? 'TODAS LAS FÁBRICAS' : 'TODAS AS FÁBRICAS'}</option>
           {uniqueFabricas.map(f => <option key={f} value={f}>{f}</option>)}
         </select>
 
@@ -109,7 +109,7 @@ export const AdminUsersList = ({ onViewUser, stationName }: { onViewUser: (instr
           onChange={(e) => setFilterRango(e.target.value)}
           style={{ padding: '12px 20px', borderRadius: 8, border: '1px solid #E2E8F0', outline: 'none', fontSize: 13, fontWeight: 700, color: '#0F004F', cursor: 'pointer', background: '#fff' }}
         >
-          <option value="ALL">TODOS LOS RANGOS</option>
+          <option value="ALL">{isEs ? 'TODOS LOS RANGOS' : 'TODOS OS NÍVEIS'}</option>
           {uniqueRangos.map(r => <option key={r} value={r}>{r}</option>)}
         </select>
       </div>
@@ -118,17 +118,17 @@ export const AdminUsersList = ({ onViewUser, stationName }: { onViewUser: (instr
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
           <thead>
             <tr style={{ background: '#0F004F', color: '#fff', fontSize: 12, textTransform: 'uppercase', letterSpacing: '1px' }}>
-              <th style={{ padding: '16px 24px', fontWeight: 800 }}>Usuario</th>
-              <th style={{ padding: '16px 24px', fontWeight: 800 }}>Fábrica</th>
-              <th style={{ padding: '16px 24px', fontWeight: 800 }}>Rango</th>
-              <th style={{ padding: '16px 24px', fontWeight: 800, textAlign: 'right' }}>Acción</th>
+              <th style={{ padding: '16px 24px', fontWeight: 800 }}>{isEs ? 'Usuario' : 'Usuário'}</th>
+              <th style={{ padding: '16px 24px', fontWeight: 800 }}>{isEs ? 'Fábrica' : 'Fábrica'}</th>
+              <th style={{ padding: '16px 24px', fontWeight: 800 }}>{isEs ? 'Rango' : 'Nível'}</th>
+              <th style={{ padding: '16px 24px', fontWeight: 800, textAlign: 'right' }}>{isEs ? 'Acción' : 'Ação'}</th>
             </tr>
           </thead>
           <tbody>
             {filteredUsers.length === 0 ? (
               <tr>
                 <td colSpan={4} style={{ padding: 40, textAlign: 'center', color: '#666', fontWeight: 600 }}>
-                  No se encontraron usuarios.
+                  {isEs ? 'No se encontraron usuarios.' : 'Nenhum usuário encontrado.'}
                 </td>
               </tr>
             ) : (
@@ -185,7 +185,7 @@ export const AdminUsersList = ({ onViewUser, stationName }: { onViewUser: (instr
                       }}
                       style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#00D6CC', fontWeight: 800, fontSize: 12, cursor: 'pointer' }}
                     >
-                      VER DESEMPEÑO <ChevronRight size={16} />
+                      {isEs ? 'VER DESEMPEÑO' : 'VER DESEMPENHO'} <ChevronRight size={16} />
                     </div>
                   </td>
                 </motion.tr>

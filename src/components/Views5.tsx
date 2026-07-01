@@ -63,15 +63,15 @@ const MapBackground = () => (
   </div>
 );
 
-const HUD = ({ level, xp, totalXp, activePowers, onBack }: any) => (
+const HUD = ({ level, xp, totalXp, activePowers, onBack, isEs }: any) => (
   <div style={{ position: 'relative', top: 0, background: 'transparent', padding: '24px 40px', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 100 }}>
     <div style={{ position: 'fixed', left: 40, top: 24, zIndex: 200 }}>
-      <BackBtn onClick={onBack} label="SAIR" />
+      <BackBtn onClick={onBack} label={isEs ? "SALIR" : "SAIR"} />
     </div>
     
     <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '40px' }}>
       <div style={{ fontSize: '10px', color: '#00D6CC', letterSpacing: '8px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '8px' }}>
-        Terminal de Exploração Estratégica
+        {isEs ? 'Terminal de Exploración Estratégica' : 'Terminal de Exploração Estratégica'}
       </div>
       <div style={{ 
         fontSize: '56px', 
@@ -81,7 +81,7 @@ const HUD = ({ level, xp, totalXp, activePowers, onBack }: any) => (
         textTransform: 'uppercase',
         filter: 'drop-shadow(0 0 15px rgba(255,255,255,0.2))'
       }}>
-        Rota do Lider Guardião
+        {isEs ? 'Ruta del Líder Guardián' : 'Rota do Lider Guardião'}
       </div>
     </div>
   </div>
@@ -375,7 +375,7 @@ const PowerDiscoveryTerminal = ({ p, nodes, onBack, onComplete }: any) => {
   );
 };
 
-export const RutaLiderView = ({ links, rutaData, onBack }: any) => {
+export const RutaLiderView = ({ links, rutaData, onBack, isEs }: any) => {
   const [completed, setCompleted] = useState<Set<string>>(new Set());
   const [selectedPower, setSelectedPower] = useState<any>(null);
   const [tick, setTick] = useState(0);
@@ -447,7 +447,7 @@ export const RutaLiderView = ({ links, rutaData, onBack }: any) => {
   return (
     <div style={{ minHeight: '100vh', position: 'relative', color: '#fff', fontFamily: 'inherit' }}>
       <MapBackground />
-      <HUD level={level} xp={xp} totalXp={totalXp} activePowers={completed.size} onBack={onBack} />
+      <HUD level={level} xp={xp} totalXp={totalXp} activePowers={completed.size} onBack={onBack} isEs={isEs} />
       
       <div style={{ position: 'relative', paddingTop: '40px', paddingBottom: '100px', overflowY: 'auto', overflowX: 'hidden' }}>
 

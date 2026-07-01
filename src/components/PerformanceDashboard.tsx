@@ -4,7 +4,7 @@ import { Trophy, Clock, Target, Activity, Zap, Layers, AlertCircle, CheckCircle2
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { getMissionTracking, MissionProgress } from '../lib/tracking';
 
-export const PerformanceDashboard = ({ onBack, stationName }: { onBack?: any, stationName?: string }) => {
+export const PerformanceDashboard = ({ onBack, stationName, isEs }: { onBack?: any, stationName?: string, isEs?: boolean }) => {
   const [data, setData] = useState<MissionProgress[]>([]);
   const [activityLogs, setActivityLogs] = useState<any[]>([]);
   const [forceRender, setForceRender] = useState(0);
@@ -350,9 +350,9 @@ export const PerformanceDashboard = ({ onBack, stationName }: { onBack?: any, st
                      <div style={{ background: '#ED1650', padding: 12, borderRadius: 16, boxShadow: '0 8px 20px rgba(237,22,80,0.2)', cursor: 'pointer' }} onClick={() => { setShowComparison(false); setFilterExpedicion('Todas'); setFilterPlaneta('Todos'); }}>
                        <X size={28} color="#fff" />
                      </div>
-                     <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F004F', margin: 0 }}>Modo Comparación</h1>
+                     <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F004F', margin: 0 }}>{isEs ? 'Modo Comparación' : 'Modo Comparação'}</h1>
                    </div>
-                   <p style={{ fontSize: 14, color: '#64748B', margin: 0 }}>Comparando métricas clave de {selectedToCompare.length} instructores.</p>
+                   <p style={{ fontSize: 14, color: '#64748B', margin: 0 }}>{isEs ? `Comparando métricas clave de ${selectedToCompare.length} instructores.` : `Comparando métricas-chave de ${selectedToCompare.length} instrutores.`}</p>
                 </div>
                 <div style={{ display: 'flex', gap: 16 }}>
                     <select 
@@ -360,7 +360,7 @@ export const PerformanceDashboard = ({ onBack, stationName }: { onBack?: any, st
                        onChange={e => setFilterExpedicion(e.target.value)}
                        style={{ padding: '10px 16px', borderRadius: 12, border: '1px solid #CBD5E1', color: '#0F004F', fontWeight: 600, background: '#fff', outline: 'none', cursor: 'pointer' }}
                     >
-                       <option value="Todas">Todas las Expediciones</option>
+                       <option value="Todas">{isEs ? 'Todas las Expediciones' : 'Todas as Expedições'}</option>
                        {availableExpediciones.map(exp => <option key={exp} value={String(exp)}>{String(exp)}</option>)}
                     </select>
                     <select 
@@ -368,7 +368,7 @@ export const PerformanceDashboard = ({ onBack, stationName }: { onBack?: any, st
                        onChange={e => setFilterPlaneta(e.target.value)}
                        style={{ padding: '10px 16px', borderRadius: 12, border: '1px solid #CBD5E1', color: '#0F004F', fontWeight: 600, background: '#fff', outline: 'none', cursor: 'pointer' }}
                     >
-                       <option value="Todos">Todos los Planetas</option>
+                       <option value="Todos">{isEs ? 'Todos los Planetas' : 'Todos os Planetas'}</option>
                        {availablePlanetas.map(pl => <option key={pl} value={String(pl)}>{String(pl)}</option>)}
                     </select>
                 </div>
@@ -397,42 +397,42 @@ export const PerformanceDashboard = ({ onBack, stationName }: { onBack?: any, st
 
                        <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
                            <div>
-                               <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 4 }}>PRECISIÓN GLOBAL</div>
+                               <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 4 }}>{isEs ? 'PRECISIÓN GLOBAL' : 'PRECISÃO GLOBAL'}</div>
                                <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
                                   <CircleProgress score={s.precisionScore} />
                                   <div>
-                                     <div style={{ fontSize: 13, color: '#64748B' }}><strong style={{color: '#0F004F'}}>{s.onTime}</strong> A Tiempo</div>
-                                     <div style={{ fontSize: 13, color: '#64748B' }}><strong style={{color: '#0F004F'}}>{s.fast}</strong> Rápidos | <strong style={{color: '#0F004F'}}>{s.slow}</strong> Lentos</div>
+                                     <div style={{ fontSize: 13, color: '#64748B' }}><strong style={{color: '#0F004F'}}>{s.onTime}</strong> {isEs ? 'A Tiempo' : 'No Prazo'}</div>
+                                     <div style={{ fontSize: 13, color: '#64748B' }}><strong style={{color: '#0F004F'}}>{s.fast}</strong> {isEs ? 'Rápidos' : 'Rápidos'} | <strong style={{color: '#0F004F'}}>{s.slow}</strong> {isEs ? 'Lentos' : 'Lentos'}</div>
                                   </div>
                                </div>
                            </div>
 
                            <div style={{ background: '#F8FAFC', borderRadius: 16, padding: 20 }}>
-                               <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 12 }}>ESTADÍSTICAS VITALES</div>
+                               <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 12 }}>{isEs ? 'ESTADÍSTICAS VITALES' : 'ESTATÍSTICAS VITAIS'}</div>
                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>Veces Dictado</span>
+                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>{isEs ? 'Veces Dictado' : 'Vezes Ministrado'}</span>
                                   <span style={{ fontSize: 15, color: '#0F004F', fontWeight: 900 }}>{s.totalMissions}</span>
                                </div>
                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>Tiempo Promedio</span>
+                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>{isEs ? 'Tiempo Promedio' : 'Tempo Médio'}</span>
                                   <span style={{ fontSize: 15, color: '#00D6CC', fontWeight: 900 }}>{s.totalMissions > 0 ? Math.round(s.totalActualMins / s.totalMissions) : 0}m</span>
                                </div>
                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>Tiempo Total</span>
+                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>{isEs ? 'Tiempo Total' : 'Tempo Total'}</span>
                                   <span style={{ fontSize: 15, color: '#0F004F', fontWeight: 900 }}>{(s.totalActualMins / 60).toFixed(1)}h</span>
                                </div>
                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>Días Activos</span>
+                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>{isEs ? 'Días Activos' : 'Dias Ativos'}</span>
                                   <span style={{ fontSize: 15, color: '#0F004F', fontWeight: 900 }}>{s.activeDays.size}</span>
                                </div>
                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>Tasa de Abandono</span>
+                                  <span style={{ fontSize: 14, color: '#475569', fontWeight: 600 }}>{isEs ? 'Tasa de Abandono' : 'Taxa de Abandono'}</span>
                                   <span style={{ fontSize: 15, color: '#ED1650', fontWeight: 900 }}>{s.abandoned}</span>
                                </div>
                            </div>
 
                            <div style={{ marginTop: 8 }}>
-                               <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 16 }}>VOLUMEN POR CURSO</div>
+                               <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 16 }}>{isEs ? 'VOLUMEN POR CURSO' : 'VOLUME POR CURSO'}</div>
                                <div style={{ height: 160, width: '100%', overflowY: 'auto', paddingRight: 8 }}>
                                  {s.courseList.length > 0 ? (
                                    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>

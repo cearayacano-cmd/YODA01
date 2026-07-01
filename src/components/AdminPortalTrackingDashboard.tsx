@@ -36,7 +36,7 @@ const selectS = {
   width: '100%'
 };
 
-export const AdminPortalTrackingDashboard = ({ stationName }: { stationName?: string }) => {
+export const AdminPortalTrackingDashboard = ({ stationName, isEs }: { stationName?: string, isEs?: boolean }) => {
   const [data, setData] = useState<PortalProgress[]>([]);
   const [filterInstructor, setFilterInstructor] = useState<string>('ALL');
   const [filterPortal, setFilterPortal] = useState<string>('ALL');
@@ -104,7 +104,7 @@ export const AdminPortalTrackingDashboard = ({ stationName }: { stationName?: st
   };
 
   const clearData = () => {
-    if (window.confirm('¿Estás seguro de que deseas eliminar TODOS los registros de uso de portales? Esto no se puede deshacer.')) {
+    if (window.confirm(isEs ? '¿Estás seguro de que deseas eliminar TODOS los registros de uso de portales? Esto no se puede deshacer.' : 'Tem certeza de que deseja excluir TODOS os registros de uso dos portais? Isso não pode ser desfeito.')) {
       localStorage.removeItem('yoda_portal_tracking');
       setData([]);
       setFilterInstructor('ALL');
@@ -123,9 +123,9 @@ export const AdminPortalTrackingDashboard = ({ stationName }: { stationName?: st
             <div>
               <div style={{ fontSize: 24, fontWeight: 900, color: '#0F004F', letterSpacing: '-0.5px', display: 'flex', alignItems: 'center', gap: 10 }}>
                 <Layout size={28} color="#99CC33" />
-                MONITOREO DE PORTALES Y RECURSOS
+                {isEs ? 'MONITOREO DE PORTALES Y RECURSOS' : 'MONITORAMENTO DE PORTAIS E RECURSOS'}
               </div>
-              <div style={{ fontSize: 12, color: '#666', marginTop: 4 }}>Seguimiento de clics en formularios, manuales y portales de guardias</div>
+              <div style={{ fontSize: 12, color: '#666', marginTop: 4 }}>{isEs ? 'Seguimiento de clics en formularios, manuales y portales de guardias' : 'Acompanhamento de cliques em formulários, manuais e portais'}</div>
             </div>
           </div>
           
@@ -140,7 +140,7 @@ export const AdminPortalTrackingDashboard = ({ stationName }: { stationName?: st
                 boxShadow: '0 4px 10px rgba(237,22,80,0.1)'
               }}
             >
-              Limpiar Registros
+              {isEs ? 'Limpiar Registros' : 'Limpar Registros'}
             </button>
 
             <button 
@@ -161,26 +161,26 @@ export const AdminPortalTrackingDashboard = ({ stationName }: { stationName?: st
         {/* Filters Bar */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 15, marginBottom: 20, background: '#fff', padding: 20, borderRadius: 12, boxShadow: '0 4px 15px rgba(0,0,0,0.03)' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5, flex: 1, minWidth: 150 }}>
-                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>Instructor</label>
+                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>{isEs ? 'Instructor' : 'Instrutor'}</label>
                 <select value={filterInstructor} onChange={e => setFilterInstructor(e.target.value)} style={selectS}>
-                    <option value="ALL">TODOS</option>
+                    <option value="ALL">{isEs ? 'TODOS' : 'TODOS'}</option>
                     {uniqueInstructors.map(i => <option key={i} value={i}>{i}</option>)}
                 </select>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5, flex: 1, minWidth: 150 }}>
-                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>Portal</label>
+                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>{isEs ? 'Portal' : 'Portal'}</label>
                 <select value={filterPortal} onChange={e => setFilterPortal(e.target.value)} style={selectS}>
-                    <option value="ALL">TODOS</option>
+                    <option value="ALL">{isEs ? 'TODOS' : 'TODOS'}</option>
                     {uniquePortals.map(i => <option key={i} value={i}>{i}</option>)}
                 </select>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5, flex: 2, minWidth: 250 }}>
-                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>Búsqueda Inteligente</label>
+                <label style={{ fontSize: 10, fontWeight: 800, color: '#666', textTransform: 'uppercase' }}>{isEs ? 'Búsqueda Inteligente' : 'Busca Inteligente'}</label>
                 <input 
                     type="text" 
                     value={searchQuery} 
                     onChange={e => setSearchQuery(e.target.value)} 
-                    placeholder="Buscar por item, portal, email..."
+                    placeholder={isEs ? "Buscar por item, portal, email..." : "Buscar por item, portal, email..."}
                     style={{ ...selectS, cursor: 'text' }}
                 />
             </div>
@@ -192,18 +192,18 @@ export const AdminPortalTrackingDashboard = ({ stationName }: { stationName?: st
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>
-                  <th style={thS}>INSTRUCTOR</th>
-                  <th style={thS}>EMAIL</th>
-                  <th style={thS}>PORTAL</th>
-                  <th style={thS}>ELEMENTO / PÁGINA VISITADA</th>
-                  <th style={thS}>FECHA Y HORA</th>
+                  <th style={thS}>{isEs ? 'INSTRUCTOR' : 'INSTRUTOR'}</th>
+                  <th style={thS}>{isEs ? 'EMAIL' : 'EMAIL'}</th>
+                  <th style={thS}>{isEs ? 'PORTAL' : 'PORTAL'}</th>
+                  <th style={thS}>{isEs ? 'ELEMENTO / PÁGINA VISITADA' : 'ELEMENTO / PÁGINA VISITADA'}</th>
+                  <th style={thS}>{isEs ? 'FECHA Y HORA' : 'DATA E HORA'}</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredData.length === 0 ? (
                   <tr>
                     <td colSpan={6} style={{ padding: '40px', textAlign: 'center', color: '#666', fontSize: 14 }}>
-                      No hay registros de clics en portales aún.
+                      {isEs ? 'No hay registros de clics en portales aún.' : 'Não há registros de cliques em portais ainda.'}
                     </td>
                   </tr>
                 ) : (
