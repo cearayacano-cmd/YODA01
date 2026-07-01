@@ -1839,7 +1839,13 @@ const ActivityLogPanel = ({ isVisible, onClose, isEs }: any) => {
       if (savedLogs) {
         try {
           const parsed = JSON.parse(savedLogs);
-          const userLogs = parsed.filter((l: any) => l.user === activeUser);
+          const ignoreActions = ['NAVIGATE', 'CLICK_LINK', 'VISIT', 'LOGIN', 'LOGOUT', 'USER_CHANGE'];
+          const userLogs = parsed.filter((l: any) => {
+             if (l.user !== activeUser) return false;
+             if (ignoreActions.includes(l.action)) return false;
+             if ((l.details || '').includes('Usuario cambiado a')) return false;
+             return true;
+          });
           setLogs(userLogs.slice(0, 15));
           
           const lastCompletion = userLogs.find((l: any) => l.action === 'COMPLETION' && !l.details.includes('toda la expedición') && !l.details.includes('Reinició'));
