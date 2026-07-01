@@ -479,41 +479,7 @@ export const AdminPlanetEditor = ({ dataArray, setDataArray, planets, onBack, in
                   >
 
               <div style={{ padding: '40px' }}>
-              {(sec.tipo === 'ojt' || sec.tipo === 'avaliacao') && (
-                <div style={{ marginBottom: '32px', padding: '32px', background: '#fff', borderRadius: '24px', border: '1px solid rgba(0,214,204,0.15)', boxShadow: '0 20px 60px rgba(0,0,0,0.05)' }}>
-                  <div style={{ fontSize: '14px', fontWeight: 900, marginBottom: '32px', display: 'flex', alignItems: 'center', gap: 12, color: '#00D6CC', letterSpacing: '0.1em' }}><AlertTriangle size={24}/> PARÁMETROS OPERATIVOS OJT <span style={{ fontWeight: 700, fontSize: '11px', color: '#64748b', letterSpacing: 0, textTransform: 'uppercase' }}>· Configuración Avanzada</span></div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', marginBottom: '32px', borderBottom: '1px solid #E2E8F0', paddingBottom: '32px' }}>
-                    <div style={{ background: '#F8FAFC', padding: 24, borderRadius: 20, border: '1px solid #E2E8F0' }}>
-                      <div style={{ fontSize: '11px', fontWeight: 900, marginBottom: 20, color: '#0F004F', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 8 }}><Monitor size={16}/> DIARIO DE BORDO OJT</div>
-                      <div style={{ marginBottom: '20px' }}>
-                        <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Etiqueta del Botón</label>
-                        <input value={sec.dbOjtLabel} onChange={e => updateSecField(si, 'dbOjtLabel', e.target.value)} placeholder="ej: Diário de Bordo OJT" style={{ ...inp({ fontWeight: 800 }), width: '100%' }} />
-                      </div>
-                      <div>
-                        <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Enlace de Destino (URL)</label>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: '#fff', border: '1px solid #E2E8F0', borderRadius: 10, padding: '0 16px' }}><LinkIcon size={16} color="#0F004F" /><input value={sec.dbOjtUrl} onChange={e => updateSecField(si, 'dbOjtUrl', e.target.value)} placeholder="https://docs.google.com/..." style={{ border: 'none', background: 'transparent', padding: '14px 0', outline: 'none', color: '#1a56db', fontWeight: 700, width: '100%', fontSize: 13 }} /></div>
-                      </div>
-                    </div>
-                    <div style={{ background: '#F8FAFC', padding: 24, borderRadius: 20, border: '1px solid #E2E8F0', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                      <div style={{ fontSize: '11px', fontWeight: 900, marginBottom: 20, color: '#0F004F', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 8 }}><Clock size={16}/> CARGA HORARIA TOTAL</div>
-                      <input value={sec.totalCh} onChange={e => updateSecField(si, 'totalCh', e.target.value)} placeholder="HH:MM:SS" style={{ ...inp({ fontSize: 28, fontWeight: 900, textAlign: 'center', color: '#0F004F' }), width: '200px' }} />
-                      <div style={{ fontSize: 13, color: '#94a3b8', marginTop: 16 }}>Formato: <span style={{ fontWeight: 800 }}>HH:MM:SS</span></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '11px', fontWeight: 900, marginBottom: '24px', color: '#00D6CC', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 10 }}><Briefcase size={18}/> AJUSTE DE RUTA PARA REPROVADOS</div>
-                    <div style={{ marginBottom: '24px' }}>
-                      <label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Descripción del Protocolo (Muestra en App)</label>
-                      <textarea value={sec.ajusteRota} onChange={e => updateSecField(si, 'ajusteRota', e.target.value)} placeholder="Protocolo de refuerzo para estudiantes..." style={{ ...inp({ minHeight: 80, lineHeight: 1.6 }), width: '100%', resize: 'vertical' }} />
-                    </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '24px' }}>
-                      <div><label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Forms KON (URL)</label><input value={sec.ajusteRotaUrlKon} onChange={e => updateSecField(si, 'ajusteRotaUrlKon', e.target.value)} placeholder="https://..." style={{ ...inp({ fontSize: 12, color: '#1a56db' }), width: '100%' }} /></div>
-                      <div><label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Forms AeC (URL)</label><input value={sec.ajusteRotaUrlAec} onChange={e => updateSecField(si, 'ajusteRotaUrlAec', e.target.value)} placeholder="https://..." style={{ ...inp({ fontSize: 12, color: '#1a56db' }), width: '100%' }} /></div>
-                      <div><label style={{ fontSize: '10px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 900, textTransform: 'uppercase' }}>Carga Horaria de Ajuste</label><input value={sec.ajusteRotaCh} onChange={e => updateSecField(si, 'ajusteRotaCh', e.target.value)} placeholder="0:30:00" style={{ ...inp({ fontWeight: 900, textAlign: 'center' }), width: '100%' }} /></div>
-                    </div>
-                  </div>
-                </div>
-              )}
+
                   <div style={{ background: '#ffffff', borderRadius: '16px', padding: '40px', border: '1px solid #E2E8F0', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
                         {(() => {
                           const groupedRows: { macroTema: string; rows: any[] }[] = [];
