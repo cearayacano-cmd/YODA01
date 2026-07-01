@@ -219,8 +219,8 @@ export default function App() {
     // This ensures that all old, corrupted, or conflicting progress markers are cleared for the user.
     if (!localStorage.getItem('yoda_auto_wipe_v8')) {
       Object.keys(localStorage).forEach(key => {
-        // Reset every single trace of user activity, except identity.
-        if (key.startsWith('yoda_') && !key.includes('active_user') && !key.includes('station_name') && !key.includes('station_country')) {
+        // Reset every single trace of user activity, except identity and users list.
+        if (key.startsWith('yoda_') && !key.includes('active_user') && !key.includes('station_name') && !key.includes('station_country') && !key.includes('users')) {
           localStorage.removeItem(key);
         }
         if (key.startsWith('resolved_') || key.startsWith('congrats_')) {
@@ -272,10 +272,10 @@ export default function App() {
 
   const activeConfig = appConfig?.[currentStation.toLowerCase()] || appConfigJson[currentStation.toLowerCase()] || appConfig?.br || appConfigJson.br;
   const go = (v: string, sector: string | null = null, courseIdx: number | null = null) => {
-    let details = `Navegación a: ${v}`;
-    if (sector) details += ` | Sector: ${sector}`;
-    if (courseIdx !== null) details += ` | Planeta Index: ${courseIdx}`;
-    addLog('NAVIGATE', details);
+    // let details = `Navegación a: ${v}`;
+    // if (sector) details += ` | Sector: ${sector}`;
+    // if (courseIdx !== null) details += ` | Planeta Index: ${courseIdx}`;
+    // addLog('NAVIGATE', details); // REMOVED to reduce noise
 
     setView(v);
     if (sector) setActiveSector(sector);
@@ -288,14 +288,22 @@ export default function App() {
   };
 
   const renderView = () => {
-    const isAdmin = activeUser.includes('carlose.araya');
-    const isBRUser = activeUser.includes('konectabr.com') || activeUser.includes('aec.com');
-    const isSSCUser = activeUser.includes('konectaperu.com') || activeUser.includes('almacontact.com');
+    const savedUsersStr = typeof localStorage !== 'undefined' ? localStorage.getItem('yoda_users_v4') : null;
+    let dbUsers = [];
+    if (savedUsersStr) {
+      try { dbUsers = JSON.parse(savedUsersStr); } catch(e) {}
+    }
+    
+    const currentUserData = dbUsers.find((u: any) => u.correo === activeUser);
+    const userRole = currentUserData ? currentUserData.acceso : null;
 
-    // Admin accesses everything.
-    // BR users access only BR. SSC users access only SSC.
-    // If unknown, default to BR.
-    const canAccessBR = isAdmin || isBRUser || (!isAdmin && !isSSCUser);
+    const isAdmin = activeUser === 'admin@yoda.com' || activeUser.includes('carlose.araya') || userRole === 'Administrador';
+    
+    // Check based on role first, fallback to domain if role not set
+    const isBRUser = userRole === 'BR Station' || (!userRole && (activeUser.includes('konectabr.com') || activeUser.includes('aec.com')));
+    const isSSCUser = userRole === 'SSC Station' || (!userRole && (activeUser.includes('konectaperu.com') || activeUser.includes('almacontact.com') || activeUser.includes('almaexperien')));
+
+    const canAccessBR = isAdmin || isBRUser || (!isAdmin && !isSSCUser && userRole !== 'SSC Station');
     const canAccessSSC = isAdmin || isSSCUser;
 
     switch (view) {
@@ -462,23 +470,16 @@ export default function App() {
           );
         }
       default: {
-        const checkAccess = (station: string, email: string) => {
-          if (!email) return false;
-          const lowerEmail = email.toLowerCase();
-          if (lowerEmail.includes('@latam.com')) return true;
-          if (station === 'br') {
-            return lowerEmail.includes('@konectabr.com') || lowerEmail.includes('@aec.com');
-          }
-          if (station === 'ssc') {
-            return lowerEmail.includes('@konectaperu.com') || lowerEmail.includes('@almacontact.com');
-          }
+        const checkAccess = (station: string) => {
+          if (station === 'br') return canAccessBR;
+          if (station === 'ssc') return canAccessSSC;
           return false;
         };
         return <Landing
-          canAccessBR={checkAccess('br', activeUser || 'instructor@example.com')}
-          canAccessSSC={checkAccess('ssc', activeUser || 'instructor@example.com')}
+          canAccessBR={checkAccess('br')}
+          canAccessSSC={checkAccess('ssc')}
           onNavigate={(st: string) => {
-            if (checkAccess(st, activeUser || 'instructor@example.com')) {
+            if (checkAccess(st)) {
               setCurrentStation(st.toUpperCase());
               localStorage.setItem('yoda_station_name', st.toUpperCase());
               go(st.toLowerCase());

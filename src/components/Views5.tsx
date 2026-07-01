@@ -489,7 +489,7 @@ export const RutaLiderView = ({ links, rutaData, onBack }: any) => {
                 texture: 'CRATERS',
                 onboardingIdx: null
               }}
-              planetLabel="RUTA DEL LÍDER"
+              planetLabel={selectedPower.name}
               sectorLabel="Módulo de Aprendizaje"
               initialViewMode="detail"
               onBack={() => setSelectedPower(null)}
@@ -723,14 +723,15 @@ export const TechBaseView = ({
         {/* Menu Items with Tactical Slots */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, position: 'relative', zIndex: 5 }}>
           {[
-            { label: 'Portal Instrutor', sec: 'SEC-A1', target: 'operaciones', color: '#FFD700' },
-            { label: 'Formulários', sec: 'SEC-A2', target: 'suministros', color: '#00F3FF' },
-            { label: 'Portal de Lideres', sec: 'SEC-B1', target: 'laboratorio', color: '#39FF14' },
-            { label: 'Workshops', sec: 'SEC-B2', target: 'ingenieria', color: '#BF00FF' }
-          ].map((item, idx) => {
+            { label: 'Portal Instrutor', sec: 'SEC-A1', target: 'operaciones', color: '#FFD700', metaKey: 'ops' },
+            { label: 'Formulários', sec: 'SEC-A2', target: 'suministros', color: '#00F3FF', metaKey: 'sup' },
+            { label: 'Portal de Lideres', sec: 'SEC-B1', target: 'laboratorio', color: '#39FF14', metaKey: 'lab' },
+            { label: 'Workshops', sec: 'SEC-B2', target: 'ingenieria', color: '#BF00FF', metaKey: 'eng' }
+          ].filter(item => config?.moduleMeta?.[item.metaKey]?.enabled !== false).map((item, idx) => {
+            const displayLabel = config?.moduleMeta?.[item.metaKey]?.title || item.label;
             const isActive = title?.toLowerCase() === item.label.toLowerCase() || (item.label === 'Portal de Lideres' && title?.toLowerCase() === 'portal de líderes');
-            const targetList = config?.[item.target] || [];
-            const isTargetReady = targetList.length > 0;
+            // Si el admin lo tiene activo (enabled !== false), entonces siempre está listo, incluso si tiene 0 módulos.
+            const isTargetReady = true;
             const itemColor = isTargetReady ? item.color : '#707E94';
             
             return (
@@ -760,7 +761,7 @@ export const TechBaseView = ({
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <span style={{ fontSize: 7, opacity: 0.5, marginBottom: 2 }}>{item.sec}</span>
                   <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    {item.label}
+                    {displayLabel}
                     {!isTargetReady && <Lock size={10} style={{ opacity: 0.7 }} />}
                   </span>
                 </div>
@@ -910,10 +911,12 @@ export const TechBaseView = ({
             <div style={{ textAlign: 'center', padding: 60, color: '#888888', border: '2px dashed #cccccc', borderRadius: 8, background: 'rgba(255,255,255,0.5)' }}>
               {isEs ? 'NO HAY RECURSOS CONFIGURADOS EN ESTA TERMINAL' : 'NENHUM RECURSO CONFIGURADO NESTE TERMINAL'}
             </div>
-          ) : links.map((link: any, i: number) => (
+          ) : links.map((link: any, i: number) => {
+            const hasLink = link.url && link.url !== '#' && link.url.trim() !== '';
+            return (
             <motion.div
               key={i}
-              whileHover={{ x: 10, background: '#2500A5' }}
+              whileHover={hasLink ? { x: 10, background: '#2500A5' } : {}}
               style={{ 
                 position: 'relative', 
                 overflow: 'hidden',
@@ -922,17 +925,18 @@ export const TechBaseView = ({
                 flexDirection: 'column',
                 gap: 16,
                 padding: '24px',
-                cursor: 'pointer',
-                background: '#1B0088', 
-                borderLeft: `4px solid ${themeColor}`,
+                cursor: hasLink ? 'pointer' : 'not-allowed',
+                background: hasLink ? '#1B0088' : '#e2e8f0', 
+                borderLeft: `4px solid ${hasLink ? themeColor : '#94a3b8'}`,
                 borderRight: '1px solid rgba(255,255,255,0.1)',
                 borderTop: '1px solid rgba(255,255,255,0.1)',
                 borderBottom: '1px solid rgba(255,255,255,0.1)',
-                boxShadow: `0 10px 30px rgba(0,0,0,0.2)`,
-                borderRadius: '0 8px 8px 0'
+                boxShadow: hasLink ? `0 10px 30px rgba(0,0,0,0.2)` : 'none',
+                borderRadius: '0 8px 8px 0',
+                opacity: hasLink ? 1 : 0.7
               }} 
               onClick={() => {
-                if (link.url !== '#') {
+                if (hasLink) {
                   const email = localStorage.getItem('yoda_active_user') || 'instructor@example.com';
                   updatePortalTracking(email, footerTitle || title, link.label, 'CLICK_LINK');
                   window.open(link.url, '_blank');
@@ -941,8 +945,8 @@ export const TechBaseView = ({
             >
               <div style={{ zIndex: 2 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 0 }}>
-                  <div style={{ fontSize: 16, fontWeight: 900, color: themeColor }}>{(i + 1).toString().padStart(2, '0')}.</div>
-                  <div style={{ fontSize: 15, fontWeight: 900, letterSpacing: '0.02em', color: '#ffffff', textTransform: 'none', flex: 1 }}>{link.label}</div>
+                  <div style={{ fontSize: 16, fontWeight: 900, color: hasLink ? themeColor : '#64748b' }}>{(i + 1).toString().padStart(2, '0')}.</div>
+                  <div style={{ fontSize: 15, fontWeight: 900, letterSpacing: '0.02em', color: hasLink ? '#ffffff' : '#334155', textTransform: 'none', flex: 1 }}>{link.label}</div>
                 </div>
 
               </div>
@@ -951,9 +955,9 @@ export const TechBaseView = ({
                 marginTop: 'auto',
                 padding: '10px 16px',
                 background: 'transparent',
-                border: `1.5px solid ${themeColor}`,
+                border: `1.5px solid ${hasLink ? themeColor : '#94a3b8'}`,
                 borderRadius: '4px',
-                color: themeColor,
+                color: hasLink ? themeColor : '#64748b',
                 fontSize: 11,
                 fontWeight: 900,
                 zIndex: 2,
@@ -961,10 +965,10 @@ export const TechBaseView = ({
                 letterSpacing: '1px',
                 transition: 'all 0.2s ease'
               }}>
-                {link.url && link.url !== '#' ? (isEs ? 'ACCEDER AL MÓDULO' : 'ACESSAR O MÓDULO') : (isEs ? 'SIN ENLACE' : 'SEM LINK')}
+                {hasLink ? (isEs ? 'ACCEDER AL MÓDULO' : 'ACESSAR O MÓDULO') : (isEs ? 'SIN ENLACE' : 'SEM LINK')}
               </div>
             </motion.div>
-          ))}
+          )})}
         </div>
       </div>
     </div>
@@ -1061,7 +1065,7 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
         rutaData.forEach((poder: any) => {
           (poder.rows || []).forEach((r: any, i: number) => {
             totalNodes++;
-            if (localStorage.getItem(`resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_Ruta del Líder_${r.tema}_${i}`) === 'true') {
+            if (localStorage.getItem(`resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${poder.name || poder.label}_${r.tema}_${i}`) === 'true') {
               completedNodes++;
             }
           });
@@ -1072,7 +1076,7 @@ export const LaboratorioView = ({ config, links, rutaData, onBack, onNavigate, o
           const nodes = rutaData.filter((d: any) => d.poder === name);
           nodes.forEach((r: any, i: number) => {
             totalNodes++;
-            if (localStorage.getItem(`resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_Ruta del Líder_${r.tema}_${i}`) === 'true') {
+            if (localStorage.getItem(`resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${name}_${r.tema}_${i}`) === 'true') {
               completedNodes++;
             }
           });

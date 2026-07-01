@@ -36,15 +36,27 @@ const selectS = {
   width: '100%'
 };
 
-export const AdminPortalTrackingDashboard = () => {
+export const AdminPortalTrackingDashboard = ({ stationName }: { stationName?: string }) => {
   const [data, setData] = useState<PortalProgress[]>([]);
   const [filterInstructor, setFilterInstructor] = useState<string>('ALL');
   const [filterPortal, setFilterPortal] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   useEffect(() => {
-    setData(getPortalTracking());
-  }, []);
+    let trackingData = getPortalTracking();
+    if (stationName) {
+      const saved = localStorage.getItem('yoda_users_v4');
+      const users = saved ? JSON.parse(saved) : [];
+      trackingData = trackingData.filter(d => {
+        const u = users.find((user: any) => user.correo === d.email);
+        if (!u) return false;
+        if (stationName === 'BR') return u.acceso === 'BR Station';
+        if (stationName === 'SSC') return u.acceso === 'SSC Station';
+        return true;
+      });
+    }
+    setData(trackingData);
+  }, [stationName]);
 
   const uniqueInstructors = Array.from(new Set(data.map(d => d.instructor).filter(Boolean)));
   const uniquePortals = Array.from(new Set(data.map(d => d.portalCategory).filter(Boolean)));

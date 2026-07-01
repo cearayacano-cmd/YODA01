@@ -127,6 +127,9 @@ export const UserManagementView = ({ onBack, embedded }: any) => {
            <div>
                <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F004F', letterSpacing: '-0.02em', margin: 0 }}>Gestión de Usuarios</h1>
                <p style={{ fontSize: 14, color: '#64748B', margin: 0 }}>Administra los instructores, sus rangos y sus accesos a las estaciones base.</p>
+               <div style={{ marginTop: 8, fontSize: 12, color: '#475569', background: '#F1F5F9', padding: '8px 12px', borderRadius: 6, display: 'inline-block' }}>
+                 <strong>Tipos de Acceso:</strong> <b>Administrador</b> (Acceso total), <b>BR / SSC Station</b> (Acceso exclusivo a su estación), <b>Explorador</b> (Visitante).
+               </div>
            </div>
         </div>
          <div style={{ display: 'flex', gap: 12 }}>
@@ -239,11 +242,11 @@ export const UserManagementView = ({ onBack, embedded }: any) => {
            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
              <div>
                <label style={{ display: 'block', fontSize: 11, fontWeight: 800, color: '#64748B', marginBottom: 8, textTransform: 'uppercase' }}>Nombre Completo</label>
-               <input value={nombre} onChange={e => setNombre(e.target.value)} type="text" placeholder="Ej. Anakin Skywalker" style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #CBD5E1', outline: 'none', fontSize: 14, background: '#F8FAFC', color: '#0F004F', fontWeight: 600 }} />
+               <input value={nombre} onChange={e => setNombre(e.target.value)} type="text" placeholder="Ej. Carlos Araya" style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #CBD5E1', outline: 'none', fontSize: 14, background: '#F8FAFC', color: '#0F004F', fontWeight: 600 }} />
              </div>
              <div>
                <label style={{ display: 'block', fontSize: 11, fontWeight: 800, color: '#64748B', marginBottom: 8, textTransform: 'uppercase' }}>Correo Electrónico</label>
-               <input value={correo} onChange={e => setCorreo(e.target.value)} type="email" placeholder="Ej. anakin@latam.com" style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #CBD5E1', outline: 'none', fontSize: 14, background: '#F8FAFC', color: '#0F004F', fontWeight: 600 }} />
+               <input value={correo} onChange={e => setCorreo(e.target.value)} type="email" placeholder="Ej. carlos.araya@latam.com" style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #CBD5E1', outline: 'none', fontSize: 14, background: '#F8FAFC', color: '#0F004F', fontWeight: 600 }} />
              </div>
              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                <div>

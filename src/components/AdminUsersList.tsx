@@ -24,6 +24,7 @@ export const AdminUsersList = ({ onViewUser, stationName }: { onViewUser: (instr
         nombreFicticio: u.nombre,
         fabrica: fabricaLabel,
         rango: rankLabel,
+        acceso: u.acceso,
         sessionCode: 'N/A'
       };
     });
@@ -35,19 +36,12 @@ export const AdminUsersList = ({ onViewUser, stationName }: { onViewUser: (instr
   const baseUsers = useMemo(() => {
     if (!stationName) return users;
     if (stationName === 'BR') {
-      return users.filter(u => {
-        const f = (u.fabrica || '').toLowerCase();
-        return f.includes('brasil') || f.includes('aec');
-      });
+      return users.filter(u => u.acceso === 'BR Station');
     }
     if (stationName === 'SSC') {
-      return users.filter(u => {
-        const f = (u.fabrica || '').toLowerCase();
-        return f.includes('perú') || f.includes('peru') || f.includes('alma');
-      });
+      return users.filter(u => u.acceso === 'SSC Station');
     }
-    // If no stationName (e.g. global view), you might still want to exclude LATAM if it's strictly for instructors, but for now we follow the user's "en ambos". Actually let's exclude LATAM everywhere in the directory if it's just the admin.
-    // Wait, the user specifically said "en ambos no debe salir el latam". I will exclude it from BR and SSC.
+    return users;
     // I will also exclude it from the baseUsers entirely if they only want instructors.
     return users.filter(u => !(u.fabrica || '').toLowerCase().includes('latam'));
   }, [users, stationName]);

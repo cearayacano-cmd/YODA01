@@ -79,12 +79,24 @@ export const PerformanceDashboard = ({ onBack, stationName }: { onBack?: any, st
   };
 
   useEffect(() => {
-    setData(getMissionTracking());
+    let trackingData = getMissionTracking();
+    if (stationName) {
+      const saved = localStorage.getItem('yoda_users_v4');
+      const users = saved ? JSON.parse(saved) : [];
+      trackingData = trackingData.filter(d => {
+        const u = users.find((user: any) => user.correo === d.email);
+        if (!u) return false;
+        if (stationName === 'BR') return u.acceso === 'BR Station';
+        if (stationName === 'SSC') return u.acceso === 'SSC Station';
+        return true;
+      });
+    }
+    setData(trackingData);
     const savedLogs = localStorage.getItem('yoda_activity_logs');
     setActivityLogs(savedLogs ? JSON.parse(savedLogs) : []);
     const rc = localStorage.getItem('yoda_rank_config');
     if (rc) setRankConfig(JSON.parse(rc));
-  }, []);
+  }, [stationName]);
 
   const parseTimeStr = (tStr: string) => {
     if (!tStr) return 0;

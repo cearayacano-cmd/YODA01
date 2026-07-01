@@ -163,7 +163,7 @@ export const Landing = ({ onNavigate, onAdmin, onActivityLog, activeUser, change
           </div>
         </div>
 
-        {dbUsers.find(u => u.correo === activeUser)?.acceso === 'Administrador' && (
+        {(dbUsers.find(u => u.correo === activeUser)?.acceso === 'Administrador' || activeUser === 'admin@yoda.com' || activeUser.includes('carlose.araya')) && (
           <button onClick={onAdmin} style={{background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.2)', padding:'8px 24px', cursor:'pointer', fontSize:10, fontWeight:900, color:'#fff', borderRadius:30, letterSpacing: '0.15em', backdropFilter: 'blur(10px)', transition: 'all 0.2s'}} onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.1)'} onMouseLeave={e=>e.currentTarget.style.background='rgba(255,255,255,0.05)'}>
             SYS.ADMIN
           </button>
@@ -915,8 +915,9 @@ const ConsoleSideFrame = ({ children, side }: any) => {
   );
 };
 
-const ModuleCard = ({ sec, title, subtitle, color, icon, stats, onClick }: any) => {
-  const isReady = stats && stats[0] && stats[0].val > 0;
+const ModuleCard = ({ sec, title, subtitle, color, icon, stats, onClick, enabled }: any) => {
+  // If enabled is explicitly passed, use it. Otherwise fallback to the old logic (stats check).
+  const isReady = enabled !== undefined ? enabled !== false : (stats && stats[0] && stats[0].val > 0);
   const displayColor = isReady ? color : '#707E94';
 
   return (
@@ -2156,11 +2157,11 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
         }}>
           <ConsoleSideFrame side="left">
           <ModuleCard
-            sec="SEC-A1" title={config?.moduleMeta?.ops?.title || (isEs ? "Portal Instructor" : "Portal Instrutor")} subtitle="" color="#FFE017" side="left"
+            sec="SEC-A1" title={config?.moduleMeta?.ops?.title || (isEs ? "Portal Instructor" : "Portal Instrutor")} subtitle="" color="#FFE017" side="left" enabled={config?.moduleMeta?.ops?.enabled}
             icon={<GraduationCap />} stats={[{label: 'MÓDULOS', val: config?.operaciones?.length || 0}, {label: isEs ? 'ACTUALIZADO' : 'ATUALIZADO', val: config?.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Portal Instrutor', 'CLICK_LINK'); onNavigate('operaciones'); }} 
           />
           <ModuleCard
-            sec="SEC-A2" title={config?.moduleMeta?.sup?.title || (isEs ? "Formularios" : "Formulários")} subtitle="" color="#00FFF2" side="left"
+            sec="SEC-A2" title={config?.moduleMeta?.sup?.title || (isEs ? "Formularios" : "Formulários")} subtitle="" color="#00FFF2" side="left" enabled={config?.moduleMeta?.sup?.enabled}
             icon={<Package />} stats={[{label: 'MÓDULOS', val: config?.suministros?.length || 0}, {label: isEs ? 'ACTUALIZADO' : 'ATUALIZADO', val: config?.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Formulários', 'CLICK_LINK'); onNavigate('suministros'); }} 
           />
         </ConsoleSideFrame>
@@ -2203,11 +2204,11 @@ export const BaseStation = ({ stationName, config = {}, onBack, onNavigate }: an
 
         <ConsoleSideFrame side="right">
           <ModuleCard
-            sec="SEC-B1" title={config?.moduleMeta?.lab?.title || "Portal de Líderes"} subtitle="" color="#A4FF00" side="right"
+            sec="SEC-B1" title={config?.moduleMeta?.lab?.title || "Portal de Líderes"} subtitle="" color="#A4FF00" side="right" enabled={config?.moduleMeta?.lab?.enabled}
             icon={<Microscope />} stats={[{label: 'MÓDULOS', val: config.laboratorio?.length || 0}, {label: isEs ? 'ACTUALIZADO' : 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Portal de Líderes', 'CLICK_LINK'); onNavigate('laboratorio'); }} 
           />
           <ModuleCard
-            sec="SEC-B2" title={config?.moduleMeta?.eng?.title || "Workshops"} subtitle="" color="#D400FF" side="right"
+            sec="SEC-B2" title={config?.moduleMeta?.eng?.title || "Workshops"} subtitle="" color="#D400FF" side="right" enabled={config?.moduleMeta?.eng?.enabled}
             icon={<Cpu />} stats={[{label: 'MÓDULOS', val: config.ingenieria?.length || 0}, {label: isEs ? 'ACTUALIZADO' : 'ATUALIZADO', val: config.lastUpdate || '---'}]} onClick={() => { updatePortalTracking(localStorage.getItem('yoda_active_user') || 'instructor@example.com', 'DASHBOARD CENTRAL', 'Workshops', 'CLICK_LINK'); onNavigate('ingenieria'); }} 
           />
         </ConsoleSideFrame>

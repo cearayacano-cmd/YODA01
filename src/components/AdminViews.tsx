@@ -405,18 +405,25 @@ export const AdminCenter = ({ config, setConfig, onBack, adminStation, onExplora
                     <div style={{
                       background:'#0F004F', 
                       padding:'20px 24px',
-                      borderBottom: `4px solid ${color}`,
+                      borderBottom: `4px solid ${meta.enabled !== false ? color : '#64748b'}`,
                       display: 'flex',
                       alignItems: 'center',
                       gap: 16
                     }}>
-                      <div style={{ width: 10, height: 10, borderRadius: '50%', background: color, boxShadow: `0 0 12px ${color}` }} />
-                      <div style={{fontSize:14, color:'#ffffff', fontWeight:900, textTransform:'none', letterSpacing: '0.1em'}}>
+                      <div style={{ width: 10, height: 10, borderRadius: '50%', background: meta.enabled !== false ? color : '#64748b', boxShadow: meta.enabled !== false ? `0 0 12px ${color}` : 'none' }} />
+                      <div style={{fontSize:14, color: meta.enabled !== false ? '#ffffff' : '#94a3b8', fontWeight:900, textTransform:'none', letterSpacing: '0.1em'}}>
                         {field === 'laboratorio' ? 'Portal de Lideres' : field === 'ingenieria' ? 'Workshops' : field === 'suministros' ? 'Formulários' : 'Portal Instrutor'}
+                      </div>
+                      <div style={{ flex: 1 }} />
+                      <div 
+                        onClick={() => updateModuleMeta(key, 'enabled', meta.enabled === false ? true : false)}
+                        style={{ width: 44, height: 24, borderRadius: 12, background: meta.enabled !== false ? '#99CC33' : 'rgba(255,255,255,0.2)', position: 'relative', cursor: 'pointer', transition: 'all 0.2s' }}
+                      >
+                         <div style={{ width: 18, height: 18, borderRadius: '50%', background: '#fff', position: 'absolute', top: 3, left: meta.enabled !== false ? 23 : 3, transition: 'all 0.2s', boxShadow: '0 2px 4px rgba(0,0,0,0.2)' }} />
                       </div>
                     </div>
                   
-                  <div style={{padding:28, flex: 1, display: 'flex', flexDirection: 'column', gap: 24}}>
+                  <div style={{padding:28, flex: 1, display: 'flex', flexDirection: 'column', gap: 24, opacity: meta.enabled !== false ? 1 : 0.4, pointerEvents: meta.enabled !== false ? 'auto' : 'none'}}>
                     <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:20}}>
                       <div>
                         <div style={{fontSize:10, color:'#64748b', textTransform:'uppercase', marginBottom:8, fontWeight: 800, letterSpacing: '0.05em'}}>TÍTULO VISIBLE</div>

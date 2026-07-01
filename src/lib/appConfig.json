@@ -48,8 +48,37 @@
         "url": "https://docs.google.com/forms/d/e/1FAIpQLSc6skAZ2tsMQx3b5uMjVzI_0kbafi11Bj7rsOJgVbrOzgLWtw/viewform"
       }
     ],
-    "lastUpdate": "26/06/2026",
-    "rutaLider": [],
+    "lastUpdate": "01/07/2026",
+    "rutaLider": [
+      {
+        "tipo": "mision1",
+        "label": "MISSÃO 1:",
+        "rows": [
+          {
+            "macroTema": "test",
+            "dia": "",
+            "tema": "test",
+            "detalhe": "",
+            "consejo": "",
+            "herramientas": [
+              {
+                "tipo": "🖼️ Slide",
+                "url": ""
+              }
+            ],
+            "iaPic": [],
+            "tiempo": ""
+          }
+        ],
+        "dbOjtLabel": "",
+        "dbOjtUrl": "",
+        "totalCh": "",
+        "ajusteRota": "",
+        "ajusteRotaUrlKon": "",
+        "ajusteRotaUrlAec": "",
+        "ajusteRotaCh": ""
+      }
+    ],
     "onboarding": [
       {
         "label": "NAVE DE ONBOARDING BASE",
@@ -10967,7 +10996,7 @@
                 "macroTema": "MSP [Manual de Serviço ao Passageiro]",
                 "dia": 1,
                 "tema": "MSP",
-                "detalhe": "- Instrutor explica o passo a passo de como encontrar o MSP via A360 e informa a finalidade de ter o conhecimento deste manual.\n(Call Center temos o PIC e nos aeroportos os agentes usam o MSP)\nBrevemente destaca os capítulos com os temas mais recorrentes:\n- Capítulo 10 - Assentos\n- Capítulo 18 - Contingências\n- Capítulo 19 - Sobre Reserva (Overbooking)\n(mostrar como forma de informação e contexto, um resumo de cada capítulo)",
+                "detalhe": "- Instrutor explica o passo a passo de como encontrar o MSP via A360 e informa a finalidade de ter o conhecimento deste manual.\n(Call Center temos o PIC e nos aeroportos os agentes usam o MSP)\nBrevemente destaca os capítulos com os temas mais recorrentes:\n- Capítulo 10 - Assentos\n- Capítulo 18 - Contingências\n- Capítulo 19 - Sobre Reserva (Overbooking)\n(mostrar como forma de informaç��������������o e contexto, um resumo de cada capítulo)",
                 "tiempo": "1:00:00",
                 "herramientas": [
                   {
@@ -19563,7 +19592,7 @@
                   "consejo": ""
                 },
                 {
-                  "macroTema": "Reclamações",
+                  "macroTema": "Reclama��ões",
                   "tema": "\"Reclamações por cobranças\"",
                   "detalhe": "Instrutor mostra fluxos de reclamação por cobrança: Cobrança em Duplicidade Regularização de Parcelas Compra não reconhecida pelo passageiro Cash in con falha",
                   "tiempo": "0:40:00",
@@ -19582,7 +19611,7 @@
                 },
                 {
                   "macroTema": "Reclamações",
-                  "tema": "Reclamações Legais",
+                  "tema": "Reclamaç��es Legais",
                   "detalhe": "- Instrutor explica o que são reclamações legais e explica brevemente a tratativa para Livro de Reclamações PE e consideraciones e flujo a ser seguido cuando o cliente solicita una gravação de chamada (FALE).",
                   "tiempo": "0:25:00",
                   "herramientas": [],
@@ -23839,8 +23868,22 @@
         }
       ]
     },
-    "rutaLiderEnabled": false,
-    "incidenciasLink": ""
+    "rutaLiderEnabled": true,
+    "incidenciasLink": "",
+    "moduleMeta": {
+      "lab": {
+        "enabled": true
+      },
+      "eng": {
+        "enabled": true
+      },
+      "ops": {
+        "enabled": true
+      },
+      "sup": {
+        "enabled": true
+      }
+    }
   },
   "ssc": {
     "monitoringUrl": "",
@@ -23855,7 +23898,7 @@
       }
     ],
     "operaciones": [],
-    "lastUpdate": "26/06/2026",
+    "lastUpdate": "01/07/2026",
     "rutaLider": [
       {
         "tipo": "imersao",
@@ -24117,6 +24160,20 @@
       ]
     },
     "incidenciasLink": "",
-    "rutaLiderEnabled": false
+    "rutaLiderEnabled": true,
+    "moduleMeta": {
+      "lab": {
+        "enabled": true
+      },
+      "eng": {
+        "enabled": true
+      },
+      "ops": {
+        "enabled": true
+      },
+      "sup": {
+        "enabled": false
+      }
+    }
   }
 }

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Users, CheckCircle2, PlayCircle, BarChart3, Clock, Target, Search, Filter, SortDesc } from 'lucide-react';
 import { getMissionTracking, MissionProgress } from '../lib/tracking';
 
-export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails }: any) => {
+export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails, stationName }: any) => {
   const [data, setData] = useState<MissionProgress[]>([]);
   const [activityLogs, setActivityLogs] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery || '');
@@ -17,10 +17,22 @@ export const AdminVisualDashboard = ({ config, initialSearchQuery, onViewDetails
   const [forceRender, setForceRender] = useState(0);
 
   useEffect(() => {
-    setData(getMissionTracking());
+    let trackingData = getMissionTracking();
+    if (stationName) {
+      const saved = localStorage.getItem('yoda_users_v4');
+      const users = saved ? JSON.parse(saved) : [];
+      trackingData = trackingData.filter(d => {
+        const u = users.find((user: any) => user.correo === d.email);
+        if (!u) return false;
+        if (stationName === 'BR') return u.acceso === 'BR Station';
+        if (stationName === 'SSC') return u.acceso === 'SSC Station';
+        return true;
+      });
+    }
+    setData(trackingData);
     const savedLogs = localStorage.getItem('yoda_activity_logs');
     setActivityLogs(savedLogs ? JSON.parse(savedLogs) : []);
-  }, [forceRender]);
+  }, [forceRender, stationName]);
 
   // Calculate Total Available Missions in BR Onboarding
   const parseTime = (tStr: string) => {

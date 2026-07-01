@@ -118,7 +118,7 @@ export const UnifiedTrackingDashboard = ({ view, logs, config, onBack, stationNa
 
         {activeTab === 'visual' && (
           <div style={{ position: 'absolute', inset: 0, overflow: 'auto' }}>
-            <AdminVisualDashboard config={config} initialSearchQuery={selectedInstructor} onViewDetails={(instructorId: string, sessionCode: string) => {
+            <AdminVisualDashboard stationName={stationName} config={config} initialSearchQuery={selectedInstructor} onViewDetails={(instructorId: string, sessionCode: string) => {
               setSelectedInstructor(instructorId);
               setSelectedCode(sessionCode);
               setActiveTab('missions');
@@ -127,12 +127,12 @@ export const UnifiedTrackingDashboard = ({ view, logs, config, onBack, stationNa
         )}
         {activeTab === 'missions' && (
           <div style={{ position: 'absolute', inset: 0, overflow: 'auto' }}>
-            <AdminTrackingDashboard initialInstructorFilter={selectedInstructor} initialCodeFilter={selectedCode} />
+            <AdminTrackingDashboard stationName={stationName} initialInstructorFilter={selectedInstructor} initialCodeFilter={selectedCode} />
           </div>
         )}
         {activeTab === 'portals' && (
           <div style={{ position: 'absolute', inset: 0, overflow: 'auto' }}>
-            <AdminPortalTrackingDashboard />
+            <AdminPortalTrackingDashboard stationName={stationName} />
           </div>
         )}
         {activeTab === 'performance' && (

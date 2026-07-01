@@ -36,7 +36,7 @@ const selectS = {
   width: '100%'
 };
 
-export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFilter }: { initialInstructorFilter?: string, initialCodeFilter?: string }) => {
+export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFilter, stationName }: { initialInstructorFilter?: string, initialCodeFilter?: string, stationName?: string }) => {
   const [data, setData] = useState<MissionProgress[]>([]);
   const [filterCode, setFilterCode] = useState<string>(initialCodeFilter || 'ALL');
   const [filterInstructor, setFilterInstructor] = useState<string>(initialInstructorFilter || 'ALL');
@@ -48,8 +48,20 @@ export const AdminTrackingDashboard = ({ initialInstructorFilter, initialCodeFil
   const [expandedMacro, setExpandedMacro] = useState<string[]>([]);
 
   useEffect(() => {
-    setData(getMissionTracking());
-  }, []);
+    let trackingData = getMissionTracking();
+    if (stationName) {
+      const saved = localStorage.getItem('yoda_users_v4');
+      const users = saved ? JSON.parse(saved) : [];
+      trackingData = trackingData.filter(d => {
+        const u = users.find((user: any) => user.correo === d.email);
+        if (!u) return false;
+        if (stationName === 'BR') return u.acceso === 'BR Station';
+        if (stationName === 'SSC') return u.acceso === 'SSC Station';
+        return true;
+      });
+    }
+    setData(trackingData);
+  }, [stationName]);
 
   const uniqueCodes = Array.from(new Set(data.map(d => d.codigo).filter(Boolean)));
   const uniqueInstructors = Array.from(new Set(data.map(d => d.instructor).filter(Boolean)));

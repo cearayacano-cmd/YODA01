@@ -684,7 +684,7 @@ const MissionMapNode = ({ section, index, planetColor, onClick, texture = 'CRATE
   const isCompleted = React.useMemo(() => {
     const rows = section.rows || [];
     if (rows.length === 0) return false;
-    const effectivePlanetLabel = planetLabel;
+    const effectivePlanetLabel = planetLabel === 'RUTA DEL LÍDER' ? (section.nombre || section.label || planetLabel) : planetLabel;
     const allDone = rows.every((r: any, i: number) => {
         const key = `resolved_${localStorage.getItem('yoda_active_user') || 'instructor@example.com'}_${effectivePlanetLabel}_${r.tema}_${i}`;
         const val = localStorage.getItem(key);
@@ -1553,6 +1553,15 @@ const FscDetailedTerminal = ({ seccion, secciones, planetColor, onBack, titleOve
                 
                 {/* Left: Scrollable List of Cards */}
                 <div style={{ paddingBottom: 60 }}>
+                    {/* INSTRUCTOR NOTE BANNER */}
+                    <div style={{ marginBottom: 30, background: 'rgba(153, 204, 51, 0.1)', border: '1px solid #99CC33', borderRadius: 12, padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 16 }}>
+                        <div style={{ background: '#99CC33', color: '#fff', borderRadius: '50%', width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                            <span style={{ fontWeight: 900, fontSize: 18 }}>!</span>
+                        </div>
+                        <div style={{ fontSize: 13, color: '#1B0088', lineHeight: 1.5 }}>
+                            <strong>Nota:</strong> {isEs ? 'Recuerda confirmar la lectura de cada paso en el orden correcto. Esto es esencial para que tu progreso y el tiempo invertido se registren correctamente en el sistema.' : 'Lembre-se de confirmar a leitura de cada passo na ordem correta. Isso é essencial para que seu progresso e tempo investido sejam registrados corretamente no sistema.'}
+                        </div>
+                    </div>
                     {allSecciones.map((sec, sidx) => (
                         <div key={sidx} style={{ marginBottom: 40 }}>
                             {allSecciones.length > 1 && (
